@@ -124,22 +124,24 @@ const Reference = ({ references }: ReferenceProps): JSX.Element => {
   const renderReferenceCard = (reference: ReferenceItem) => {
     return (
       <div
-        className="group bg-white/90 rounded-xl shadow-md h-[180px] flex flex-col justify-between cursor-pointer transition-transform duration-200 hover:scale-[1.03] active:scale-95 border border-white/40 backdrop-blur-md"
+        className="group bg-white/90 rounded-xl shadow-md h-[180px] flex flex-col justify-between cursor-pointer transition-all duration-200 hover:scale-[1.03] active:scale-95 hover:shadow-xl border border-white/40 backdrop-blur-md focus-within:ring-2 focus-within:ring-blue-400"
         style={{ minWidth: 220, maxWidth: 260 }}
         onClick={() => (reference as any).type === 'link' ? handleOpenLink(reference.url) : undefined}
+        tabIndex={0}
       >
         {/* Thumbnail */}
-        <div className="flex-1 flex items-center justify-center overflow-hidden rounded-t-xl" style={{ height: '60%' }}>
+        <div className="flex-1 flex items-center justify-center overflow-hidden rounded-t-xl transition-all duration-200 group-hover:shadow-lg" style={{ height: '60%' }}>
           {(reference as any).type === 'image' && (
             <picture>
               <source srcSet={getAssetUrl(reference.url).replace(/\.(jpe?g|png)$/i, '.webp')} type="image/webp" />
               <img
                 src={getAssetUrl(reference.url)}
                 alt={reference.title}
-                className="object-cover w-full h-full rounded-t-xl hover:opacity-80 transition cursor-zoom-in"
+                className="object-cover w-full h-full rounded-t-xl hover:opacity-80 transition-all duration-200 cursor-zoom-in"
                 onClick={e => { e.stopPropagation(); setLightboxImg(getAssetUrl(reference.url)); }}
                 tabIndex={0}
                 onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { setLightboxImg(getAssetUrl(reference.url)); } }}
+                loading="lazy"
               />
             </picture>
           )}
@@ -160,7 +162,9 @@ const Reference = ({ references }: ReferenceProps): JSX.Element => {
             {(reference as any).type === 'document' && (
               <button
                 onClick={e => { e.stopPropagation(); handleDownload(reference.url, reference.title); }}
-                className="ml-auto p-1 rounded-full hover:bg-yellow-100 text-yellow-700 transition-colors"
+                className="ml-auto p-1 rounded-full hover:bg-yellow-100 text-yellow-700 transition-colors transition-all duration-200 focus:ring-2 focus:ring-yellow-400"
+                tabIndex={0}
+                aria-label="Tải xuống tài liệu"
               >
                 <span className="material-icons text-base">download</span>
               </button>
@@ -198,13 +202,14 @@ const Reference = ({ references }: ReferenceProps): JSX.Element => {
       {/* Lightbox modal */}
       {lightboxImg && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm transition-all duration-300"
           onClick={() => setLightboxImg(null)}
         >
           <div className="relative max-w-3xl w-full flex flex-col items-center">
             <button
-              className="absolute top-2 right-2 bg-white/80 hover:bg-white text-gray-800 rounded-full p-2 shadow-lg z-10"
+              className="absolute top-2 right-2 bg-white/80 hover:bg-white text-gray-800 rounded-full p-2 shadow-lg z-10 focus:ring-2 focus:ring-blue-400 transition-all duration-200"
               onClick={e => { e.stopPropagation(); setLightboxImg(null); }}
+              aria-label="Đóng lightbox"
             >
               <span className="material-icons text-2xl">close</span>
             </button>
@@ -213,8 +218,9 @@ const Reference = ({ references }: ReferenceProps): JSX.Element => {
               <img
                 src={lightboxImg || ''}
                 alt="Phóng to ảnh reference"
-                className="rounded-xl max-h-[80vh] w-auto object-contain border-4 border-white shadow-2xl"
+                className="rounded-xl max-h-[80vh] w-auto object-contain border-4 border-white shadow-2xl transition-all duration-300"
                 onClick={e => e.stopPropagation()}
+                loading="lazy"
               />
             </picture>
           </div>

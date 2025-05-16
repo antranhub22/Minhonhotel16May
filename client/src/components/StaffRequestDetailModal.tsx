@@ -76,13 +76,13 @@ const StaffRequestDetailModal: React.FC<StaffRequestDetailModalProps> = ({ reque
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
       <div
         ref={modalRef}
-        className="bg-white rounded-xl shadow-xl p-6 w-full max-w-lg relative"
+        className="bg-white rounded-xl shadow-xl p-6 w-full max-w-lg relative transition-all duration-300 focus-within:ring-2 focus-within:ring-blue-400"
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-title"
         tabIndex={-1}
       >
-        <button className="absolute top-2 right-2 text-gray-500 hover:text-blue-700" onClick={onClose} aria-label="Đóng modal">&times;</button>
+        <button className="absolute top-2 right-2 text-gray-500 hover:text-blue-700 transition-all duration-200 focus:ring-2 focus:ring-blue-400" onClick={onClose} aria-label="Đóng modal">&times;</button>
         <h3 id="modal-title" className="text-xl font-bold text-blue-900 mb-4">Request Details</h3>
         <div className="space-y-2 mb-4">
           <div><b>Room:</b> {request.room}</div>
@@ -113,14 +113,14 @@ const StaffRequestDetailModal: React.FC<StaffRequestDetailModalProps> = ({ reque
           </div>
         )}
         <div className="flex gap-2 justify-end">
-          <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded font-semibold flex items-center justify-center" onClick={handleUpdateStatus} disabled={loading || pendingStatus === request.status}>
+          <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded font-semibold flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-lg focus:ring-2 focus:ring-blue-400" onClick={handleUpdateStatus} disabled={loading || pendingStatus === request.status}>
             {loading ? (
               <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
             ) : null}
             Cập Nhật
           </button>
-          <button className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded font-semibold" onClick={onOpenMessage} disabled={loading}>Nhắn khách</button>
-          <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded font-semibold" onClick={onClose} disabled={loading}>Đóng</button>
+          <button className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded font-semibold transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-lg focus:ring-2 focus:ring-green-400" onClick={onOpenMessage} disabled={loading}>Nhắn khách</button>
+          <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded font-semibold transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-lg focus:ring-2 focus:ring-gray-400" onClick={onClose} disabled={loading}>Đóng</button>
         </div>
       </div>
     </div>

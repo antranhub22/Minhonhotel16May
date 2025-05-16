@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import { CheckCircle } from 'lucide-react';
 
 const EmailTester: React.FC = () => {
   const [sending, setSending] = useState(false);
   const [result, setResult] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
+  const [shake, setShake] = useState(false);
   const [email, setEmail] = useState('tuans2@gmail.com');
 
   const sendTestEmail = async () => {
@@ -11,6 +14,7 @@ const EmailTester: React.FC = () => {
       setSending(true);
       setResult(null);
       setError(null);
+      setSuccess(false);
 
       // Get device info
       const isMobile = /iPhone|iPad|iPod|Android|Mobile|webOS|BlackBerry/i.test(navigator.userAgent);
@@ -37,6 +41,8 @@ const EmailTester: React.FC = () => {
         
         if (data.success) {
           setResult(`Email sent successfully using standard method! Provider: ${data.provider || 'unknown'}`);
+          setSuccess(true);
+          setTimeout(() => setSuccess(false), 1500);
           setSending(false);
           return;
         } else {
@@ -76,6 +82,8 @@ const EmailTester: React.FC = () => {
         
         if (mobileData.success) {
           setResult(`Email đang được xử lý qua endpoint tối ưu hóa cho ${isMobile ? 'di động' : 'desktop'}! Vui lòng kiểm tra hộp thư sau vài giây.`);
+          setSuccess(true);
+          setTimeout(() => setSuccess(false), 1500);
         } else {
           throw new Error(mobileData.error || 'Lỗi không xác định với endpoint di động');
         }
@@ -85,13 +93,15 @@ const EmailTester: React.FC = () => {
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An unexpected error occurred');
+      setShake(true);
+      setTimeout(() => setShake(false), 500);
     } finally {
       setSending(false);
     }
   };
 
   return (
-    <div className="p-4 bg-white rounded-lg shadow">
+    <div className={`p-4 bg-white rounded-lg shadow transition-all duration-300 hover:shadow-xl ${shake ? 'animate-shake' : ''}`}>
       <h2 className="text-xl font-bold mb-4">Email Tester</h2>
       
       <div className="mb-4">
@@ -103,7 +113,7 @@ const EmailTester: React.FC = () => {
           id="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 focus:border-blue-400"
           disabled={sending}
         />
       </div>
@@ -111,16 +121,21 @@ const EmailTester: React.FC = () => {
       <button
         onClick={sendTestEmail}
         disabled={sending}
-        className={`w-full py-2 px-4 rounded-md text-white font-medium ${
+        className={`w-full py-2 px-4 rounded-md text-white font-medium transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-lg focus:ring-2 focus:ring-blue-400 ${
           sending 
             ? 'bg-blue-400 cursor-not-allowed' 
-            : 'bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500'
+            : success ? 'bg-green-500' : 'bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500'
         }`}
       >
         {sending ? (
           <div className="flex items-center justify-center">
             <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
             Sending...
+          </div>
+        ) : success ? (
+          <div className="flex items-center justify-center">
+            <CheckCircle className="h-5 w-5 text-white mr-2 animate-bounceIn" />
+            Đã gửi!
           </div>
         ) : (
           'Send Test Email'

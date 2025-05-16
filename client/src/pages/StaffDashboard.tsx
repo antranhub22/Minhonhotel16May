@@ -299,7 +299,7 @@ const StaffDashboard: React.FC = () => {
               <button
                 onClick={handleDeleteAllRequests}
                 disabled={isDeleting || requests.length === 0}
-                className={`w-auto bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded font-semibold ${(isDeleting || requests.length === 0) ? 'opacity-50 cursor-not-allowed' : ''}`}
+                className={`w-auto bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded font-semibold transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-lg focus:ring-2 focus:ring-red-400 ${(isDeleting || requests.length === 0) ? 'opacity-50 cursor-not-allowed' : ''}`}
               >
                 {isDeleting ? (
                   <div className="flex items-center">
@@ -312,7 +312,7 @@ const StaffDashboard: React.FC = () => {
               </button>
               <button
                 onClick={fetchRequests}
-                className="w-auto bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded font-semibold"
+                className="w-auto bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded font-semibold transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-lg focus:ring-2 focus:ring-blue-400"
               >
                 Refresh
               </button>
@@ -380,7 +380,7 @@ const StaffDashboard: React.FC = () => {
                   [...filteredRequests]
                     .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
                     .map(req => (
-                      <div key={req.id} className="border rounded-lg p-3 bg-white shadow-sm">
+                      <div key={req.id} className="border rounded-lg p-3 bg-white shadow-sm transition-all duration-200 hover:shadow-lg hover:scale-[1.02]">
                         <div className="flex justify-between mb-2">
                           <div className="font-semibold">Phòng: {req.room_number || 'N/A'}</div>
                           <div className={`px-2 py-1 rounded-full text-xs font-semibold ${statusColor(req.status)}`}>{req.status || 'Chưa xác định'}</div>
@@ -434,7 +434,7 @@ const StaffDashboard: React.FC = () => {
                           </select>
                           <div className="grid grid-cols-2 gap-2">
                             <button
-                              className="bg-blue-600 hover:bg-blue-700 text-white px-2 py-2 rounded text-sm font-semibold"
+                              className="bg-blue-600 hover:bg-blue-700 text-white px-2 py-2 rounded text-sm font-semibold transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-lg focus:ring-2 focus:ring-blue-400"
                               onClick={async () => {
                                 const newStatus = pendingStatus[req.id];
                                 if (newStatus && newStatus !== req.status) {
@@ -446,7 +446,7 @@ const StaffDashboard: React.FC = () => {
                                 }
                               }}
                             >Cập Nhật</button>
-                            <button className="bg-green-600 hover:bg-green-700 text-white px-2 py-2 rounded text-sm font-semibold" onClick={() => { setSelectedRequest(req); handleOpenMessage(); }}>Nhắn khách</button>
+                            <button className="bg-green-600 hover:bg-green-700 text-white px-2 py-2 rounded text-sm font-semibold transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-lg focus:ring-2 focus:ring-green-400" onClick={() => { setSelectedRequest(req); handleOpenMessage(); }}>Nhắn khách</button>
                           </div>
                         </div>
                       </div>
@@ -501,7 +501,7 @@ const StaffDashboard: React.FC = () => {
                           ))}
                         </select>
                         <button
-                          className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-xs font-semibold"
+                          className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-xs font-semibold transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-lg focus:ring-2 focus:ring-blue-400"
                           onClick={async () => {
                             const newStatus = pendingStatus[req.id];
                             if (newStatus && newStatus !== req.status) {
@@ -513,7 +513,7 @@ const StaffDashboard: React.FC = () => {
                             }
                           }}
                         >Cập Nhật</button>
-                        <button className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-xs font-semibold" onClick={() => { setSelectedRequest(req); handleOpenMessage(); }}>Nhắn khách</button>
+                        <button className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-xs font-semibold transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-lg focus:ring-2 focus:ring-green-400" onClick={() => { setSelectedRequest(req); handleOpenMessage(); }}>Nhắn khách</button>
                       </td>
                     </tr>
                   ))}
