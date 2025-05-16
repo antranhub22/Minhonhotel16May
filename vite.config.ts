@@ -5,6 +5,7 @@ import path from "path";
 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import { visualizer } from "rollup-plugin-visualizer";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -22,6 +23,12 @@ export default defineConfig({
           ),
         ]
       : []),
+    visualizer({
+      filename: "./dist/bundle-visualizer.html",
+      open: false,
+      gzipSize: true,
+      brotliSize: true
+    })
   ],
   resolve: {
     alias: {

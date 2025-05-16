@@ -1333,6 +1333,15 @@ function cleanSummaryContent(content) {
   if (!content) return "";
   return content.split("\n").filter((line) => !/^Bước tiếp theo:/i.test(line) && !/^Next Step:/i.test(line) && !/Vui lòng nhấn/i.test(line) && !/Please Press Send To Reception/i.test(line)).map((line) => line.replace(/\(dùng cho khách[^\)]*\)/i, "").replace(/\(used for Guest[^\)]*\)/i, "")).join("\n").replace(/\n{3,}/g, "\n\n");
 }
+function handleApiError(res, error, defaultMessage) {
+  if (process.env.NODE_ENV === "development") {
+    console.error(defaultMessage, error);
+    return res.status(500).json({ error: defaultMessage, message: error.message, stack: error.stack });
+  } else {
+    console.error(defaultMessage, error.message);
+    return res.status(500).json({ error: defaultMessage });
+  }
+}
 async function registerRoutes(app2) {
   const httpServer = createServer(app2);
   const wss = new WebSocketServer({ server: httpServer, path: "/ws" });
@@ -1416,12 +1425,7 @@ async function registerRoutes(app2) {
         usage: response.usage
       });
     } catch (error) {
-      console.error("OpenAI API test error:", error);
-      res.status(500).json({
-        error: "Error testing OpenAI API",
-        details: error.message,
-        code: error.code
-      });
+      handleApiError(res, error, "OpenAI API test error:");
     }
   });
   app2.get("/api/transcripts/:callId", async (req, res) => {
@@ -1430,7 +1434,7 @@ async function registerRoutes(app2) {
       const transcripts2 = await storage.getTranscriptsByCallId(callId);
       res.json(transcripts2);
     } catch (error) {
-      res.status(500).json({ error: "Failed to retrieve transcripts" });
+      handleApiError(res, error, "Failed to retrieve transcripts");
     }
   });
   app2.post("/api/orders", async (req, res) => {
@@ -1442,7 +1446,7 @@ async function registerRoutes(app2) {
       if (error instanceof z.ZodError) {
         res.status(400).json({ error: "Invalid order data", details: error.errors });
       } else {
-        res.status(500).json({ error: "Failed to create order" });
+        handleApiError(res, error, "Failed to create order");
       }
     }
   });
@@ -1455,7 +1459,7 @@ async function registerRoutes(app2) {
       }
       res.json(order);
     } catch (error) {
-      res.status(500).json({ error: "Failed to retrieve order" });
+      handleApiError(res, error, "Failed to retrieve order");
     }
   });
   app2.get("/api/orders/room/:roomNumber", async (req, res) => {
@@ -1464,7 +1468,7 @@ async function registerRoutes(app2) {
       const orders2 = await storage.getOrdersByRoomNumber(roomNumber);
       res.json(orders2);
     } catch (error) {
-      res.status(500).json({ error: "Failed to retrieve orders" });
+      handleApiError(res, error, "Failed to retrieve orders");
     }
   });
   app2.patch("/api/orders/:id/status", verifyJWT, async (req, res) => {
@@ -1488,7 +1492,7 @@ async function registerRoutes(app2) {
       });
       res.json(orders2);
     } catch (err) {
-      res.status(500).json({ error: "Failed to retrieve staff orders" });
+      handleApiError(res, err, "Failed to retrieve staff orders");
     }
   });
   app2.post("/api/orders/:id/update-status", verifyJWT, async (req, res) => {
@@ -1500,7 +1504,7 @@ async function registerRoutes(app2) {
       io.to(String(idNum)).emit("order_status_update", { orderId: String(idNum), status });
       res.json(updatedOrder);
     } catch (err) {
-      res.status(500).json({ error: "Failed to update order status" });
+      handleApiError(res, err, "Failed to update order status");
     }
   });
   app2.post("/api/store-summary", async (req, res) => {
@@ -1601,15 +1605,7 @@ async function registerRoutes(app2) {
         serviceRequests
       });
     } catch (error) {
-      console.error("Error storing call summary:", error, error.stack);
-      if (error instanceof z.ZodError) {
-        return res.status(400).json({ error: "Invalid summary data", details: error.errors });
-      }
-      return res.status(500).json({
-        error: "Failed to save call summary",
-        message: error.message,
-        stack: error.stack
-      });
+      handleApiError(res, error, "Error storing call summary:");
     }
   });
   app2.get("/api/summaries/:callId", async (req, res) => {
@@ -1624,7 +1620,7 @@ async function registerRoutes(app2) {
       }
       res.json(summary);
     } catch (error) {
-      res.status(500).json({ error: "Failed to retrieve call summary" });
+      handleApiError(res, error, "Failed to retrieve call summary");
     }
   });
   app2.get("/api/summaries/recent/:hours", async (req, res) => {
@@ -1647,8 +1643,7 @@ async function registerRoutes(app2) {
         summaries: mapped
       });
     } catch (error) {
-      console.error("Error retrieving recent call summaries:", error);
-      res.status(500).json({ error: "Failed to retrieve recent call summaries" });
+      handleApiError(res, error, "Error retrieving recent call summaries:");
     }
   });
   app2.post("/api/translate-to-vietnamese", async (req, res) => {
@@ -1663,8 +1658,7 @@ async function registerRoutes(app2) {
         translatedText
       });
     } catch (error) {
-      console.error("Error translating text to Vietnamese:", error);
-      res.status(500).json({ error: "Failed to translate text to Vietnamese" });
+      handleApiError(res, error, "Error translating text to Vietnamese:");
     }
   });
   app2.post("/api/send-service-email", async (req, res) => {
@@ -1702,8 +1696,7 @@ async function registerRoutes(app2) {
         throw new Error(result.error?.toString() || "Unknown error");
       }
     } catch (error) {
-      console.error("Error sending service confirmation email:", error);
-      res.status(500).json({ error: "Failed to send service confirmation email" });
+      handleApiError(res, error, "Error sending service confirmation email:");
     }
   });
   app2.post("/api/send-call-summary-email", async (req, res) => {
@@ -1777,8 +1770,7 @@ async function registerRoutes(app2) {
         throw new Error("Failed to send call summary to all recipients");
       }
     } catch (error) {
-      console.error("Error sending call summary email:", error);
-      res.status(500).json({ error: "Failed to send call summary email" });
+      handleApiError(res, error, "Error sending call summary email:");
     }
   });
   app2.post("/api/test-email", async (req, res) => {
@@ -1817,12 +1809,7 @@ async function registerRoutes(app2) {
         throw new Error(result.error?.toString() || "Unknown error");
       }
     } catch (error) {
-      console.error("Error sending test email:", error);
-      res.status(500).json({
-        success: false,
-        error: "Failed to send test email",
-        details: error?.message || String(error)
-      });
+      handleApiError(res, error, "Error sending test email:");
     }
   });
   app2.post("/api/mobile-test-email", async (req, res) => {
@@ -1876,8 +1863,7 @@ Mi Nhon Hotel Mui Ne`
         timestamp: (/* @__PURE__ */ new Date()).toISOString()
       });
     } catch (error) {
-      console.error("Error in mobile test email endpoint:", error);
-      res.status(500).json({ success: false, error: "Server error" });
+      handleApiError(res, error, "Error in mobile test email endpoint:");
     }
   });
   app2.post("/api/mobile-call-summary-email", async (req, res) => {
@@ -1937,11 +1923,7 @@ Mi Nhon Hotel Mui Ne`
         console.error("L\u1ED7i khi g\u1EEDi email t\xF3m t\u1EAFt t\u1EEB thi\u1EBFt b\u1ECB di \u0111\u1ED9ng:", sendError);
       }
     } catch (error) {
-      console.error("L\u1ED7i trong endpoint mobile-call-summary-email:", error);
-      res.status(500).json({
-        success: false,
-        error: "L\u1ED7i server khi x\u1EED l\xFD y\xEAu c\u1EA7u g\u1EEDi email t\u1EEB thi\u1EBFt b\u1ECB di \u0111\u1ED9ng"
-      });
+      handleApiError(res, error, "L\u1ED7i trong endpoint mobile-call-summary-email:");
     }
   });
   app2.get("/api/mailjet-status", async (req, res) => {
@@ -1981,12 +1963,7 @@ Mi Nhon Hotel Mui Ne`
         });
       }
     } catch (error) {
-      console.error("L\u1ED7i khi ki\u1EC3m tra tr\u1EA1ng th\xE1i Mailjet:", error);
-      res.status(500).json({
-        success: false,
-        error: "L\u1ED7i khi ki\u1EC3m tra tr\u1EA1ng th\xE1i Mailjet",
-        details: error.message || String(error)
-      });
+      handleApiError(res, error, "L\u1ED7i khi ki\u1EC3m tra tr\u1EA1ng th\xE1i Mailjet:");
     }
   });
   app2.get("/api/recent-emails", async (req, res) => {
@@ -2033,12 +2010,7 @@ Mi Nhon Hotel Mui Ne`
         });
       }
     } catch (error) {
-      console.error("L\u1ED7i khi l\u1EA5y danh s\xE1ch email g\u1EA7n \u0111\xE2y:", error);
-      res.status(500).json({
-        success: false,
-        error: "L\u1ED7i khi l\u1EA5y danh s\xE1ch email g\u1EA7n \u0111\xE2y",
-        details: error.message || String(error)
-      });
+      handleApiError(res, error, "L\u1ED7i khi l\u1EA5y danh s\xE1ch email g\u1EA7n \u0111\xE2y:");
     }
   });
   app2.get("/api/db-test", async (req, res) => {
@@ -2046,8 +2018,7 @@ Mi Nhon Hotel Mui Ne`
       const recent = await storage.getRecentCallSummaries(1);
       return res.json({ success: true, count: recent.length });
     } catch (dbError) {
-      console.error("DB test error:", dbError);
-      return res.status(500).json({ success: false, error: dbError.message });
+      handleApiError(res, dbError, "DB test error:");
     }
   });
   app2.get("/api/references/:callId", async (req, res) => {
@@ -2056,8 +2027,7 @@ Mi Nhon Hotel Mui Ne`
       const references = await Reference.find({ callId }).sort({ createdAt: -1 });
       res.json(references);
     } catch (error) {
-      console.error("Error fetching references:", error);
-      res.status(500).json({ error: "Failed to fetch references" });
+      handleApiError(res, error, "Error fetching references:");
     }
   });
   app2.post("/api/references", async (req, res) => {
@@ -2067,8 +2037,7 @@ Mi Nhon Hotel Mui Ne`
       await reference.save();
       res.status(201).json(reference);
     } catch (error) {
-      console.error("Error creating reference:", error);
-      res.status(500).json({ error: "Failed to create reference" });
+      handleApiError(res, error, "Error creating reference:");
     }
   });
   app2.delete("/api/references/:id", async (req, res) => {
@@ -2077,8 +2046,7 @@ Mi Nhon Hotel Mui Ne`
       await Reference.findByIdAndDelete(id);
       res.status(204).send();
     } catch (error) {
-      console.error("Error deleting reference:", error);
-      res.status(500).json({ error: "Failed to delete reference" });
+      handleApiError(res, error, "Error deleting reference:");
     }
   });
   app2.get("/api/reference-map", (_req, res) => {
@@ -2087,8 +2055,7 @@ Mi Nhon Hotel Mui Ne`
       const map = JSON.parse(raw);
       res.json(map);
     } catch (error) {
-      console.error("Invalid REFERENCE_MAP env var:", error);
-      res.status(500).json({ error: "Invalid REFERENCE_MAP JSON" });
+      handleApiError(res, error, "Invalid REFERENCE_MAP env var:");
     }
   });
   app2.post("/api/staff/login", (req, res) => {
@@ -2127,12 +2094,7 @@ Mi Nhon Hotel Mui Ne`
       }
       res.json(dbRequests);
     } catch (err) {
-      console.error("Error in /api/staff/requests:", err);
-      console.log("Database error, returning fallback dummy data");
-      res.json([
-        { id: 1, room_number: "101", guestName: "Tony", request_content: "Beef burger x 2", created_at: /* @__PURE__ */ new Date(), status: "\u0110\xE3 ghi nh\u1EADn", notes: "", orderId: "ORD-10001", updatedAt: /* @__PURE__ */ new Date() },
-        { id: 2, room_number: "202", guestName: "Anna", request_content: "Spa booking at 10:00", created_at: /* @__PURE__ */ new Date(), status: "\u0110ang th\u1EF1c hi\u1EC7n", notes: "", orderId: "ORD-10002", updatedAt: /* @__PURE__ */ new Date() }
-      ]);
+      handleApiError(res, err, "Error in /api/staff/requests:");
     }
   });
   app2.patch("/api/staff/requests/:id/status", verifyJWT, async (req, res) => {
@@ -2151,8 +2113,7 @@ Mi Nhon Hotel Mui Ne`
       }
       res.json(result[0]);
     } catch (error) {
-      console.error("Error updating request status:", error);
-      res.status(500).json({ error: "Failed to update request status" });
+      handleApiError(res, error, "Error updating request status:");
     }
   });
   app2.get("/api/staff/requests/:id/messages", verifyJWT, (req, res) => {
@@ -2186,11 +2147,7 @@ Mi Nhon Hotel Mui Ne`
         deletedCount: result.length
       });
     } catch (error) {
-      console.error("Error deleting all requests:", error);
-      res.status(500).json({
-        error: "Failed to delete requests",
-        details: error?.message
-      });
+      handleApiError(res, error, "Error deleting all requests:");
     }
   });
   return httpServer;
@@ -2210,6 +2167,7 @@ import path from "path";
 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
+import { visualizer } from "rollup-plugin-visualizer";
 var __filename = fileURLToPath(import.meta.url);
 var __dirname = dirname(__filename);
 var vite_config_default = defineConfig({
@@ -2221,7 +2179,13 @@ var vite_config_default = defineConfig({
       await import("@replit/vite-plugin-cartographer").then(
         (m) => m.cartographer()
       )
-    ] : []
+    ] : [],
+    visualizer({
+      filename: "./dist/bundle-visualizer.html",
+      open: false,
+      gzipSize: true,
+      brotliSize: true
+    })
   ],
   resolve: {
     alias: {
