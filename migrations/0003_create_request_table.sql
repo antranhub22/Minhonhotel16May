@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS "request" (
+  id SERIAL PRIMARY KEY,
+  room_number VARCHAR(255) NOT NULL,
+  order_id VARCHAR(255) NOT NULL,
+  guest_name VARCHAR(255) NOT NULL,
+  request_content TEXT NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+  status VARCHAR(50) NOT NULL,
+  updated_at TIMESTAMP NOT NULL DEFAULT NOW()
+); 
