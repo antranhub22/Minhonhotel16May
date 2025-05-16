@@ -13,7 +13,6 @@ import {
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from '@/lib/queryClient';
-import { CheckCircle } from 'lucide-react';
 
 interface EmailFormProps {
   summaryContent: string;
@@ -25,56 +24,52 @@ export function EmailForm({ summaryContent, serviceRequests, roomNumber }: Email
   const [email, setEmail] = useState('');
   const [isSending, setIsSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState(false);
-  const [shake, setShake] = useState(false);
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
     if (!email || !email.includes('@')) {
       setError('Vui lòng nhập địa chỉ email hợp lệ');
-      setShake(true);
-      setTimeout(() => setShake(false), 500);
       return;
     }
+    
     setIsSending(true);
     setError(null);
-    setSuccess(false);
+    
     try {
       const requestData = {
         toEmail: email,
         callDetails: {
           roomNumber: roomNumber || 'Không xác định',
           timestamp: new Date(),
-          duration: '0:00',
+          duration: '0:00', // Có thể cập nhật từ trạng thái cuộc gọi
           summary: summaryContent,
-          serviceRequests: serviceRequests.map(req =>
+          serviceRequests: serviceRequests.map(req => 
             `${req.serviceType}: ${req.requestText || 'Không có thông tin chi tiết'}`
           )
         }
       };
+      
       const response = await apiRequest({
         url: '/api/send-call-summary-email',
         method: 'POST',
         body: requestData
       }) as any;
+      
       if (response && response.success) {
         toast({
           title: 'Gửi email thành công',
           description: 'Tóm tắt cuộc gọi đã được gửi đến email của bạn.',
           variant: 'default',
         });
-        setEmail('');
-        setSuccess(true);
-        setTimeout(() => setSuccess(false), 1500);
+        setEmail(''); // Clear input after success
       } else {
         throw new Error('Không gửi được email');
       }
     } catch (err) {
       console.error('Lỗi khi gửi email:', err);
       setError('Không thể gửi email. Vui lòng thử lại sau.');
-      setShake(true);
-      setTimeout(() => setShake(false), 500);
       toast({
         title: 'Lỗi',
         description: 'Không thể gửi email. Vui lòng thử lại sau.',
@@ -86,7 +81,7 @@ export function EmailForm({ summaryContent, serviceRequests, roomNumber }: Email
   };
 
   return (
-    <Card className={`w-full max-w-md mx-auto mt-6 transition-all duration-300 shadow hover:shadow-xl ${shake ? 'animate-shake' : ''}`}>
+    <Card className="w-full max-w-md mx-auto mt-6">
       <CardHeader>
         <CardTitle>Gửi tóm tắt qua email</CardTitle>
         <CardDescription>
@@ -106,17 +101,18 @@ export function EmailForm({ summaryContent, serviceRequests, roomNumber }: Email
                 type="email"
                 required
                 disabled={isSending}
-                className="transition-all duration-200 focus:ring-2 focus:ring-blue-400 focus:border-blue-400"
               />
             </div>
           </div>
+          
           {error && (
             <Alert variant="destructive" className="mt-4">
               <AlertDescription>{error}</AlertDescription>
             </Alert>
           )}
+          
           <Button 
-            className={`w-full mt-4 flex items-center justify-center transition-all duration-200 hover:scale-105 active:scale-95 hover:shadow-lg focus:ring-2 focus:ring-blue-400 ${success ? 'bg-green-500' : ''}`}
+            className="w-full mt-4 flex items-center justify-center" 
             type="submit" 
             disabled={isSending || !email}
           >
@@ -124,11 +120,6 @@ export function EmailForm({ summaryContent, serviceRequests, roomNumber }: Email
               <>
                 <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
                 Đang gửi...
-              </>
-            ) : success ? (
-              <>
-                <CheckCircle className="h-5 w-5 text-white mr-2 animate-bounceIn" />
-                Đã gửi!
               </>
             ) : (
               'Gửi email'

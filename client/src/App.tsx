@@ -9,7 +9,6 @@ import EmailTester from "@/components/EmailTester";
 import { useWebSocket } from '@/hooks/useWebSocket';
 import StaffPage from '@/pages/staff';
 import { BrowserRouter } from 'react-router-dom';
-import { AnimatePresence, motion } from 'framer-motion';
 
 // Lazy-loaded components
 const CallHistory = React.lazy(() => import('@/pages/CallHistory'));
@@ -44,70 +43,16 @@ const EmailTestPage = () => {
 
 function Router() {
   return (
-    <AnimatePresence mode="wait">
+    <Suspense fallback={<LoadingFallback />}>
       <Switch>
-        <Route path="/call-history" component={() => (
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -40 }}
-            transition={{ duration: 0.3 }}
-          >
-            <CallHistory />
-          </motion.div>
-        )} />
-        <Route path="/call-details/:callId" component={() => (
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -40 }}
-            transition={{ duration: 0.3 }}
-          >
-            <CallDetails />
-          </motion.div>
-        )} />
-        <Route path="/email-test" component={() => (
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -40 }}
-            transition={{ duration: 0.3 }}
-          >
-            <EmailTestPage />
-          </motion.div>
-        )} />
-        <Route path="/staff" component={() => (
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -40 }}
-            transition={{ duration: 0.3 }}
-          >
-            <StaffPage />
-          </motion.div>
-        )} />
-        <Route path="/" component={() => (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.98 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.98 }}
-            transition={{ duration: 0.3 }}
-          >
-            <VoiceAssistant />
-          </motion.div>
-        )} />
-        <Route component={() => (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <NotFound />
-          </motion.div>
-        )} />
+        <Route path="/call-history" component={CallHistory} />
+        <Route path="/call-details/:callId" component={CallDetails} />
+        <Route path="/email-test" component={EmailTestPage} />
+        <Route path="/staff" component={StaffPage} />
+        <Route path="/" component={VoiceAssistant} />
+        <Route component={NotFound} />
       </Switch>
-    </AnimatePresence>
+    </Suspense>
   );
 }
 
