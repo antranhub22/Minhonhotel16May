@@ -1,0 +1,3 @@
+{
+  "postbuild": "echo $(date +%s) > public/version.txt"
+} 

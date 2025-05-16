@@ -1,0 +1,120 @@
+openapi: 3.0.3
+info:
+  title: Mi Nhon Hotel API
+  version: 1.0.0
+  description: |-
+    API cho hệ thống quản lý khách sạn Mi Nhon Hotel (backend Node.js/Express)
+    - Quản lý order, request, summary, email, AI, WebSocket, healthcheck, staff, v.v.
+servers:
+  - url: http://localhost:8080
+    description: Local development
+paths:
+  /api/summaries/recent/{hours}:
+    get:
+      summary: Lấy danh sách call summary gần đây
+      parameters:
+        - in: path
+          name: hours
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 72
+          required: true
+          description: Số giờ gần đây
+      responses:
+        '200':
+          description: Danh sách summary
+  /api/translate-to-vietnamese:
+    post:
+      summary: Dịch văn bản sang tiếng Việt
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+      responses:
+        '200':
+          description: Kết quả dịch
+  /api/send-service-email:
+    post:
+      summary: Gửi email xác nhận dịch vụ
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                toEmail:
+                  type: string
+                serviceDetails:
+                  type: object
+      responses:
+        '200':
+          description: Kết quả gửi email
+  /api/send-call-summary-email:
+    post:
+      summary: Gửi email tóm tắt cuộc gọi
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                callDetails:
+                  type: object
+      responses:
+        '200':
+          description: Kết quả gửi email
+  /api/orders:
+    post:
+      summary: Tạo order mới
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '201':
+          description: Order đã tạo
+  /api/orders/{id}:
+    get:
+      summary: Lấy order theo ID
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: Order
+  /api/staff/login:
+    post:
+      summary: Đăng nhập staff
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: Token đăng nhập
+  /health:
+    get:
+      summary: Healthcheck đơn giản
+      responses:
+        '200':
+          description: OK 

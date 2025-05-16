@@ -1,0 +1,21 @@
+{
+  "scripts": {
+    "build": "esbuild index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
+    "migrate": "./node_modules/.bin/drizzle-kit push",
+    "start": "node dist/index.js",
+    "test": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest watch"
+  },
+  "dependencies": {
+    "@types/bull": "^3.15.9",
+    "@types/ioredis": "^4.28.10",
+    "@types/jsonwebtoken": "^9.0.9",
+    "axios": "^1.9.0",
+    "bull": "^4.16.5",
+    "ioredis": "^5.6.1",
+    "jsonwebtoken": "^9.0.2",
+    "esbuild": "^0.19.0",
+    "drizzle-kit": "^0.20.0"
+  }
+}

@@ -1,0 +1,2 @@
+# Version file for cache busting
+# Do not edit manually 
