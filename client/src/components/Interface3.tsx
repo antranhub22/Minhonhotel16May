@@ -454,13 +454,36 @@ const Interface3: React.FC<Interface3Props> = ({ isActive }) => {
             <div className="md:w-3/4 w-full space-y-3 sm:space-y-4">
               {/* Mobile: Cancel và Send to Reception lên trên cùng */}
               <div className="flex sm:hidden flex-row w-full gap-2 mb-2">
-                <button className="flex-1 flex items-center justify-center px-2 py-1.5 bg-white/80 hover:bg-blue-100 text-blue-900 rounded-full text-xs font-semibold border border-white/30 shadow transition-colors" onClick={() => setCurrentInterface('interface1')}>
+                <button 
+                  className="flex-1 flex items-center justify-center px-2 py-1.5 bg-white hover:bg-blue-100 text-blue-900 rounded-full text-xs font-semibold border-2 border-blue-200 shadow transition-all duration-200 active:scale-95 active:bg-blue-100"
+                  style={{
+                    fontFamily: 'inherit',
+                    letterSpacing: 0.2,
+                    minHeight: 40,
+                    minWidth: 80,
+                    touchAction: 'manipulation',
+                    zIndex: 10
+                  }}
+                  onClick={() => setCurrentInterface('interface1')}
+                >
                   <span className="material-icons text-base mr-1">cancel</span>{t('cancel', language)}
                 </button>
                 <button
                   onClick={handleConfirmOrder}
-                  className="flex-1 bg-[#d4af37] hover:bg-[#ffd700] text-blue-900 font-bold py-1.5 px-3 rounded-full shadow-lg flex items-center justify-center space-x-2 transition-colors border border-white/30 text-xs"
-                  style={{letterSpacing:0.5}}
+                  className="flex-1 bg-[#ffd700] hover:bg-[#ffe066] text-blue-900 font-bold py-1.5 px-3 rounded-full shadow-2xl flex items-center justify-center space-x-2 transition-all duration-200 border-4 border-[#d4af37] text-xs active:scale-95 active:bg-[#ffe066]"
+                  style={{
+                    fontFamily: 'inherit',
+                    letterSpacing: 0.5,
+                    boxShadow: '0 6px 24px 0 rgba(212,175,55,0.25), 0 1.5px 4px 0 rgba(0,0,0,0.12)',
+                    borderWidth: 4,
+                    borderColor: '#d4af37',
+                    background: 'linear-gradient(180deg, #ffe066 0%, #ffd700 100%)',
+                    textShadow: '0 1px 2px #fff, 0 1px 8px #ffd700',
+                    minHeight: 40,
+                    minWidth: 120,
+                    touchAction: 'manipulation',
+                    zIndex: 10
+                  }}
                 >
                   <span className="material-icons">send</span>
                   <span className="whitespace-nowrap">{t('send_to_reception', language)}</span>
@@ -541,13 +564,36 @@ const Interface3: React.FC<Interface3Props> = ({ isActive }) => {
               <div className="flex flex-col items-end space-y-2 sm:space-y-3 w-full md:w-auto">
                 <button
                   onClick={handleConfirmOrder}
-                  className="w-full md:w-auto bg-[#d4af37] hover:bg-[#ffd700] text-blue-900 font-bold py-1.5 sm:py-2 px-3 sm:px-4 rounded-full shadow-lg flex items-center justify-center space-x-2 transition-colors border border-white/30 text-xs sm:text-sm"
-                  style={{letterSpacing:0.5}}
+                  className="w-full md:w-auto bg-[#ffd700] hover:bg-[#ffe066] text-blue-900 font-bold py-1.5 sm:py-2 px-3 sm:px-4 rounded-full shadow-2xl flex items-center justify-center space-x-2 transition-all duration-200 border-4 border-[#d4af37] text-xs sm:text-sm active:scale-95 active:bg-[#ffe066]"
+                  style={{
+                    fontFamily: 'inherit',
+                    letterSpacing: 0.5,
+                    boxShadow: '0 6px 24px 0 rgba(212,175,55,0.25), 0 1.5px 4px 0 rgba(0,0,0,0.12)',
+                    borderWidth: 4,
+                    borderColor: '#d4af37',
+                    background: 'linear-gradient(180deg, #ffe066 0%, #ffd700 100%)',
+                    textShadow: '0 1px 2px #fff, 0 1px 8px #ffd700',
+                    minHeight: 40,
+                    minWidth: 120,
+                    touchAction: 'manipulation',
+                    zIndex: 10
+                  }}
                 >
                   <span className="material-icons">send</span>
                   <span className="whitespace-nowrap">{t('send_to_reception', language)}</span>
                 </button>
-                <button className="w-full md:w-auto flex items-center justify-center px-2 sm:px-3 py-1.5 bg-white/80 hover:bg-blue-100 text-blue-900 rounded-full text-xs font-semibold border border-white/30 shadow transition-colors" onClick={() => setCurrentInterface('interface1')}>
+                <button 
+                  className="w-full md:w-auto flex items-center justify-center px-2 sm:px-3 py-1.5 bg-white hover:bg-blue-100 text-blue-900 font-semibold rounded-full shadow transition-all duration-200 border-2 border-blue-200 text-xs sm:text-sm active:scale-95 active:bg-blue-100"
+                  style={{
+                    fontFamily: 'inherit',
+                    letterSpacing: 0.2,
+                    minHeight: 40,
+                    minWidth: 80,
+                    touchAction: 'manipulation',
+                    zIndex: 10
+                  }}
+                  onClick={() => setCurrentInterface('interface1')}
+                >
                   <span className="material-icons text-base mr-1">cancel</span>{t('cancel', language)}
                 </button>
               </div>
