@@ -8,7 +8,8 @@
     "build": "vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
     "migrate": "drizzle-kit push",
     "start": "npm run migrate && NODE_ENV=production node dist/index.js",
-    "check": "tsc"
+    "check": "tsc",
+    "postinstall": "npm rebuild esbuild"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.37.0",
@@ -122,7 +123,7 @@
     "@vitejs/plugin-react": "^4.4.1",
     "autoprefixer": "^10.4.20",
     "drizzle-kit": "^0.30.4",
-    "esbuild": "^0.25.0",
+    "esbuild": "^0.25.4",
     "eslint": "^9.25.1",
     "eslint-config-prettier": "^10.1.2",
     "eslint-plugin-jsx-a11y": "^6.10.2",
