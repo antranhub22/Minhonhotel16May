@@ -8,6 +8,7 @@ const StaffLogin: React.FC<StaffLoginProps> = ({ onLogin }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -16,6 +17,7 @@ const StaffLogin: React.FC<StaffLoginProps> = ({ onLogin }) => {
       return;
     }
     setError('');
+    setLoading(true);
     try {
       const res = await fetch('/api/staff/login', {
         method: 'POST',
@@ -24,36 +26,94 @@ const StaffLogin: React.FC<StaffLoginProps> = ({ onLogin }) => {
       });
       if (!res.ok) {
         const data = await res.json();
-        setError(data.error || 'Login failed.');
-        return;
+        throw new Error(data.error || 'Login failed.');
       }
       const data = await res.json();
       if (data.token) {
         localStorage.setItem('staff_token', data.token);
         onLogin();
       } else {
-        setError('Login failed: No token received.');
+        throw new Error('Login failed: No token received.');
       }
     } catch (err) {
-      setError('Login failed: Network or server error.');
+      console.error('Login error:', err);
+      setError(err instanceof Error ? err.message : 'Login failed: Network or server error.');
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-blue-300">
-      <form onSubmit={handleSubmit} className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md space-y-6 border border-gray-200">
-        <h2 className="text-2xl font-bold text-blue-900 mb-4 text-center">Staff Login</h2>
-        {error && <div className="text-red-500 text-sm mb-2">{error}</div>}
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8">
         <div>
-          <label className="block text-gray-700 font-medium mb-1">Username</label>
-          <input type="text" className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400" value={username} onChange={e => setUsername(e.target.value)} autoFocus />
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+            Staff Login
+          </h2>
         </div>
-        <div>
-          <label className="block text-gray-700 font-medium mb-1">Password</label>
-          <input type="password" className="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400" value={password} onChange={e => setPassword(e.target.value)} />
-        </div>
-        <button type="submit" className="w-full bg-blue-700 hover:bg-blue-800 text-white font-semibold py-2 rounded-lg transition">Login</button>
-      </form>
+        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+          <div className="rounded-md shadow-sm -space-y-px">
+            <div>
+              <label htmlFor="username" className="sr-only">Username</label>
+              <input
+                id="username"
+                name="username"
+                type="text"
+                required
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                placeholder="Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                disabled={loading}
+              />
+            </div>
+            <div>
+              <label htmlFor="password" className="sr-only">Password</label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                required
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                disabled={loading}
+              />
+            </div>
+          </div>
+
+          {error && (
+            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded relative" role="alert">
+              <strong className="font-bold">Error: </strong>
+              <span className="block sm:inline">{error}</span>
+            </div>
+          )}
+
+          <div>
+            <button
+              type="submit"
+              disabled={loading}
+              className={`group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white ${
+                loading 
+                  ? 'bg-blue-400 cursor-not-allowed' 
+                  : 'bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500'
+              }`}
+            >
+              {loading ? (
+                <>
+                  <div className="absolute left-0 inset-y-0 flex items-center pl-3">
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                  </div>
+                  <span className="pl-6">Logging in...</span>
+                </>
+              ) : (
+                'Sign in'
+              )}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

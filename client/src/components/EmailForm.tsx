@@ -100,6 +100,7 @@ export function EmailForm({ summaryContent, serviceRequests, roomNumber }: Email
                 onChange={(e) => setEmail(e.target.value)}
                 type="email"
                 required
+                disabled={isSending}
               />
             </div>
           </div>
@@ -111,11 +112,18 @@ export function EmailForm({ summaryContent, serviceRequests, roomNumber }: Email
           )}
           
           <Button 
-            className="w-full mt-4" 
+            className="w-full mt-4 flex items-center justify-center" 
             type="submit" 
             disabled={isSending || !email}
           >
-            {isSending ? 'Đang gửi...' : 'Gửi email'}
+            {isSending ? (
+              <>
+                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                Đang gửi...
+              </>
+            ) : (
+              'Gửi email'
+            )}
           </Button>
         </form>
       </CardContent>

@@ -30,6 +30,8 @@ const StaffDashboard: React.FC = () => {
   const [showMessagePopup, setShowMessagePopup] = useState(false);
   const [messages, setMessages] = useState<any[]>([]);
   const [loadingMsg, setLoadingMsg] = useState(false);
+  const [loadingRequests, setLoadingRequests] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [statusFilter, setStatusFilter] = useState('Tất cả');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
@@ -52,6 +54,8 @@ const StaffDashboard: React.FC = () => {
       return;
     }
     try {
+      setLoadingRequests(true);
+      setError(null);
       const res = await fetch('/api/staff/requests', {
         headers: { 'Authorization': `Bearer ${token}` },
         credentials: 'include'
@@ -61,11 +65,16 @@ const StaffDashboard: React.FC = () => {
         navigate('/staff');
         return;
       }
+      if (!res.ok) {
+        throw new Error(`Failed to fetch requests: ${res.statusText}`);
+      }
       const data = await res.json();
-      console.log('Fetched requests data:', data); // Debug log
       setRequests(data);
     } catch (err) {
       console.error('Failed to fetch requests:', err);
+      setError('Failed to load requests. Please try again later.');
+    } finally {
+      setLoadingRequests(false);
     }
   };
 
@@ -260,140 +269,239 @@ const StaffDashboard: React.FC = () => {
           <h2 className="text-xl sm:text-2xl font-bold text-blue-900 text-center">Staff Request Management</h2>
         </div>
 
-        {/* Nút Refresh */}
-        <div className="flex justify-between mb-4">
-          <button
-            onClick={handleDeleteAllRequests}
-            disabled={isDeleting || requests.length === 0}
-            className={`w-auto bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded font-semibold ${(isDeleting || requests.length === 0) ? 'opacity-50 cursor-not-allowed' : ''}`}
-          >
-            {isDeleting ? 'Đang xóa...' : 'Xóa tất cả Requests'}
-          </button>
-          <button
-            onClick={fetchRequests}
-            className="w-auto bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded font-semibold"
-          >
-            Refresh
-          </button>
-        </div>
-
-        {/* Filters */}
-        <div className="mb-4 grid grid-cols-1 gap-4">
-          {/* Filter status */}
-          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-            <label className="font-semibold text-blue-900 w-full sm:w-auto">Lọc theo trạng thái:</label>
-            <select
-              className="w-full sm:w-auto border rounded px-3 py-1 text-sm"
-              value={statusFilter}
-              onChange={e => setStatusFilter(e.target.value)}
+        {/* Error Alert */}
+        {error && (
+          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+            <strong className="font-bold">Error: </strong>
+            <span className="block sm:inline">{error}</span>
+            <button 
+              onClick={() => setError(null)}
+              className="absolute top-0 bottom-0 right-0 px-4 py-3"
             >
-              {statusOptions.map(opt => (
-                <option key={opt} value={opt}>{opt}</option>
-              ))}
-            </select>
+              <span className="sr-only">Dismiss</span>
+              <svg className="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
           </div>
-          
-          {/* Filter thời gian */}
-          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-            <label className="font-semibold text-blue-900 w-full sm:w-auto">Lọc theo thời gian:</label>
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 w-full sm:w-auto">
-              <div className="flex items-center gap-2 w-full sm:w-auto">
-                <label className="text-sm text-gray-600 min-w-10">Từ:</label>
-                <input 
-                  type="date" 
-                  className="border rounded px-2 py-1 text-sm w-full"
-                  value={startDate}
-                  onChange={e => setStartDate(e.target.value)}
-                />
-              </div>
-              <div className="flex items-center gap-2 w-full sm:w-auto">
-                <label className="text-sm text-gray-600 min-w-10">Đến:</label>
-                <input 
-                  type="date" 
-                  className="border rounded px-2 py-1 text-sm w-full"
-                  value={endDate}
-                  onChange={e => setEndDate(e.target.value)}
-                />
-              </div>
-              {(startDate || endDate) && (
-                <button
-                  onClick={() => {
-                    setStartDate('');
-                    setEndDate('');
-                  }}
-                  className="text-blue-600 hover:text-blue-800 text-sm mt-2 sm:mt-0"
-                >
-                  Xóa lọc
-                </button>
-              )}
+        )}
+
+        {/* Loading State */}
+        {loadingRequests ? (
+          <div className="flex items-center justify-center p-8">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+            <span className="ml-2">Loading requests...</span>
+          </div>
+        ) : (
+          <>
+            {/* Nút Refresh */}
+            <div className="flex justify-between mb-4">
+              <button
+                onClick={handleDeleteAllRequests}
+                disabled={isDeleting || requests.length === 0}
+                className={`w-auto bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded font-semibold ${(isDeleting || requests.length === 0) ? 'opacity-50 cursor-not-allowed' : ''}`}
+              >
+                {isDeleting ? (
+                  <div className="flex items-center">
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                    Deleting...
+                  </div>
+                ) : (
+                  'Delete All Requests'
+                )}
+              </button>
+              <button
+                onClick={fetchRequests}
+                className="w-auto bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded font-semibold"
+              >
+                Refresh
+              </button>
             </div>
-          </div>
-        </div>
 
-        {/* Mobile version of requests - Card style */}
-        <div className="block sm:hidden">
-          <div className="space-y-4">
-            {/* Debug log */}
-            {(() => { console.log('Mobile rendering - filteredRequests:', filteredRequests); return null; })()}
-            {filteredRequests.length > 0 ? (
-              [...filteredRequests]
-                .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
-                .map(req => (
-                  <div key={req.id} className="border rounded-lg p-3 bg-white shadow-sm">
-                    <div className="flex justify-between mb-2">
-                      <div className="font-semibold">Phòng: {req.room_number || 'N/A'}</div>
-                      <div className={`px-2 py-1 rounded-full text-xs font-semibold ${statusColor(req.status)}`}>{req.status || 'Chưa xác định'}</div>
-                    </div>
-                    <div className="text-sm text-gray-500 mb-2">Order ID: {req.orderId || req.id || 'N/A'}</div>
-                    <div className="text-xs text-gray-500 mb-3">
-                      {req.created_at ? (
-                        <>
-                          {new Date(req.created_at).toLocaleDateString()} {new Date(req.created_at).toLocaleTimeString()}
-                        </>
-                      ) : (
-                        'Thời gian không xác định'
-                      )}
-                    </div>
+            {/* Filters */}
+            <div className="mb-4 grid grid-cols-1 gap-4">
+              {/* Filter status */}
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+                <label className="font-semibold text-blue-900 w-full sm:w-auto">Lọc theo trạng thái:</label>
+                <select
+                  className="w-full sm:w-auto border rounded px-3 py-1 text-sm"
+                  value={statusFilter}
+                  onChange={e => setStatusFilter(e.target.value)}
+                >
+                  {statusOptions.map(opt => (
+                    <option key={opt} value={opt}>{opt}</option>
+                  ))}
+                </select>
+              </div>
+              
+              {/* Filter thời gian */}
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+                <label className="font-semibold text-blue-900 w-full sm:w-auto">Lọc theo thời gian:</label>
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 w-full sm:w-auto">
+                  <div className="flex items-center gap-2 w-full sm:w-auto">
+                    <label className="text-sm text-gray-600 min-w-10">Từ:</label>
+                    <input 
+                      type="date" 
+                      className="border rounded px-2 py-1 text-sm w-full"
+                      value={startDate}
+                      onChange={e => setStartDate(e.target.value)}
+                    />
+                  </div>
+                  <div className="flex items-center gap-2 w-full sm:w-auto">
+                    <label className="text-sm text-gray-600 min-w-10">Đến:</label>
+                    <input 
+                      type="date" 
+                      className="border rounded px-2 py-1 text-sm w-full"
+                      value={endDate}
+                      onChange={e => setEndDate(e.target.value)}
+                    />
+                  </div>
+                  {(startDate || endDate) && (
+                    <button
+                      onClick={() => {
+                        setStartDate('');
+                        setEndDate('');
+                      }}
+                      className="text-blue-600 hover:text-blue-800 text-sm mt-2 sm:mt-0"
+                    >
+                      Xóa lọc
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
 
-                    {/* Collapsible content */}
-                    <div className="mb-3">
-                      <button 
-                        onClick={() => setExpandedContent(expandedContent === req.id ? null : req.id)}
-                        className="w-full flex justify-between items-center py-1 px-2 border rounded bg-gray-50 hover:bg-gray-100"
-                      >
-                        <span className="text-sm font-medium text-blue-700">
-                          {expandedContent === req.id ? 'Ẩn nội dung' : 'Xem nội dung'}
-                        </span>
-                        <svg 
-                          className={`w-4 h-4 text-blue-700 transition-transform ${expandedContent === req.id ? 'rotate-180' : ''}`} 
-                          fill="none" 
-                          stroke="currentColor" 
-                          viewBox="0 0 24 24"
-                        >
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                        </svg>
-                      </button>
-                      
-                      {expandedContent === req.id && (
-                        <div className="mt-2 p-2 bg-gray-50 rounded-md whitespace-pre-line break-words text-sm">
-                          {req.request_content || 'Không có nội dung'}
+            {/* Mobile version of requests - Card style */}
+            <div className="block sm:hidden">
+              <div className="space-y-4">
+                {/* Debug log */}
+                {(() => { console.log('Mobile rendering - filteredRequests:', filteredRequests); return null; })()}
+                {filteredRequests.length > 0 ? (
+                  [...filteredRequests]
+                    .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+                    .map(req => (
+                      <div key={req.id} className="border rounded-lg p-3 bg-white shadow-sm">
+                        <div className="flex justify-between mb-2">
+                          <div className="font-semibold">Phòng: {req.room_number || 'N/A'}</div>
+                          <div className={`px-2 py-1 rounded-full text-xs font-semibold ${statusColor(req.status)}`}>{req.status || 'Chưa xác định'}</div>
                         </div>
-                      )}
-                    </div>
+                        <div className="text-sm text-gray-500 mb-2">Order ID: {req.orderId || req.id || 'N/A'}</div>
+                        <div className="text-xs text-gray-500 mb-3">
+                          {req.created_at ? (
+                            <>
+                              {new Date(req.created_at).toLocaleDateString()} {new Date(req.created_at).toLocaleTimeString()}
+                            </>
+                          ) : (
+                            'Thời gian không xác định'
+                          )}
+                        </div>
 
-                    <div className="flex flex-col gap-2">
-                      <select
-                        className="border rounded px-2 py-2 text-sm w-full"
-                        value={pendingStatus[req.id] ?? req.status}
-                        onChange={e => setPendingStatus(s => ({ ...s, [req.id]: e.target.value }))}
-                      >
-                        {statusOptions.filter(opt => opt !== 'Tất cả').map(opt => (
-                          <option key={opt} value={opt}>{opt}</option>
-                        ))}
-                      </select>
-                      <div className="grid grid-cols-2 gap-2">
+                        {/* Collapsible content */}
+                        <div className="mb-3">
+                          <button 
+                            onClick={() => setExpandedContent(expandedContent === req.id ? null : req.id)}
+                            className="w-full flex justify-between items-center py-1 px-2 border rounded bg-gray-50 hover:bg-gray-100"
+                          >
+                            <span className="text-sm font-medium text-blue-700">
+                              {expandedContent === req.id ? 'Ẩn nội dung' : 'Xem nội dung'}
+                            </span>
+                            <svg 
+                              className={`w-4 h-4 text-blue-700 transition-transform ${expandedContent === req.id ? 'rotate-180' : ''}`} 
+                              fill="none" 
+                              stroke="currentColor" 
+                              viewBox="0 0 24 24"
+                            >
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                          </button>
+                          
+                          {expandedContent === req.id && (
+                            <div className="mt-2 p-2 bg-gray-50 rounded-md whitespace-pre-line break-words text-sm">
+                              {req.request_content || 'Không có nội dung'}
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="flex flex-col gap-2">
+                          <select
+                            className="border rounded px-2 py-2 text-sm w-full"
+                            value={pendingStatus[req.id] ?? req.status}
+                            onChange={e => setPendingStatus(s => ({ ...s, [req.id]: e.target.value }))}
+                          >
+                            {statusOptions.filter(opt => opt !== 'Tất cả').map(opt => (
+                              <option key={opt} value={opt}>{opt}</option>
+                            ))}
+                          </select>
+                          <div className="grid grid-cols-2 gap-2">
+                            <button
+                              className="bg-blue-600 hover:bg-blue-700 text-white px-2 py-2 rounded text-sm font-semibold"
+                              onClick={async () => {
+                                const newStatus = pendingStatus[req.id];
+                                if (newStatus && newStatus !== req.status) {
+                                  await handleStatusChange(newStatus, req.id);
+                                  setPendingStatus(s => {
+                                    const { [req.id]: _, ...rest } = s;
+                                    return rest;
+                                  });
+                                }
+                              }}
+                            >Cập Nhật</button>
+                            <button className="bg-green-600 hover:bg-green-700 text-white px-2 py-2 rounded text-sm font-semibold" onClick={() => { setSelectedRequest(req); handleOpenMessage(); }}>Nhắn khách</button>
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                ) : (
+                  <div className="text-center py-8 text-gray-500">
+                    <p>Không có yêu cầu nào</p>
+                    <p className="mt-2 text-sm">Nhấn Refresh để tải lại dữ liệu</p>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Desktop version - Table */}
+            <div className="hidden sm:block overflow-x-auto">
+              <table className="min-w-full text-sm">
+                <thead>
+                  <tr className="bg-blue-100 text-blue-900">
+                    <th className="py-2 px-3 text-left">Room</th>
+                    <th className="py-2 px-3 text-left">Order ID</th>
+                    <th className="py-2 px-6 text-left w-3/5">Content</th>
+                    <th className="py-2 px-3 text-left">Time</th>
+                    <th className="py-2 px-2 text-left w-1/12">Status</th>
+                    <th className="py-2 px-3 text-left">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {(Array.isArray(filteredRequests) ? [...filteredRequests].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()) : []).map(req => (
+                    <tr key={req.id} className="border-b hover:bg-blue-50">
+                      <td className="py-2 px-3 font-semibold">{req.room_number}</td>
+                      <td className="py-2 px-3">{req.orderId || req.id}</td>
+                      <td className="py-2 px-6 whitespace-pre-line break-words max-w-4xl">{req.request_content}</td>
+                      <td className="py-2 px-3">
+                        {req.created_at && (
+                          <span className="block whitespace-nowrap">{new Date(req.created_at).toLocaleDateString()}</span>
+                        )}
+                        {req.created_at && (
+                          <span className="block whitespace-nowrap text-xs text-gray-500">{new Date(req.created_at).toLocaleTimeString()}</span>
+                        )}
+                      </td>
+                      <td className="py-2 px-2">
+                        <span className={`px-2 py-1 rounded-full text-xs font-semibold ${statusColor(req.status)} break-words whitespace-normal block text-center`}>{req.status}</span>
+                      </td>
+                      <td className="py-2 px-3 space-x-2">
+                        <select
+                          className="border rounded px-2 py-1 text-xs"
+                          value={pendingStatus[req.id] ?? req.status}
+                          onChange={e => setPendingStatus(s => ({ ...s, [req.id]: e.target.value }))}
+                        >
+                          {statusOptions.filter(opt => opt !== 'Tất cả').map(opt => (
+                            <option key={opt} value={opt}>{opt}</option>
+                          ))}
+                        </select>
                         <button
-                          className="bg-blue-600 hover:bg-blue-700 text-white px-2 py-2 rounded text-sm font-semibold"
+                          className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-xs font-semibold"
                           onClick={async () => {
                             const newStatus = pendingStatus[req.id];
                             if (newStatus && newStatus !== req.status) {
@@ -405,87 +513,23 @@ const StaffDashboard: React.FC = () => {
                             }
                           }}
                         >Cập Nhật</button>
-                        <button className="bg-green-600 hover:bg-green-700 text-white px-2 py-2 rounded text-sm font-semibold" onClick={() => { setSelectedRequest(req); handleOpenMessage(); }}>Nhắn khách</button>
-                      </div>
-                    </div>
-                  </div>
-                ))
-            ) : (
-              <div className="text-center py-8 text-gray-500">
-                <p>Không có yêu cầu nào</p>
-                <p className="mt-2 text-sm">Nhấn Refresh để tải lại dữ liệu</p>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Desktop version - Table */}
-        <div className="hidden sm:block overflow-x-auto">
-          <table className="min-w-full text-sm">
-            <thead>
-              <tr className="bg-blue-100 text-blue-900">
-                <th className="py-2 px-3 text-left">Room</th>
-                <th className="py-2 px-3 text-left">Order ID</th>
-                <th className="py-2 px-6 text-left w-3/5">Content</th>
-                <th className="py-2 px-3 text-left">Time</th>
-                <th className="py-2 px-2 text-left w-1/12">Status</th>
-                <th className="py-2 px-3 text-left">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {(Array.isArray(filteredRequests) ? [...filteredRequests].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()) : []).map(req => (
-                <tr key={req.id} className="border-b hover:bg-blue-50">
-                  <td className="py-2 px-3 font-semibold">{req.room_number}</td>
-                  <td className="py-2 px-3">{req.orderId || req.id}</td>
-                  <td className="py-2 px-6 whitespace-pre-line break-words max-w-4xl">{req.request_content}</td>
-                  <td className="py-2 px-3">
-                    {req.created_at && (
-                      <span className="block whitespace-nowrap">{new Date(req.created_at).toLocaleDateString()}</span>
-                    )}
-                    {req.created_at && (
-                      <span className="block whitespace-nowrap text-xs text-gray-500">{new Date(req.created_at).toLocaleTimeString()}</span>
-                    )}
-                  </td>
-                  <td className="py-2 px-2">
-                    <span className={`px-2 py-1 rounded-full text-xs font-semibold ${statusColor(req.status)} break-words whitespace-normal block text-center`}>{req.status}</span>
-                  </td>
-                  <td className="py-2 px-3 space-x-2">
-                    <select
-                      className="border rounded px-2 py-1 text-xs"
-                      value={pendingStatus[req.id] ?? req.status}
-                      onChange={e => setPendingStatus(s => ({ ...s, [req.id]: e.target.value }))}
-                    >
-                      {statusOptions.filter(opt => opt !== 'Tất cả').map(opt => (
-                        <option key={opt} value={opt}>{opt}</option>
-                      ))}
-                    </select>
-                    <button
-                      className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-xs font-semibold"
-                      onClick={async () => {
-                        const newStatus = pendingStatus[req.id];
-                        if (newStatus && newStatus !== req.status) {
-                          await handleStatusChange(newStatus, req.id);
-                          setPendingStatus(s => {
-                            const { [req.id]: _, ...rest } = s;
-                            return rest;
-                          });
-                        }
-                      }}
-                    >Cập Nhật</button>
-                    <button className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-xs font-semibold" onClick={() => { setSelectedRequest(req); handleOpenMessage(); }}>Nhắn khách</button>
-                  </td>
-                </tr>
-              ))}
-              {filteredRequests.length === 0 && (
-                <tr>
-                  <td colSpan={6} className="py-8 text-center text-gray-500">Không có yêu cầu nào</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
+                        <button className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-xs font-semibold" onClick={() => { setSelectedRequest(req); handleOpenMessage(); }}>Nhắn khách</button>
+                      </td>
+                    </tr>
+                  ))}
+                  {filteredRequests.length === 0 && (
+                    <tr>
+                      <td colSpan={6} className="py-8 text-center text-gray-500">Không có yêu cầu nào</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </>
+        )}
       </div>
-      {/* Modal chi tiết request */}
+
+      {/* Modals */}
       {showDetailModal && selectedRequest && (
         <StaffRequestDetailModal
           request={selectedRequest}
@@ -494,7 +538,7 @@ const StaffDashboard: React.FC = () => {
           onOpenMessage={handleOpenMessage}
         />
       )}
-      {/* Popup nhắn tin */}
+
       {showMessagePopup && selectedRequest && (
         <StaffMessagePopup
           messages={messages}
@@ -503,12 +547,13 @@ const StaffDashboard: React.FC = () => {
           loading={loadingMsg}
         />
       )}
+
       {/* Password Dialog for Delete */}
       {showPasswordDialog && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md mx-4" onClick={handleDialogClick}>
-            <h3 className="text-lg font-bold text-red-600 mb-4">Xác nhận xóa toàn bộ requests</h3>
-            <p className="mb-4 text-gray-700">Hành động này sẽ xóa tất cả requests và không thể hoàn tác. Vui lòng nhập mật khẩu để xác nhận:</p>
+            <h3 className="text-lg font-bold text-red-600 mb-4">Confirm Delete All Requests</h3>
+            <p className="mb-4 text-gray-700">This action will delete all requests and cannot be undone. Please enter the password to confirm:</p>
             
             <div className="mb-4">
               <input
@@ -517,11 +562,11 @@ const StaffDashboard: React.FC = () => {
                 onChange={(e) => setDeletePassword(e.target.value)}
                 onKeyDown={handlePasswordKeyDown}
                 className={`w-full px-3 py-2 border rounded ${passwordError ? 'border-red-500' : 'border-gray-300'} focus:outline-none focus:ring-2 focus:ring-red-500`}
-                placeholder="Nhập mật khẩu xác nhận"
+                placeholder="Enter confirmation password"
                 autoFocus
               />
               {passwordError && <p className="text-red-500 text-sm mt-1">{passwordError}</p>}
-              <p className="text-gray-500 text-xs mt-2 italic">Biện pháp bảo vệ: Chức năng xóa yêu cầu mật khẩu xác nhận để ngăn ngừa xóa dữ liệu do nhầm lẫn.</p>
+              <p className="text-gray-500 text-xs mt-2 italic">Security measure: Delete function requires password confirmation to prevent accidental data loss.</p>
             </div>
             
             <div className="flex justify-end space-x-3">
@@ -529,7 +574,7 @@ const StaffDashboard: React.FC = () => {
                 onClick={() => setShowPasswordDialog(false)}
                 className="px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded transition duration-200"
               >
-                Hủy
+                Cancel
               </button>
               <button
                 onClick={confirmDelete}
@@ -538,18 +583,15 @@ const StaffDashboard: React.FC = () => {
               >
                 {isDeleting ? (
                   <>
-                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    Đang xóa...
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                    Deleting...
                   </>
                 ) : (
                   <>
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                     </svg>
-                    Xác nhận xóa
+                    Confirm Delete
                   </>
                 )}
               </button>

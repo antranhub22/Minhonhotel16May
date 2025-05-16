@@ -32,34 +32,53 @@ interface DocContents {
 const Reference = ({ references }: ReferenceProps): JSX.Element => {
   const [docContents, setDocContents] = useState<DocContents>({});
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [activeCategory, setActiveCategory] = useState(CATEGORIES[0]);
   const [lightboxImg, setLightboxImg] = useState<string | null>(null);
 
   useEffect(() => {
     setLoading(true);
+    setError(null);
     let fetchCount = 0;
+    let errorCount = 0;
+
     if (references.length === 0) {
       setLoading(false);
       return;
     }
+
     references.forEach((ref: ReferenceItem) => {
       if ((ref as any).type === 'document' && ref.url.endsWith('.txt') && !docContents[ref.url]) {
         fetch(ref.url)
-          .then(res => res.text())
+          .then(res => {
+            if (!res.ok) {
+              throw new Error(`Failed to fetch document: ${res.statusText}`);
+            }
+            return res.text();
+          })
           .then(text => {
             setDocContents((prev: DocContents) => ({ ...prev, [ref.url]: text }));
             fetchCount++;
-            if (fetchCount === references.length) setLoading(false);
+            if (fetchCount + errorCount === references.length) {
+              setLoading(false);
+            }
           })
-          .catch(() => {
-            fetchCount++;
-            if (fetchCount === references.length) setLoading(false);
+          .catch((err) => {
+            console.error(`Error fetching document ${ref.url}:`, err);
+            errorCount++;
+            if (fetchCount + errorCount === references.length) {
+              setLoading(false);
+              setError('Some documents could not be loaded. Please try again later.');
+            }
           });
       } else {
         fetchCount++;
-        if (fetchCount === references.length) setLoading(false);
+        if (fetchCount + errorCount === references.length) {
+          setLoading(false);
+        }
       }
     });
+
     if (references.every(ref => (ref as any).type !== 'document' || !ref.url.endsWith('.txt'))) {
       setLoading(false);
     }
@@ -112,14 +131,17 @@ const Reference = ({ references }: ReferenceProps): JSX.Element => {
         {/* Thumbnail */}
         <div className="flex-1 flex items-center justify-center overflow-hidden rounded-t-xl" style={{ height: '60%' }}>
           {(reference as any).type === 'image' && (
-            <img
-              src={getAssetUrl(reference.url)}
-              alt={reference.title}
-              className="object-cover w-full h-full rounded-t-xl hover:opacity-80 transition cursor-zoom-in"
-              onClick={e => { e.stopPropagation(); setLightboxImg(getAssetUrl(reference.url)); }}
-              tabIndex={0}
-              onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { setLightboxImg(getAssetUrl(reference.url)); } }}
-            />
+            <picture>
+              <source srcSet={getAssetUrl(reference.url).replace(/\.(jpe?g|png)$/i, '.webp')} type="image/webp" />
+              <img
+                src={getAssetUrl(reference.url)}
+                alt={reference.title}
+                className="object-cover w-full h-full rounded-t-xl hover:opacity-80 transition cursor-zoom-in"
+                onClick={e => { e.stopPropagation(); setLightboxImg(getAssetUrl(reference.url)); }}
+                tabIndex={0}
+                onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { setLightboxImg(getAssetUrl(reference.url)); } }}
+              />
+            </picture>
           )}
           {(reference as any).type === 'document' && reference.url.endsWith('.pdf') && (
             <span className="material-icons text-5xl text-blue-700/80">picture_as_pdf</span>
@@ -186,12 +208,15 @@ const Reference = ({ references }: ReferenceProps): JSX.Element => {
             >
               <span className="material-icons text-2xl">close</span>
             </button>
-            <img
-              src={lightboxImg}
-              alt="Phóng to ảnh reference"
-              className="rounded-xl max-h-[80vh] w-auto object-contain border-4 border-white shadow-2xl"
-              onClick={e => e.stopPropagation()}
-            />
+            <picture>
+              <source srcSet={lightboxImg ? lightboxImg.replace(/\.(jpe?g|png)$/i, '.webp') : ''} type="image/webp" />
+              <img
+                src={lightboxImg || ''}
+                alt="Phóng to ảnh reference"
+                className="rounded-xl max-h-[80vh] w-auto object-contain border-4 border-white shadow-2xl"
+                onClick={e => e.stopPropagation()}
+              />
+            </picture>
           </div>
         </div>
       )}
@@ -234,11 +259,21 @@ const Reference = ({ references }: ReferenceProps): JSX.Element => {
       </div>
 
       {/* Loading state */}
-      {loading ? (
-        <div className="flex gap-4 overflow-x-auto pb-2">
-          {[...Array(3)].map((_, i) => <SkeletonCard key={i} />)}
+      {loading && (
+        <div className="flex items-center justify-center p-4">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+          <span className="ml-2">Loading references...</span>
         </div>
-      ) : filteredReferences.length === 0 ? (
+      )}
+      
+      {error && (
+        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+          <strong className="font-bold">Error: </strong>
+          <span className="block sm:inline">{error}</span>
+        </div>
+      )}
+
+      {!loading && !error && filteredReferences.length === 0 ? (
         <div className="flex items-center justify-center h-[120px] text-white/80 text-base font-medium">No references available</div>
       ) : (
         <Swiper

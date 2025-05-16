@@ -12,11 +12,8 @@ const EmailTester: React.FC = () => {
       setResult(null);
       setError(null);
 
-      console.log('Sending test email to:', email);
-      
       // Get device info
-      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-      console.log('Device type:', isMobile ? 'mobile' : 'desktop');
+      const isMobile = /iPhone|iPad|iPod|Android|Mobile|webOS|BlackBerry/i.test(navigator.userAgent);
       
       // First try the regular endpoint
       try {
@@ -32,6 +29,10 @@ const EmailTester: React.FC = () => {
           cache: 'no-cache',
         });
         
+        if (!response.ok) {
+          throw new Error(`Standard endpoint failed: ${response.statusText}`);
+        }
+        
         const data = await response.json();
         
         if (data.success) {
@@ -45,13 +46,8 @@ const EmailTester: React.FC = () => {
         console.error('Error with standard endpoint:', err);
       }
       
-      // Luôn thử cả phương thức tiêu chuẩn và phương thức dành cho thiết bị di động
+      // Try mobile-specific endpoint
       try {
-        console.log('Thử sử dụng endpoint dành riêng cho di động...');
-        // Mở rộng phát hiện thiết bị di động
-        const isMobile = /iPhone|iPad|iPod|Android|Mobile|webOS|BlackBerry/i.test(navigator.userAgent);
-        
-        // Thêm timestamp để ngăn cache
         const timestamp = new Date().getTime();
         const mobileResponse = await fetch(`/api/mobile-test-email?_=${timestamp}`, {
           method: 'POST',
@@ -69,77 +65,81 @@ const EmailTester: React.FC = () => {
           }),
           cache: 'no-cache',
           credentials: 'same-origin',
-          keepalive: true // Duy trì kết nối ngay cả khi chuyển trang
+          keepalive: true
         });
+        
+        if (!mobileResponse.ok) {
+          throw new Error(`Mobile endpoint failed: ${mobileResponse.statusText}`);
+        }
         
         const mobileData = await mobileResponse.json();
         
         if (mobileData.success) {
           setResult(`Email đang được xử lý qua endpoint tối ưu hóa cho ${isMobile ? 'di động' : 'desktop'}! Vui lòng kiểm tra hộp thư sau vài giây.`);
-          
-          // Gửi thông báo đến console để kiểm tra
-          console.log(`Đã gửi yêu cầu thành công đến ${isMobile ? 'mobile' : 'desktop'} endpoint.`);
-          console.log('Response:', mobileData);
         } else {
           throw new Error(mobileData.error || 'Lỗi không xác định với endpoint di động');
         }
       } catch (mobileErr: any) {
         console.error('Chi tiết lỗi mobile endpoint:', mobileErr);
-        setError(`Không thể gửi email: ${mobileErr?.message || 'Lỗi không xác định'}`);
+        throw new Error(`Không thể gửi email: ${mobileErr?.message || 'Lỗi không xác định'}`);
       }
-      
-      setSending(false);
-    } catch (err: any) {
-      console.error('Error sending test email:', err);
-      setError(`Error: ${err?.message || 'Unknown error'}`);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'An unexpected error occurred');
+    } finally {
       setSending(false);
     }
   };
 
   return (
-    <div className="p-4 border rounded-lg shadow-md bg-white max-w-md mx-auto mt-4">
-      <h2 className="text-xl font-bold mb-4 text-primary">Kiểm tra Email trên Di động</h2>
+    <div className="p-4 bg-white rounded-lg shadow">
+      <h2 className="text-xl font-bold mb-4">Email Tester</h2>
       
       <div className="mb-4">
-        <label className="block text-sm font-medium mb-1">Email người nhận:</label>
+        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+          Test Email Address
+        </label>
         <input
           type="email"
+          id="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full p-2 border rounded focus:ring-2 focus:ring-primary"
-          placeholder="example@gmail.com"
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          disabled={sending}
         />
       </div>
 
       <button
         onClick={sendTestEmail}
         disabled={sending}
-        className={`w-full p-3 rounded font-medium text-white ${
-          sending ? 'bg-gray-400' : 'bg-primary hover:bg-primary/90'
+        className={`w-full py-2 px-4 rounded-md text-white font-medium ${
+          sending 
+            ? 'bg-blue-400 cursor-not-allowed' 
+            : 'bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500'
         }`}
       >
-        {sending ? 'Đang gửi...' : 'Gửi Email Kiểm tra'}
+        {sending ? (
+          <div className="flex items-center justify-center">
+            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+            Sending...
+          </div>
+        ) : (
+          'Send Test Email'
+        )}
       </button>
 
-      {result && (
-        <div className="mt-4 p-3 bg-green-100 text-green-800 rounded">
-          {result}
+      {error && (
+        <div className="mt-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded relative" role="alert">
+          <strong className="font-bold">Error: </strong>
+          <span className="block sm:inline">{error}</span>
         </div>
       )}
 
-      {error && (
-        <div className="mt-4 p-3 bg-red-100 text-red-800 rounded">
-          {error}
+      {result && (
+        <div className="mt-4 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded relative" role="alert">
+          <strong className="font-bold">Success: </strong>
+          <span className="block sm:inline">{result}</span>
         </div>
       )}
-      
-      <div className="mt-4 text-sm text-gray-500">
-        <p>
-          * Công cụ này giúp kiểm tra việc gửi email trên thiết bị di động.
-          Nếu phương thức tiêu chuẩn không hoạt động, hệ thống sẽ tự động thử
-          phương thức tối ưu hóa cho di động.
-        </p>
-      </div>
     </div>
   );
 };
