@@ -243,7 +243,16 @@ const Interface2: React.FC<Interface2Props> = ({ isActive }) => {
     >
       <div className="container mx-auto flex flex-col md:flex-row p-2 h-full gap-2">
         {/* Left: Call indicator & Realtime conversation side by side, Reference below */}
-        <div className="w-full md:w-3/4 lg:w-2/3 flex flex-col items-center space-y-1 sm:space-y-4 mt-1">
+        <div
+          className="w-full md:w-3/4 lg:w-2/3 flex flex-col items-center space-y-1 sm:space-y-4 mt-1"
+          style={{
+            flex: '1 1 auto',
+            height: '100%',
+            minHeight: '0',
+            maxHeight: 'none',
+            overflow: 'visible',
+          }}
+        >
           {/* Replace old orb with new SiriCallButton */}
           <div className="relative flex flex-col items-center justify-center mb-1 sm:mb-6 w-full max-w-xs mx-auto">
             {/* SiriCallButton ở trên */}
@@ -283,7 +292,17 @@ const Interface2: React.FC<Interface2Props> = ({ isActive }) => {
               </button>
               {/* Duration ở giữa, luôn căn giữa */}
               <div className="flex-1 flex justify-center">
-                <div className="text-white text-xs sm:text-sm bg-blue-900/80 rounded-full px-3 sm:px-4 py-1 shadow-lg border border-white/30 flex items-center justify-center" style={{backdropFilter:'blur(2px)'}}>
+                <div
+                  className="text-white text-xs sm:text-sm rounded-full px-3 sm:px-4 py-1 shadow-lg border border-white/30 flex items-center justify-center"
+                  style={{
+                    background: 'linear-gradient(135deg, #4e5ab7 0%, #3f51b5 100%)',
+                    border: '1.5px solid #fff',
+                    boxShadow: '0px 4px 8px rgba(0,0,0,0.15)',
+                    fontWeight: 700,
+                    letterSpacing: 1,
+                    backdropFilter: 'blur(2px)'
+                  }}
+                >
                   {formatDuration(localDuration)}
                 </div>
               </div>
@@ -425,8 +444,25 @@ const Interface2: React.FC<Interface2Props> = ({ isActive }) => {
             </div>
           )}
           {/* Reference container below (full width, auto height) */}
-          <div className="w-full mt-1">
-            <div className="w-full flex flex-row items-center gap-x-2 mb-3 px-2">
+          <div
+            className="w-full mt-1 flex-1 flex flex-col"
+            style={{
+              minHeight: '200px',
+              maxHeight: 'none',
+              overflowY: 'visible',
+              marginBottom: 8,
+              flex: '1 1 auto',
+            }}
+          >
+            <div
+              className="w-full flex flex-row items-center gap-x-2 mb-3 px-2 overflow-x-auto"
+              style={{
+                flexWrap: 'nowrap',
+                overflowX: 'auto',
+                WebkitOverflowScrolling: 'touch',
+                minHeight: '140px',
+              }}
+            >
               <Reference references={references} />
             </div>
           </div>
