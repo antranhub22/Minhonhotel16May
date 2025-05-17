@@ -10,7 +10,7 @@
 @layer base {
   * {
     @apply border;
-    border-color: theme('colors.border');
+    border-color: #e5e7eb;
   }
 
   body {
@@ -20,9 +20,9 @@
 
 @layer utilities {
   .bg-background {
-    background-color: theme('colors.background');
+    background-color: var(--background);
   }
   .text-foreground {
-    color: theme('colors.foreground');
+    color: var(--foreground);
   }
 }
