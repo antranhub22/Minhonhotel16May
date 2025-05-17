@@ -59,6 +59,7 @@ const LanguageSwitcher = memo(({ language, onLanguageChange }: LanguageSwitcherP
       style={{ minWidth: 40, minHeight: 40 }}
       title="Refresh"
     >
+      <span className="mr-2 text-xs sm:text-sm font-bold text-amber-500 bg-amber-100 px-2 py-0.5 rounded-full align-middle">Demo</span>
       <span className="material-icons text-xl sm:text-2xl mr-1 text-amber-400">refresh</span>
       <span className="hidden sm:inline font-semibold">Refresh</span>
       <span className="ml-2 text-xs sm:text-sm font-bold text-amber-500 bg-amber-100 px-2 py-0.5 rounded-full align-middle">Demo</span>
