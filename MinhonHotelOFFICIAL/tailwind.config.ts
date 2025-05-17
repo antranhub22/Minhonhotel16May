@@ -3,6 +3,37 @@ import type { Config } from "tailwindcss";
 export default {
   darkMode: ["class"],
   content: ["./client/index.html", "./client/src/**/*.{js,jsx,ts,tsx}"],
+  safelist: [
+    "bg-background",
+    "text-foreground",
+    "border",
+    "border-border",
+    "border-border/50",
+    "bg-card",
+    "bg-popover",
+    "bg-primary",
+    "bg-secondary",
+    "bg-muted",
+    "bg-accent",
+    "bg-destructive",
+    "text-card-foreground",
+    "text-popover-foreground",
+    "text-primary-foreground",
+    "text-secondary-foreground",
+    "text-muted-foreground",
+    "text-accent-foreground",
+    "text-destructive-foreground",
+    "border-input",
+    "border-ring",
+    "bg-sidebar",
+    "text-sidebar-foreground",
+    "border-sidebar-border",
+    "bg-sidebar-primary",
+    "text-sidebar-primary-foreground",
+    "bg-sidebar-accent",
+    "text-sidebar-accent-foreground",
+    "border-sidebar-ring"
+  ],
   theme: {
     extend: {
       borderRadius: {
