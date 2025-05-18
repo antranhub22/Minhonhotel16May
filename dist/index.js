@@ -2150,6 +2150,14 @@ Mi Nhon Hotel Mui Ne`
       handleApiError(res, error, "Error deleting all requests:");
     }
   });
+  app2.get("/api/orders", async (req, res) => {
+    try {
+      const orders2 = await storage.getAllOrders({});
+      res.json(orders2);
+    } catch (error) {
+      handleApiError(res, error, "Failed to retrieve all orders");
+    }
+  });
   return httpServer;
 }
 

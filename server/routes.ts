@@ -1167,5 +1167,15 @@ Mi Nhon Hotel Mui Ne`
     }
   });
 
+  // Get all orders (public, no auth)
+  app.get('/api/orders', async (req, res) => {
+    try {
+      const orders = await storage.getAllOrders({});
+      res.json(orders);
+    } catch (error) {
+      handleApiError(res, error, 'Failed to retrieve all orders');
+    }
+  });
+
   return httpServer;
 }
