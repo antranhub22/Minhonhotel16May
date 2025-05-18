@@ -92,17 +92,22 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
     </div>
   );
 
-  // Hàm để xác định màu sắc dựa trên trạng thái
-  const getStatusColor = (status: string | undefined) => {
-    if (!status) return 'bg-gray-300 text-gray-800';
-    
+  // Hàm để xác định màu sắc và icon dựa trên trạng thái
+  const getStatusStyle = (status: string | undefined) => {
+    if (!status) return { bg: 'bg-gray-300', text: 'text-gray-800', icon: 'info' };
     switch (status) {
-      case 'Đã ghi nhận': return 'bg-gray-300 text-gray-800';
-      case 'Đang thực hiện': return 'bg-yellow-200 text-yellow-800';
-      case 'Đã thực hiện và đang bàn giao cho khách': return 'bg-blue-200 text-blue-800';
-      case 'Hoàn thiện': return 'bg-green-200 text-green-800';
-      case 'Lưu ý khác': return 'bg-red-200 text-red-800';
-      default: return 'bg-gray-300 text-gray-800';
+      case 'Đã ghi nhận':
+        return { bg: 'bg-gray-300', text: 'text-gray-800', icon: 'assignment_turned_in' };
+      case 'Đang thực hiện':
+        return { bg: 'bg-yellow-400', text: 'text-yellow-900', icon: 'autorenew' };
+      case 'Đã thực hiện và đang bàn giao cho khách':
+        return { bg: 'bg-blue-400', text: 'text-blue-900', icon: 'local_shipping' };
+      case 'Hoàn thiện':
+        return { bg: 'bg-green-500', text: 'text-white', icon: 'check_circle' };
+      case 'Lưu ý khác':
+        return { bg: 'bg-red-400', text: 'text-white', icon: 'error' };
+      default:
+        return { bg: 'bg-gray-300', text: 'text-gray-800', icon: 'info' };
     }
   };
 
@@ -424,15 +429,22 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                   
                   {/* Thêm trạng thái - hiển thị theo ngôn ngữ đã chọn */}
                   <div className="mt-2 flex justify-center">
-                    <span className={`px-2 py-1 text-xs font-semibold ${getStatusColor(o.status)} w-full text-center`}
-                      style={{
-                        borderRadius: '16px',
-                        boxShadow: '0px 1px 4px rgba(0, 0, 0, 0.1)',
-                        transition: 'all 0.2s ease'
-                      }}
-                    >
-                      {t(getStatusTranslationKey(o.status), language)}
-                    </span>
+                    {(() => {
+                      const style = getStatusStyle(o.status);
+                      return (
+                        <span className={`flex items-center gap-1 px-2 py-1 text-xs font-semibold ${style.bg} ${style.text} w-full text-center shadow-md border border-white/60`}
+                          style={{
+                            borderRadius: '16px',
+                            boxShadow: '0px 1px 4px rgba(0, 0, 0, 0.12)',
+                            transition: 'all 0.2s ease',
+                            letterSpacing: 0.2
+                          }}
+                        >
+                          <span className="material-icons text-base mr-1" style={{marginTop: -2}}>{style.icon}</span>
+                          {t(getStatusTranslationKey(o.status), language)}
+                        </span>
+                      );
+                    })()}
                   </div>
                 </div>
               );
