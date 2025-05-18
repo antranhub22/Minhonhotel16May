@@ -200,7 +200,7 @@ const Reference = ({ references }: ReferenceProps): JSX.Element => {
       <div className="flex items-center mb-4 px-2">
         <div className="flex items-center px-3 py-2 sm:py-1.5 gap-2 transition-all duration-300 mx-auto sm:mx-0"
           style={{
-            background: 'linear-gradient(135deg, #4e5ab7 0%, #3f51b5 100%)',
+            background: 'linear-gradient(135deg, #79DBDC 0%, #559A9A 100%)',
             boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.15)', 
             borderRadius: '8px',
             minWidth: '150px',
