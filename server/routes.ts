@@ -656,11 +656,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (results.every((r) => r.success)) {
         // Lưu request vào DB cho staff UI
         try {
+          const cleanedSummary = cleanSummaryContent(vietnameseSummary);
           await db.insert(requestTable).values({
             room_number: callDetails.roomNumber,
             orderId: callDetails.orderReference || orderReference,
             guestName: callDetails.guestName || 'Guest',
-            request_content: cleanSummaryContent(vietnameseSummary),
+            request_content: cleanedSummary,
             created_at: new Date(),
             status: 'Đã ghi nhận',
             updatedAt: new Date()
@@ -849,9 +850,7 @@ Mi Nhon Hotel Mui Ne`
           serviceRequests: callDetails.serviceRequests || [],
           orderReference: orderReference
         });
-        
         console.log('Kết quả gửi email tóm tắt cuộc gọi từ thiết bị di động:', result);
-        
         // Thêm mới: Lưu request vào database để hiển thị trong staff UI
         try {
           console.log('Lưu request từ thiết bị di động vào database...');
@@ -866,8 +865,19 @@ Mi Nhon Hotel Mui Ne`
             updatedAt: new Date()
           });
           console.log('Đã lưu request thành công vào database với ID:', orderReference);
+          // Bổ sung: Lưu order vào bảng orders
+          await storage.createOrder({
+            callId: callDetails.callId || 'unknown',
+            roomNumber: callDetails.roomNumber,
+            orderType: 'Room Service',
+            deliveryTime: new Date(callDetails.timestamp || Date.now()).toISOString(),
+            specialInstructions: '',
+            items: [],
+            totalAmount: 0
+          });
+          console.log('Đã lưu order vào bảng orders');
         } catch (dbError) {
-          console.error('Lỗi khi lưu request từ thiết bị di động vào DB:', dbError);
+          console.error('Lỗi khi lưu request hoặc order từ thiết bị di động vào DB:', dbError);
         }
       } catch (sendError) {
         console.error('Lỗi khi gửi email tóm tắt từ thiết bị di động:', sendError);

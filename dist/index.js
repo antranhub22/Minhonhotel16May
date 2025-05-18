@@ -1757,11 +1757,12 @@ async function registerRoutes(app2) {
       }
       if (results.every((r) => r.success)) {
         try {
+          const cleanedSummary = cleanSummaryContent(vietnameseSummary);
           await db2.insert(request).values({
             room_number: callDetails.roomNumber,
             orderId: callDetails.orderReference || orderReference,
             guestName: callDetails.guestName || "Guest",
-            request_content: cleanSummaryContent(vietnameseSummary),
+            request_content: cleanedSummary,
             created_at: /* @__PURE__ */ new Date(),
             status: "\u0110\xE3 ghi nh\u1EADn",
             updatedAt: /* @__PURE__ */ new Date()
@@ -1920,8 +1921,18 @@ Mi Nhon Hotel Mui Ne`
             updatedAt: /* @__PURE__ */ new Date()
           });
           console.log("\u0110\xE3 l\u01B0u request th\xE0nh c\xF4ng v\xE0o database v\u1EDBi ID:", orderReference);
+          await storage.createOrder({
+            callId: callDetails.callId || "unknown",
+            roomNumber: callDetails.roomNumber,
+            orderType: "Room Service",
+            deliveryTime: new Date(callDetails.timestamp || Date.now()).toISOString(),
+            specialInstructions: "",
+            items: [],
+            totalAmount: 0
+          });
+          console.log("\u0110\xE3 l\u01B0u order v\xE0o b\u1EA3ng orders");
         } catch (dbError) {
-          console.error("L\u1ED7i khi l\u01B0u request t\u1EEB thi\u1EBFt b\u1ECB di \u0111\u1ED9ng v\xE0o DB:", dbError);
+          console.error("L\u1ED7i khi l\u01B0u request ho\u1EB7c order t\u1EEB thi\u1EBFt b\u1ECB di \u0111\u1ED9ng v\xE0o DB:", dbError);
         }
       } catch (sendError) {
         console.error("L\u1ED7i khi g\u1EEDi email t\xF3m t\u1EAFt t\u1EEB thi\u1EBFt b\u1ECB di \u0111\u1ED9ng:", sendError);
