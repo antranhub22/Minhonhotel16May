@@ -114,15 +114,13 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
   // Hàm chuyển đổi trạng thái từ Staff UI sang key cho dịch thuật
   const getStatusTranslationKey = (status: string | undefined): string => {
     if (!status) return 'status_acknowledged';
-    
-    switch (status) {
-      case 'Đã ghi nhận': return 'status_acknowledged';
-      case 'Đang thực hiện': return 'status_in_progress'; 
-      case 'Đã thực hiện và đang bàn giao cho khách': return 'status_delivering';
-      case 'Hoàn thiện': return 'status_completed';
-      case 'Lưu ý khác': return 'status_note';
-      default: return 'status_acknowledged';
-    }
+    const normalized = status.trim().toLowerCase();
+    if (normalized.includes('đã ghi nhận') || normalized.includes('acknowledged')) return 'status_acknowledged';
+    if (normalized.includes('đang thực hiện') || normalized.includes('in progress')) return 'status_in_progress';
+    if (normalized.includes('bàn giao') || normalized.includes('delivering')) return 'status_delivering';
+    if (normalized.includes('hoàn thiện') || normalized.includes('completed')) return 'status_completed';
+    if (normalized.includes('lưu ý') || normalized.includes('note')) return 'status_note';
+    return 'status_acknowledged';
   };
 
   return (
@@ -180,7 +178,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                 }}
               >
                 <option value="en">🇬🇧 English</option>
-                <option value="fr">🇫🇷 Français</option>
+                <option value="fr">��🇷 Français</option>
                 <option value="zh">🇨🇳 中文</option>
                 <option value="ru">🇷🇺 Русский</option>
                 <option value="ko">🇰🇷 한국어</option>
@@ -431,6 +429,8 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                   <div className="mt-2 flex justify-center">
                     {(() => {
                       const style = getStatusStyle(o.status);
+                      // Log để debug
+                      console.log('Order status:', o.status, '->', getStatusTranslationKey(o.status));
                       return (
                         <span className={`flex items-center gap-1 px-2 py-1 text-xs font-semibold ${style.bg} ${style.text} w-full text-center shadow-md border border-white/60`}
                           style={{
