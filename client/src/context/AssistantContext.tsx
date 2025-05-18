@@ -507,7 +507,9 @@ export function AssistantProvider({ children }: { children: ReactNode }) {
     let polling: NodeJS.Timeout | null = null;
     const fetchOrders = async () => {
       try {
-        const res = await fetch('/api/orders');
+        // Sử dụng biến môi trường VITE_API_HOST nếu có, hoặc fallback sang domain backend mặc định
+        const API_HOST = import.meta.env.VITE_API_HOST || "https://minhnhotelben.onrender.com";
+        const res = await fetch(`${API_HOST}/api/orders`);
         if (!res.ok) return;
         const data = await res.json();
         console.log('[AssistantContext] Fetched orders from API:', data);
