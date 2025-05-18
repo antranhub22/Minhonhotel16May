@@ -871,7 +871,7 @@ Mi Nhon Hotel Mui Ne`
             roomNumber: callDetails.roomNumber,
             orderType: 'Room Service',
             deliveryTime: new Date(callDetails.timestamp || Date.now()).toISOString(),
-            specialInstructions: '',
+            specialInstructions: callDetails.orderReference || orderReference,
             items: [],
             totalAmount: 0
           });
