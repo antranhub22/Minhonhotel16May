@@ -13,7 +13,7 @@ interface Interface1Props {
 }
 
 const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
-  const { setCurrentInterface, setTranscripts, setModelOutput, setCallDetails, setCallDuration, setEmailSentForCurrentSession, activeOrders, language, setLanguage } = useAssistant();
+  const { setCurrentInterface, activeOrders, language, setLanguage } = useAssistant();
   
   // State để lưu trữ tooltip đang hiển thị
   const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
@@ -181,7 +181,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                 }}
               >
                 <option value="en">🇬🇧 English</option>
-                <option value="fr">🇫�� Français</option>
+                <option value="fr">🇫🇷 Français</option>
                 <option value="zh">🇨🇳 中文</option>
                 <option value="ru">🇷🇺 Русский</option>
                 <option value="ko">🇰🇷 한국어</option>
@@ -399,7 +399,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
               const mins = Math.floor(diffSec / 60).toString().padStart(2, '0');
               const secs = (diffSec % 60).toString().padStart(2, '0');
               return (
-                <div key={o.reference} 
+                <div key={o.reference + '_' + o.requestedAt.getTime()} 
                   className="p-2 sm:p-3 text-gray-800 max-w-xs w-[220px] flex-shrink-0 transition-all duration-250 hover:rotate-1 hover:scale-105"
                   style={{
                     background: 'rgba(255, 255, 255, 0.85)',
