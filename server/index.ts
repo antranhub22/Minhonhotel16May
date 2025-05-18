@@ -9,7 +9,10 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors({
-  origin: 'https://muinehoteldemo.talk2go.online',
+  origin: [
+    'https://muinehoteldemo.talk2go.online',
+    'https://demohotelminuine.talk2go.online'
+  ],
   credentials: true
 }));
 

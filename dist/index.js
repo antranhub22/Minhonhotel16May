@@ -2312,7 +2312,10 @@ var app = express2();
 app.use(express2.json());
 app.use(express2.urlencoded({ extended: false }));
 app.use(cors({
-  origin: "https://muinehoteldemo.talk2go.online",
+  origin: [
+    "https://muinehoteldemo.talk2go.online",
+    "https://demohotelminuine.talk2go.online"
+  ],
   credentials: true
 }));
 app.use((req, res, next) => {
