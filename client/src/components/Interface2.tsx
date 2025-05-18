@@ -244,7 +244,7 @@ const Interface2: React.FC<Interface2Props> = ({ isActive }) => {
     >
       <div className="container mx-auto flex flex-col md:flex-row p-2 h-full gap-2">
         {/* Left: Call indicator & Realtime conversation side by side, Reference below */}
-        <div className="w-full md:w-3/4 lg:w-2/3 flex flex-col items-center space-y-1 sm:space-y-4 mt-1">
+        <div className="w-full md:w-3/4 lg:w-2/3 flex flex-col items-center space-y-1 sm:space-y-4 mt-1 min-h-0 overflow-y-auto">
           {/* Replace old orb with new SiriCallButton */}
           <div className="relative flex flex-col items-center justify-center mb-1 sm:mb-6 w-full max-w-xs mx-auto">
             {/* SiriCallButton ở trên */}
