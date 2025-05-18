@@ -172,7 +172,7 @@ const Reference = ({ references }: ReferenceProps): JSX.Element => {
 
   // Main render
   return (
-    <div className="w-full max-w-5xl mx-auto mt-2 mb-2 px-2 py-3 rounded-2xl" style={{ background: 'rgba(85,154,154,0.85)', minHeight: 260 }}>
+    <div className="w-full max-w-5xl mx-auto mt-2 mb-2 px-2 py-3 rounded-2xl sm:px-2 sm:py-3 px-1 py-2" style={{ background: 'rgba(85,154,154,0.85)', minHeight: 260 }}>
       {/* Lightbox modal */}
       {lightboxImg && (
         <div
@@ -248,10 +248,10 @@ const Reference = ({ references }: ReferenceProps): JSX.Element => {
           navigation={filteredReferences.length > 3}
           pagination={{ clickable: true, dynamicBullets: true }}
           className="w-full"
-          style={{ paddingBottom: 32 }}
+          style={{ paddingBottom: 32, overflowX: window.innerWidth < 640 ? 'auto' : undefined }}
         >
           {filteredReferences.map((reference, idx) => (
-            <SwiperSlide key={reference.url + idx} className="flex justify-center" style={window.innerWidth < 640 ? {width: 240, maxWidth: 280, minWidth: 200} : {}}>
+            <SwiperSlide key={reference.url + idx} className="flex justify-center" style={window.innerWidth < 640 ? { width: '90vw', maxWidth: '98vw', minWidth: 0 } : {}}>
               {renderReferenceCard(reference)}
             </SwiperSlide>
           ))}
