@@ -1486,16 +1486,18 @@ async function registerRoutes(app2) {
     if (!updatedOrder) {
       return res.status(404).json({ error: "Order not found" });
     }
-    if (globalThis.wss && updatedOrder.specialInstructions) {
-      globalThis.wss.clients.forEach((client) => {
-        if (client.readyState === 1) {
-          client.send(JSON.stringify({
-            type: "order_status_update",
-            reference: updatedOrder.specialInstructions,
-            status: updatedOrder.status
-          }));
-        }
-      });
+    if (globalThis.wss) {
+      if (updatedOrder.specialInstructions) {
+        globalThis.wss.clients.forEach((client) => {
+          if (client.readyState === 1) {
+            client.send(JSON.stringify({
+              type: "order_status_update",
+              reference: updatedOrder.specialInstructions,
+              status: updatedOrder.status
+            }));
+          }
+        });
+      }
     }
     res.json(updatedOrder);
   });
@@ -2137,6 +2139,27 @@ Mi Nhon Hotel Mui Ne`
       }).where(eq3(request.id, id)).returning();
       if (result.length === 0) {
         return res.status(404).json({ error: "Request not found" });
+      }
+      const orderId = result[0].orderId;
+      if (orderId) {
+        const orders2 = await storage.getAllOrders({});
+        const order = orders2.find((o) => o.specialInstructions === orderId);
+        if (order) {
+          const updatedOrder = await storage.updateOrderStatus(order.id, status);
+          if (updatedOrder && globalThis.wss) {
+            if (updatedOrder.specialInstructions) {
+              globalThis.wss.clients.forEach((client) => {
+                if (client.readyState === 1) {
+                  client.send(JSON.stringify({
+                    type: "order_status_update",
+                    reference: updatedOrder.specialInstructions,
+                    status: updatedOrder.status
+                  }));
+                }
+              });
+            }
+          }
+        }
       }
       res.json(result[0]);
     } catch (error) {

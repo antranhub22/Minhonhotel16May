@@ -300,16 +300,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
     
     // Emit WebSocket notification cho tất cả client
-    if (globalThis.wss && updatedOrder.specialInstructions) {
-      globalThis.wss.clients.forEach((client) => {
-        if (client.readyState === 1) {
-          client.send(JSON.stringify({
-            type: 'order_status_update',
-            reference: updatedOrder.specialInstructions,
-            status: updatedOrder.status
-          }));
-        }
-      });
+    if (globalThis.wss) {
+      if (updatedOrder.specialInstructions) {
+        globalThis.wss.clients.forEach((client) => {
+          if (client.readyState === 1) {
+            client.send(JSON.stringify({
+              type: 'order_status_update',
+              reference: updatedOrder.specialInstructions,
+              status: updatedOrder.status
+            }));
+          }
+        });
+      }
     }
     
     res.json(updatedOrder);
@@ -1148,7 +1150,30 @@ Mi Nhon Hotel Mui Ne`
       if (result.length === 0) {
         return res.status(404).json({ error: 'Request not found' });
       }
-      
+      // Đồng bộ status sang order nếu có orderId
+      const orderId = result[0].orderId;
+      if (orderId) {
+        // Tìm order theo specialInstructions (orderReference)
+        const orders = await storage.getAllOrders({});
+        const order = orders.find(o => o.specialInstructions === orderId);
+        if (order) {
+          const updatedOrder = await storage.updateOrderStatus(order.id, status);
+          // Emit WebSocket cho Guest UI nếu updatedOrder tồn tại
+          if (updatedOrder && globalThis.wss) {
+            if (updatedOrder.specialInstructions) {
+              globalThis.wss.clients.forEach((client) => {
+                if (client.readyState === 1) {
+                  client.send(JSON.stringify({
+                    type: 'order_status_update',
+                    reference: updatedOrder.specialInstructions,
+                    status: updatedOrder.status
+                  }));
+                }
+              });
+            }
+          }
+        }
+      }
       res.json(result[0]);
     } catch (error) {
       handleApiError(res, error, 'Error updating request status:');
