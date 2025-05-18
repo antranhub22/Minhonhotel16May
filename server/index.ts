@@ -6,15 +6,17 @@ import { setupSocket } from './socket';
 import cors from 'cors';
 
 const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
 app.use(cors({
   origin: [
-    'https://muinehoteldemo.talk2go.online',
-    'https://demohotelminuine.talk2go.online'
+    'https://demohotelminuine.talk2go.online',
+    'https://muinehoteldemo.talk2go.online'
   ],
-  credentials: true
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 app.use((req, res, next) => {
   const start = Date.now();

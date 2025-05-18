@@ -2317,15 +2317,17 @@ function setupSocket(server) {
 // server/index.ts
 import cors from "cors";
 var app = express2();
-app.use(express2.json());
-app.use(express2.urlencoded({ extended: false }));
 app.use(cors({
   origin: [
-    "https://muinehoteldemo.talk2go.online",
-    "https://demohotelminuine.talk2go.online"
+    "https://demohotelminuine.talk2go.online",
+    "https://muinehoteldemo.talk2go.online"
   ],
-  credentials: true
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
+app.use(express2.json());
+app.use(express2.urlencoded({ extended: false }));
 app.use((req, res, next) => {
   const start = Date.now();
   const path3 = req.path;
