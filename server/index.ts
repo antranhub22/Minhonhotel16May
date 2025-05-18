@@ -7,11 +7,7 @@ import cors from 'cors';
 
 const app = express();
 app.use(cors({
-  origin: [
-    'https://demohotelminuine.talk2go.online',
-    'https://muinehoteldemo.talk2go.online'
-  ],
-  credentials: true,
+  origin: '*',
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
