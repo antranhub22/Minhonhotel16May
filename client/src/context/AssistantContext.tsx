@@ -510,6 +510,7 @@ export function AssistantProvider({ children }: { children: ReactNode }) {
         const res = await fetch('/api/orders');
         if (!res.ok) return;
         const data = await res.json();
+        console.log('[AssistantContext] Fetched orders from API:', data);
         // data là mảng order, cần map sang ActiveOrder (chuyển requestedAt sang Date)
         if (Array.isArray(data)) {
           setActiveOrders(

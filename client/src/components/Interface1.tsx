@@ -123,6 +123,9 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
     return 'status_acknowledged';
   };
 
+  // Log dữ liệu order thực tế để debug
+  console.log('ActiveOrders:', activeOrders);
+
   return (
     <div 
       className={`absolute w-full min-h-screen h-full transition-opacity duration-500 ${
@@ -178,7 +181,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                 }}
               >
                 <option value="en">🇬🇧 English</option>
-                <option value="fr">��🇷 Français</option>
+                <option value="fr">🇫�� Français</option>
                 <option value="zh">🇨🇳 中文</option>
                 <option value="ru">🇷🇺 Русский</option>
                 <option value="ko">🇰🇷 한국어</option>
