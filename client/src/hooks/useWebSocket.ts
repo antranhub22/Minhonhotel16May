@@ -1,10 +1,11 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useAssistant } from '@/context/AssistantContext';
+import { ActiveOrder, AssistantContextType } from '@/types';
 
 export function useWebSocket() {
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [connected, setConnected] = useState(false);
-  const { callDetails, addTranscript } = useAssistant();
+  const assistant = useAssistant() as AssistantContextType;
   const retryRef = useRef(0);
 
   // Initialize WebSocket connection
@@ -27,10 +28,10 @@ export function useWebSocket() {
       retryRef.current = 0; // reset retry count
       
       // Send initial message with call ID if available
-      if (callDetails) {
+      if (assistant.callDetails) {
         newSocket.send(JSON.stringify({
           type: 'init',
-          callId: callDetails.id
+          callId: assistant.callDetails.id
         }));
       }
     };
@@ -41,11 +42,17 @@ export function useWebSocket() {
         
         // Handle transcript messages
         if (data.type === 'transcript') {
-          addTranscript({
+          assistant.addTranscript({
             callId: data.callId,
             role: data.role,
             content: data.content
           });
+        }
+        // Handle order status update (realtime from staff UI)
+        if (data.type === 'order_status_update' && data.orderId && data.status) {
+          assistant.setActiveOrders((prevOrders: ActiveOrder[]) => prevOrders.map((order: ActiveOrder) =>
+            order.reference === data.orderId ? { ...order, status: data.status } : order
+          ));
         }
       } catch (error) {
         console.error('Error parsing WebSocket message:', error);
@@ -80,7 +87,7 @@ export function useWebSocket() {
     return () => {
       newSocket.close();
     };
-  }, [callDetails, addTranscript]);
+  }, [assistant.callDetails, assistant.addTranscript, assistant.activeOrders, assistant.setActiveOrders]);
 
   // Send message through WebSocket
   const sendMessage = useCallback((message: any) => {
@@ -111,14 +118,14 @@ export function useWebSocket() {
 
   // Re-send init if callDetails.id becomes available after socket is open
   useEffect(() => {
-    if (socket && connected && callDetails?.id) {
-      console.log('Sending init message with callId after availability', callDetails.id);
+    if (socket && connected && assistant.callDetails?.id) {
+      console.log('Sending init message with callId after availability', assistant.callDetails.id);
       socket.send(JSON.stringify({
         type: 'init',
-        callId: callDetails.id
+        callId: assistant.callDetails.id
       }));
     }
-  }, [callDetails?.id, socket, connected]);
+  }, [assistant.callDetails?.id, socket, connected]);
 
   return { connected, sendMessage, reconnect };
 }

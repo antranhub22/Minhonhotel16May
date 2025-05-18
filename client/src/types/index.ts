@@ -99,6 +99,7 @@ export interface AssistantContextType {
   setRequestReceivedAt: (date: Date | null) => void;
   activeOrders: ActiveOrder[];
   addActiveOrder: (order: ActiveOrder) => void;
+  setActiveOrders: React.Dispatch<React.SetStateAction<ActiveOrder[]>>;
   micLevel: number;
   modelOutput: string[];
   setModelOutput: (output: string[]) => void;
