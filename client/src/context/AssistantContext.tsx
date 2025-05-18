@@ -502,6 +502,36 @@ export function AssistantProvider({ children }: { children: ReactNode }) {
     setModelOutput(prev => [...prev, output]);
   };
 
+  // Polling API để lấy trạng thái order mới nhất mỗi 5 giây
+  useEffect(() => {
+    let polling: NodeJS.Timeout | null = null;
+    const fetchOrders = async () => {
+      try {
+        const res = await fetch('/api/orders');
+        if (!res.ok) return;
+        const data = await res.json();
+        // data là mảng order, cần map sang ActiveOrder (chuyển requestedAt sang Date)
+        if (Array.isArray(data)) {
+          setActiveOrders(
+            data.map((o: any) => ({
+              ...o,
+              requestedAt: o.requestedAt ? new Date(o.requestedAt) : new Date(),
+            }))
+          );
+        }
+      } catch (err) {
+        // ignore
+      }
+    };
+    if (currentInterface === 'interface1' || currentInterface === 'interface2') {
+      fetchOrders();
+      polling = setInterval(fetchOrders, 5000);
+    }
+    return () => {
+      if (polling) clearInterval(polling);
+    };
+  }, [currentInterface]);
+
   const value: AssistantContextType = {
     currentInterface,
     setCurrentInterface,
