@@ -270,17 +270,18 @@ const Interface2: React.FC<Interface2Props> = ({ isActive }) => {
               <button
                 id="cancelButton"
                 onClick={handleCancel}
-                className="flex items-center justify-center px-4 py-3 bg-white/80 hover:bg-blue-100 text-blue-900 rounded-full text-base font-semibold border-2 border-blue-200 shadow transition-colors sm:hidden active:scale-95 active:bg-blue-100"
+                className="flex items-center justify-center px-3 py-2 bg-white/80 hover:bg-blue-100 text-blue-900 rounded-full text-xs font-semibold border-2 border-blue-200 shadow transition-colors sm:hidden active:scale-95 active:bg-blue-100"
                 style={{
                   fontFamily: 'inherit',
                   letterSpacing: 0.2,
-                  minHeight: 56,
-                  minWidth: 120,
+                  minHeight: 44,
+                  minWidth: 90,
+                  fontSize: 14,
                   touchAction: 'manipulation',
                   zIndex: 10
                 }}
               >
-                <span className="material-icons text-lg mr-2">cancel</span>{t('cancel', language)}
+                <span className="material-icons text-base mr-1">cancel</span>{t('cancel', language)}
               </button>
               {/* Duration ở giữa, luôn căn giữa */}
               <div className="flex-1 flex justify-center">
@@ -293,8 +294,8 @@ const Interface2: React.FC<Interface2Props> = ({ isActive }) => {
                 id="confirmButton"
                 onClick={handleNext}
                 variant="yellow"
-                className="flex items-center justify-center sm:hidden"
-                style={{ minHeight: 56, minWidth: 200, zIndex: 10 }}
+                className="flex items-center justify-center sm:hidden text-xs font-bold"
+                style={{ minHeight: 44, minWidth: 120, fontSize: 14, zIndex: 10 }}
               >
                 <span className="material-icons text-lg mr-2">send</span>{t('confirm', language)}
               </Button>
