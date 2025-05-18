@@ -2,12 +2,11 @@
 import React, { useState, useEffect } from 'react';
 import { useAssistant } from '@/context/AssistantContext';
 import hotelImage from '../assets/hotel-exterior.jpeg';
-import { t } from '../i18n';
+import { useTranslation } from 'react-i18next';
 import { ActiveOrder } from '@/types';
 import { initVapi, getVapiInstance } from '@/lib/vapiClient';
 import { FaGlobeAsia } from 'react-icons/fa';
 import { FiChevronDown } from 'react-icons/fi';
-import { useTranslation } from 'react-i18next';
 
 interface Interface1Props {
   isActive: boolean;
@@ -16,7 +15,7 @@ interface Interface1Props {
 const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
   // Sử dụng any để tránh lỗi type khi destructuring context mở rộng
   const { setCurrentInterface, setTranscripts, setModelOutput, setCallDetails, setCallDuration, setEmailSentForCurrentSession, activeOrders, language, setLanguage, staffMessages } = useAssistant() as any;
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   
   // State để lưu trữ tooltip đang hiển thị
   const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
@@ -91,7 +90,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
       
       {activeTooltip === iconName && (
         <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-max max-w-[120px] sm:max-w-[180px] bg-white/90 text-gray-800 text-xs sm:text-sm font-medium py-1 px-2 rounded shadow-lg z-50 pointer-events-none text-center">
-          {t(`icon_${iconName}`, language)}
+          {String(t(`icon_${iconName}`))}
           <div className="absolute w-2 h-2 bg-white/90 transform rotate-45 left-1/2 -translate-x-1/2 top-full -mt-1"></div>
         </div>
       )}
@@ -173,11 +172,14 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
             <FaGlobeAsia className="text-[#F9BF3B] text-xl mr-1.5" 
               style={{ filter: 'drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.2))' }}
             />
-            <label className="mr-2 font-semibold font-sans text-white whitespace-nowrap text-sm sm:text-base">{t('language', language)}:</label>
+            <label className="mr-2 font-semibold font-sans text-white whitespace-nowrap text-sm sm:text-base">{String(t('language'))}:</label>
             <div className="relative flex-1">
               <select
                 value={language}
-                onChange={e => setLanguage(e.target.value as 'en' | 'fr' | 'zh' | 'ru' | 'ko')}
+                onChange={e => {
+                  setLanguage(e.target.value as 'en' | 'fr' | 'zh' | 'ru' | 'ko');
+                  i18n.changeLanguage(e.target.value);
+                }}
                 className="appearance-none w-full pl-6 sm:pl-8 pr-6 py-1 sm:py-1.5 font-sans bg-transparent focus:outline-none transition-all duration-200"
                 style={{
                   fontWeight: 600,
@@ -198,9 +200,9 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
         </div>
         <h2 className="font-poppins font-bold text-2xl sm:text-3xl lg:text-4xl text-amber-400 mb-2 text-center"
           style={{ textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)' }}>
-          <span style={{ color: 'red', fontStyle: 'italic', marginRight: 8 }}>Demo</span>{t('hotel_name', language)}
+          <span style={{ color: 'red', fontStyle: 'italic', marginRight: 8 }}>Demo</span>{String(t('hotel_name'))}
         </h2>
-        <p className="text-xs sm:text-lg lg:text-xl text-center max-w-full mb-4 truncate sm:whitespace-nowrap overflow-x-auto">{t('hotel_subtitle', language)}</p>
+        <p className="text-xs sm:text-lg lg:text-xl text-center max-w-full mb-4 truncate sm:whitespace-nowrap overflow-x-auto">{String(t('hotel_subtitle'))}</p>
         
         {/* Main Call Button với hiệu ứng nâng cao */}
         <div className="relative mb-4 sm:mb-12 flex items-center justify-center">
@@ -242,19 +244,9 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                   : '#4ADE80' // Xanh lá sáng cho tiếng Hàn
               }}
             >mic</span>
-            {language === 'fr' ? (
-              <span className="text-sm sm:text-lg lg:text-2xl font-bold text-white px-2 text-center"
-                style={{ textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)' }}
-              >{t('press_to_call', language)}</span>
-            ) : language === 'ru' || language === 'ko' ? (
-              <span className="text-sm sm:text-lg lg:text-xl font-bold text-white px-2 text-center"
-                style={{ textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)' }}
-              >{t('press_to_call', language)}</span>
-            ) : (
-              <span className="text-lg sm:text-2xl lg:text-3xl font-bold whitespace-nowrap text-white"
-                style={{ textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)' }}
-              >{t('press_to_call', language)}</span>
-            )}
+            <span className="text-lg sm:text-2xl lg:text-3xl font-bold whitespace-nowrap text-white"
+              style={{ textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)' }}
+            >{String(t('press_to_call'))}</span>
             <span className="absolute w-full h-full rounded-full pointer-events-none"></span>
             </button>
         </div>
@@ -277,7 +269,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                   borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
                   textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)'
                 }}
-              >{t('room_and_stay', language)}</h4>
+              >{String(t('room_and_stay'))}</h4>
               <ul className="grid grid-cols-5 gap-0 sm:gap-2 py-0.5 sm:py-2">
                 <li><IconWithTooltip iconName="login" /></li>
                 <li><IconWithTooltip iconName="hourglass_empty" /></li>
@@ -302,7 +294,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                   borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
                   textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)'
                 }}
-              >{t('room_services', language)}</h4>
+              >{String(t('room_services'))}</h4>
               <ul className="grid grid-cols-7 gap-0 sm:gap-2 py-0.5 sm:py-2">
                 <li><IconWithTooltip iconName="restaurant" /></li>
                 <li><IconWithTooltip iconName="local_bar" /></li>
@@ -329,7 +321,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                   borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
                   textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)'
                 }}
-              >{t('bookings_and_facilities', language)}</h4>
+              >{String(t('bookings_and_facilities'))}</h4>
               <ul className="grid grid-cols-7 gap-0 sm:gap-2 py-0.5 sm:py-2">
                 <li><IconWithTooltip iconName="event_seat" /></li>
                 <li><IconWithTooltip iconName="spa" /></li>
@@ -356,7 +348,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                   borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
                   textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)'
                 }}
-              >{t('tourism_and_exploration', language)}</h4>
+              >{String(t('tourism_and_exploration'))}</h4>
               <ul className="grid grid-cols-7 gap-0 sm:gap-2 py-0.5 sm:py-2">
                 <li><IconWithTooltip iconName="location_on" /></li>
                 <li><IconWithTooltip iconName="local_dining" /></li>
@@ -383,7 +375,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                   borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
                   textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)'
                 }}
-              >{t('support_external_services', language)}</h4>
+              >{String(t('support_external_services'))}</h4>
               <ul className="grid grid-cols-4 gap-0 sm:gap-2 py-0.5 sm:py-2">
                 <li><IconWithTooltip iconName="translate" /></li>
                 <li><IconWithTooltip iconName="rate_review" /></li>
@@ -430,9 +422,9 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                     >{`${mins}:${secs}`}</span>
                   </div>
                   
-                  <p className="text-xs sm:text-sm mb-0.5 px-1.5"><strong>{t('order_ref', language)}:</strong> {o.reference}</p>
-                  <p className="text-xs sm:text-sm mb-0.5 px-1.5"><strong>{t('requested_at', language)}:</strong> {o.requestedAt.toLocaleString('en-US', {timeZone: 'Asia/Ho_Chi_Minh', year:'numeric', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit'})}</p>
-                  <p className="text-xs sm:text-sm mb-0.5 px-1.5"><strong>{t('estimated_completion', language)}:</strong> {o.estimatedTime}</p>
+                  <p className="text-xs sm:text-sm mb-0.5 px-1.5"><strong>{String(t('order_ref'))}:</strong> {o.reference}</p>
+                  <p className="text-xs sm:text-sm mb-0.5 px-1.5"><strong>{String(t('requested_at'))}:</strong> {o.requestedAt.toLocaleString('en-US', {timeZone: 'Asia/Ho_Chi_Minh', year:'numeric', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit'})}</p>
+                  <p className="text-xs sm:text-sm mb-0.5 px-1.5"><strong>{String(t('estimated_completion'))}:</strong> {o.estimatedTime}</p>
                   
                   {/* Thêm trạng thái - hiển thị theo ngôn ngữ đã chọn */}
                   <div className="mt-2 flex justify-center">
@@ -450,7 +442,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                           }}
                         >
                           <span className="material-icons text-base mr-1" style={{marginTop: -2}}>{style.icon}</span>
-                          {t(getStatusTranslationKey(o.status), language)}
+                          {String(t(getStatusTranslationKey(o.status)))}
                         </span>
                       );
                     })()}
