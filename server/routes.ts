@@ -99,12 +99,19 @@ function handleApiError(res: Response, error: any, defaultMessage: string) {
   }
 }
 
+// Đảm bảo globalThis.wss có type đúng
+declare global {
+  // eslint-disable-next-line no-var
+  var wss: import('ws').WebSocketServer | undefined;
+}
+
 export async function registerRoutes(app: Express): Promise<Server> {
   // Create HTTP server for express app
   const httpServer = createServer(app);
   
   // Create WebSocket server
   const wss = new WebSocketServer({ server: httpServer, path: '/ws' });
+  globalThis.wss = wss;
   
   // Store active connections
   const clients = new Set<WebSocketClient>();
@@ -290,6 +297,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
     
     if (!updatedOrder) {
       return res.status(404).json({ error: 'Order not found' });
+    }
+    
+    // Emit WebSocket notification cho tất cả client
+    if (globalThis.wss) {
+      if (updatedOrder.specialInstructions) {
+        globalThis.wss.clients.forEach((client) => {
+          if (client.readyState === 1) {
+            client.send(JSON.stringify({
+              type: 'order_status_update',
+              reference: updatedOrder.specialInstructions,
+              status: updatedOrder.status
+            }));
+          }
+        });
+      }
     }
     
     res.json(updatedOrder);
@@ -656,11 +678,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (results.every((r) => r.success)) {
         // Lưu request vào DB cho staff UI
         try {
+          const cleanedSummary = cleanSummaryContent(vietnameseSummary);
           await db.insert(requestTable).values({
             room_number: callDetails.roomNumber,
             orderId: callDetails.orderReference || orderReference,
             guestName: callDetails.guestName || 'Guest',
-            request_content: cleanSummaryContent(vietnameseSummary),
+            request_content: cleanedSummary,
             created_at: new Date(),
             status: 'Đã ghi nhận',
             updatedAt: new Date()
@@ -849,9 +872,7 @@ Mi Nhon Hotel Mui Ne`
           serviceRequests: callDetails.serviceRequests || [],
           orderReference: orderReference
         });
-        
         console.log('Kết quả gửi email tóm tắt cuộc gọi từ thiết bị di động:', result);
-        
         // Thêm mới: Lưu request vào database để hiển thị trong staff UI
         try {
           console.log('Lưu request từ thiết bị di động vào database...');
@@ -866,8 +887,19 @@ Mi Nhon Hotel Mui Ne`
             updatedAt: new Date()
           });
           console.log('Đã lưu request thành công vào database với ID:', orderReference);
+          // Bổ sung: Lưu order vào bảng orders
+          await storage.createOrder({
+            callId: callDetails.callId || 'unknown',
+            roomNumber: callDetails.roomNumber,
+            orderType: 'Room Service',
+            deliveryTime: new Date(callDetails.timestamp || Date.now()).toISOString(),
+            specialInstructions: callDetails.orderReference || orderReference,
+            items: [],
+            totalAmount: 0
+          });
+          console.log('Đã lưu order vào bảng orders');
         } catch (dbError) {
-          console.error('Lỗi khi lưu request từ thiết bị di động vào DB:', dbError);
+          console.error('Lỗi khi lưu request hoặc order từ thiết bị di động vào DB:', dbError);
         }
       } catch (sendError) {
         console.error('Lỗi khi gửi email tóm tắt từ thiết bị di động:', sendError);
@@ -1118,7 +1150,30 @@ Mi Nhon Hotel Mui Ne`
       if (result.length === 0) {
         return res.status(404).json({ error: 'Request not found' });
       }
-      
+      // Đồng bộ status sang order nếu có orderId
+      const orderId = result[0].orderId;
+      if (orderId) {
+        // Tìm order theo specialInstructions (orderReference)
+        const orders = await storage.getAllOrders({});
+        const order = orders.find(o => o.specialInstructions === orderId);
+        if (order) {
+          const updatedOrder = await storage.updateOrderStatus(order.id, status);
+          // Emit WebSocket cho Guest UI nếu updatedOrder tồn tại
+          if (updatedOrder && globalThis.wss) {
+            if (updatedOrder.specialInstructions) {
+              globalThis.wss.clients.forEach((client) => {
+                if (client.readyState === 1) {
+                  client.send(JSON.stringify({
+                    type: 'order_status_update',
+                    reference: updatedOrder.specialInstructions,
+                    status: updatedOrder.status
+                  }));
+                }
+              });
+            }
+          }
+        }
+      }
       res.json(result[0]);
     } catch (error) {
       handleApiError(res, error, 'Error updating request status:');
@@ -1164,6 +1219,26 @@ Mi Nhon Hotel Mui Ne`
       });
     } catch (error) {
       handleApiError(res, error, 'Error deleting all requests:');
+    }
+  });
+
+  // Get all orders (public, no auth)
+  app.get('/api/orders', async (req, res) => {
+    try {
+      const orders = await storage.getAllOrders({});
+      res.json(orders);
+    } catch (error) {
+      handleApiError(res, error, 'Failed to retrieve all orders');
+    }
+  });
+
+  // Xóa tất cả orders (public, không cần xác thực)
+  app.delete('/api/orders/all', async (req, res) => {
+    try {
+      const deleted = await storage.deleteAllOrders();
+      res.json({ success: true, deletedCount: deleted });
+    } catch (error) {
+      handleApiError(res, error, 'Error deleting all orders');
     }
   });
 

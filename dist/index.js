@@ -162,6 +162,10 @@ var DatabaseStorage = class {
     }
     return await query;
   }
+  async deleteAllOrders() {
+    const result = await db.delete(orders);
+    return result.rowCount || 0;
+  }
   async addCallSummary(insertCallSummary) {
     const result = await db.insert(callSummaries).values(insertCallSummary).returning();
     return result[0];
@@ -1345,6 +1349,7 @@ function handleApiError(res, error, defaultMessage) {
 async function registerRoutes(app2) {
   const httpServer = createServer(app2);
   const wss = new WebSocketServer({ server: httpServer, path: "/ws" });
+  globalThis.wss = wss;
   const clients = /* @__PURE__ */ new Set();
   wss.on("connection", (ws) => {
     console.log("WebSocket client connected");
@@ -1480,6 +1485,19 @@ async function registerRoutes(app2) {
     const updatedOrder = await storage.updateOrderStatus(idNum, status);
     if (!updatedOrder) {
       return res.status(404).json({ error: "Order not found" });
+    }
+    if (globalThis.wss) {
+      if (updatedOrder.specialInstructions) {
+        globalThis.wss.clients.forEach((client) => {
+          if (client.readyState === 1) {
+            client.send(JSON.stringify({
+              type: "order_status_update",
+              reference: updatedOrder.specialInstructions,
+              status: updatedOrder.status
+            }));
+          }
+        });
+      }
     }
     res.json(updatedOrder);
   });
@@ -1753,11 +1771,12 @@ async function registerRoutes(app2) {
       }
       if (results.every((r) => r.success)) {
         try {
+          const cleanedSummary = cleanSummaryContent(vietnameseSummary);
           await db2.insert(request).values({
             room_number: callDetails.roomNumber,
             orderId: callDetails.orderReference || orderReference,
             guestName: callDetails.guestName || "Guest",
-            request_content: cleanSummaryContent(vietnameseSummary),
+            request_content: cleanedSummary,
             created_at: /* @__PURE__ */ new Date(),
             status: "\u0110\xE3 ghi nh\u1EADn",
             updatedAt: /* @__PURE__ */ new Date()
@@ -1916,8 +1935,18 @@ Mi Nhon Hotel Mui Ne`
             updatedAt: /* @__PURE__ */ new Date()
           });
           console.log("\u0110\xE3 l\u01B0u request th\xE0nh c\xF4ng v\xE0o database v\u1EDBi ID:", orderReference);
+          await storage.createOrder({
+            callId: callDetails.callId || "unknown",
+            roomNumber: callDetails.roomNumber,
+            orderType: "Room Service",
+            deliveryTime: new Date(callDetails.timestamp || Date.now()).toISOString(),
+            specialInstructions: callDetails.orderReference || orderReference,
+            items: [],
+            totalAmount: 0
+          });
+          console.log("\u0110\xE3 l\u01B0u order v\xE0o b\u1EA3ng orders");
         } catch (dbError) {
-          console.error("L\u1ED7i khi l\u01B0u request t\u1EEB thi\u1EBFt b\u1ECB di \u0111\u1ED9ng v\xE0o DB:", dbError);
+          console.error("L\u1ED7i khi l\u01B0u request ho\u1EB7c order t\u1EEB thi\u1EBFt b\u1ECB di \u0111\u1ED9ng v\xE0o DB:", dbError);
         }
       } catch (sendError) {
         console.error("L\u1ED7i khi g\u1EEDi email t\xF3m t\u1EAFt t\u1EEB thi\u1EBFt b\u1ECB di \u0111\u1ED9ng:", sendError);
@@ -2111,6 +2140,27 @@ Mi Nhon Hotel Mui Ne`
       if (result.length === 0) {
         return res.status(404).json({ error: "Request not found" });
       }
+      const orderId = result[0].orderId;
+      if (orderId) {
+        const orders2 = await storage.getAllOrders({});
+        const order = orders2.find((o) => o.specialInstructions === orderId);
+        if (order) {
+          const updatedOrder = await storage.updateOrderStatus(order.id, status);
+          if (updatedOrder && globalThis.wss) {
+            if (updatedOrder.specialInstructions) {
+              globalThis.wss.clients.forEach((client) => {
+                if (client.readyState === 1) {
+                  client.send(JSON.stringify({
+                    type: "order_status_update",
+                    reference: updatedOrder.specialInstructions,
+                    status: updatedOrder.status
+                  }));
+                }
+              });
+            }
+          }
+        }
+      }
       res.json(result[0]);
     } catch (error) {
       handleApiError(res, error, "Error updating request status:");
@@ -2148,6 +2198,22 @@ Mi Nhon Hotel Mui Ne`
       });
     } catch (error) {
       handleApiError(res, error, "Error deleting all requests:");
+    }
+  });
+  app2.get("/api/orders", async (req, res) => {
+    try {
+      const orders2 = await storage.getAllOrders({});
+      res.json(orders2);
+    } catch (error) {
+      handleApiError(res, error, "Failed to retrieve all orders");
+    }
+  });
+  app2.delete("/api/orders/all", async (req, res) => {
+    try {
+      const deleted = await storage.deleteAllOrders();
+      res.json({ success: true, deletedCount: deleted });
+    } catch (error) {
+      handleApiError(res, error, "Error deleting all orders");
     }
   });
   return httpServer;
@@ -2307,7 +2373,13 @@ function setupSocket(server) {
 }
 
 // server/index.ts
+import cors from "cors";
 var app = express2();
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
 app.use(express2.json());
 app.use(express2.urlencoded({ extended: false }));
 app.use((req, res, next) => {

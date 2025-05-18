@@ -20,6 +20,7 @@ export interface IStorage {
   getOrdersByRoomNumber(roomNumber: string): Promise<Order[]>;
   updateOrderStatus(id: number, status: string): Promise<Order | undefined>;
   getAllOrders(filter: { status?: string; roomNumber?: string }): Promise<Order[]>;
+  deleteAllOrders(): Promise<number>;
   
   // Call Summary methods
   addCallSummary(summary: InsertCallSummary): Promise<CallSummary>;
@@ -87,6 +88,11 @@ export class DatabaseStorage implements IStorage {
       query.where(eq(orders.roomNumber, filter.roomNumber));
     }
     return await query;
+  }
+  
+  async deleteAllOrders(): Promise<number> {
+    const result = await db.delete(orders);
+    return result.rowCount || 0;
   }
   
   async addCallSummary(insertCallSummary: InsertCallSummary): Promise<CallSummary> {

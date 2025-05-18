@@ -38,6 +38,7 @@ interface AssistantContextType {
   setRequestReceivedAt: (date: Date | null) => void;
   activeOrders: ActiveOrder[];
   addActiveOrder: (order: ActiveOrder) => void;
+  setActiveOrders: React.Dispatch<React.SetStateAction<ActiveOrder[]>>;
   micLevel: number;
   modelOutput: string[];
   setModelOutput: (output: string[]) => void;
@@ -501,6 +502,40 @@ export function AssistantProvider({ children }: { children: ReactNode }) {
     setModelOutput(prev => [...prev, output]);
   };
 
+  // Polling API để lấy trạng thái order mới nhất mỗi 5 giây
+  useEffect(() => {
+    let polling: NodeJS.Timeout | null = null;
+    const fetchOrders = async () => {
+      try {
+        // Sử dụng biến môi trường VITE_API_HOST nếu có, hoặc fallback sang domain backend mặc định
+        const API_HOST = import.meta.env.VITE_API_HOST || "https://minhnhotelben.onrender.com";
+        const res = await fetch(`${API_HOST}/api/orders`);
+        if (!res.ok) return;
+        const data = await res.json();
+        console.log('[AssistantContext] Fetched orders from API:', data);
+        // data là mảng order, cần map sang ActiveOrder (chuyển requestedAt sang Date)
+        if (Array.isArray(data)) {
+          setActiveOrders(
+            data.map((o: any) => ({
+              ...o,
+              reference: o.specialInstructions || o.reference || '',
+              requestedAt: o.createdAt ? new Date(o.createdAt) : new Date(),
+            }))
+          );
+        }
+      } catch (err) {
+        // ignore
+      }
+    };
+    if (currentInterface === 'interface1' || currentInterface === 'interface2') {
+      fetchOrders();
+      polling = setInterval(fetchOrders, 5000);
+    }
+    return () => {
+      if (polling) clearInterval(polling);
+    };
+  }, [currentInterface]);
+
   const value: AssistantContextType = {
     currentInterface,
     setCurrentInterface,
@@ -532,6 +567,7 @@ export function AssistantProvider({ children }: { children: ReactNode }) {
     setRequestReceivedAt,
     activeOrders,
     addActiveOrder,
+    setActiveOrders,
     micLevel,
     modelOutput,
     setModelOutput,
