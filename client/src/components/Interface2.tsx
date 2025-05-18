@@ -5,6 +5,7 @@ import SiriCallButton from './SiriCallButton';
 import { referenceService, ReferenceItem } from '@/services/ReferenceService';
 import InfographicSteps from './InfographicSteps';
 import { t } from '@/i18n';
+import { Button } from './ui/button';
 
 interface Interface2Props {
   isActive: boolean;
@@ -287,27 +288,16 @@ const Interface2: React.FC<Interface2Props> = ({ isActive }) => {
                   {formatDuration(localDuration)}
                 </div>
               </div>
-              {/* Nút Confirm (chỉ mobile) */}
-              <button
+              {/* Nút xác nhận (mobile) */}
+              <Button
                 id="confirmButton"
                 onClick={handleNext}
-                className="flex items-center justify-center px-4 py-3 bg-[#ffd700] hover:bg-[#ffe066] text-blue-900 rounded-full text-base font-bold border-4 border-[#d4af37] shadow-2xl transition-all duration-200 sm:hidden active:scale-95 active:bg-[#ffe066]"
-                style={{
-                  fontFamily: 'inherit',
-                  letterSpacing: 0.2,
-                  boxShadow: '0 6px 24px 0 rgba(212,175,55,0.25), 0 1.5px 4px 0 rgba(0,0,0,0.12)',
-                  borderWidth: 4,
-                  borderColor: '#d4af37',
-                  background: 'linear-gradient(180deg, #ffe066 0%, #ffd700 100%)',
-                  textShadow: '0 1px 2px #fff, 0 1px 8px #ffd700',
-                  minHeight: 56,
-                  minWidth: 200,
-                  touchAction: 'manipulation',
-                  zIndex: 10
-                }}
+                variant="yellow"
+                className="flex items-center justify-center sm:hidden"
+                style={{ minHeight: 56, minWidth: 200, zIndex: 10 }}
               >
                 <span className="material-icons text-lg mr-2">send</span>{t('confirm', language)}
-              </button>
+              </Button>
               {/* Nút MicLevel bên phải */}
               <button
                 className="flex items-center justify-center transition-colors"
@@ -434,27 +424,17 @@ const Interface2: React.FC<Interface2Props> = ({ isActive }) => {
         {/* Right: Control buttons */}
         <div className="w-1/4 lg:w-1/3 flex-col items-center lg:items-end p-2 space-y-4 overflow-auto hidden sm:flex" style={{ maxHeight: '100%' }}>
           <div className="flex flex-col gap-4 w-full md:w-auto">
-            <button
+            {/* Nút xác nhận (desktop/tablet) */}
+            <Button
               id="endCallButton"
               onClick={handleNext}
-              className="w-full md:w-auto bg-[#ffd700] hover:bg-[#ffe066] text-blue-900 font-bold py-3 px-8 rounded-full shadow-2xl flex items-center justify-center space-x-2 transition-all duration-200 border-4 border-[#d4af37] text-base sm:text-lg active:scale-95 active:bg-[#ffe066]"
-              style={{
-                fontFamily: 'inherit',
-                letterSpacing: 0.5,
-                boxShadow: '0 6px 24px 0 rgba(212,175,55,0.25), 0 1.5px 4px 0 rgba(0,0,0,0.12)',
-                borderWidth: 4,
-                borderColor: '#d4af37',
-                background: 'linear-gradient(180deg, #ffe066 0%, #ffd700 100%)',
-                textShadow: '0 1px 2px #fff, 0 1px 8px #ffd700',
-                minHeight: 56,
-                minWidth: 220,
-                touchAction: 'manipulation',
-                zIndex: 10
-              }}
+              variant="yellow"
+              className="w-full md:w-auto flex items-center justify-center space-x-2 text-base sm:text-lg"
+              style={{ minHeight: 56, minWidth: 220, zIndex: 10 }}
             >
               <span className="material-icons">send</span>
               <span className="whitespace-nowrap">{t('confirm_request', language)}</span>
-            </button>
+            </Button>
             <button
               id="cancelButtonDesktop"
               onClick={handleCancel}
