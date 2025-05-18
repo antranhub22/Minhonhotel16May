@@ -45,8 +45,8 @@ interface AssistantContextType {
   addModelOutput: (output: string) => void;
   language: Language;
   setLanguage: (lang: Language) => void;
-  staffMessagePopup: { content: string, created_at: string | Date } | null;
-  showStaffMessagePopup: (content: string, created_at: string | Date) => void;
+  staffMessages: { content: string, created_at: string | Date }[];
+  addStaffMessage: (content: string, created_at: string | Date) => void;
 }
 
 const initialOrderSummary: OrderSummary = {
@@ -112,8 +112,8 @@ export function AssistantProvider({ children }: { children: ReactNode }) {
   const [micLevel, setMicLevel] = useState<number>(0);
   const [modelOutput, setModelOutput] = useState<string[]>([]);
   const [language, setLanguage] = useState<Language>('en');
-  // State cho popup tin nhắn staff gửi guest
-  const [staffMessagePopup, setStaffMessagePopup] = useState<{content: string, created_at: string | Date} | null>(null);
+  // State cho lịch sử tin nhắn staff gửi guest (chat bubble)
+  const [staffMessages, setStaffMessages] = useState<{ content: string, created_at: string | Date }[]>([]);
 
   // Persist activeOrders to localStorage whenever it changes
   useEffect(() => {
@@ -540,9 +540,9 @@ export function AssistantProvider({ children }: { children: ReactNode }) {
     };
   }, [currentInterface]);
 
-  const showStaffMessagePopup = (content: string, created_at: string | Date) => {
-    setStaffMessagePopup({ content, created_at });
-    setTimeout(() => setStaffMessagePopup(null), 7000); // 7s tự ẩn
+  // Thêm tin nhắn staff mới vào lịch sử
+  const addStaffMessage = (content: string, created_at: string | Date) => {
+    setStaffMessages(prev => [...prev, { content, created_at }]);
   };
 
   const value: AssistantContextType = {
@@ -583,8 +583,8 @@ export function AssistantProvider({ children }: { children: ReactNode }) {
     addModelOutput,
     language,
     setLanguage,
-    staffMessagePopup,
-    showStaffMessagePopup,
+    staffMessages,
+    addStaffMessage,
   };
 
   return (

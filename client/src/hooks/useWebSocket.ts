@@ -59,10 +59,10 @@ export function useWebSocket() {
             return order;
           }));
         }
-        // Handle staff message (realtime popup)
+        // Handle staff message (realtime chat bubble)
         if (data.type === 'staff_message' && data.content) {
-          if (assistant.showStaffMessagePopup) {
-            assistant.showStaffMessagePopup(data.content, data.created_at);
+          if (assistant.addStaffMessage) {
+            assistant.addStaffMessage(data.content, data.created_at);
           }
         }
       } catch (error) {
@@ -98,7 +98,7 @@ export function useWebSocket() {
     return () => {
       newSocket.close();
     };
-  }, [assistant.callDetails, assistant.addTranscript, assistant.activeOrders, assistant.setActiveOrders, assistant.showStaffMessagePopup]);
+  }, [assistant.callDetails, assistant.addTranscript, assistant.activeOrders, assistant.setActiveOrders, assistant.addStaffMessage]);
 
   // Send message through WebSocket
   const sendMessage = useCallback((message: any) => {

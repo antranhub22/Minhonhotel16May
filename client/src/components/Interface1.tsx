@@ -7,6 +7,7 @@ import { ActiveOrder } from '@/types';
 import { initVapi, getVapiInstance } from '@/lib/vapiClient';
 import { FaGlobeAsia } from 'react-icons/fa';
 import { FiChevronDown } from 'react-icons/fi';
+import { useTranslation } from 'react-i18next';
 
 interface Interface1Props {
   isActive: boolean;
@@ -14,7 +15,8 @@ interface Interface1Props {
 
 const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
   // Sử dụng any để tránh lỗi type khi destructuring context mở rộng
-  const { setCurrentInterface, setTranscripts, setModelOutput, setCallDetails, setCallDuration, setEmailSentForCurrentSession, activeOrders, language, setLanguage, staffMessagePopup } = useAssistant() as any;
+  const { setCurrentInterface, setTranscripts, setModelOutput, setCallDetails, setCallDuration, setEmailSentForCurrentSession, activeOrders, language, setLanguage, staffMessages } = useAssistant() as any;
+  const { t } = useTranslation();
   
   // State để lưu trữ tooltip đang hiển thị
   const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
@@ -25,6 +27,9 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
     const timer = setInterval(() => setNow(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
+
+  // Thêm state để điều khiển chat bubble
+  const [chatOpen, setChatOpen] = useState(false);
 
   // Hàm dùng chung cho mọi ngôn ngữ
   const handleCall = async (lang: 'en' | 'fr' | 'zh' | 'ru' | 'ko') => {
@@ -455,18 +460,48 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
             })}
           </div>
         )}
-        {/* Popup tin nhắn staff gửi guest */}
-        {staffMessagePopup && (
-          <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50 bg-white text-blue-900 px-6 py-4 rounded-2xl shadow-xl border-2 border-amber-400 animate-fade-in-up"
-            style={{ minWidth: 260, maxWidth: 360, fontWeight: 600, fontSize: 16, boxShadow: '0 8px 32px rgba(0,0,0,0.18)' }}>
-            <div className="flex items-center mb-2">
-              <span className="material-icons text-amber-400 mr-2">chat</span>
-              <span>Staff Message</span>
+        {/* Chat bubble staff-guest */}
+        <div className="fixed bottom-8 right-8 z-50">
+          {!chatOpen && staffMessages.length > 0 && (
+            <button
+              className="bg-blue-600 text-white rounded-full shadow-lg w-14 h-14 flex items-center justify-center text-3xl hover:bg-blue-700 transition-all"
+              onClick={() => setChatOpen(true)}
+              aria-label="Open chat"
+            >
+              <span className="material-icons">chat</span>
+              {staffMessages.length > 0 && <span className="absolute -top-1 -right-1 bg-amber-400 text-xs rounded-full px-2 py-0.5 font-bold text-blue-900">{staffMessages.length}</span>}
+            </button>
+          )}
+          {chatOpen && (
+            <div className="bg-white rounded-2xl shadow-2xl border-2 border-amber-400 w-80 max-w-full p-4 animate-fade-in-up relative">
+              <button
+                className="absolute top-2 right-2 text-gray-400 hover:text-blue-700 text-2xl"
+                onClick={() => setChatOpen(false)}
+                aria-label="Close chat"
+              >
+                &times;
+              </button>
+              <div className="flex items-center mb-2">
+                <span className="material-icons text-amber-400 mr-2">chat</span>
+                <span className="font-bold text-blue-900 text-lg">Staff Chat</span>
+              </div>
+              <div className="overflow-y-auto max-h-60 mb-2 pr-1">
+                {staffMessages.length === 0 ? (
+                  <div className="text-gray-400 text-sm text-center">Chưa có tin nhắn</div>
+                ) : (
+                  staffMessages.map((msg: { content: string, created_at: string | Date }, idx: number) => (
+                    <div key={idx} className="mb-2 text-left">
+                      <div className="inline-block px-3 py-1 rounded-lg bg-blue-100 text-blue-900">
+                        <span className="font-semibold">Staff:</span> {msg.content}
+                      </div>
+                      <div className="text-xs text-gray-400 mt-0.5">{typeof msg.created_at === 'string' ? new Date(msg.created_at).toLocaleTimeString() : msg.created_at.toLocaleTimeString()}</div>
+                    </div>
+                  ))
+                )}
+              </div>
             </div>
-            <div className="whitespace-pre-line break-words">{staffMessagePopup.content}</div>
-            <div className="text-xs text-gray-500 mt-2 text-right">{typeof staffMessagePopup.created_at === 'string' ? new Date(staffMessagePopup.created_at).toLocaleTimeString() : staffMessagePopup.created_at.toLocaleTimeString()}</div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );
