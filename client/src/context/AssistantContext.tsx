@@ -519,7 +519,7 @@ export function AssistantProvider({ children }: { children: ReactNode }) {
             data.map((o: any) => ({
               ...o,
               reference: o.specialInstructions || o.reference || '',
-              requestedAt: o.requestedAt ? new Date(o.requestedAt) : new Date(),
+              requestedAt: o.createdAt ? new Date(o.createdAt) : new Date(),
             }))
           );
         }
