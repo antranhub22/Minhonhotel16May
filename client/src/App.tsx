@@ -3,7 +3,6 @@ import ErrorBoundary from '@/components/ErrorBoundary';
 import { Switch, Route, Link } from "wouter";
 import { Toaster } from "@/components/ui/toaster";
 import VoiceAssistant from "@/components/VoiceAssistant";
-import { AssistantProvider } from "@/context/AssistantContext";
 import NotFound from "@/pages/not-found";
 import EmailTester from "@/components/EmailTester";
 import { useWebSocket } from '@/hooks/useWebSocket';
@@ -60,14 +59,10 @@ function App() {
   // Initialize WebSocket globally to keep connection across routes
   useWebSocket();
   return (
-    <BrowserRouter>
-      <AssistantProvider>
-        <ErrorBoundary>
-          <Router />
-          <Toaster />
-        </ErrorBoundary>
-      </AssistantProvider>
-    </BrowserRouter>
+    <ErrorBoundary>
+      <Router />
+      <Toaster />
+    </ErrorBoundary>
   );
 }
 
