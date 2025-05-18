@@ -1177,5 +1177,15 @@ Mi Nhon Hotel Mui Ne`
     }
   });
 
+  // Xóa tất cả orders (public, không cần xác thực)
+  app.delete('/api/orders/all', async (req, res) => {
+    try {
+      const deleted = await storage.deleteAllOrders();
+      res.json({ success: true, deletedCount: deleted });
+    } catch (error) {
+      handleApiError(res, error, 'Error deleting all orders');
+    }
+  });
+
   return httpServer;
 }

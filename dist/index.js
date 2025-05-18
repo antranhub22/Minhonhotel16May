@@ -162,6 +162,10 @@ var DatabaseStorage = class {
     }
     return await query;
   }
+  async deleteAllOrders() {
+    const result = await db.delete(orders);
+    return result.rowCount || 0;
+  }
   async addCallSummary(insertCallSummary) {
     const result = await db.insert(callSummaries).values(insertCallSummary).returning();
     return result[0];
@@ -2156,6 +2160,14 @@ Mi Nhon Hotel Mui Ne`
       res.json(orders2);
     } catch (error) {
       handleApiError(res, error, "Failed to retrieve all orders");
+    }
+  });
+  app2.delete("/api/orders/all", async (req, res) => {
+    try {
+      const deleted = await storage.deleteAllOrders();
+      res.json({ success: true, deletedCount: deleted });
+    } catch (error) {
+      handleApiError(res, error, "Error deleting all orders");
     }
   });
   return httpServer;
