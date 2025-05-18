@@ -1349,6 +1349,7 @@ function handleApiError(res, error, defaultMessage) {
 async function registerRoutes(app2) {
   const httpServer = createServer(app2);
   const wss = new WebSocketServer({ server: httpServer, path: "/ws" });
+  globalThis.wss = wss;
   const clients = /* @__PURE__ */ new Set();
   wss.on("connection", (ws) => {
     console.log("WebSocket client connected");

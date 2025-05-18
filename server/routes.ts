@@ -111,6 +111,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   
   // Create WebSocket server
   const wss = new WebSocketServer({ server: httpServer, path: '/ws' });
+  globalThis.wss = wss;
   
   // Store active connections
   const clients = new Set<WebSocketClient>();
