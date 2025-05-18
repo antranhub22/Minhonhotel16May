@@ -13,7 +13,8 @@ interface Interface1Props {
 }
 
 const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
-  const { setCurrentInterface, setTranscripts, setModelOutput, setCallDetails, setCallDuration, setEmailSentForCurrentSession, activeOrders, language, setLanguage } = useAssistant();
+  // Sử dụng any để tránh lỗi type khi destructuring context mở rộng
+  const { setCurrentInterface, setTranscripts, setModelOutput, setCallDetails, setCallDuration, setEmailSentForCurrentSession, activeOrders, language, setLanguage, staffMessagePopup } = useAssistant() as any;
   
   // State để lưu trữ tooltip đang hiển thị
   const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
@@ -181,7 +182,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                 }}
               >
                 <option value="en">🇬🇧 English</option>
-                <option value="fr">🇫�� Français</option>
+                <option value="fr">🇫🇷 Français</option>
                 <option value="zh">🇨🇳 中文</option>
                 <option value="ru">🇷🇺 Русский</option>
                 <option value="ko">🇰🇷 한국어</option>
@@ -452,6 +453,18 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                 </div>
               );
             })}
+          </div>
+        )}
+        {/* Popup tin nhắn staff gửi guest */}
+        {staffMessagePopup && (
+          <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50 bg-white text-blue-900 px-6 py-4 rounded-2xl shadow-xl border-2 border-amber-400 animate-fade-in-up"
+            style={{ minWidth: 260, maxWidth: 360, fontWeight: 600, fontSize: 16, boxShadow: '0 8px 32px rgba(0,0,0,0.18)' }}>
+            <div className="flex items-center mb-2">
+              <span className="material-icons text-amber-400 mr-2">chat</span>
+              <span>Staff Message</span>
+            </div>
+            <div className="whitespace-pre-line break-words">{staffMessagePopup.content}</div>
+            <div className="text-xs text-gray-500 mt-2 text-right">{typeof staffMessagePopup.created_at === 'string' ? new Date(staffMessagePopup.created_at).toLocaleTimeString() : staffMessagePopup.created_at.toLocaleTimeString()}</div>
           </div>
         )}
       </div>
