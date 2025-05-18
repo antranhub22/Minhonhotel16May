@@ -1201,19 +1201,6 @@ Mi Nhon Hotel Mui Ne`
       updatedAt: new Date()
     };
     messageList.push(msg);
-    // Emit WebSocket cho guest UI (popup)
-    if (globalThis.wss) {
-      globalThis.wss.clients.forEach((client) => {
-        if (client.readyState === 1) {
-          client.send(JSON.stringify({
-            type: 'staff_message',
-            requestId: id,
-            content: content,
-            created_at: msg.created_at
-          }));
-        }
-      });
-    }
     res.status(201).json(msg);
   });
 

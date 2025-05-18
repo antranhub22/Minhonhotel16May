@@ -2184,18 +2184,6 @@ Mi Nhon Hotel Mui Ne`
       updatedAt: /* @__PURE__ */ new Date()
     };
     messageList.push(msg);
-    if (globalThis.wss) {
-      globalThis.wss.clients.forEach((client) => {
-        if (client.readyState === 1) {
-          client.send(JSON.stringify({
-            type: "staff_message",
-            requestId: id,
-            content,
-            created_at: msg.created_at
-          }));
-        }
-      });
-    }
     res.status(201).json(msg);
   });
   app2.delete("/api/staff/requests/all", verifyJWT, async (req, res) => {

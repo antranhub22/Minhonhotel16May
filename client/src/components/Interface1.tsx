@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAssistant } from '@/context/AssistantContext';
 import hotelImage from '../assets/hotel-exterior.jpeg';
-import { useTranslation } from 'react-i18next';
+import { t } from '../i18n';
 import { ActiveOrder } from '@/types';
 import { initVapi, getVapiInstance } from '@/lib/vapiClient';
 import { FaGlobeAsia } from 'react-icons/fa';
@@ -13,9 +13,7 @@ interface Interface1Props {
 }
 
 const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
-  // Sử dụng any để tránh lỗi type khi destructuring context mở rộng
-  const { setCurrentInterface, setTranscripts, setModelOutput, setCallDetails, setCallDuration, setEmailSentForCurrentSession, activeOrders, language, setLanguage, staffMessages } = useAssistant() as any;
-  const { t, i18n } = useTranslation();
+  const { setCurrentInterface, setTranscripts, setModelOutput, setCallDetails, setCallDuration, setEmailSentForCurrentSession, activeOrders, language, setLanguage } = useAssistant();
   
   // State để lưu trữ tooltip đang hiển thị
   const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
@@ -26,9 +24,6 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
     const timer = setInterval(() => setNow(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
-
-  // Thêm state để điều khiển chat bubble
-  const [chatOpen, setChatOpen] = useState(false);
 
   // Hàm dùng chung cho mọi ngôn ngữ
   const handleCall = async (lang: 'en' | 'fr' | 'zh' | 'ru' | 'ko') => {
@@ -90,7 +85,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
       
       {activeTooltip === iconName && (
         <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-max max-w-[120px] sm:max-w-[180px] bg-white/90 text-gray-800 text-xs sm:text-sm font-medium py-1 px-2 rounded shadow-lg z-50 pointer-events-none text-center">
-          {String(t(`icon_${iconName}`))}
+          {t(`icon_${iconName}`, language)}
           <div className="absolute w-2 h-2 bg-white/90 transform rotate-45 left-1/2 -translate-x-1/2 top-full -mt-1"></div>
         </div>
       )}
@@ -172,14 +167,11 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
             <FaGlobeAsia className="text-[#F9BF3B] text-xl mr-1.5" 
               style={{ filter: 'drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.2))' }}
             />
-            <label className="mr-2 font-semibold font-sans text-white whitespace-nowrap text-sm sm:text-base">{String(t('language'))}:</label>
+            <label className="mr-2 font-semibold font-sans text-white whitespace-nowrap text-sm sm:text-base">{t('language', language)}:</label>
             <div className="relative flex-1">
               <select
                 value={language}
-                onChange={e => {
-                  setLanguage(e.target.value as 'en' | 'fr' | 'zh' | 'ru' | 'ko');
-                  i18n.changeLanguage(e.target.value);
-                }}
+                onChange={e => setLanguage(e.target.value as 'en' | 'fr' | 'zh' | 'ru' | 'ko')}
                 className="appearance-none w-full pl-6 sm:pl-8 pr-6 py-1 sm:py-1.5 font-sans bg-transparent focus:outline-none transition-all duration-200"
                 style={{
                   fontWeight: 600,
@@ -189,7 +181,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                 }}
               >
                 <option value="en">🇬🇧 English</option>
-                <option value="fr">🇫🇷 Français</option>
+                <option value="fr">🇫�� Français</option>
                 <option value="zh">🇨🇳 中文</option>
                 <option value="ru">🇷🇺 Русский</option>
                 <option value="ko">🇰🇷 한국어</option>
@@ -200,9 +192,9 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
         </div>
         <h2 className="font-poppins font-bold text-2xl sm:text-3xl lg:text-4xl text-amber-400 mb-2 text-center"
           style={{ textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)' }}>
-          <span style={{ color: 'red', fontStyle: 'italic', marginRight: 8 }}>Demo</span>{String(t('hotel_name'))}
+          <span style={{ color: 'red', fontStyle: 'italic', marginRight: 8 }}>Demo</span>{t('hotel_name', language)}
         </h2>
-        <p className="text-xs sm:text-lg lg:text-xl text-center max-w-full mb-4 truncate sm:whitespace-nowrap overflow-x-auto">{String(t('hotel_subtitle'))}</p>
+        <p className="text-xs sm:text-lg lg:text-xl text-center max-w-full mb-4 truncate sm:whitespace-nowrap overflow-x-auto">{t('hotel_subtitle', language)}</p>
         
         {/* Main Call Button với hiệu ứng nâng cao */}
         <div className="relative mb-4 sm:mb-12 flex items-center justify-center">
@@ -244,9 +236,19 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                   : '#4ADE80' // Xanh lá sáng cho tiếng Hàn
               }}
             >mic</span>
-            <span className="text-lg sm:text-2xl lg:text-3xl font-bold whitespace-nowrap text-white"
-              style={{ textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)' }}
-            >{String(t('press_to_call'))}</span>
+            {language === 'fr' ? (
+              <span className="text-sm sm:text-lg lg:text-2xl font-bold text-white px-2 text-center"
+                style={{ textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)' }}
+              >{t('press_to_call', language)}</span>
+            ) : language === 'ru' || language === 'ko' ? (
+              <span className="text-sm sm:text-lg lg:text-xl font-bold text-white px-2 text-center"
+                style={{ textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)' }}
+              >{t('press_to_call', language)}</span>
+            ) : (
+              <span className="text-lg sm:text-2xl lg:text-3xl font-bold whitespace-nowrap text-white"
+                style={{ textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)' }}
+              >{t('press_to_call', language)}</span>
+            )}
             <span className="absolute w-full h-full rounded-full pointer-events-none"></span>
             </button>
         </div>
@@ -269,7 +271,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                   borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
                   textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)'
                 }}
-              >{String(t('room_and_stay'))}</h4>
+              >{t('room_and_stay', language)}</h4>
               <ul className="grid grid-cols-5 gap-0 sm:gap-2 py-0.5 sm:py-2">
                 <li><IconWithTooltip iconName="login" /></li>
                 <li><IconWithTooltip iconName="hourglass_empty" /></li>
@@ -294,7 +296,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                   borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
                   textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)'
                 }}
-              >{String(t('room_services'))}</h4>
+              >{t('room_services', language)}</h4>
               <ul className="grid grid-cols-7 gap-0 sm:gap-2 py-0.5 sm:py-2">
                 <li><IconWithTooltip iconName="restaurant" /></li>
                 <li><IconWithTooltip iconName="local_bar" /></li>
@@ -321,7 +323,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                   borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
                   textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)'
                 }}
-              >{String(t('bookings_and_facilities'))}</h4>
+              >{t('bookings_and_facilities', language)}</h4>
               <ul className="grid grid-cols-7 gap-0 sm:gap-2 py-0.5 sm:py-2">
                 <li><IconWithTooltip iconName="event_seat" /></li>
                 <li><IconWithTooltip iconName="spa" /></li>
@@ -348,7 +350,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                   borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
                   textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)'
                 }}
-              >{String(t('tourism_and_exploration'))}</h4>
+              >{t('tourism_and_exploration', language)}</h4>
               <ul className="grid grid-cols-7 gap-0 sm:gap-2 py-0.5 sm:py-2">
                 <li><IconWithTooltip iconName="location_on" /></li>
                 <li><IconWithTooltip iconName="local_dining" /></li>
@@ -375,7 +377,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                   borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
                   textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)'
                 }}
-              >{String(t('support_external_services'))}</h4>
+              >{t('support_external_services', language)}</h4>
               <ul className="grid grid-cols-4 gap-0 sm:gap-2 py-0.5 sm:py-2">
                 <li><IconWithTooltip iconName="translate" /></li>
                 <li><IconWithTooltip iconName="rate_review" /></li>
@@ -422,9 +424,9 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                     >{`${mins}:${secs}`}</span>
                   </div>
                   
-                  <p className="text-xs sm:text-sm mb-0.5 px-1.5"><strong>{String(t('order_ref'))}:</strong> {o.reference}</p>
-                  <p className="text-xs sm:text-sm mb-0.5 px-1.5"><strong>{String(t('requested_at'))}:</strong> {o.requestedAt.toLocaleString('en-US', {timeZone: 'Asia/Ho_Chi_Minh', year:'numeric', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit'})}</p>
-                  <p className="text-xs sm:text-sm mb-0.5 px-1.5"><strong>{String(t('estimated_completion'))}:</strong> {o.estimatedTime}</p>
+                  <p className="text-xs sm:text-sm mb-0.5 px-1.5"><strong>{t('order_ref', language)}:</strong> {o.reference}</p>
+                  <p className="text-xs sm:text-sm mb-0.5 px-1.5"><strong>{t('requested_at', language)}:</strong> {o.requestedAt.toLocaleString('en-US', {timeZone: 'Asia/Ho_Chi_Minh', year:'numeric', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit'})}</p>
+                  <p className="text-xs sm:text-sm mb-0.5 px-1.5"><strong>{t('estimated_completion', language)}:</strong> {o.estimatedTime}</p>
                   
                   {/* Thêm trạng thái - hiển thị theo ngôn ngữ đã chọn */}
                   <div className="mt-2 flex justify-center">
@@ -442,7 +444,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                           }}
                         >
                           <span className="material-icons text-base mr-1" style={{marginTop: -2}}>{style.icon}</span>
-                          {String(t(getStatusTranslationKey(o.status)))}
+                          {t(getStatusTranslationKey(o.status), language)}
                         </span>
                       );
                     })()}
@@ -452,48 +454,6 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
             })}
           </div>
         )}
-        {/* Chat bubble staff-guest */}
-        <div className="fixed bottom-8 right-8 z-50">
-          {!chatOpen && staffMessages.length > 0 && (
-            <button
-              className="bg-blue-600 text-white rounded-full shadow-lg w-14 h-14 flex items-center justify-center text-3xl hover:bg-blue-700 transition-all"
-              onClick={() => setChatOpen(true)}
-              aria-label="Open chat"
-            >
-              <span className="material-icons">chat</span>
-              {staffMessages.length > 0 && <span className="absolute -top-1 -right-1 bg-amber-400 text-xs rounded-full px-2 py-0.5 font-bold text-blue-900">{staffMessages.length}</span>}
-            </button>
-          )}
-          {chatOpen && (
-            <div className="bg-white rounded-2xl shadow-2xl border-2 border-amber-400 w-80 max-w-full p-4 animate-fade-in-up relative">
-              <button
-                className="absolute top-2 right-2 text-gray-400 hover:text-blue-700 text-2xl"
-                onClick={() => setChatOpen(false)}
-                aria-label="Close chat"
-              >
-                &times;
-              </button>
-              <div className="flex items-center mb-2">
-                <span className="material-icons text-amber-400 mr-2">chat</span>
-                <span className="font-bold text-blue-900 text-lg">Staff Chat</span>
-              </div>
-              <div className="overflow-y-auto max-h-60 mb-2 pr-1">
-                {staffMessages.length === 0 ? (
-                  <div className="text-gray-400 text-sm text-center">Chưa có tin nhắn</div>
-                ) : (
-                  staffMessages.map((msg: { content: string, created_at: string | Date }, idx: number) => (
-                    <div key={idx} className="mb-2 text-left">
-                      <div className="inline-block px-3 py-1 rounded-lg bg-blue-100 text-blue-900">
-                        <span className="font-semibold">Staff:</span> {msg.content}
-                      </div>
-                      <div className="text-xs text-gray-400 mt-0.5">{typeof msg.created_at === 'string' ? new Date(msg.created_at).toLocaleTimeString() : msg.created_at.toLocaleTimeString()}</div>
-                    </div>
-                  ))
-                )}
-              </div>
-            </div>
-          )}
-        </div>
       </div>
     </div>
   );

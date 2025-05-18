@@ -106,8 +106,6 @@ export interface AssistantContextType {
   addModelOutput: (output: string) => void;
   language: Language;
   setLanguage: (lang: Language) => void;
-  staffMessages: { content: string, created_at: string | Date }[];
-  addStaffMessage: (content: string, created_at: string | Date) => void;
 }
 
 // Represents an order item in the status panel
