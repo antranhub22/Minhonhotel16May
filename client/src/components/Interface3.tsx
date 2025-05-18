@@ -5,6 +5,7 @@ import hotelImage from '../assets/hotel-exterior.jpeg';
 import InfographicSteps from './InfographicSteps';
 import { parseSummaryToOrderDetails, extractRoomNumber } from '@/lib/summaryParser';
 import { t } from '@/i18n';
+import { Button } from './ui/button';
 
 interface Interface3Props {
   isActive: boolean;
@@ -457,14 +458,15 @@ const Interface3: React.FC<Interface3Props> = ({ isActive }) => {
                 <button className="flex-1 flex items-center justify-center px-2 py-1.5 bg-white/80 hover:bg-blue-100 text-blue-900 rounded-full text-xs font-semibold border border-white/30 shadow transition-colors" onClick={() => setCurrentInterface('interface1')}>
                   <span className="material-icons text-base mr-1">cancel</span>{t('cancel', language)}
                 </button>
-                <button
+                <Button
                   onClick={handleConfirmOrder}
-                  className="flex-1 bg-[#d4af37] hover:bg-[#ffd700] text-blue-900 font-bold py-1.5 px-3 rounded-full shadow-lg flex items-center justify-center space-x-2 transition-colors border border-white/30 text-xs"
-                  style={{letterSpacing:0.5}}
+                  variant="yellow"
+                  className="flex-1 flex items-center justify-center space-x-2 text-xs font-bold sm:hidden"
+                  style={{ minHeight: 44, minWidth: 120, zIndex: 10 }}
                 >
                   <span className="material-icons">send</span>
                   <span className="whitespace-nowrap">{t('send_to_reception', language)}</span>
-                </button>
+                </Button>
               </div>
               {/* Mobile: Add Note, Room, Vietnamese, textarea lên trên summary */}
               <div className="flex flex-col gap-2 mb-2 sm:hidden">
@@ -539,14 +541,15 @@ const Interface3: React.FC<Interface3Props> = ({ isActive }) => {
             {/* Right column: control buttons at top-right (ẩn trên mobile) */}
             <div className="md:w-1/4 w-full hidden sm:flex md:justify-end justify-center">
               <div className="flex flex-col items-end space-y-2 sm:space-y-3 w-full md:w-auto">
-                <button
+                <Button
                   onClick={handleConfirmOrder}
-                  className="w-full md:w-auto bg-[#d4af37] hover:bg-[#ffd700] text-blue-900 font-bold py-1.5 sm:py-2 px-3 sm:px-4 rounded-full shadow-lg flex items-center justify-center space-x-2 transition-colors border border-white/30 text-xs sm:text-sm"
-                  style={{letterSpacing:0.5}}
+                  variant="yellow"
+                  className="w-full md:w-auto flex items-center justify-center space-x-2 text-xs sm:text-sm font-bold"
+                  style={{ minHeight: 44, minWidth: 160, zIndex: 10 }}
                 >
                   <span className="material-icons">send</span>
                   <span className="whitespace-nowrap">{t('send_to_reception', language)}</span>
-                </button>
+                </Button>
                 <button className="w-full md:w-auto flex items-center justify-center px-2 sm:px-3 py-1.5 bg-white/80 hover:bg-blue-100 text-blue-900 rounded-full text-xs font-semibold border border-white/30 shadow transition-colors" onClick={() => setCurrentInterface('interface1')}>
                   <span className="material-icons text-base mr-1">cancel</span>{t('cancel', language)}
                 </button>
