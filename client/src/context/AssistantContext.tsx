@@ -518,6 +518,7 @@ export function AssistantProvider({ children }: { children: ReactNode }) {
           setActiveOrders(
             data.map((o: any) => ({
               ...o,
+              reference: o.specialInstructions || o.reference || '',
               requestedAt: o.requestedAt ? new Date(o.requestedAt) : new Date(),
             }))
           );
