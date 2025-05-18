@@ -99,6 +99,12 @@ function handleApiError(res: Response, error: any, defaultMessage: string) {
   }
 }
 
+// Đảm bảo globalThis.wss có type đúng
+declare global {
+  // eslint-disable-next-line no-var
+  var wss: import('ws').WebSocketServer | undefined;
+}
+
 export async function registerRoutes(app: Express): Promise<Server> {
   // Create HTTP server for express app
   const httpServer = createServer(app);
@@ -290,6 +296,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
     
     if (!updatedOrder) {
       return res.status(404).json({ error: 'Order not found' });
+    }
+    
+    // Emit WebSocket notification cho tất cả client
+    if (globalThis.wss && updatedOrder.specialInstructions) {
+      globalThis.wss.clients.forEach((client) => {
+        if (client.readyState === 1) {
+          client.send(JSON.stringify({
+            type: 'order_status_update',
+            reference: updatedOrder.specialInstructions,
+            status: updatedOrder.status
+          }));
+        }
+      });
     }
     
     res.json(updatedOrder);

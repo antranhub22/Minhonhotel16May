@@ -49,10 +49,15 @@ export function useWebSocket() {
           });
         }
         // Handle order status update (realtime from staff UI)
-        if (data.type === 'order_status_update' && data.orderId && data.status) {
-          assistant.setActiveOrders((prevOrders: ActiveOrder[]) => prevOrders.map((order: ActiveOrder) =>
-            order.reference === data.orderId ? { ...order, status: data.status } : order
-          ));
+        if (data.type === 'order_status_update' && (data.orderId || data.reference) && data.status) {
+          assistant.setActiveOrders((prevOrders: ActiveOrder[]) => prevOrders.map((order: ActiveOrder) => {
+            // So sánh theo reference (mã order)
+            const matchByReference = (data.reference && order.reference === data.reference) || (data.orderId && order.reference === data.orderId);
+            if (matchByReference) {
+              return { ...order, status: data.status };
+            }
+            return order;
+          }));
         }
       } catch (error) {
         console.error('Error parsing WebSocket message:', error);

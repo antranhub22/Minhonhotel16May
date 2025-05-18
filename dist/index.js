@@ -1485,6 +1485,17 @@ async function registerRoutes(app2) {
     if (!updatedOrder) {
       return res.status(404).json({ error: "Order not found" });
     }
+    if (globalThis.wss && updatedOrder.specialInstructions) {
+      globalThis.wss.clients.forEach((client) => {
+        if (client.readyState === 1) {
+          client.send(JSON.stringify({
+            type: "order_status_update",
+            reference: updatedOrder.specialInstructions,
+            status: updatedOrder.status
+          }));
+        }
+      });
+    }
     res.json(updatedOrder);
   });
   app2.get("/api/staff/orders", verifyJWT, async (req, res) => {
