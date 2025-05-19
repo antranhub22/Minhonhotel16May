@@ -8,6 +8,7 @@ import { initVapi, getVapiInstance } from '@/lib/vapiClient';
 import { FaGlobeAsia } from 'react-icons/fa';
 import { FiChevronDown } from 'react-icons/fi';
 import Reference from '@/components/Reference';
+import { referenceService, ReferenceItem } from '@/services/ReferenceService';
 
 interface Interface1Props {
   isActive: boolean;
@@ -24,6 +25,16 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
   useEffect(() => {
     const timer = setInterval(() => setNow(new Date()), 1000);
     return () => clearInterval(timer);
+  }, []);
+
+  const [references, setReferences] = useState<ReferenceItem[]>([]);
+  useEffect(() => {
+    async function loadAllReferences() {
+      await referenceService.initialize();
+      const allRefs = Object.values((referenceService as any).referenceMap || {}) as ReferenceItem[];
+      setReferences(allRefs);
+    }
+    loadAllReferences();
   }, []);
 
   // Hàm dùng chung cho mọi ngôn ngữ
