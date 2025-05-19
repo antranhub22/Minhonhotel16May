@@ -415,12 +415,6 @@ const Interface2: React.FC<Interface2Props> = ({ isActive }) => {
               </div>
             </div>
           )}
-          {/* Reference container below (full width, auto height) */}
-          <div className="w-full mt-1">
-            <div className="w-full flex flex-row items-center gap-x-2 mb-3 px-2">
-              <Reference references={references} />
-            </div>
-          </div>
         </div>
         {/* Right: Control buttons */}
         <div className="w-1/4 lg:w-1/3 flex-col items-center lg:items-end p-2 space-y-4 overflow-auto hidden sm:flex" style={{ maxHeight: '100%' }}>

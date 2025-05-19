@@ -7,6 +7,7 @@ import { ActiveOrder } from '@/types';
 import { initVapi, getVapiInstance } from '@/lib/vapiClient';
 import { FaGlobeAsia } from 'react-icons/fa';
 import { FiChevronDown } from 'react-icons/fi';
+import Reference from '@/components/Reference';
 
 interface Interface1Props {
   isActive: boolean;
@@ -181,7 +182,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                 }}
               >
                 <option value="en">🇬🇧 English</option>
-                <option value="fr">🇫�� Français</option>
+                <option value="fr">🇫🇷 Français</option>
                 <option value="zh">🇨🇳 中文</option>
                 <option value="ru">🇷🇺 Русский</option>
                 <option value="ko">🇰🇷 한국어</option>
@@ -194,7 +195,8 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
           style={{ textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)' }}>
           <span style={{ color: 'red', fontStyle: 'italic', marginRight: 8 }}>Demo</span>{t('hotel_name', language)}
         </h2>
-        <p className="text-xs sm:text-lg lg:text-xl text-center max-w-full mb-4 truncate sm:whitespace-nowrap overflow-x-auto">{t('hotel_subtitle', language)}</p>
+        <p className="text-xs sm:text-lg lg:text-xl text-center max-w-full mb-4 truncate sm:whitespace-nowrap overflow-x-auto">AI-powered Voice Assistant - Supporting All Your Needs</p>
+        <Reference references={references} />
         
         {/* Main Call Button với hiệu ứng nâng cao */}
         <div className="relative mb-4 sm:mb-12 flex items-center justify-center">
