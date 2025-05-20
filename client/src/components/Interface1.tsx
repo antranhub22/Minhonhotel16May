@@ -120,6 +120,14 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
     add_home: 'Additional Homestay Services',
   };
 
+  // Định nghĩa mảng iconName cho từng nhóm dịch vụ
+  const travelTourIcons = ["sand_dunes", "sightseeing", "jeep_tour", "stream_beach", "special_tour"];
+  const busTicketIcons = ["bus_hcm", "bus_dl", "bus_nt", "bus_other"];
+  const vehicleRentalIcons = ["motorcycle", "car_driver", "car_self", "vehicle_special"];
+  const currencyIcons = ["usd", "eur", "gbp", "sgd", "jpy", "krw", "rub", "currency_other"];
+  const laundryIcons = ["laundry_regular", "laundry_special", "laundry_express", "laundry_additional"];
+  const homestayIcons = ["homestay_300k", "homestay_300_600k", "homestay_600k", "homestay_longterm", "homestay_additional"];
+
   // Hàm dùng chung cho mọi ngôn ngữ
   const handleCall = async (lang: 'en' | 'fr' | 'zh' | 'ru' | 'ko') => {
     setEmailSentForCurrentSession(false);
@@ -229,6 +237,23 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
 
   // Log dữ liệu order thực tế để debug
   console.log('ActiveOrders:', activeOrders);
+
+  // Hàm render icon group
+  const renderIconGroup = (icons: string[], col: number) => {
+    const items = icons.map(icon => (
+      <li key={icon} className="w-16 h-16 flex items-center justify-center">
+        {iconComponents[icon] ? <IconWithTooltip iconName={icon} /> : <span className="text-red-500">?</span>}
+      </li>
+    ));
+    // Bổ sung li invisible nếu thiếu để đủ hàng cuối
+    const remainder = icons.length % col;
+    if (remainder !== 0) {
+      for (let i = 0; i < col - remainder; i++) {
+        items.push(<li key={`invisible-${i}`} className="w-16 h-16 flex items-center justify-center invisible"></li>);
+      }
+    }
+    return items;
+  };
 
   return (
     <div 
@@ -378,12 +403,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                 }}
               >{t('tourism_tour', lang)}</h4>
               <ul className="grid grid-cols-3 gap-x-6 gap-y-3 py-2 justify-items-center">
-                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="sand_dunes" /></li>
-                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="sightseeing" /></li>
-                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="jeep_tour" /></li>
-                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="stream_beach" /></li>
-                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="special_tour" /></li>
-                <li className="w-16 h-16 flex items-center justify-center invisible"></li>
+                {renderIconGroup(travelTourIcons, 3)}
               </ul>
             </div>
             {/* 2. VÉ XE KHÁCH */}
@@ -404,10 +424,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                 }}
               >{t('ticket_bus', lang)}</h4>
               <ul className="grid grid-cols-2 gap-x-6 gap-y-3 py-2 justify-items-center">
-                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="bus_hcm" /></li>
-                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="bus_dl" /></li>
-                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="bus_nt" /></li>
-                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="bus_other" /></li>
+                {renderIconGroup(busTicketIcons, 2)}
               </ul>
             </div>
             {/* 3. DỊCH VỤ CHO THUÊ PHƯƠNG TIỆN */}
@@ -428,10 +445,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                 }}
               >{t('rental_service', lang)}</h4>
               <ul className="grid grid-cols-2 gap-x-6 gap-y-3 py-2 justify-items-center">
-                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="motorcycle" /></li>
-                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="car_driver" /></li>
-                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="car_self" /></li>
-                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="vehicle_special" /></li>
+                {renderIconGroup(vehicleRentalIcons, 2)}
               </ul>
             </div>
             {/* 4. DỊCH VỤ ĐỔI TIỀN TỆ */}
@@ -452,14 +466,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                 }}
               >{t('currency_exchange', lang)}</h4>
               <ul className="grid grid-cols-4 gap-x-6 gap-y-3 py-2 justify-items-center">
-                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="usd" /></li>
-                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="eur" /></li>
-                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="gbp" /></li>
-                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="sgd" /></li>
-                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="jpy" /></li>
-                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="krw" /></li>
-                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="rub" /></li>
-                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="currency_other" /></li>
+                {renderIconGroup(currencyIcons, 4)}
               </ul>
             </div>
             {/* 5. DỊCH VỤ GIẶT ỦI */}
@@ -480,12 +487,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                 }}
               >{t('laundry_service', lang)}</h4>
               <ul className="grid grid-cols-3 gap-x-6 gap-y-3 py-2 justify-items-center">
-                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="laundry_regular" /></li>
-                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="laundry_special" /></li>
-                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="laundry_express" /></li>
-                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="laundry_additional" /></li>
-                <li className="w-16 h-16 flex items-center justify-center invisible"></li>
-                <li className="w-16 h-16 flex items-center justify-center invisible"></li>
+                {renderIconGroup(laundryIcons, 3)}
               </ul>
             </div>
             {/* 6. DỊCH VỤ HOMESTAY */}
@@ -506,12 +508,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                 }}
               >{t('homestay_service', lang)}</h4>
               <ul className="grid grid-cols-3 gap-x-6 gap-y-3 py-2 justify-items-center">
-                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="homestay_300k" /></li>
-                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="homestay_300_600k" /></li>
-                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="homestay_600k" /></li>
-                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="homestay_longterm" /></li>
-                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="homestay_additional" /></li>
-                <li className="w-16 h-16 flex items-center justify-center invisible"></li>
+                {renderIconGroup(homestayIcons, 3)}
               </ul>
             </div>
           </div>
