@@ -397,7 +397,7 @@ export const ReferenceMedia = ({ media }: { media: IconMedia }) => {
 
 // ReferenceSlider: Slider cho mediaList, activeIdx, onChange
 export const ReferenceSlider = ({ mediaList, activeIdx, onChange, side }: { mediaList: IconMedia[], activeIdx: number, onChange: (idx: number) => void, side: 'left' | 'right' | 'mobile' }) => (
-  <div className={`w-[320px] max-w-[90vw] min-h-[220px] bg-white/80 rounded-2xl shadow-xl border border-white/30 flex flex-col items-center justify-center p-4 backdrop-blur-md ${side === 'mobile' ? 'mx-auto' : ''}`}>
+  <div className="w-[320px] max-w-[90vw] min-h-[220px] bg-white/80 rounded-2xl shadow-xl border border-white/30 flex flex-col items-center justify-center p-4 backdrop-blur-md">
     <Swiper
       modules={[Navigation, Pagination, A11y]}
       spaceBetween={16}
@@ -410,11 +410,11 @@ export const ReferenceSlider = ({ mediaList, activeIdx, onChange, side }: { medi
       style={{ minHeight: 180 }}
     >
       {mediaList.map((media, idx) => (
-        <SwiperSlide key={idx} className={side === 'mobile' ? 'flex justify-center items-center w-full' : ''}>
+        <SwiperSlide key={idx}>
           {media.type === 'image' || media.type === 'gif' ? (
-            <img src={media.src} alt={media.alt || ''} className="rounded-xl max-h-[200px] w-auto object-contain shadow-lg mx-auto" />
+            <img src={media.src} alt={media.alt || ''} className="rounded-xl max-h-[200px] w-auto object-contain shadow-lg" />
           ) : media.type === 'video' ? (
-            <video src={media.src} controls autoPlay loop className="rounded-xl max-h-[200px] w-auto object-contain shadow-lg mx-auto" />
+            <video src={media.src} controls autoPlay loop className="rounded-xl max-h-[200px] w-auto object-contain shadow-lg" />
           ) : null}
         </SwiperSlide>
       ))}
