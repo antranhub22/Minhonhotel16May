@@ -189,14 +189,13 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
   // Component hiển thị icon với tooltip
   const IconWithTooltip = ({ iconName, className }: { iconName: string, className?: string }) => (
     <div className="relative flex flex-col items-center justify-center cursor-pointer">
-      <span 
-        className={`material-icons text-xl sm:text-4xl text-[#F9BF3B] ${className || ''}`} 
+      <span
+        className={className || ''}
         style={{ filter: 'drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.2))' }}
         onClick={() => handleIconClick(iconName)}
       >
-        {iconName}
+        {iconComponents[iconName] || <span className="text-red-500">?</span>}
       </span>
-      
       {activeTooltip === iconName && (
         <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-max max-w-[120px] sm:max-w-[180px] bg-white/90 text-gray-800 text-xs sm:text-sm font-medium py-1 px-2 rounded shadow-lg z-50 pointer-events-none text-center">
           {iconDisplayNames[iconName] || iconName}
@@ -547,32 +546,6 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                         boxShadow: '0px 2px 6px rgba(0, 0, 0, 0.1)'
                       }}
                     >{`${mins}:${secs}`}</span>
-                  </div>
-                  
-                  <p className="text-xs sm:text-sm mb-0.5 px-1.5"><strong>{t('order_ref', lang)}:</strong> {o.reference}</p>
-                  <p className="text-xs sm:text-sm mb-0.5 px-1.5"><strong>{t('requested_at', lang)}:</strong> {o.requestedAt.toLocaleString('en-US', {timeZone: 'Asia/Ho_Chi_Minh', year:'numeric', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit'})}</p>
-                  <p className="text-xs sm:text-sm mb-0.5 px-1.5"><strong>{t('estimated_completion', lang)}:</strong> {o.estimatedTime}</p>
-                  
-                  {/* Thêm trạng thái - hiển thị theo ngôn ngữ đã chọn */}
-                  <div className="mt-2 flex justify-center">
-                    {(() => {
-                      const style = getStatusStyle(o.status);
-                      // Log để debug
-                      console.log('Order status:', o.status, '->', getStatusTranslationKey(o.status));
-                      return (
-                        <span className={`flex items-center gap-1 px-2 py-1 text-xs font-semibold ${style.bg} ${style.text} w-full text-center shadow-md border border-white/60`}
-                          style={{
-                            borderRadius: '16px',
-                            boxShadow: '0px 1px 4px rgba(0, 0, 0, 0.12)',
-                            transition: 'all 0.2s ease',
-                            letterSpacing: 0.2
-                          }}
-                        >
-                          <span className="material-icons text-base mr-1" style={{marginTop: -2}}>{style.icon}</span>
-                          {t(getStatusTranslationKey(o.status), lang)}
-                        </span>
-                      );
-                    })()}
                   </div>
                 </div>
               );
