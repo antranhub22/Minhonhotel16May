@@ -10,6 +10,7 @@ import { FiChevronDown } from 'react-icons/fi';
 import Reference from '@/components/Reference';
 import { referenceService, ReferenceItem } from '@/services/ReferenceService';
 import { iconMediaMap, IconMedia } from '../assets/iconMediaMap';
+import { FaMountain, FaCarSide, FaUmbrellaBeach, FaStar, FaBusAlt, FaRoute, FaMotorcycle, FaTaxi, FaMoneyBillWave, FaEuroSign, FaPoundSign, FaYenSign, FaRubleSign, FaExchangeAlt, FaBitcoin, FaTshirt, FaSoap, FaBolt, FaPlus, FaHome, FaBuilding, FaCalendarAlt, FaPlusSquare } from 'react-icons/fa';
 
 interface Interface1Props {
   isActive: boolean;
@@ -39,6 +40,45 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
   }, []);
 
   const [activeIcon, setActiveIcon] = useState<string | null>(null);
+
+  // Tạo object ánh xạ iconName -> React component icon sát nghĩa nhất
+  const iconComponents: Record<string, JSX.Element> = {
+    // TOURISM & TOURS
+    sand_dunes: <FaMountain size={32} color="#F9BF3B" />, // Đồi cát (fallback)
+    sightseeing: <FaMountain size={32} color="#F9BF3B" />, // Phan Thiet Sightseeing
+    jeep_tour: <FaCarSide size={32} color="#F9BF3B" />, // Jeep Tour
+    stream_beach: <FaUmbrellaBeach size={32} color="#F9BF3B" />, // Stream and Beach
+    special_tour: <FaStar size={32} color="#F9BF3B" />, // Special Tours
+    // BUS TICKETS
+    bus_hcm: <FaBusAlt size={32} color="#F9BF3B" />,
+    bus_dl: <FaBusAlt size={32} color="#F9BF3B" />,
+    bus_nt: <FaBusAlt size={32} color="#F9BF3B" />,
+    bus_other: <FaRoute size={32} color="#F9BF3B" />,
+    // VEHICLE RENTAL
+    motorcycle: <FaMotorcycle size={32} color="#F9BF3B" />,
+    car_driver: <FaTaxi size={32} color="#F9BF3B" />,
+    car_self: <FaCarSide size={32} color="#F9BF3B" />,
+    vehicle_special: <FaCarSide size={32} color="#F9BF3B" />,
+    // CURRENCY EXCHANGE
+    usd: <FaMoneyBillWave size={32} color="#F9BF3B" />,
+    eur: <FaEuroSign size={32} color="#F9BF3B" />,
+    gbp: <FaPoundSign size={32} color="#F9BF3B" />,
+    jpy: <FaYenSign size={32} color="#F9BF3B" />,
+    rub: <FaRubleSign size={32} color="#F9BF3B" />,
+    currency_exchange: <FaExchangeAlt size={32} color="#F9BF3B" />,
+    currency_other: <FaBitcoin size={32} color="#F9BF3B" />,
+    // LAUNDRY SERVICE
+    laundry_regular: <FaTshirt size={32} color="#F9BF3B" />,
+    laundry_special: <FaSoap size={32} color="#F9BF3B" />,
+    laundry_express: <FaBolt size={32} color="#F9BF3B" />,
+    laundry_additional: <FaPlus size={32} color="#F9BF3B" />,
+    // HOMESTAY SERVICE
+    homestay_300k: <FaHome size={32} color="#F9BF3B" />,
+    homestay_300_600k: <FaHome size={32} color="#F9BF3B" />,
+    homestay_600k: <FaBuilding size={32} color="#F9BF3B" />,
+    homestay_longterm: <FaCalendarAlt size={32} color="#F9BF3B" />,
+    homestay_additional: <FaPlusSquare size={32} color="#F9BF3B" />,
+  };
 
   // Thêm object ánh xạ iconName -> tên dịch vụ đúng chuẩn:
   const iconDisplayNames: Record<string, string> = {
