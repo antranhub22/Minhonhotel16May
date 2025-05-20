@@ -130,29 +130,6 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
   const laundryIcons = ["laundry_regular", "laundry_special", "laundry_express", "laundry_additional"];
   const homestayIcons = ["homestay_300k", "homestay_300_600k", "homestay_600k", "homestay_longterm", "homestay_additional"];
 
-  // Sau khi khai báo iconComponents và các mảng iconName:
-  console.log('iconComponents keys:', Object.keys(iconComponents));
-  console.log('travelTourIcons:', travelTourIcons);
-  console.log('busTicketIcons:', busTicketIcons);
-  console.log('vehicleRentalIcons:', vehicleRentalIcons);
-  console.log('currencyIcons:', currencyIcons);
-  console.log('laundryIcons:', laundryIcons);
-  console.log('homestayIcons:', homestayIcons);
-
-  // Hàm kiểm tra icon thiếu
-  function logMissingIcons(iconList: string[], groupName: string) {
-    const missing = iconList.filter((icon: string) => !iconComponents[icon]);
-    if (missing.length > 0) {
-      console.error(`Missing icons in group ${groupName}:`, missing);
-    }
-  }
-  logMissingIcons(travelTourIcons, 'Travel Tours');
-  logMissingIcons(busTicketIcons, 'Bus Tickets');
-  logMissingIcons(vehicleRentalIcons, 'Vehicle Rental');
-  logMissingIcons(currencyIcons, 'Currency Exchange');
-  logMissingIcons(laundryIcons, 'Laundry');
-  logMissingIcons(homestayIcons, 'Homestay');
-
   // Hàm dùng chung cho mọi ngôn ngữ
   const handleCall = async (lang: 'en' | 'fr' | 'zh' | 'ru' | 'ko') => {
     setEmailSentForCurrentSession(false);
