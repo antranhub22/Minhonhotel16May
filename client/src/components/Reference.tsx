@@ -9,6 +9,8 @@ import 'swiper/css/pagination';
 import { ChevronDown } from 'lucide-react';
 import { FaBookOpen } from 'react-icons/fa';
 import { FiChevronDown } from 'react-icons/fi';
+import { IconMedia } from '../assets/iconMediaMap';
+import SwiperCore from 'swiper';
 
 const CATEGORIES = [
   'Landmark',
@@ -296,5 +298,103 @@ const Reference = ({ references, activeIconMedia }: ReferenceProps): JSX.Element
     </div>
   );
 };
+
+// DualReference: Hiển thị 2 reference media hai bên, slider đồng bộ, chuyên nghiệp
+export const DualReference: React.FC<{ mediaList: IconMedia[] }> = ({ mediaList }) => {
+  const [leftIdx, setLeftIdx] = React.useState(0);
+  const [rightIdx, setRightIdx] = React.useState(mediaList.length > 1 ? 1 : 0);
+
+  if (!mediaList || mediaList.length === 0) return null;
+
+  // Nếu chỉ có 1 media, chỉ render Reference bên trái
+  if (mediaList.length === 1) {
+    return (
+      <div className="flex w-full justify-start items-center gap-8 mt-4 mb-6">
+        <ReferenceMedia media={mediaList[0]} />
+        <div className="flex-1" />
+      </div>
+    );
+  }
+
+  // Nếu có 2 media, mỗi bên 1 media
+  if (mediaList.length === 2) {
+    return (
+      <div className="flex w-full justify-between items-center gap-8 mt-4 mb-6">
+        <ReferenceMedia media={mediaList[0]} />
+        <ReferenceMedia media={mediaList[1]} />
+      </div>
+    );
+  }
+
+  // Nếu >2 media, mỗi bên là slider, index luôn khác nhau
+  const handleLeftChange = (idx: number) => {
+    setLeftIdx(idx);
+    // Nếu trùng index, dịch phải sang index khác
+    if (idx === rightIdx) {
+      setRightIdx((idx + 1) % mediaList.length);
+    }
+  };
+  const handleRightChange = (idx: number) => {
+    setRightIdx(idx);
+    if (idx === leftIdx) {
+      setLeftIdx((idx + 1) % mediaList.length);
+    }
+  };
+
+  return (
+    <div className="flex w-full justify-between items-center gap-8 mt-4 mb-6">
+      <ReferenceSlider
+        mediaList={mediaList}
+        activeIdx={leftIdx}
+        onChange={handleLeftChange}
+        side="left"
+      />
+      <ReferenceSlider
+        mediaList={mediaList}
+        activeIdx={rightIdx}
+        onChange={handleRightChange}
+        side="right"
+      />
+    </div>
+  );
+};
+
+// ReferenceMedia: Hiển thị 1 media (ảnh/video/gif) với style đẹp
+const ReferenceMedia = ({ media }: { media: IconMedia }) => (
+  <div className="w-[320px] max-w-[90vw] min-h-[220px] bg-white/80 rounded-2xl shadow-xl border border-white/30 flex items-center justify-center p-4 backdrop-blur-md">
+    {media.type === 'image' || media.type === 'gif' ? (
+      <img src={media.src} alt={media.alt || ''} className="rounded-xl max-h-[200px] w-auto object-contain shadow-lg" />
+    ) : media.type === 'video' ? (
+      <video src={media.src} controls autoPlay loop className="rounded-xl max-h-[200px] w-auto object-contain shadow-lg" />
+    ) : null}
+  </div>
+);
+
+// ReferenceSlider: Slider cho mediaList, activeIdx, onChange
+const ReferenceSlider = ({ mediaList, activeIdx, onChange, side }: { mediaList: IconMedia[], activeIdx: number, onChange: (idx: number) => void, side: 'left' | 'right' }) => (
+  <div className="w-[320px] max-w-[90vw] min-h-[220px] bg-white/80 rounded-2xl shadow-xl border border-white/30 flex flex-col items-center justify-center p-4 backdrop-blur-md">
+    <Swiper
+      modules={[Navigation, Pagination, A11y]}
+      spaceBetween={16}
+      slidesPerView={1}
+      navigation
+      pagination={{ clickable: true, dynamicBullets: true }}
+      onSlideChange={swiper => onChange(swiper.activeIndex)}
+      initialSlide={activeIdx}
+      className="w-full h-full"
+      style={{ minHeight: 180 }}
+    >
+      {mediaList.map((media, idx) => (
+        <SwiperSlide key={idx}>
+          {media.type === 'image' || media.type === 'gif' ? (
+            <img src={media.src} alt={media.alt || ''} className="rounded-xl max-h-[200px] w-auto object-contain shadow-lg" />
+          ) : media.type === 'video' ? (
+            <video src={media.src} controls autoPlay loop className="rounded-xl max-h-[200px] w-auto object-contain shadow-lg" />
+          ) : null}
+        </SwiperSlide>
+      ))}
+    </Swiper>
+  </div>
+);
 
 export default Reference;
