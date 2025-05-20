@@ -253,7 +253,7 @@ const StaffDashboard: React.FC = () => {
         {/* Logo và tiêu đề */}
         <div className="flex flex-col items-center mb-6">
           <img 
-            src="/assets/references/images/minhon-logo.jpg" 
+            src="/assets/references/images/haily-logo1.jpg" 
             alt="Minhon Logo" 
             className="h-16 object-contain mb-2"
           />

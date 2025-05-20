@@ -24,7 +24,7 @@ const VoiceAssistant: React.FC = () => {
         <div className="container mx-auto flex items-center justify-between px-2">
           {/* Left: Logo */}
           <div className="w-16 flex-shrink-0 flex items-center justify-start ml-1 sm:ml-4 mr-2 sm:mr-6">
-            <img src="/assets/references/images/minhon-logo.jpg" alt="Minhon Logo" className="h-10 sm:h-14 w-auto rounded-lg shadow-md bg-white/80 p-1" />
+            <img src="/assets/references/images/haily-logo1.jpg" alt="Haily Logo" className="h-10 sm:h-14 w-auto rounded-lg shadow-md bg-white/80 p-1" />
           </div>
           {/* Center: InfographicSteps - luôn ngang, nhỏ lại trên mobile */}
           <div className="flex-1 flex justify-center">
