@@ -280,7 +280,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
         {/* Services Section - với hiệu ứng Glass Morphism và 3D */}
         <div className="text-center w-full max-w-5xl mb-10 sm:mb-8" style={{ perspective: '1000px' }}>
           <div className="flex flex-col md:flex-row md:flex-wrap justify-center gap-y-2 sm:gap-y-2 md:gap-3 text-left mx-auto w-full">
-            {/* Room & Stay */}
+            {/* 1. TOUR DU LỊCH */}
             <div className="p-0.5 py-0 sm:p-2 w-4/5 mx-auto md:w-64 mb-2 sm:mb-0 min-h-[36px] transition-all duration-250 hover:scale-103 hover:-translate-y-1"
               style={{
                 background: 'rgba(85,154,154,0.7)',
@@ -296,16 +296,16 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                   borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
                   textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)'
                 }}
-              >{t('room_and_stay', language)}</h4>
-              <ul className="grid grid-cols-5 gap-0 sm:gap-2 py-0.5 sm:py-2">
-                <li><IconWithTooltip iconName="login" /></li>
-                <li><IconWithTooltip iconName="hourglass_empty" /></li>
-                <li><IconWithTooltip iconName="info" /></li>
-                <li><IconWithTooltip iconName="policy" /></li>
-                <li><IconWithTooltip iconName="wifi" /></li>
+              >{t('tourism_tour', language)}</h4>
+              <ul className="grid grid-cols-2 gap-0 sm:gap-2 py-0.5 sm:py-2">
+                <li><IconWithTooltip iconName="tour_doi_cat" /></li>
+                <li><IconWithTooltip iconName="tour_phan_thiet" /></li>
+                <li><IconWithTooltip iconName="tour_jeep" /></li>
+                <li><IconWithTooltip iconName="tour_suoi_bien" /></li>
+                <li><IconWithTooltip iconName="tour_dac_biet" /></li>
               </ul>
             </div>
-            {/* Room Services - Áp dụng cùng phong cách cho các panel khác */}
+            {/* 2. VÉ XE KHÁCH */}
             <div className="p-0.5 py-0 sm:p-2 w-4/5 mx-auto md:w-64 mb-2 sm:mb-0 min-h-[36px] transition-all duration-250 hover:scale-103 hover:-translate-y-1"
               style={{
                 background: 'rgba(85,154,154,0.7)',
@@ -321,18 +321,15 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                   borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
                   textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)'
                 }}
-              >{t('room_services', language)}</h4>
-              <ul className="grid grid-cols-7 gap-0 sm:gap-2 py-0.5 sm:py-2">
-                <li><IconWithTooltip iconName="restaurant" /></li>
-                <li><IconWithTooltip iconName="local_bar" /></li>
-                <li><IconWithTooltip iconName="cleaning_services" /></li>
-                <li><IconWithTooltip iconName="local_laundry_service" /></li>
-                <li><IconWithTooltip iconName="alarm" /></li>
-                <li><IconWithTooltip iconName="add_circle" /></li>
-                <li><IconWithTooltip iconName="build" /></li>
+              >{t('ticket_bus', language)}</h4>
+              <ul className="grid grid-cols-2 gap-0 sm:gap-2 py-0.5 sm:py-2">
+                <li><IconWithTooltip iconName="xe_khach_sg" /></li>
+                <li><IconWithTooltip iconName="xe_khach_dl" /></li>
+                <li><IconWithTooltip iconName="xe_khach_nt" /></li>
+                <li><IconWithTooltip iconName="xe_khach_khac" /></li>
               </ul>
             </div>
-            {/* Bookings & Facilities */}
+            {/* 3. DỊCH VỤ CHO THUÊ PHƯƠNG TIỆN */}
             <div className="p-0.5 py-0 sm:p-2 w-4/5 mx-auto md:w-64 mb-2 sm:mb-0 min-h-[36px] transition-all duration-250 hover:scale-103 hover:-translate-y-1"
               style={{
                 background: 'rgba(85,154,154,0.7)',
@@ -348,18 +345,15 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                   borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
                   textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)'
                 }}
-              >{t('bookings_and_facilities', language)}</h4>
-              <ul className="grid grid-cols-7 gap-0 sm:gap-2 py-0.5 sm:py-2">
-                <li><IconWithTooltip iconName="event_seat" /></li>
-                <li><IconWithTooltip iconName="spa" /></li>
-                <li><IconWithTooltip iconName="fitness_center" /></li>
-                <li><IconWithTooltip iconName="pool" /></li>
-                <li><IconWithTooltip iconName="directions_car" /></li>
-                <li><IconWithTooltip iconName="medical_services" /></li>
-                <li><IconWithTooltip iconName="support_agent" /></li>
+              >{t('rental_service', language)}</h4>
+              <ul className="grid grid-cols-2 gap-0 sm:gap-2 py-0.5 sm:py-2">
+                <li><IconWithTooltip iconName="thue_xe_may" /></li>
+                <li><IconWithTooltip iconName="thue_oto_taixe" /></li>
+                <li><IconWithTooltip iconName="thue_oto_tulai" /></li>
+                <li><IconWithTooltip iconName="thue_phuongtien_dacbiet" /></li>
               </ul>
             </div>
-            {/* Tourism & Exploration */}
+            {/* 4. DỊCH VỤ ĐỔI TIỀN TỆ */}
             <div className="p-0.5 py-0 sm:p-2 w-4/5 mx-auto md:w-64 mb-2 sm:mb-0 min-h-[36px] transition-all duration-250 hover:scale-103 hover:-translate-y-1"
               style={{
                 background: 'rgba(85,154,154,0.7)',
@@ -375,25 +369,26 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                   borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
                   textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)'
                 }}
-              >{t('tourism_and_exploration', language)}</h4>
-              <ul className="grid grid-cols-7 gap-0 sm:gap-2 py-0.5 sm:py-2">
-                <li><IconWithTooltip iconName="location_on" /></li>
-                <li><IconWithTooltip iconName="local_dining" /></li>
-                <li><IconWithTooltip iconName="directions_bus" /></li>
-                <li><IconWithTooltip iconName="directions_car" /></li>
-                <li><IconWithTooltip iconName="event" /></li>
-                <li><IconWithTooltip iconName="shopping_bag" /></li>
-                <li><IconWithTooltip iconName="map" /></li>
+              >{t('currency_exchange', language)}</h4>
+              <ul className="grid grid-cols-2 gap-0 sm:gap-2 py-0.5 sm:py-2">
+                <li><IconWithTooltip iconName="usd" /></li>
+                <li><IconWithTooltip iconName="eur" /></li>
+                <li><IconWithTooltip iconName="gbp" /></li>
+                <li><IconWithTooltip iconName="sgd" /></li>
+                <li><IconWithTooltip iconName="jpy" /></li>
+                <li><IconWithTooltip iconName="krw" /></li>
+                <li><IconWithTooltip iconName="rub" /></li>
+                <li><IconWithTooltip iconName="currency_other" /></li>
               </ul>
             </div>
-            {/* Support */}
-            <div className="p-0.5 py-0 sm:p-2 w-4/5 mx-auto md:w-64 mb-4 sm:mb-0 min-h-[36px] transition-all duration-250 hover:scale-103 hover:-translate-y-1"
+            {/* 5. DỊCH VỤ GIẶT ỦI */}
+            <div className="p-0.5 py-0 sm:p-2 w-4/5 mx-auto md:w-64 mb-2 sm:mb-0 min-h-[36px] transition-all duration-250 hover:scale-103 hover:-translate-y-1"
               style={{
                 background: 'rgba(85,154,154,0.7)',
                 backdropFilter: 'blur(8px)',
                 borderRadius: '12px',
-                boxShadow: '0px 10px 25px rgba(0,0,0,0.15)',
-                border: '1px solid rgba(255,255,255,0.18)',
+                boxShadow: '0px 10px 25px rgba(0, 0, 0, 0.15)',
+                border: '1px solid rgba(255, 255, 255, 0.18)',
                 transform: 'translateZ(20px)'
               }}
             >
@@ -402,12 +397,37 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                   borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
                   textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)'
                 }}
-              >{t('support_external_services', language)}</h4>
-              <ul className="grid grid-cols-4 gap-0 sm:gap-2 py-0.5 sm:py-2">
-                <li><IconWithTooltip iconName="translate" /></li>
-                <li><IconWithTooltip iconName="rate_review" /></li>
-                <li><IconWithTooltip iconName="report_problem" /></li>
-                <li><IconWithTooltip iconName="luggage" /></li>
+              >{t('laundry_service', language)}</h4>
+              <ul className="grid grid-cols-2 gap-0 sm:gap-2 py-0.5 sm:py-2">
+                <li><IconWithTooltip iconName="giat_thuong" /></li>
+                <li><IconWithTooltip iconName="giat_dac_biet" /></li>
+                <li><IconWithTooltip iconName="giat_toc_do" /></li>
+                <li><IconWithTooltip iconName="giat_bo_sung" /></li>
+              </ul>
+            </div>
+            {/* 6. DỊCH VỤ HOMESTAY */}
+            <div className="p-0.5 py-0 sm:p-2 w-4/5 mx-auto md:w-64 mb-2 sm:mb-0 min-h-[36px] transition-all duration-250 hover:scale-103 hover:-translate-y-1"
+              style={{
+                background: 'rgba(85,154,154,0.7)',
+                backdropFilter: 'blur(8px)',
+                borderRadius: '12px',
+                boxShadow: '0px 10px 25px rgba(0, 0, 0, 0.15)',
+                border: '1px solid rgba(255, 255, 255, 0.18)',
+                transform: 'translateZ(20px)'
+              }}
+            >
+              <h4 className="font-medium text-amber-400 pb-0 mb-0.5 text-xs sm:text-sm"
+                style={{ 
+                  borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+                  textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)'
+                }}
+              >{t('homestay_service', language)}</h4>
+              <ul className="grid grid-cols-2 gap-0 sm:gap-2 py-0.5 sm:py-2">
+                <li><IconWithTooltip iconName="homestay_300k" /></li>
+                <li><IconWithTooltip iconName="homestay_300_600k" /></li>
+                <li><IconWithTooltip iconName="homestay_600k" /></li>
+                <li><IconWithTooltip iconName="homestay_daihan" /></li>
+                <li><IconWithTooltip iconName="homestay_bo_sung" /></li>
               </ul>
             </div>
           </div>
