@@ -341,69 +341,69 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
               <ReferenceSlider mediaList={getActiveIconMediaList()} activeIdx={0} onChange={() => {}} side="mobile" />
             )}
           </div>
-          {/* Nút gọi luôn ở giữa, mọi thiết bị */}
-          <div className="w-full flex justify-center items-center mb-4">
-            <div className="relative flex items-center justify-center">
-              {/* Ripple Animation (luôn hiển thị, mạnh hơn khi hover) */}
-              <div className="absolute inset-0 rounded-full border-4 border-amber-400 animate-[ripple_1.5s_linear_infinite] pointer-events-none transition-opacity duration-300 group-hover:opacity-80 opacity-60"></div>
-              <div className="absolute inset-0 rounded-full border-4 border-amber-400/70 animate-[ripple_2s_linear_infinite] pointer-events-none transition-opacity duration-300 group-hover:opacity-60 opacity-40"></div>
-              {/* Main Button */}
-              <button 
-                id={`vapiButton${lang === 'en' ? 'En' : lang === 'fr' ? 'Fr' : lang === 'zh' ? 'Zh' : lang === 'ru' ? 'Ru' : 'Ko'}`}
-                className="group relative w-36 h-36 sm:w-40 sm:h-40 lg:w-56 lg:h-56 rounded-full font-poppins font-bold flex flex-col items-center justify-center overflow-hidden hover:translate-y-[-2px] hover:shadow-[0px_12px_20px_rgba(0,0,0,0.2)]"
-                onClick={() => handleCall(lang as any)}
-                style={{
-                  background: lang === 'en' 
-                    ? 'linear-gradient(180deg, rgba(85,154,154,0.9) 0%, rgba(85,154,154,0.9) 100%)' // Tiếng Anh - Blue Lagoon
-                    : lang === 'fr' 
-                    ? 'linear-gradient(180deg, rgba(59, 130, 246, 0.9) 0%, rgba(37, 99, 235, 0.9) 100%)' // Tiếng Pháp - Xanh da trời
-                    : lang === 'zh' 
-                    ? 'linear-gradient(180deg, rgba(220, 38, 38, 0.9) 0%, rgba(185, 28, 28, 0.9) 100%)' // Tiếng Trung - Đỏ
-                    : lang === 'ru' 
-                    ? 'linear-gradient(180deg, rgba(79, 70, 229, 0.9) 0%, rgba(67, 56, 202, 0.9) 100%)' // Tiếng Nga - Tím
-                    : 'linear-gradient(180deg, rgba(16, 185, 129, 0.9) 0%, rgba(5, 150, 105, 0.9) 100%)', // Tiếng Hàn - Xanh lá
-                  boxShadow: '0px 12px 24px rgba(0, 0, 0, 0.25), 0px 6px 12px rgba(0, 0, 0, 0.15), inset 0px 1px 0px rgba(255, 255, 255, 0.3)',
-                  border: '1px solid rgba(255, 255, 255, 0.5)',
-                  transition: 'all 0.3s ease',
-                  transform: 'translateY(0) translateZ(30px)',
-                }}
-              >
-                <span className="material-icons text-4xl sm:text-6xl lg:text-7xl mb-2 text-[#F9BF3B] transition-all duration-300 group-hover:scale-110" 
-                  style={{ 
-                    filter: 'drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.2))',
-                    color: lang === 'en' 
-                      ? '#F9BF3B' // Vàng cho tiếng Anh
-                      : lang === 'fr' 
-                      ? '#FFFFFF' // Trắng cho tiếng Pháp
-                      : lang === 'zh' 
-                      ? '#FFEB3B' // Vàng sáng cho tiếng Trung
-                      : lang === 'ru' 
-                      ? '#F48FB1' // Hồng nhạt cho tiếng Nga
-                      : '#4ADE80' // Xanh lá sáng cho tiếng Hàn
-                  }}
-                >mic</span>
-                {lang === 'fr' ? (
-                  <span className="text-sm sm:text-lg lg:text-2xl font-bold text-white px-2 text-center"
-                    style={{ textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)' }}
-                  >{t('press_to_call', lang)}</span>
-                ) : lang === 'ru' || lang === 'ko' ? (
-                  <span className="text-sm sm:text-lg lg:text-xl font-bold text-white px-2 text-center"
-                    style={{ textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)' }}
-                  >{t('press_to_call', lang)}</span>
-                ) : (
-                  <span className="text-lg sm:text-2xl lg:text-3xl font-bold whitespace-nowrap text-white"
-                    style={{ textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)' }}
-                  >{t('press_to_call', lang)}</span>
-                )}
-                <span className="absolute w-full h-full rounded-full pointer-events-none"></span>
-              </button>
-            </div>
-          </div>
-          {/* Desktop: 3 cột, mỗi bên 1 ảnh */}
+          {/* Desktop: 3 cột, mỗi bên 1 ảnh, nút gọi ở giữa */}
           <div className="hidden md:grid grid-cols-3 items-center justify-items-center gap-4">
             {/* ReferenceMedia bên trái */}
             <div className="flex items-center justify-center">
               {getActiveIconMediaList()[0] && <ReferenceMedia media={getActiveIconMediaList()[0]} />}
+            </div>
+            {/* Nút gọi ở giữa */}
+            <div className="flex items-center justify-center">
+              <div className="relative flex items-center justify-center">
+                {/* Ripple Animation (luôn hiển thị, mạnh hơn khi hover) */}
+                <div className="absolute inset-0 rounded-full border-4 border-amber-400 animate-[ripple_1.5s_linear_infinite] pointer-events-none transition-opacity duration-300 group-hover:opacity-80 opacity-60"></div>
+                <div className="absolute inset-0 rounded-full border-4 border-amber-400/70 animate-[ripple_2s_linear_infinite] pointer-events-none transition-opacity duration-300 group-hover:opacity-60 opacity-40"></div>
+                {/* Main Button */}
+                <button 
+                  id={`vapiButton${lang === 'en' ? 'En' : lang === 'fr' ? 'Fr' : lang === 'zh' ? 'Zh' : lang === 'ru' ? 'Ru' : 'Ko'}`}
+                  className="group relative w-36 h-36 sm:w-40 sm:h-40 lg:w-56 lg:h-56 rounded-full font-poppins font-bold flex flex-col items-center justify-center overflow-hidden hover:translate-y-[-2px] hover:shadow-[0px_12px_20px_rgba(0,0,0,0.2)]"
+                  onClick={() => handleCall(lang as any)}
+                  style={{
+                    background: lang === 'en' 
+                      ? 'linear-gradient(180deg, rgba(85,154,154,0.9) 0%, rgba(85,154,154,0.9) 100%)' // Tiếng Anh - Blue Lagoon
+                      : lang === 'fr' 
+                      ? 'linear-gradient(180deg, rgba(59, 130, 246, 0.9) 0%, rgba(37, 99, 235, 0.9) 100%)' // Tiếng Pháp - Xanh da trời
+                      : lang === 'zh' 
+                      ? 'linear-gradient(180deg, rgba(220, 38, 38, 0.9) 0%, rgba(185, 28, 28, 0.9) 100%)' // Tiếng Trung - Đỏ
+                      : lang === 'ru' 
+                      ? 'linear-gradient(180deg, rgba(79, 70, 229, 0.9) 0%, rgba(67, 56, 202, 0.9) 100%)' // Tiếng Nga - Tím
+                      : 'linear-gradient(180deg, rgba(16, 185, 129, 0.9) 0%, rgba(5, 150, 105, 0.9) 100%)', // Tiếng Hàn - Xanh lá
+                    boxShadow: '0px 12px 24px rgba(0, 0, 0, 0.25), 0px 6px 12px rgba(0, 0, 0, 0.15), inset 0px 1px 0px rgba(255, 255, 255, 0.3)',
+                    border: '1px solid rgba(255, 255, 255, 0.5)',
+                    transition: 'all 0.3s ease',
+                    transform: 'translateY(0) translateZ(30px)',
+                  }}
+                >
+                  <span className="material-icons text-4xl sm:text-6xl lg:text-7xl mb-2 text-[#F9BF3B] transition-all duration-300 group-hover:scale-110" 
+                    style={{ 
+                      filter: 'drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.2))',
+                      color: lang === 'en' 
+                        ? '#F9BF3B' // Vàng cho tiếng Anh
+                        : lang === 'fr' 
+                        ? '#FFFFFF' // Trắng cho tiếng Pháp
+                        : lang === 'zh' 
+                        ? '#FFEB3B' // Vàng sáng cho tiếng Trung
+                        : lang === 'ru' 
+                        ? '#F48FB1' // Hồng nhạt cho tiếng Nga
+                        : '#4ADE80' // Xanh lá sáng cho tiếng Hàn
+                    }}
+                  >mic</span>
+                  {lang === 'fr' ? (
+                    <span className="text-sm sm:text-lg lg:text-2xl font-bold text-white px-2 text-center"
+                      style={{ textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)' }}
+                    >{t('press_to_call', lang)}</span>
+                  ) : lang === 'ru' || lang === 'ko' ? (
+                    <span className="text-sm sm:text-lg lg:text-xl font-bold text-white px-2 text-center"
+                      style={{ textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)' }}
+                    >{t('press_to_call', lang)}</span>
+                  ) : (
+                    <span className="text-lg sm:text-2xl lg:text-3xl font-bold whitespace-nowrap text-white"
+                      style={{ textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)' }}
+                    >{t('press_to_call', lang)}</span>
+                  )}
+                  <span className="absolute w-full h-full rounded-full pointer-events-none"></span>
+                </button>
+              </div>
             </div>
             {/* ReferenceMedia bên phải */}
             <div className="flex items-center justify-center">
