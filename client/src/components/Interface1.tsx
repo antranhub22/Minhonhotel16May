@@ -335,11 +335,14 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
         </h2>
         <p className="text-xs sm:text-lg lg:text-xl text-center max-w-full mb-4 truncate sm:whitespace-nowrap overflow-x-auto">AI-powered Voice Assistant - Supporting All Your Needs</p>
         
-        {/* DualReference media hai bên, nút gọi ở giữa */}
-        <div className="w-full flex flex-row items-center justify-center gap-8 mb-8 mt-2">
-          <DualReference mediaList={getActiveIconMediaList()} />
-          <div className="flex-1 flex items-center justify-center">
-            {/* Main Call Button với hiệu ứng nâng cao */}
+        {/* Thay thế block DualReference + nút gọi bằng layout grid 3 cột */}
+        <div className="w-full grid grid-cols-1 md:grid-cols-3 items-center justify-items-center gap-4 mb-8 mt-2">
+          {/* Reference 1 (bên trái) */}
+          <div className="hidden md:block">
+            <DualReference mediaList={getActiveIconMediaList()} />
+          </div>
+          {/* Nút gọi luôn ở giữa */}
+          <div className="flex items-center justify-center">
             <div className="relative flex items-center justify-center">
               {/* Ripple Animation (luôn hiển thị, mạnh hơn khi hover) */}
               <div className="absolute inset-0 rounded-full border-4 border-amber-400 animate-[ripple_1.5s_linear_infinite] pointer-events-none transition-opacity duration-300 group-hover:opacity-80 opacity-60"></div>
@@ -395,6 +398,10 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                 <span className="absolute w-full h-full rounded-full pointer-events-none"></span>
               </button>
             </div>
+          </div>
+          {/* Reference 2 (bên phải) */}
+          <div className="hidden md:block">
+            {/* Để trống hoặc có thể render DualReference nếu muốn, nhưng chỉ cần 1 DualReference là đủ */}
           </div>
         </div>
         {/* Services Section - với hiệu ứng Glass Morphism và 3D */}
