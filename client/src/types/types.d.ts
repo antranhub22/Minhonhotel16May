@@ -1,19 +1,48 @@
 declare module '@/context/AssistantContext' {
   export interface AssistantContextType {
+    currentInterface: string;
+    setCurrentInterface: (layer: string) => void;
     transcripts: Array<{
       id: string;
       role: 'user' | 'assistant';
       content: string;
       timestamp: Date;
+      isModelOutput?: boolean;
     }>;
+    setTranscripts: (transcripts: any[]) => void;
+    addTranscript: (transcript: any) => void;
+    orderSummary: any;
+    setOrderSummary: (summary: any) => void;
     callDetails: any;
+    setCallDetails: (details: any) => void;
+    order: any;
+    setOrder: (order: any) => void;
     callDuration: number;
-    endCall: () => void;
+    setCallDuration: (duration: number) => void;
     isMuted: boolean;
     toggleMute: () => void;
-    setCurrentInterface: (interface: string) => void;
+    startCall: () => Promise<void>;
+    endCall: () => void;
+    callSummary: any;
+    setCallSummary: (summary: any) => void;
+    serviceRequests: any[];
+    setServiceRequests: (requests: any[]) => void;
+    vietnameseSummary: string | null;
+    setVietnameseSummary: (summary: string) => void;
+    translateToVietnamese: (text: string) => Promise<string>;
+    emailSentForCurrentSession: boolean;
+    setEmailSentForCurrentSession: (sent: boolean) => void;
+    requestReceivedAt: Date | null;
+    setRequestReceivedAt: (date: Date | null) => void;
+    activeOrders: any[];
+    addActiveOrder: (order: any) => void;
+    setActiveOrders: (orders: any[]) => void;
     micLevel: number;
-    modelOutput: any;
+    modelOutput: string[];
+    setModelOutput: (output: string[]) => void;
+    addModelOutput: (output: string) => void;
+    language: string;
+    setLanguage: (lang: string) => void;
   }
 
   export function useAssistant(): AssistantContextType;

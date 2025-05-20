@@ -23,13 +23,19 @@ const CATEGORIES = [
 
 interface ReferenceProps {
   references: ReferenceItem[];
+  activeIconMedia?: {
+    type: 'image' | 'video' | 'gif';
+    src: string;
+    alt?: string;
+    onClose: () => void;
+  } | null;
 }
 
 interface DocContents {
   [key: string]: string;
 }
 
-const Reference = ({ references }: ReferenceProps): JSX.Element => {
+const Reference = ({ references, activeIconMedia }: ReferenceProps): JSX.Element => {
   const [docContents, setDocContents] = useState<DocContents>({});
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState(CATEGORIES[0]);
@@ -169,6 +175,36 @@ const Reference = ({ references }: ReferenceProps): JSX.Element => {
 
   // Lọc reference theo category, không phân biệt hoa thường và loại bỏ dấu cách thừa
   const filteredReferences = references.filter(ref => (ref as any).category && (ref as any).category.trim().toLowerCase() === activeCategory.trim().toLowerCase());
+
+  // Nếu có media động từ icon, hiển thị media động + nút đóng
+  if (activeIconMedia) {
+    return (
+      <div className="w-full sm:max-w-5xl mx-auto mt-2 mb-2 px-2 py-3 rounded-2xl flex flex-col items-center justify-center relative"
+        style={{ background: 'rgba(85,154,154,0.85)', minHeight: 260 }}>
+        <button
+          className="absolute top-2 right-2 bg-white/80 hover:bg-white text-gray-800 rounded-full p-2 shadow-lg z-10"
+          onClick={activeIconMedia.onClose}
+        >
+          <span className="material-icons text-2xl">close</span>
+        </button>
+        {activeIconMedia.type === 'image' || activeIconMedia.type === 'gif' ? (
+          <img
+            src={activeIconMedia.src}
+            alt={activeIconMedia.alt || 'Icon Media'}
+            className="rounded-xl max-h-[60vh] w-auto object-contain border-4 border-white shadow-2xl"
+          />
+        ) : activeIconMedia.type === 'video' ? (
+          <video
+            src={activeIconMedia.src}
+            controls
+            autoPlay
+            loop
+            className="rounded-xl max-h-[60vh] w-auto object-contain border-4 border-white shadow-2xl"
+          />
+        ) : null}
+      </div>
+    );
+  }
 
   // Main render
   return (

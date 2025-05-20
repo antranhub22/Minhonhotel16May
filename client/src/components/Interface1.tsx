@@ -9,6 +9,7 @@ import { FaGlobeAsia } from 'react-icons/fa';
 import { FiChevronDown } from 'react-icons/fi';
 import Reference from '@/components/Reference';
 import { referenceService, ReferenceItem } from '@/services/ReferenceService';
+import { iconMediaMap, IconMedia } from '../assets/iconMediaMap';
 
 interface Interface1Props {
   isActive: boolean;
@@ -36,6 +37,8 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
     }
     loadAllReferences();
   }, []);
+
+  const [activeIcon, setActiveIcon] = useState<string | null>(null);
 
   // Hàm dùng chung cho mọi ngôn ngữ
   const handleCall = async (lang: 'en' | 'fr' | 'zh' | 'ru' | 'ko') => {
@@ -71,8 +74,9 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
     }
   };
 
-  // Hàm xử lý khi click vào icon
+  // Khi nhấn icon, set activeIcon (nếu nhấn lại icon đang chọn thì bỏ chọn)
   const handleIconClick = (iconName: string) => {
+    setActiveIcon(prev => prev === iconName ? null : iconName);
     // Nếu đang hiển thị tooltip cho icon này rồi thì ẩn đi, ngược lại thì hiển thị
     setActiveTooltip(activeTooltip === iconName ? null : iconName);
     
@@ -83,6 +87,14 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
       }, 3000);
     }
   };
+
+  // Hàm truyền vào Reference để đóng media động
+  const handleCloseMedia = () => setActiveIcon(null);
+
+  // Lấy media động tương ứng nếu có
+  const activeIconMedia = activeIcon && iconMediaMap[activeIcon]
+    ? { ...iconMediaMap[activeIcon], onClose: handleCloseMedia }
+    : null;
 
   // Component hiển thị icon với tooltip
   const IconWithTooltip = ({ iconName, className }: { iconName: string, className?: string }) => (
@@ -207,7 +219,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
           <span style={{ color: 'red', fontStyle: 'italic', marginRight: 8 }}>Demo</span>{t('hotel_name', language)}
         </h2>
         <p className="text-xs sm:text-lg lg:text-xl text-center max-w-full mb-4 truncate sm:whitespace-nowrap overflow-x-auto">AI-powered Voice Assistant - Supporting All Your Needs</p>
-        <Reference references={references} />
+        <Reference references={references} activeIconMedia={activeIconMedia} />
         
         {/* Main Call Button với hiệu ứng nâng cao */}
         <div className="relative mb-4 sm:mb-12 flex items-center justify-center">
