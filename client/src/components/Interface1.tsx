@@ -412,14 +412,13 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
         <div className="text-center w-full max-w-5xl mb-10 sm:mb-8" style={{ perspective: '1000px' }}>
           <div className="flex flex-col md:flex-row md:flex-wrap justify-center gap-y-2 sm:gap-y-2 md:gap-3 text-left mx-auto w-full">
             {/* 1. TRAVEL TOURS */}
-            <div className="p-0.5 py-0 sm:p-2 w-4/5 mx-auto md:w-64 mb-2 sm:mb-0 min-h-[36px] transition-all duration-250 hover:scale-103 hover:-translate-y-1"
+            <div className="p-0.5 py-0 sm:p-2 w-4/5 mx-auto md:w-64 mb-2 sm:mb-0 min-h-[160px] bg-opacity-80"
               style={{
                 background: 'rgba(85,154,154,0.7)',
                 backdropFilter: 'blur(8px)',
                 borderRadius: '12px',
                 boxShadow: '0px 10px 25px rgba(0, 0, 0, 0.15)',
                 border: '1px solid rgba(255, 255, 255, 0.18)',
-                transform: 'translateZ(20px)'
               }}
             >
               <h4 className="font-medium text-amber-400 pb-0 mb-0.5 text-xs sm:text-sm"
@@ -433,14 +432,13 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
               </ul>
             </div>
             {/* 2. VÉ XE KHÁCH */}
-            <div className="p-0.5 py-0 sm:p-2 w-4/5 mx-auto md:w-64 mb-2 sm:mb-0 min-h-[36px] transition-all duration-250 hover:scale-103 hover:-translate-y-1"
+            <div className="p-0.5 py-0 sm:p-2 w-4/5 mx-auto md:w-64 mb-2 sm:mb-0 min-h-[160px] bg-opacity-80"
               style={{
                 background: 'rgba(85,154,154,0.7)',
                 backdropFilter: 'blur(8px)',
                 borderRadius: '12px',
                 boxShadow: '0px 10px 25px rgba(0, 0, 0, 0.15)',
                 border: '1px solid rgba(255, 255, 255, 0.18)',
-                transform: 'translateZ(20px)'
               }}
             >
               <h4 className="font-medium text-amber-400 pb-0 mb-0.5 text-xs sm:text-sm"
@@ -454,14 +452,13 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
               </ul>
             </div>
             {/* 3. DỊCH VỤ CHO THUÊ PHƯƠNG TIỆN */}
-            <div className="p-0.5 py-0 sm:p-2 w-4/5 mx-auto md:w-64 mb-2 sm:mb-0 min-h-[36px] transition-all duration-250 hover:scale-103 hover:-translate-y-1"
+            <div className="p-0.5 py-0 sm:p-2 w-4/5 mx-auto md:w-64 mb-2 sm:mb-0 min-h-[160px] bg-opacity-80"
               style={{
                 background: 'rgba(85,154,154,0.7)',
                 backdropFilter: 'blur(8px)',
                 borderRadius: '12px',
                 boxShadow: '0px 10px 25px rgba(0, 0, 0, 0.15)',
                 border: '1px solid rgba(255, 255, 255, 0.18)',
-                transform: 'translateZ(20px)'
               }}
             >
               <h4 className="font-medium text-amber-400 pb-0 mb-0.5 text-xs sm:text-sm"
@@ -475,14 +472,13 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
               </ul>
             </div>
             {/* 4. DỊCH VỤ ĐỔI TIỀN TỆ */}
-            <div className="p-0.5 py-0 sm:p-2 w-4/5 mx-auto md:w-64 mb-2 sm:mb-0 min-h-[36px] transition-all duration-250 hover:scale-103 hover:-translate-y-1"
+            <div className="p-0.5 py-0 sm:p-2 w-4/5 mx-auto md:w-64 mb-2 sm:mb-0 min-h-[160px] bg-opacity-80"
               style={{
                 background: 'rgba(85,154,154,0.7)',
                 backdropFilter: 'blur(8px)',
                 borderRadius: '12px',
                 boxShadow: '0px 10px 25px rgba(0, 0, 0, 0.15)',
                 border: '1px solid rgba(255, 255, 255, 0.18)',
-                transform: 'translateZ(20px)'
               }}
             >
               <h4 className="font-medium text-amber-400 pb-0 mb-0.5 text-xs sm:text-sm"
@@ -496,14 +492,13 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
               </ul>
             </div>
             {/* 5. DỊCH VỤ GIẶT ỦI */}
-            <div className="p-0.5 py-0 sm:p-2 w-4/5 mx-auto md:w-64 mb-2 sm:mb-0 min-h-[36px] transition-all duration-250 hover:scale-103 hover:-translate-y-1"
+            <div className="p-0.5 py-0 sm:p-2 w-4/5 mx-auto md:w-64 mb-2 sm:mb-0 min-h-[160px] bg-opacity-80"
               style={{
                 background: 'rgba(85,154,154,0.7)',
                 backdropFilter: 'blur(8px)',
                 borderRadius: '12px',
                 boxShadow: '0px 10px 25px rgba(0, 0, 0, 0.15)',
                 border: '1px solid rgba(255, 255, 255, 0.18)',
-                transform: 'translateZ(20px)'
               }}
             >
               <h4 className="font-medium text-amber-400 pb-0 mb-0.5 text-xs sm:text-sm"
@@ -517,14 +512,13 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
               </ul>
             </div>
             {/* 6. DỊCH VỤ HOMESTAY */}
-            <div className="p-0.5 py-0 sm:p-2 w-4/5 mx-auto md:w-64 mb-2 sm:mb-0 min-h-[36px] transition-all duration-250 hover:scale-103 hover:-translate-y-1"
+            <div className="p-0.5 py-0 sm:p-2 w-4/5 mx-auto md:w-64 mb-2 sm:mb-0 min-h-[160px] bg-opacity-80"
               style={{
                 background: 'rgba(85,154,154,0.7)',
                 backdropFilter: 'blur(8px)',
                 borderRadius: '12px',
                 boxShadow: '0px 10px 25px rgba(0, 0, 0, 0.15)',
                 border: '1px solid rgba(255, 255, 255, 0.18)',
-                transform: 'translateZ(20px)'
               }}
             >
               <h4 className="font-medium text-amber-400 pb-0 mb-0.5 text-xs sm:text-sm"
