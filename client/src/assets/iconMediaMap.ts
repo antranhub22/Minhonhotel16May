@@ -10,11 +10,17 @@ export interface IconMedia {
   alt?: string;
 }
 
-export const iconMediaMap: Record<string, IconMedia> = {
+export const iconMediaMap: Record<string, IconMedia | IconMedia[]> = {
   // TOURISM & TOURS
-  sand_dunes: { type: 'image', src: '', alt: 'Sand Dunes Tour' },
+  sand_dunes: [
+    { type: 'image', src: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80', alt: 'Sand Dunes 1' },
+    { type: 'image', src: 'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=600&q=80', alt: 'Sand Dunes 2' }
+  ],
   sightseeing: { type: 'image', src: '', alt: 'Phan Thiet Sightseeing' },
-  jeep_tour: { type: 'image', src: '', alt: 'Jeep Tour' },
+  jeep_tour: [
+    { type: 'image', src: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=600&q=80', alt: 'Jeep Tour 1' },
+    { type: 'image', src: 'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=600&q=80', alt: 'Jeep Tour 2' }
+  ],
   stream_beach: { type: 'image', src: '', alt: 'Stream and Beach Tour' },
   special_tour: { type: 'image', src: '', alt: 'Special Tours' },
   // BUS TICKETS
