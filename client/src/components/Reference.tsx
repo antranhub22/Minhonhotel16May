@@ -227,7 +227,7 @@ const Reference = ({ references, activeIconMedia }: ReferenceProps): JSX.Element
             <img
               src={lightboxImg}
               alt="Phóng to ảnh reference"
-              className="rounded-xl max-h-[80vh] w-auto object-contain border-4 border-white shadow-2xl"
+              className="rounded-xl max-h-[92vh] max-w-[96vw] w-auto object-contain border-4 border-white shadow-2xl"
               onClick={e => e.stopPropagation()}
             />
           </div>
@@ -384,9 +384,9 @@ export const ReferenceMedia = ({ media }: { media: IconMedia }) => {
               <span className="material-icons text-2xl">close</span>
             </button>
             {media.type === 'image' || media.type === 'gif' ? (
-              <img src={media.src} alt={media.alt || ''} className="rounded-xl max-h-[80vh] w-auto object-contain border-4 border-white shadow-2xl" onClick={e => e.stopPropagation()} />
+              <img src={media.src} alt={media.alt || ''} className="rounded-xl max-h-[92vh] max-w-[96vw] w-auto object-contain border-4 border-white shadow-2xl" onClick={e => e.stopPropagation()} />
             ) : media.type === 'video' ? (
-              <video src={media.src} controls autoPlay loop className="rounded-xl max-h-[80vh] w-auto object-contain border-4 border-white shadow-2xl" onClick={e => e.stopPropagation()} />
+              <video src={media.src} controls autoPlay loop className="rounded-xl max-h-[92vh] max-w-[96vw] w-auto object-contain border-4 border-white shadow-2xl" onClick={e => e.stopPropagation()} />
             ) : null}
           </div>
         </div>
