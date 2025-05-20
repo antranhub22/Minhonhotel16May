@@ -84,40 +84,42 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
 
   // Thêm object ánh xạ iconName -> tên dịch vụ đúng chuẩn:
   const iconDisplayNames: Record<string, string> = {
-    // TOURISM & TOURS
-    flag: 'Sand Dunes',
-    location_city: 'Phan Thiet Sightseeing',
-    directions_car: 'Jeep Tour',
-    waves: 'Stream and Beach',
-    star: 'Special Tours',
+    // TRAVEL TOURS
+    sand_dunes: 'Sand Dunes',
+    sightseeing: 'Sightseeing',
+    jeep_tour: 'Jeep',
+    stream_beach: 'Stream and Beach',
+    special_tour: 'Special Tours',
     // BUS TICKETS
-    directions_bus: 'Mui Ne - Ho Chi Minh City Route',
-    directions_bus_filled: 'Mui Ne - Da Lat Route',
-    directions: 'Mui Ne - Nha Trang Route',
-    alt_route: 'Other Routes',
+    bus_hcm: 'Mui Ne - Ho Chi Minh City Route',
+    bus_dl: 'Mui Ne - Da Lat Route',
+    bus_nt: 'Mui Ne - Nha Trang Route',
+    bus_other: 'Other Routes',
     // VEHICLE RENTAL
-    two_wheeler: 'Motorcycle Rental',
-    local_taxi: 'Car Rental (with driver)',
-    airport_shuttle: 'Special Vehicle Rental',
+    motorcycle: 'Motorcycle Rental',
+    car_driver: 'Car Rental (with driver)',
+    car_self: 'Car Rental (self-drive)',
+    vehicle_special: 'Special Vehicle Rental',
     // CURRENCY EXCHANGE
-    attach_money: 'USD (US Dollar)',
-    euro: 'EUR (Euro)',
-    currency_pound: 'GBP (British Pound)',
-    currency_yen: 'JPY (Japanese Yen)',
-    currency_ruble: 'RUB (Russian Ruble)',
-    currency_exchange: 'Additional Currency Services',
-    currency_bitcoin: 'Additional Currency Services',
+    usd: 'USD',
+    eur: 'EUR',
+    gbp: 'GBP',
+    sgd: 'SGD',
+    jpy: 'JPY',
+    krw: 'KRW',
+    rub: 'RUB',
+    currency_other: 'Additional Currency Services',
     // LAUNDRY SERVICE
-    local_laundry_service: 'Regular Laundry Service',
-    dry_cleaning: 'Special Laundry Service',
-    bolt: 'Express Laundry Service',
-    add: 'Additional Laundry Services',
+    laundry_regular: 'Regular Laundry Service',
+    laundry_special: 'Special Laundry Service',
+    laundry_express: 'Express Laundry Service',
+    laundry_additional: 'Additional Laundry Services',
     // HOMESTAY SERVICE
-    home: 'Price Range/day: < 300k',
-    home_work: 'Price Range/day: 300k - 600k',
-    villa: 'Price Range/day: Above 600k',
-    event_repeat: 'Long-term Rental',
-    add_home: 'Additional Homestay Services',
+    homestay_300k: 'Price Range/day: <300k',
+    homestay_300_600k: 'Price Range/day: 300k-600k',
+    homestay_600k: 'Price Range/day: Above 600k',
+    homestay_longterm: 'Long-term Rental',
+    homestay_additional: 'Additional Homestay Services',
   };
 
   // Định nghĩa mảng iconName cho từng nhóm dịch vụ
