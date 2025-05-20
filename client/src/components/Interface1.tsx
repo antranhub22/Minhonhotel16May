@@ -263,11 +263,14 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
 
   // Hàm render icon group
   const renderIconGroup = (icons: string[], col: number) => {
-    const items = icons.map(icon => (
-      <li key={icon} className="w-16 h-16 flex items-center justify-center">
-        {iconComponents[icon] ? <IconWithTooltip iconName={icon} /> : <span className="text-red-500">?</span>}
-      </li>
-    ));
+    const items = icons.map(icon => {
+      console.log('Rendering icon:', icon, iconComponents[icon]);
+      return (
+        <li key={icon} className="w-16 h-16 flex items-center justify-center">
+          {iconComponents[icon] ? iconComponents[icon] : <span className="text-red-500">?</span>}
+        </li>
+      );
+    });
     // Bổ sung li invisible nếu thiếu để đủ hàng cuối
     const remainder = icons.length % col;
     if (remainder !== 0) {
