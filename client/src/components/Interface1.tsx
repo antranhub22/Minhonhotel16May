@@ -375,12 +375,12 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                   textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)'
                 }}
               >{t('tourism_tour', language)}</h4>
-              <ul className="flex flex-wrap justify-center items-center gap-4 py-2">
-                <li><IconWithTooltip iconName="sand_dunes" /></li>
-                <li><IconWithTooltip iconName="sightseeing" /></li>
-                <li><IconWithTooltip iconName="jeep_tour" /></li>
-                <li><IconWithTooltip iconName="stream_beach" /></li>
-                <li><IconWithTooltip iconName="special_tour" /></li>
+              <ul className="flex flex-wrap justify-center items-center gap-x-6 gap-y-3 py-2">
+                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="sand_dunes" /></li>
+                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="sightseeing" /></li>
+                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="jeep_tour" /></li>
+                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="stream_beach" /></li>
+                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="special_tour" /></li>
               </ul>
             </div>
             {/* 2. VÉ XE KHÁCH */}
@@ -400,11 +400,11 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                   textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)'
                 }}
               >{t('ticket_bus', language)}</h4>
-              <ul className="flex flex-wrap justify-center items-center gap-4 py-2">
-                <li><IconWithTooltip iconName="bus_hcm" /></li>
-                <li><IconWithTooltip iconName="bus_dl" /></li>
-                <li><IconWithTooltip iconName="bus_nt" /></li>
-                <li><IconWithTooltip iconName="bus_other" /></li>
+              <ul className="flex flex-wrap justify-center items-center gap-x-6 gap-y-3 py-2">
+                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="bus_hcm" /></li>
+                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="bus_dl" /></li>
+                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="bus_nt" /></li>
+                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="bus_other" /></li>
               </ul>
             </div>
             {/* 3. DỊCH VỤ CHO THUÊ PHƯƠNG TIỆN */}
@@ -424,11 +424,11 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                   textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)'
                 }}
               >{t('rental_service', language)}</h4>
-              <ul className="flex flex-wrap justify-center items-center gap-4 py-2">
-                <li><IconWithTooltip iconName="motorcycle" /></li>
-                <li><IconWithTooltip iconName="car_driver" /></li>
-                <li><IconWithTooltip iconName="car_self" /></li>
-                <li><IconWithTooltip iconName="vehicle_special" /></li>
+              <ul className="flex flex-wrap justify-center items-center gap-x-6 gap-y-3 py-2">
+                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="motorcycle" /></li>
+                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="car_driver" /></li>
+                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="car_self" /></li>
+                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="vehicle_special" /></li>
               </ul>
             </div>
             {/* 4. DỊCH VỤ ĐỔI TIỀN TỆ */}
@@ -448,14 +448,14 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                   textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)'
                 }}
               >{t('currency_exchange', language)}</h4>
-              <ul className="flex flex-wrap justify-center items-center gap-4 py-2">
-                <li><IconWithTooltip iconName="usd" /></li>
-                <li><IconWithTooltip iconName="eur" /></li>
-                <li><IconWithTooltip iconName="gbp" /></li>
-                <li><IconWithTooltip iconName="jpy" /></li>
-                <li><IconWithTooltip iconName="rub" /></li>
-                <li><IconWithTooltip iconName="currency_exchange" /></li>
-                <li><IconWithTooltip iconName="currency_other" /></li>
+              <ul className="flex flex-wrap justify-center items-center gap-x-6 gap-y-3 py-2">
+                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="usd" /></li>
+                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="eur" /></li>
+                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="gbp" /></li>
+                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="jpy" /></li>
+                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="rub" /></li>
+                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="currency_exchange" /></li>
+                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="currency_other" /></li>
               </ul>
             </div>
             {/* 5. DỊCH VỤ GIẶT ỦI */}
@@ -475,11 +475,11 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                   textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)'
                 }}
               >{t('laundry_service', language)}</h4>
-              <ul className="flex flex-wrap justify-center items-center gap-4 py-2">
-                <li><IconWithTooltip iconName="laundry_regular" /></li>
-                <li><IconWithTooltip iconName="laundry_special" /></li>
-                <li><IconWithTooltip iconName="laundry_express" /></li>
-                <li><IconWithTooltip iconName="laundry_additional" /></li>
+              <ul className="flex flex-wrap justify-center items-center gap-x-6 gap-y-3 py-2">
+                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="laundry_regular" /></li>
+                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="laundry_special" /></li>
+                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="laundry_express" /></li>
+                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="laundry_additional" /></li>
               </ul>
             </div>
             {/* 6. DỊCH VỤ HOMESTAY */}
@@ -499,12 +499,12 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                   textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)'
                 }}
               >{t('homestay_service', language)}</h4>
-              <ul className="flex flex-wrap justify-center items-center gap-4 py-2">
-                <li><IconWithTooltip iconName="homestay_300k" /></li>
-                <li><IconWithTooltip iconName="homestay_300_600k" /></li>
-                <li><IconWithTooltip iconName="homestay_600k" /></li>
-                <li><IconWithTooltip iconName="homestay_longterm" /></li>
-                <li><IconWithTooltip iconName="homestay_additional" /></li>
+              <ul className="flex flex-wrap justify-center items-center gap-x-6 gap-y-3 py-2">
+                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="homestay_300k" /></li>
+                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="homestay_300_600k" /></li>
+                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="homestay_600k" /></li>
+                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="homestay_longterm" /></li>
+                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="homestay_additional" /></li>
               </ul>
             </div>
           </div>
