@@ -298,11 +298,11 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                 }}
               >{t('tourism_tour', language)}</h4>
               <ul className="flex flex-wrap justify-center items-center gap-2 py-1">
-                <li><IconWithTooltip iconName="tour_doi_cat" /></li>
-                <li><IconWithTooltip iconName="tour_phan_thiet" /></li>
-                <li><IconWithTooltip iconName="tour_jeep" /></li>
-                <li><IconWithTooltip iconName="tour_suoi_bien" /></li>
-                <li><IconWithTooltip iconName="tour_dac_biet" /></li>
+                <li><IconWithTooltip iconName="flag" /></li>
+                <li><IconWithTooltip iconName="location_city" /></li>
+                <li><IconWithTooltip iconName="directions_car" /></li>
+                <li><IconWithTooltip iconName="waves" /></li>
+                <li><IconWithTooltip iconName="star" /></li>
               </ul>
             </div>
             {/* 2. VÉ XE KHÁCH */}
@@ -323,10 +323,10 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                 }}
               >{t('ticket_bus', language)}</h4>
               <ul className="flex flex-wrap justify-center items-center gap-2 py-1">
-                <li><IconWithTooltip iconName="xe_khach_sg" /></li>
-                <li><IconWithTooltip iconName="xe_khach_dl" /></li>
-                <li><IconWithTooltip iconName="xe_khach_nt" /></li>
-                <li><IconWithTooltip iconName="xe_khach_khac" /></li>
+                <li><IconWithTooltip iconName="directions_bus" /></li>
+                <li><IconWithTooltip iconName="directions_bus_filled" /></li>
+                <li><IconWithTooltip iconName="directions" /></li>
+                <li><IconWithTooltip iconName="alt_route" /></li>
               </ul>
             </div>
             {/* 3. DỊCH VỤ CHO THUÊ PHƯƠNG TIỆN */}
@@ -347,10 +347,10 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                 }}
               >{t('rental_service', language)}</h4>
               <ul className="flex flex-wrap justify-center items-center gap-2 py-1">
-                <li><IconWithTooltip iconName="thue_xe_may" /></li>
-                <li><IconWithTooltip iconName="thue_oto_taixe" /></li>
-                <li><IconWithTooltip iconName="thue_oto_tulai" /></li>
-                <li><IconWithTooltip iconName="thue_phuongtien_dacbiet" /></li>
+                <li><IconWithTooltip iconName="two_wheeler" /></li>
+                <li><IconWithTooltip iconName="local_taxi" /></li>
+                <li><IconWithTooltip iconName="directions_car" /></li>
+                <li><IconWithTooltip iconName="airport_shuttle" /></li>
               </ul>
             </div>
             {/* 4. DỊCH VỤ ĐỔI TIỀN TỆ */}
@@ -371,14 +371,13 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                 }}
               >{t('currency_exchange', language)}</h4>
               <ul className="flex flex-wrap justify-center items-center gap-2 py-1">
-                <li><IconWithTooltip iconName="usd" /></li>
-                <li><IconWithTooltip iconName="eur" /></li>
-                <li><IconWithTooltip iconName="gbp" /></li>
-                <li><IconWithTooltip iconName="sgd" /></li>
-                <li><IconWithTooltip iconName="jpy" /></li>
-                <li><IconWithTooltip iconName="krw" /></li>
-                <li><IconWithTooltip iconName="rub" /></li>
-                <li><IconWithTooltip iconName="currency_other" /></li>
+                <li><IconWithTooltip iconName="attach_money" /></li>
+                <li><IconWithTooltip iconName="euro" /></li>
+                <li><IconWithTooltip iconName="currency_pound" /></li>
+                <li><IconWithTooltip iconName="currency_yen" /></li>
+                <li><IconWithTooltip iconName="currency_ruble" /></li>
+                <li><IconWithTooltip iconName="currency_exchange" /></li>
+                <li><IconWithTooltip iconName="currency_bitcoin" /></li>
               </ul>
             </div>
             {/* 5. DỊCH VỤ GIẶT ỦI */}
@@ -399,10 +398,10 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                 }}
               >{t('laundry_service', language)}</h4>
               <ul className="flex flex-wrap justify-center items-center gap-2 py-1">
-                <li><IconWithTooltip iconName="giat_thuong" /></li>
-                <li><IconWithTooltip iconName="giat_dac_biet" /></li>
-                <li><IconWithTooltip iconName="giat_toc_do" /></li>
-                <li><IconWithTooltip iconName="giat_bo_sung" /></li>
+                <li><IconWithTooltip iconName="local_laundry_service" /></li>
+                <li><IconWithTooltip iconName="dry_cleaning" /></li>
+                <li><IconWithTooltip iconName="bolt" /></li>
+                <li><IconWithTooltip iconName="add" /></li>
               </ul>
             </div>
             {/* 6. DỊCH VỤ HOMESTAY */}
@@ -423,11 +422,11 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                 }}
               >{t('homestay_service', language)}</h4>
               <ul className="flex flex-wrap justify-center items-center gap-2 py-1">
-                <li><IconWithTooltip iconName="homestay_300k" /></li>
-                <li><IconWithTooltip iconName="homestay_300_600k" /></li>
-                <li><IconWithTooltip iconName="homestay_600k" /></li>
-                <li><IconWithTooltip iconName="homestay_daihan" /></li>
-                <li><IconWithTooltip iconName="homestay_bo_sung" /></li>
+                <li><IconWithTooltip iconName="home" /></li>
+                <li><IconWithTooltip iconName="home_work" /></li>
+                <li><IconWithTooltip iconName="villa" /></li>
+                <li><IconWithTooltip iconName="event_repeat" /></li>
+                <li><IconWithTooltip iconName="add_home" /></li>
               </ul>
             </div>
           </div>
