@@ -297,7 +297,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                   textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)'
                 }}
               >{t('tourism_tour', language)}</h4>
-              <ul className="grid grid-cols-2 gap-0 sm:gap-2 py-0.5 sm:py-2">
+              <ul className="flex flex-wrap justify-center items-center gap-2 py-1">
                 <li><IconWithTooltip iconName="tour_doi_cat" /></li>
                 <li><IconWithTooltip iconName="tour_phan_thiet" /></li>
                 <li><IconWithTooltip iconName="tour_jeep" /></li>
@@ -322,7 +322,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                   textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)'
                 }}
               >{t('ticket_bus', language)}</h4>
-              <ul className="grid grid-cols-2 gap-0 sm:gap-2 py-0.5 sm:py-2">
+              <ul className="flex flex-wrap justify-center items-center gap-2 py-1">
                 <li><IconWithTooltip iconName="xe_khach_sg" /></li>
                 <li><IconWithTooltip iconName="xe_khach_dl" /></li>
                 <li><IconWithTooltip iconName="xe_khach_nt" /></li>
@@ -346,7 +346,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                   textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)'
                 }}
               >{t('rental_service', language)}</h4>
-              <ul className="grid grid-cols-2 gap-0 sm:gap-2 py-0.5 sm:py-2">
+              <ul className="flex flex-wrap justify-center items-center gap-2 py-1">
                 <li><IconWithTooltip iconName="thue_xe_may" /></li>
                 <li><IconWithTooltip iconName="thue_oto_taixe" /></li>
                 <li><IconWithTooltip iconName="thue_oto_tulai" /></li>
@@ -370,7 +370,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                   textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)'
                 }}
               >{t('currency_exchange', language)}</h4>
-              <ul className="grid grid-cols-2 gap-0 sm:gap-2 py-0.5 sm:py-2">
+              <ul className="flex flex-wrap justify-center items-center gap-2 py-1">
                 <li><IconWithTooltip iconName="usd" /></li>
                 <li><IconWithTooltip iconName="eur" /></li>
                 <li><IconWithTooltip iconName="gbp" /></li>
@@ -398,7 +398,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                   textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)'
                 }}
               >{t('laundry_service', language)}</h4>
-              <ul className="grid grid-cols-2 gap-0 sm:gap-2 py-0.5 sm:py-2">
+              <ul className="flex flex-wrap justify-center items-center gap-2 py-1">
                 <li><IconWithTooltip iconName="giat_thuong" /></li>
                 <li><IconWithTooltip iconName="giat_dac_biet" /></li>
                 <li><IconWithTooltip iconName="giat_toc_do" /></li>
@@ -422,7 +422,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                   textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)'
                 }}
               >{t('homestay_service', language)}</h4>
-              <ul className="grid grid-cols-2 gap-0 sm:gap-2 py-0.5 sm:py-2">
+              <ul className="flex flex-wrap justify-center items-center gap-2 py-1">
                 <li><IconWithTooltip iconName="homestay_300k" /></li>
                 <li><IconWithTooltip iconName="homestay_300_600k" /></li>
                 <li><IconWithTooltip iconName="homestay_600k" /></li>
