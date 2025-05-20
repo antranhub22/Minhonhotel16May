@@ -360,15 +360,40 @@ export const DualReference: React.FC<{ mediaList: IconMedia[] }> = ({ mediaList 
 };
 
 // ReferenceMedia: Hiển thị 1 media (ảnh/video/gif) với style đẹp
-export const ReferenceMedia = ({ media }: { media: IconMedia }) => (
-  <div className="w-[320px] max-w-[90vw] min-h-[220px] bg-white/80 rounded-2xl shadow-xl border border-white/30 flex items-center justify-center p-4 backdrop-blur-md">
-    {media.type === 'image' || media.type === 'gif' ? (
-      <img src={media.src} alt={media.alt || ''} className="rounded-xl max-h-[200px] w-auto object-contain shadow-lg" />
-    ) : media.type === 'video' ? (
-      <video src={media.src} controls autoPlay loop className="rounded-xl max-h-[200px] w-auto object-contain shadow-lg" />
-    ) : null}
-  </div>
-);
+export const ReferenceMedia = ({ media }: { media: IconMedia }) => {
+  const [zoomed, setZoomed] = useState(false);
+  return (
+    <>
+      <div className="w-[320px] max-w-[90vw] min-h-[220px] bg-white/80 rounded-2xl shadow-xl border border-white/30 flex items-center justify-center p-4 backdrop-blur-md cursor-zoom-in"
+        onClick={() => setZoomed(true)}
+        title="Click to zoom"
+      >
+        {media.type === 'image' || media.type === 'gif' ? (
+          <img src={media.src} alt={media.alt || ''} className="rounded-xl max-h-[200px] w-auto object-contain shadow-lg" />
+        ) : media.type === 'video' ? (
+          <video src={media.src} controls autoPlay loop className="rounded-xl max-h-[200px] w-auto object-contain shadow-lg" />
+        ) : null}
+      </div>
+      {zoomed && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm" onClick={() => setZoomed(false)}>
+          <div className="relative max-w-3xl w-full flex flex-col items-center">
+            <button
+              className="absolute top-2 right-2 bg-white/80 hover:bg-white text-gray-800 rounded-full p-2 shadow-lg z-10"
+              onClick={e => { e.stopPropagation(); setZoomed(false); }}
+            >
+              <span className="material-icons text-2xl">close</span>
+            </button>
+            {media.type === 'image' || media.type === 'gif' ? (
+              <img src={media.src} alt={media.alt || ''} className="rounded-xl max-h-[80vh] w-auto object-contain border-4 border-white shadow-2xl" onClick={e => e.stopPropagation()} />
+            ) : media.type === 'video' ? (
+              <video src={media.src} controls autoPlay loop className="rounded-xl max-h-[80vh] w-auto object-contain border-4 border-white shadow-2xl" onClick={e => e.stopPropagation()} />
+            ) : null}
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
 
 // ReferenceSlider: Slider cho mediaList, activeIdx, onChange
 const ReferenceSlider = ({ mediaList, activeIdx, onChange, side }: { mediaList: IconMedia[], activeIdx: number, onChange: (idx: number) => void, side: 'left' | 'right' }) => (
