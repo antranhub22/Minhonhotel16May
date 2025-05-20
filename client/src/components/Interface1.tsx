@@ -375,7 +375,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                   textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)'
                 }}
               >{t('tourism_tour', language)}</h4>
-              <ul className="flex flex-wrap justify-center items-center gap-2 py-1">
+              <ul className="flex flex-wrap justify-center items-center gap-4 py-2">
                 <li><IconWithTooltip iconName="flag" /></li>
                 <li><IconWithTooltip iconName="location_city" /></li>
                 <li><IconWithTooltip iconName="directions_car" /></li>
@@ -400,7 +400,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                   textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)'
                 }}
               >{t('ticket_bus', language)}</h4>
-              <ul className="flex flex-wrap justify-center items-center gap-2 py-1">
+              <ul className="flex flex-wrap justify-center items-center gap-4 py-2">
                 <li><IconWithTooltip iconName="directions_bus" /></li>
                 <li><IconWithTooltip iconName="directions_bus_filled" /></li>
                 <li><IconWithTooltip iconName="directions" /></li>
@@ -424,7 +424,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                   textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)'
                 }}
               >{t('rental_service', language)}</h4>
-              <ul className="flex flex-wrap justify-center items-center gap-2 py-1">
+              <ul className="flex flex-wrap justify-center items-center gap-4 py-2">
                 <li><IconWithTooltip iconName="two_wheeler" /></li>
                 <li><IconWithTooltip iconName="local_taxi" /></li>
                 <li><IconWithTooltip iconName="directions_car" /></li>
@@ -448,7 +448,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                   textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)'
                 }}
               >{t('currency_exchange', language)}</h4>
-              <ul className="flex flex-wrap justify-center items-center gap-2 py-1">
+              <ul className="flex flex-wrap justify-center items-center gap-4 py-2">
                 <li><IconWithTooltip iconName="attach_money" /></li>
                 <li><IconWithTooltip iconName="euro" /></li>
                 <li><IconWithTooltip iconName="currency_pound" /></li>
@@ -475,7 +475,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                   textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)'
                 }}
               >{t('laundry_service', language)}</h4>
-              <ul className="flex flex-wrap justify-center items-center gap-2 py-1">
+              <ul className="flex flex-wrap justify-center items-center gap-4 py-2">
                 <li><IconWithTooltip iconName="local_laundry_service" /></li>
                 <li><IconWithTooltip iconName="dry_cleaning" /></li>
                 <li><IconWithTooltip iconName="bolt" /></li>
@@ -499,7 +499,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                   textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)'
                 }}
               >{t('homestay_service', language)}</h4>
-              <ul className="flex flex-wrap justify-center items-center gap-2 py-1">
+              <ul className="flex flex-wrap justify-center items-center gap-4 py-2">
                 <li><IconWithTooltip iconName="home" /></li>
                 <li><IconWithTooltip iconName="home_work" /></li>
                 <li><IconWithTooltip iconName="villa" /></li>
