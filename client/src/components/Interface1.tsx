@@ -493,8 +493,8 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                   textShadow: '0px 1px 2px rgba(0, 0, 0, 0.10)'
                 }}
               >{t('tourism_tour', lang)}</h4>
-              <ul className="grid grid-cols-3 gap-x-1 gap-y-1 py-0.5 justify-items-center">
-                {renderIconGroup(travelTourIcons, 3, isMobile ? 22 : 28)}
+              <ul className={`grid ${isMobile ? `grid-cols-${travelTourIcons.length}` : 'grid-cols-3'} gap-x-1 gap-y-1 py-0.5 justify-items-center`}>
+                {renderIconGroup(travelTourIcons, isMobile ? travelTourIcons.length : 3, isMobile ? 22 : 28)}
               </ul>
             </div>
             {/* 2. BUS TICKETS */}
@@ -513,8 +513,8 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                   textShadow: '0px 1px 2px rgba(0, 0, 0, 0.10)'
                 }}
               >{t('ticket_bus', lang)}</h4>
-              <ul className="grid grid-cols-2 gap-x-1 gap-y-1 py-0.5 justify-items-center">
-                {renderIconGroup(busTicketIcons, 2, isMobile ? 22 : 28)}
+              <ul className={`grid ${isMobile ? `grid-cols-${busTicketIcons.length}` : 'grid-cols-2'} gap-x-1 gap-y-1 py-0.5 justify-items-center`}>
+                {renderIconGroup(busTicketIcons, isMobile ? busTicketIcons.length : 2, isMobile ? 22 : 28)}
               </ul>
             </div>
             {/* 3. VEHICLE RENTAL */}
@@ -533,8 +533,8 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                   textShadow: '0px 1px 2px rgba(0, 0, 0, 0.10)'
                 }}
               >{t('rental_service', lang)}</h4>
-              <ul className="grid grid-cols-2 gap-x-1 gap-y-1 py-0.5 justify-items-center">
-                {renderIconGroup(vehicleRentalIcons, 2, isMobile ? 22 : 28)}
+              <ul className={`grid ${isMobile ? `grid-cols-${vehicleRentalIcons.length}` : 'grid-cols-2'} gap-x-1 gap-y-1 py-0.5 justify-items-center`}>
+                {renderIconGroup(vehicleRentalIcons, isMobile ? vehicleRentalIcons.length : 2, isMobile ? 22 : 28)}
               </ul>
             </div>
             {/* 4. CURRENCY EXCHANGE */}
@@ -553,8 +553,8 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                   textShadow: '0px 1px 2px rgba(0, 0, 0, 0.10)'
                 }}
               >{t('currency_exchange', lang)}</h4>
-              <ul className="grid grid-cols-4 gap-x-1 gap-y-1 py-0.5 justify-items-center">
-                {renderIconGroup(currencyIcons, 4, isMobile ? 20 : 26)}
+              <ul className={`grid ${isMobile ? `grid-cols-${currencyIcons.length}` : 'grid-cols-4'} gap-x-1 gap-y-1 py-0.5 justify-items-center`}>
+                {renderIconGroup(currencyIcons, isMobile ? currencyIcons.length : 4, isMobile ? 20 : 26)}
               </ul>
             </div>
             {/* 5. LAUNDRY SERVICE */}
@@ -573,8 +573,8 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                   textShadow: '0px 1px 2px rgba(0, 0, 0, 0.10)'
                 }}
               >{t('laundry_service', lang)}</h4>
-              <ul className="grid grid-cols-3 gap-x-1 gap-y-1 py-0.5 justify-items-center">
-                {renderIconGroup(laundryIcons, 3, isMobile ? 22 : 28)}
+              <ul className={`grid ${isMobile ? `grid-cols-${laundryIcons.length}` : 'grid-cols-3'} gap-x-1 gap-y-1 py-0.5 justify-items-center`}>
+                {renderIconGroup(laundryIcons, isMobile ? laundryIcons.length : 3, isMobile ? 22 : 28)}
               </ul>
             </div>
             {/* 6. HOMESTAY SERVICE */}
@@ -593,8 +593,8 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                   textShadow: '0px 1px 2px rgba(0, 0, 0, 0.10)'
                 }}
               >{t('homestay_service', lang)}</h4>
-              <ul className="grid grid-cols-3 gap-x-1 gap-y-1 py-0.5 justify-items-center">
-                {renderIconGroup(homestayIcons, 3, isMobile ? 22 : 28)}
+              <ul className={`grid ${isMobile ? `grid-cols-${homestayIcons.length}` : 'grid-cols-3'} gap-x-1 gap-y-1 py-0.5 justify-items-center`}>
+                {renderIconGroup(homestayIcons, isMobile ? homestayIcons.length : 3, isMobile ? 22 : 28)}
               </ul>
             </div>
           </div>
