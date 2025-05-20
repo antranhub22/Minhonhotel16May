@@ -10,7 +10,7 @@ import { FiChevronDown } from 'react-icons/fi';
 import Reference from '@/components/Reference';
 import { referenceService, ReferenceItem } from '@/services/ReferenceService';
 import { iconMediaMap, IconMedia } from '../assets/iconMediaMap';
-import { FaMountain, FaCarSide, FaUmbrellaBeach, FaStar, FaBusAlt, FaRoute, FaMotorcycle, FaTaxi, FaMoneyBillWave, FaEuroSign, FaPoundSign, FaYenSign, FaRubleSign, FaExchangeAlt, FaBitcoin, FaTshirt, FaSoap, FaBolt, FaPlus, FaHome, FaBuilding, FaCalendarAlt, FaPlusSquare } from 'react-icons/fa';
+import { FaMountain, FaCarSide, FaUmbrellaBeach, FaStar, FaBusAlt, FaRoute, FaMotorcycle, FaTaxi, FaMoneyBillWave, FaEuroSign, FaPoundSign, FaYenSign, FaRubleSign, FaExchangeAlt, FaBitcoin, FaTshirt, FaSoap, FaBolt, FaPlus, FaHome, FaBuilding, FaCalendarAlt, FaPlusSquare, FaDollarSign, FaWonSign } from 'react-icons/fa';
 
 interface Interface1Props {
   isActive: boolean;
@@ -61,12 +61,13 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
     car_self: <FaCarSide size={32} color="#F9BF3B" />,
     vehicle_special: <FaCarSide size={32} color="#F9BF3B" />,
     // CURRENCY EXCHANGE
-    usd: <FaMoneyBillWave size={32} color="#F9BF3B" />,
+    usd: <FaDollarSign size={32} color="#F9BF3B" />,
     eur: <FaEuroSign size={32} color="#F9BF3B" />,
     gbp: <FaPoundSign size={32} color="#F9BF3B" />,
+    sgd: <FaMoneyBillWave size={32} color="#F9BF3B" />,
     jpy: <FaYenSign size={32} color="#F9BF3B" />,
+    krw: <FaWonSign size={32} color="#F9BF3B" />,
     rub: <FaRubleSign size={32} color="#F9BF3B" />,
-    currency_exchange: <FaExchangeAlt size={32} color="#F9BF3B" />,
     currency_other: <FaBitcoin size={32} color="#F9BF3B" />,
     // LAUNDRY SERVICE
     laundry_regular: <FaTshirt size={32} color="#F9BF3B" />,
@@ -359,7 +360,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
         {/* Services Section - với hiệu ứng Glass Morphism và 3D */}
         <div className="text-center w-full max-w-5xl mb-10 sm:mb-8" style={{ perspective: '1000px' }}>
           <div className="flex flex-col md:flex-row md:flex-wrap justify-center gap-y-2 sm:gap-y-2 md:gap-3 text-left mx-auto w-full">
-            {/* 1. TOUR DU LỊCH */}
+            {/* 1. TRAVEL TOURS */}
             <div className="p-0.5 py-0 sm:p-2 w-4/5 mx-auto md:w-64 mb-2 sm:mb-0 min-h-[36px] transition-all duration-250 hover:scale-103 hover:-translate-y-1"
               style={{
                 background: 'rgba(85,154,154,0.7)',
@@ -454,11 +455,11 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                 <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="usd" /></li>
                 <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="eur" /></li>
                 <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="gbp" /></li>
+                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="sgd" /></li>
                 <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="jpy" /></li>
+                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="krw" /></li>
                 <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="rub" /></li>
-                <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="currency_exchange" /></li>
                 <li className="w-16 h-16 flex items-center justify-center"><IconWithTooltip iconName="currency_other" /></li>
-                <li className="w-16 h-16 flex items-center justify-center invisible"></li>
               </ul>
             </div>
             {/* 5. DỊCH VỤ GIẶT ỦI */}
