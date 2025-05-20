@@ -396,13 +396,13 @@ export const ReferenceMedia = ({ media }: { media: IconMedia }) => {
 };
 
 // ReferenceSlider: Slider cho mediaList, activeIdx, onChange
-const ReferenceSlider = ({ mediaList, activeIdx, onChange, side }: { mediaList: IconMedia[], activeIdx: number, onChange: (idx: number) => void, side: 'left' | 'right' }) => (
+export const ReferenceSlider = ({ mediaList, activeIdx, onChange, side }: { mediaList: IconMedia[], activeIdx: number, onChange: (idx: number) => void, side: 'left' | 'right' | 'mobile' }) => (
   <div className="w-[320px] max-w-[90vw] min-h-[220px] bg-white/80 rounded-2xl shadow-xl border border-white/30 flex flex-col items-center justify-center p-4 backdrop-blur-md">
     <Swiper
       modules={[Navigation, Pagination, A11y]}
       spaceBetween={16}
       slidesPerView={1}
-      navigation
+      navigation={side !== 'mobile'}
       pagination={{ clickable: true, dynamicBullets: true }}
       onSlideChange={swiper => onChange(swiper.activeIndex)}
       initialSlide={activeIdx}
