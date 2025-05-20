@@ -11,6 +11,7 @@ import { DualReference } from './Reference';
 import { referenceService, ReferenceItem } from '@/services/ReferenceService';
 import { iconMediaMap, IconMedia } from '../assets/iconMediaMap';
 import { FaMountain, FaCarSide, FaUmbrellaBeach, FaStar, FaBusAlt, FaRoute, FaMotorcycle, FaTaxi, FaMoneyBillWave, FaEuroSign, FaPoundSign, FaYenSign, FaRubleSign, FaExchangeAlt, FaBitcoin, FaTshirt, FaSoap, FaBolt, FaPlus, FaHome, FaBuilding, FaCalendarAlt, FaPlusSquare, FaDollarSign, FaWonSign } from 'react-icons/fa';
+import { ReferenceMedia } from './Reference';
 
 interface Interface1Props {
   isActive: boolean;
@@ -185,9 +186,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
   const getActiveIconMediaList = () => {
     if (!activeIcon || !iconMediaMap[activeIcon]) return [];
     const media = iconMediaMap[activeIcon];
-    // Nếu là mảng (nhiều media)
     if (Array.isArray(media)) return media;
-    // Nếu là 1 object
     if (media && media.src) return [media];
     return [];
   };
@@ -335,11 +334,11 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
         </h2>
         <p className="text-xs sm:text-lg lg:text-xl text-center max-w-full mb-4 truncate sm:whitespace-nowrap overflow-x-auto">AI-powered Voice Assistant - Supporting All Your Needs</p>
         
-        {/* Thay thế block DualReference + nút gọi bằng layout grid 3 cột */}
+        {/* Thay thế block DualReference + nút gọi bằng layout grid 3 cột, mỗi bên 1 ảnh */}
         <div className="w-full grid grid-cols-1 md:grid-cols-3 items-center justify-items-center gap-4 mb-8 mt-2">
-          {/* Reference 1 (bên trái) */}
-          <div className="hidden md:block">
-            <DualReference mediaList={getActiveIconMediaList()} />
+          {/* ReferenceMedia bên trái */}
+          <div className="hidden md:flex items-center justify-center">
+            {getActiveIconMediaList()[0] && <ReferenceMedia media={getActiveIconMediaList()[0]} />}
           </div>
           {/* Nút gọi luôn ở giữa */}
           <div className="flex items-center justify-center">
@@ -399,9 +398,9 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
               </button>
             </div>
           </div>
-          {/* Reference 2 (bên phải) */}
-          <div className="hidden md:block">
-            {/* Để trống hoặc có thể render DualReference nếu muốn, nhưng chỉ cần 1 DualReference là đủ */}
+          {/* ReferenceMedia bên phải */}
+          <div className="hidden md:flex items-center justify-center">
+            {getActiveIconMediaList()[1] && <ReferenceMedia media={getActiveIconMediaList()[1]} />}
           </div>
         </div>
         {/* Services Section - với hiệu ứng Glass Morphism và 3D */}

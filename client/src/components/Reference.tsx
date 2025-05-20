@@ -360,7 +360,7 @@ export const DualReference: React.FC<{ mediaList: IconMedia[] }> = ({ mediaList 
 };
 
 // ReferenceMedia: Hiển thị 1 media (ảnh/video/gif) với style đẹp
-const ReferenceMedia = ({ media }: { media: IconMedia }) => (
+export const ReferenceMedia = ({ media }: { media: IconMedia }) => (
   <div className="w-[320px] max-w-[90vw] min-h-[220px] bg-white/80 rounded-2xl shadow-xl border border-white/30 flex items-center justify-center p-4 backdrop-blur-md">
     {media.type === 'image' || media.type === 'gif' ? (
       <img src={media.src} alt={media.alt || ''} className="rounded-xl max-h-[200px] w-auto object-contain shadow-lg" />
