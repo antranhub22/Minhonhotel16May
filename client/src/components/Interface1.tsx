@@ -245,12 +245,11 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
   console.log('ActiveOrders:', activeOrders);
 
   // Hàm render icon group
-  const renderIconGroup = (icons: string[], col: number) => {
+  const renderIconGroup = (icons: string[], col: number, iconSize: number = 32) => {
     const items = icons.map(icon => {
-      // console.log('Rendering icon:', icon, iconComponents[icon]);
       return (
-        <li key={icon} className="w-16 h-16 flex items-center justify-center">
-          {iconComponents[icon] ? <IconWithTooltip iconName={icon} /> : <span className="text-red-500">?</span>}
+        <li key={icon} className="w-12 h-12 flex items-center justify-center">
+          {iconComponents[icon] ? React.cloneElement(iconComponents[icon], { size: iconSize }) : <span className="text-red-500">?</span>}
         </li>
       );
     });
@@ -258,7 +257,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
     const remainder = icons.length % col;
     if (remainder !== 0) {
       for (let i = 0; i < col - remainder; i++) {
-        items.push(<li key={`invisible-${i}`} className="w-16 h-16 flex items-center justify-center invisible"></li>);
+        items.push(<li key={`invisible-${i}`} className="w-12 h-12 flex items-center justify-center invisible"></li>);
       }
     }
     return items;
@@ -416,123 +415,45 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
         <div className="text-center w-full max-w-5xl mb-10 sm:mb-8" style={{ perspective: '1000px' }}>
           <div className="flex flex-col md:flex-row md:flex-wrap justify-center gap-y-2 sm:gap-y-2 md:gap-3 text-left mx-auto w-full">
             {/* 1. TRAVEL TOURS */}
-            <div className="p-0.5 py-0 sm:p-2 w-4/5 mx-auto md:w-64 mb-2 sm:mb-0 min-h-[160px] bg-opacity-80"
-              style={{
-                background: 'rgba(85,154,154,0.7)',
-                backdropFilter: 'blur(8px)',
-                borderRadius: '12px',
-                boxShadow: '0px 10px 25px rgba(0, 0, 0, 0.15)',
-                border: '1px solid rgba(255, 255, 255, 0.18)',
-              }}
-            >
-              <h4 className="font-medium text-amber-400 pb-0 mb-0.5 text-xs sm:text-sm"
-                style={{ 
-                  borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-                  textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)'
-                }}
-              >{t('tourism_tour', lang)}</h4>
-              <ul className="grid grid-cols-3 gap-x-6 gap-y-3 py-2 justify-items-center">
-                {renderIconGroup(travelTourIcons, 3)}
+            <div className="bg-white/60 border border-white/30 rounded-lg shadow-md p-2 sm:p-3 w-full sm:w-80 md:w-64 mb-2 sm:mb-0 flex flex-col items-start mx-auto" style={{ minHeight: 0 }}>
+              <h4 className="font-medium text-amber-300 text-sm mb-1" style={{ textShadow: '0px 1px 2px rgba(0,0,0,0.08)' }}>{t('tourism_tour', lang)}</h4>
+              <ul className="grid grid-cols-3 gap-x-2 gap-y-2 py-1 justify-items-center">
+                {renderIconGroup(travelTourIcons, 3, 26)}
               </ul>
             </div>
             {/* 2. VÉ XE KHÁCH */}
-            <div className="p-0.5 py-0 sm:p-2 w-4/5 mx-auto md:w-64 mb-2 sm:mb-0 min-h-[160px] bg-opacity-80"
-              style={{
-                background: 'rgba(85,154,154,0.7)',
-                backdropFilter: 'blur(8px)',
-                borderRadius: '12px',
-                boxShadow: '0px 10px 25px rgba(0, 0, 0, 0.15)',
-                border: '1px solid rgba(255, 255, 255, 0.18)',
-              }}
-            >
-              <h4 className="font-medium text-amber-400 pb-0 mb-0.5 text-xs sm:text-sm"
-                style={{ 
-                  borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-                  textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)'
-                }}
-              >{t('ticket_bus', lang)}</h4>
-              <ul className="grid grid-cols-2 gap-x-6 gap-y-3 py-2 justify-items-center">
-                {renderIconGroup(busTicketIcons, 2)}
+            <div className="bg-white/60 border border-white/30 rounded-lg shadow-md p-2 sm:p-3 w-full sm:w-80 md:w-64 mb-2 sm:mb-0 flex flex-col items-start mx-auto" style={{ minHeight: 0 }}>
+              <h4 className="font-medium text-amber-300 text-sm mb-1" style={{ textShadow: '0px 1px 2px rgba(0,0,0,0.08)' }}>{t('ticket_bus', lang)}</h4>
+              <ul className="grid grid-cols-2 gap-x-2 gap-y-2 py-1 justify-items-center">
+                {renderIconGroup(busTicketIcons, 2, 26)}
               </ul>
             </div>
             {/* 3. DỊCH VỤ CHO THUÊ PHƯƠNG TIỆN */}
-            <div className="p-0.5 py-0 sm:p-2 w-4/5 mx-auto md:w-64 mb-2 sm:mb-0 min-h-[160px] bg-opacity-80"
-              style={{
-                background: 'rgba(85,154,154,0.7)',
-                backdropFilter: 'blur(8px)',
-                borderRadius: '12px',
-                boxShadow: '0px 10px 25px rgba(0, 0, 0, 0.15)',
-                border: '1px solid rgba(255, 255, 255, 0.18)',
-              }}
-            >
-              <h4 className="font-medium text-amber-400 pb-0 mb-0.5 text-xs sm:text-sm"
-                style={{ 
-                  borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-                  textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)'
-                }}
-              >{t('rental_service', lang)}</h4>
-              <ul className="grid grid-cols-2 gap-x-6 gap-y-3 py-2 justify-items-center">
-                {renderIconGroup(vehicleRentalIcons, 2)}
+            <div className="bg-white/60 border border-white/30 rounded-lg shadow-md p-2 sm:p-3 w-full sm:w-80 md:w-64 mb-2 sm:mb-0 flex flex-col items-start mx-auto" style={{ minHeight: 0 }}>
+              <h4 className="font-medium text-amber-300 text-sm mb-1" style={{ textShadow: '0px 1px 2px rgba(0,0,0,0.08)' }}>{t('rental_service', lang)}</h4>
+              <ul className="grid grid-cols-2 gap-x-2 gap-y-2 py-1 justify-items-center">
+                {renderIconGroup(vehicleRentalIcons, 2, 26)}
               </ul>
             </div>
             {/* 4. DỊCH VỤ ĐỔI TIỀN TỆ */}
-            <div className="p-0.5 py-0 sm:p-2 w-4/5 mx-auto md:w-64 mb-2 sm:mb-0 min-h-[160px] bg-opacity-80"
-              style={{
-                background: 'rgba(85,154,154,0.7)',
-                backdropFilter: 'blur(8px)',
-                borderRadius: '12px',
-                boxShadow: '0px 10px 25px rgba(0, 0, 0, 0.15)',
-                border: '1px solid rgba(255, 255, 255, 0.18)',
-              }}
-            >
-              <h4 className="font-medium text-amber-400 pb-0 mb-0.5 text-xs sm:text-sm"
-                style={{ 
-                  borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-                  textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)'
-                }}
-              >{t('currency_exchange', lang)}</h4>
-              <ul className="grid grid-cols-4 gap-x-6 gap-y-3 py-2 justify-items-center">
-                {renderIconGroup(currencyIcons, 4)}
+            <div className="bg-white/60 border border-white/30 rounded-lg shadow-md p-2 sm:p-3 w-full sm:w-80 md:w-64 mb-2 sm:mb-0 flex flex-col items-start mx-auto" style={{ minHeight: 0 }}>
+              <h4 className="font-medium text-amber-300 text-sm mb-1" style={{ textShadow: '0px 1px 2px rgba(0,0,0,0.08)' }}>{t('currency_exchange', lang)}</h4>
+              <ul className="grid grid-cols-4 gap-x-2 gap-y-2 py-1 justify-items-center">
+                {renderIconGroup(currencyIcons, 4, 26)}
               </ul>
             </div>
             {/* 5. DỊCH VỤ GIẶT ỦI */}
-            <div className="p-0.5 py-0 sm:p-2 w-4/5 mx-auto md:w-64 mb-2 sm:mb-0 min-h-[160px] bg-opacity-80"
-              style={{
-                background: 'rgba(85,154,154,0.7)',
-                backdropFilter: 'blur(8px)',
-                borderRadius: '12px',
-                boxShadow: '0px 10px 25px rgba(0, 0, 0, 0.15)',
-                border: '1px solid rgba(255, 255, 255, 0.18)',
-              }}
-            >
-              <h4 className="font-medium text-amber-400 pb-0 mb-0.5 text-xs sm:text-sm"
-                style={{ 
-                  borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-                  textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)'
-                }}
-              >{t('laundry_service', lang)}</h4>
-              <ul className="grid grid-cols-3 gap-x-6 gap-y-3 py-2 justify-items-center">
-                {renderIconGroup(laundryIcons, 3)}
+            <div className="bg-white/60 border border-white/30 rounded-lg shadow-md p-2 sm:p-3 w-full sm:w-80 md:w-64 mb-2 sm:mb-0 flex flex-col items-start mx-auto" style={{ minHeight: 0 }}>
+              <h4 className="font-medium text-amber-300 text-sm mb-1" style={{ textShadow: '0px 1px 2px rgba(0,0,0,0.08)' }}>{t('laundry_service', lang)}</h4>
+              <ul className="grid grid-cols-3 gap-x-2 gap-y-2 py-1 justify-items-center">
+                {renderIconGroup(laundryIcons, 3, 26)}
               </ul>
             </div>
             {/* 6. DỊCH VỤ HOMESTAY */}
-            <div className="p-0.5 py-0 sm:p-2 w-4/5 mx-auto md:w-64 mb-2 sm:mb-0 min-h-[160px] bg-opacity-80"
-              style={{
-                background: 'rgba(85,154,154,0.7)',
-                backdropFilter: 'blur(8px)',
-                borderRadius: '12px',
-                boxShadow: '0px 10px 25px rgba(0, 0, 0, 0.15)',
-                border: '1px solid rgba(255, 255, 255, 0.18)',
-              }}
-            >
-              <h4 className="font-medium text-amber-400 pb-0 mb-0.5 text-xs sm:text-sm"
-                style={{ 
-                  borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-                  textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)'
-                }}
-              >{t('homestay_service', lang)}</h4>
-              <ul className="grid grid-cols-3 gap-x-6 gap-y-3 py-2 justify-items-center">
-                {renderIconGroup(homestayIcons, 3)}
+            <div className="bg-white/60 border border-white/30 rounded-lg shadow-md p-2 sm:p-3 w-full sm:w-80 md:w-64 mb-2 sm:mb-0 flex flex-col items-start mx-auto" style={{ minHeight: 0 }}>
+              <h4 className="font-medium text-amber-300 text-sm mb-1" style={{ textShadow: '0px 1px 2px rgba(0,0,0,0.08)' }}>{t('homestay_service', lang)}</h4>
+              <ul className="grid grid-cols-3 gap-x-2 gap-y-2 py-1 justify-items-center">
+                {renderIconGroup(homestayIcons, 3, 26)}
               </ul>
             </div>
           </div>
