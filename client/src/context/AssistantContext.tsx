@@ -515,13 +515,18 @@ export function AssistantProvider({ children }: { children: ReactNode }) {
         console.log('[AssistantContext] Fetched orders from API:', data);
         // data là mảng order, cần map sang ActiveOrder (chuyển requestedAt sang Date)
         if (Array.isArray(data)) {
-          setActiveOrders(
-            data.map((o: any) => ({
+          setActiveOrders(prev => {
+            // Chuyển data từ API về ActiveOrder chuẩn
+            const apiOrders = data.map((o: any) => ({
               ...o,
               reference: o.specialInstructions || o.reference || '',
               requestedAt: o.createdAt ? new Date(o.createdAt) : new Date(),
-            }))
-          );
+            }));
+            // Lọc các order local chưa có trong API (theo reference)
+            const localOnly = prev.filter(localOrder => !apiOrders.some(apiOrder => apiOrder.reference === localOrder.reference));
+            // Gộp lại: localOnly + apiOrders (order mới sẽ ở đầu)
+            return [...localOnly, ...apiOrders];
+          });
         }
       } catch (err) {
         // ignore
