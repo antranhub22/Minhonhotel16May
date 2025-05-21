@@ -479,7 +479,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
           <div className="flex flex-col md:flex-row md:flex-wrap justify-center gap-y-1.5 sm:gap-y-2 md:gap-3 text-left mx-auto w-full">
             {/* 1. TRAVEL TOURS */}
             <div
-              className="py-0.5 px-1 sm:p-2 w-full sm:w-4/5 md:w-64 mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
+              className="py-0.5 px-1 sm:p-2 w-11/12 sm:w-4/5 md:w-64 mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
               style={{
                 background: 'rgba(85,154,154,0.4)',
                 backdropFilter: 'blur(8px)',
@@ -496,15 +496,15 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
               >{t('tourism_tour', lang)}</h4>
               <ul className={
                 isMobile
-                  ? "flex flex-row flex-nowrap justify-center items-center gap-x-0.5 py-0"
+                  ? "flex flex-row flex-nowrap justify-center items-center gap-x-2 py-0"
                   : "grid grid-cols-3 gap-x-1 gap-y-1 py-0.5 justify-items-center"
               }>
-                {renderIconGroup(travelTourIcons, isMobile ? travelTourIcons.length : 3, isMobile ? 16 : 28)}
+                {renderIconGroup(travelTourIcons, isMobile ? travelTourIcons.length : 3, isMobile ? 18 : 28)}
               </ul>
             </div>
             {/* 2. BUS TICKETS */}
             <div
-              className="py-0.5 px-1 sm:p-2 w-full sm:w-4/5 md:w-64 mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
+              className="py-0.5 px-1 sm:p-2 w-11/12 sm:w-4/5 md:w-64 mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
               style={{
                 background: 'rgba(85,154,154,0.4)',
                 backdropFilter: 'blur(8px)',
@@ -521,15 +521,15 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
               >{t('ticket_bus', lang)}</h4>
               <ul className={
                 isMobile
-                  ? "flex flex-row flex-nowrap justify-center items-center gap-x-0.5 py-0"
+                  ? "flex flex-row flex-nowrap justify-center items-center gap-x-2 py-0"
                   : "grid grid-cols-2 gap-x-1 gap-y-1 py-0.5 justify-items-center"
               }>
-                {renderIconGroup(busTicketIcons, isMobile ? busTicketIcons.length : 2, isMobile ? 16 : 28)}
+                {renderIconGroup(busTicketIcons, isMobile ? busTicketIcons.length : 2, isMobile ? 18 : 28)}
               </ul>
             </div>
             {/* 3. VEHICLE RENTAL */}
             <div
-              className="py-0.5 px-1 sm:p-2 w-full sm:w-4/5 md:w-64 mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
+              className="py-0.5 px-1 sm:p-2 w-11/12 sm:w-4/5 md:w-64 mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
               style={{
                 background: 'rgba(85,154,154,0.4)',
                 backdropFilter: 'blur(8px)',
@@ -546,15 +546,15 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
               >{t('rental_service', lang)}</h4>
               <ul className={
                 isMobile
-                  ? "flex flex-row flex-nowrap justify-center items-center gap-x-0.5 py-0"
+                  ? "flex flex-row flex-nowrap justify-center items-center gap-x-2 py-0"
                   : "grid grid-cols-2 gap-x-1 gap-y-1 py-0.5 justify-items-center"
               }>
-                {renderIconGroup(vehicleRentalIcons, isMobile ? vehicleRentalIcons.length : 2, isMobile ? 16 : 28)}
+                {renderIconGroup(vehicleRentalIcons, isMobile ? vehicleRentalIcons.length : 2, isMobile ? 18 : 28)}
               </ul>
             </div>
             {/* 4. CURRENCY EXCHANGE */}
             <div
-              className="py-0.5 px-1 sm:p-2 w-full sm:w-4/5 md:w-64 mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
+              className="py-0.5 px-1 sm:p-2 w-11/12 sm:w-4/5 md:w-64 mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
               style={{
                 background: 'rgba(85,154,154,0.4)',
                 backdropFilter: 'blur(8px)',
@@ -571,15 +571,15 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
               >{t('currency_exchange', lang)}</h4>
               <ul className={
                 isMobile
-                  ? "flex flex-row flex-nowrap justify-center items-center gap-x-0.5 py-0"
+                  ? "flex flex-row flex-nowrap justify-center items-center gap-x-2 py-0"
                   : "grid grid-cols-4 gap-x-1 gap-y-1 py-0.5 justify-items-center"
               }>
-                {renderIconGroup(currencyIcons, isMobile ? currencyIcons.length : 4, isMobile ? 14 : 26)}
+                {renderIconGroup(currencyIcons, isMobile ? currencyIcons.length : 4, isMobile ? 16 : 26)}
               </ul>
             </div>
             {/* 5. LAUNDRY SERVICE */}
             <div
-              className="py-0.5 px-1 sm:p-2 w-full sm:w-4/5 md:w-64 mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
+              className="py-0.5 px-1 sm:p-2 w-11/12 sm:w-4/5 md:w-64 mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
               style={{
                 background: 'rgba(85,154,154,0.4)',
                 backdropFilter: 'blur(8px)',
@@ -596,15 +596,15 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
               >{t('laundry_service', lang)}</h4>
               <ul className={
                 isMobile
-                  ? "flex flex-row flex-nowrap justify-center items-center gap-x-0.5 py-0"
+                  ? "flex flex-row flex-nowrap justify-center items-center gap-x-2 py-0"
                   : "grid grid-cols-3 gap-x-1 gap-y-1 py-0.5 justify-items-center"
               }>
-                {renderIconGroup(laundryIcons, isMobile ? laundryIcons.length : 3, isMobile ? 16 : 28)}
+                {renderIconGroup(laundryIcons, isMobile ? laundryIcons.length : 3, isMobile ? 18 : 28)}
               </ul>
             </div>
             {/* 6. HOMESTAY SERVICE */}
             <div
-              className="py-0.5 px-1 sm:p-2 w-full sm:w-4/5 md:w-64 mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
+              className="py-0.5 px-1 sm:p-2 w-11/12 sm:w-4/5 md:w-64 mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
               style={{
                 background: 'rgba(85,154,154,0.4)',
                 backdropFilter: 'blur(8px)',
@@ -621,10 +621,10 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
               >{t('homestay_service', lang)}</h4>
               <ul className={
                 isMobile
-                  ? "flex flex-row flex-nowrap justify-center items-center gap-x-0.5 py-0"
+                  ? "flex flex-row flex-nowrap justify-center items-center gap-x-2 py-0"
                   : "grid grid-cols-3 gap-x-1 gap-y-1 py-0.5 justify-items-center"
               }>
-                {renderIconGroup(homestayIcons, isMobile ? homestayIcons.length : 3, isMobile ? 16 : 28)}
+                {renderIconGroup(homestayIcons, isMobile ? homestayIcons.length : 3, isMobile ? 18 : 28)}
               </ul>
             </div>
           </div>
