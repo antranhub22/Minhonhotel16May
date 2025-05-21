@@ -109,7 +109,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
     rub: 'RUB',
     currency_other: 'Additional Currency Services',
     // LAUNDRY SERVICE
-    laundry_regular: 'Regular Laundry Service',
+    laundry_regular: 'Regularly Laundry Service for 25k/kg',
     laundry_special: 'Special Laundry Service',
     laundry_express: 'Express Laundry Service',
     laundry_additional: 'Additional Laundry Services',
