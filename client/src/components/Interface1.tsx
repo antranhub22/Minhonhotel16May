@@ -642,7 +642,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
               const secs = (diffSec % 60).toString().padStart(2, '0');
               return (
                 <div key={o.reference} 
-                  className="p-2 sm:p-3 text-gray-800 max-w-xs w-[220px] flex-shrink-0 transition-all duration-250 hover:rotate-1 hover:scale-105"
+                  className="p-2 sm:p-3 text-gray-800 max-w-xs w-[260px] flex-shrink-0 transition-all duration-250 hover:rotate-1 hover:scale-105"
                   style={{
                     background: 'rgba(139,26,71,0.85)',
                     backdropFilter: 'blur(8px)',
@@ -664,6 +664,13 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                         boxShadow: '0px 2px 6px rgba(0, 0, 0, 0.1)'
                       }}
                     >{`${mins}:${secs}`}</span>
+                  </div>
+                  {/* Thông tin đơn hàng */}
+                  <div className="space-y-1 text-sm text-white/90">
+                    <div><b>{t('order_reference', lang)}:</b> <span className="font-mono">{o.reference}</span></div>
+                    {o.status && <div><b>{t('status', lang)}:</b> {t(getStatusTranslationKey(o.status), lang)}</div>}
+                    <div><b>{t('created_at', lang)}:</b> {o.requestedAt.toLocaleString()}</div>
+                    {o.estimatedTime && <div><b>{t('estimated_delivery_time', lang)}:</b> {o.estimatedTime}</div>}
                   </div>
                 </div>
               );
