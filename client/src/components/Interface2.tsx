@@ -237,7 +237,7 @@ const Interface2: React.FC<Interface2Props> = ({ isActive }) => {
         isActive ? 'opacity-100' : 'opacity-0 pointer-events-none'
       } z-20 overflow-y-auto`} id="interface2"
       style={{
-        backgroundImage: `linear-gradient(rgba(85,154,154,0.7), rgba(121, 219, 220, 0.6)), url('/assets/courtyard.jpeg')`,
+        backgroundImage: `linear-gradient(rgba(139,26,71,0.7), rgba(168,34,85,0.6)), url('/assets/courtyard.jpeg')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center'
       }}
