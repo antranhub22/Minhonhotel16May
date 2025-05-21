@@ -238,7 +238,7 @@ const Reference = ({ references, activeIconMedia }: ReferenceProps): JSX.Element
       <div className="flex items-center mb-4 px-2">
         <div className="flex items-center px-3 py-2 sm:py-1.5 gap-2 transition-all duration-300 mx-auto sm:mx-0"
           style={{
-            background: 'linear-gradient(135deg, #79DBDC 0%, #559A9A 100%)',
+            background: 'linear-gradient(135deg, #A82255 0%, #8B1A47 100%)',
             boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.15)', 
             borderRadius: '8px',
             minWidth: '150px',
@@ -246,7 +246,7 @@ const Reference = ({ references, activeIconMedia }: ReferenceProps): JSX.Element
             width: 'auto',
             border: '1px solid rgba(255, 255, 255, 0.1)'
           }}>
-          <FaBookOpen className="text-[#F9BF3B] text-xl mr-1.5"
+          <FaBookOpen className="text-[#DAC17A] text-xl mr-1.5"
             style={{ filter: 'drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.2))' }}
           />
           <label className="mr-2 font-semibold font-sans text-white whitespace-nowrap text-sm sm:text-base">Category:</label>
@@ -266,7 +266,7 @@ const Reference = ({ references, activeIconMedia }: ReferenceProps): JSX.Element
                 <option key={cat} value={cat} className="bg-blue-800 text-white">{cat}</option>
               ))}
             </select>
-            <FiChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 text-[#F9BF3B] pointer-events-none text-lg" />
+            <FiChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 text-[#DAC17A] pointer-events-none text-lg" />
           </div>
         </div>
       </div>
