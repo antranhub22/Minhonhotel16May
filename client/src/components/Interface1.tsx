@@ -52,9 +52,9 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
     stream_beach: <FaUmbrellaBeach size={32} color="#DAC17A" />, // Stream and Beach
     special_tour: <FaStar size={32} color="#DAC17A" />, // Special Tours
     // BUS TICKETS
-    bus_hcm: <span className="icon-bus-label">HCM</span>,
-    bus_dl: <span className="icon-bus-label">ĐL</span>,
-    bus_nt: <span className="icon-bus-label">NT</span>,
+    bus_hcm: <span className="icon-bus-label" style={{color:'#DAC17A',fontSize:32,fontWeight:700,background:'transparent',boxShadow:'none',border:'none',padding:'0 8px',display:'flex',alignItems:'center',justifyContent:'center',height:36,lineHeight:'36px',letterSpacing:'0.5px'}}>HoChiMinh</span>,
+    bus_dl: <span className="icon-bus-label" style={{color:'#DAC17A',fontSize:32,fontWeight:700,background:'transparent',boxShadow:'none',border:'none',padding:'0 8px',display:'flex',alignItems:'center',justifyContent:'center',height:36,lineHeight:'36px',letterSpacing:'0.5px'}}>Dalat</span>,
+    bus_nt: <span className="icon-bus-label" style={{color:'#DAC17A',fontSize:32,fontWeight:700,background:'transparent',boxShadow:'none',border:'none',padding:'0 8px',display:'flex',alignItems:'center',justifyContent:'center',height:36,lineHeight:'36px',letterSpacing:'0.5px'}}>NhaTrang</span>,
     bus_other: <FaRoute size={32} color="#DAC17A" />,
     // VEHICLE RENTAL
     motorcycle: <FaMotorcycle size={32} color="#DAC17A" />,
