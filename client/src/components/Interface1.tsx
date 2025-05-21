@@ -10,7 +10,7 @@ import { FiChevronDown } from 'react-icons/fi';
 import { DualReference } from './Reference';
 import { referenceService, ReferenceItem } from '@/services/ReferenceService';
 import { iconMediaMap, IconMedia } from '../assets/iconMediaMap';
-import { FaMountain, FaCarSide, FaUmbrellaBeach, FaStar, FaBusAlt, FaRoute, FaMotorcycle, FaTaxi, FaMoneyBillWave, FaEuroSign, FaPoundSign, FaYenSign, FaRubleSign, FaExchangeAlt, FaBitcoin, FaTshirt, FaSoap, FaBolt, FaPlus, FaHome, FaBuilding, FaCalendarAlt, FaPlusSquare, FaDollarSign, FaWonSign } from 'react-icons/fa';
+import { FaMountain, FaCarSide, FaUmbrellaBeach, FaStar, FaBusAlt, FaRoute, FaMotorcycle, FaTaxi, FaMoneyBillWave, FaEuroSign, FaPoundSign, FaYenSign, FaRubleSign, FaExchangeAlt, FaBitcoin, FaTshirt, FaSoap, FaBolt, FaPlus, FaHome, FaBuilding, FaCalendarAlt, FaPlusSquare, FaDollarSign, FaWonSign, FaCity } from 'react-icons/fa';
 import { ReferenceMedia, ReferenceSlider } from './Reference';
 
 interface Interface1Props {
@@ -47,14 +47,14 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
   const iconComponents: Record<string, JSX.Element> = {
     // TOURISM & TOURS
     sand_dunes: <FaMountain size={32} color="#DAC17A" />, // Đồi cát (fallback)
-    sightseeing: <FaMountain size={32} color="#DAC17A" />, // Phan Thiet Sightseeing
+    sightseeing: <FaCity size={32} color="#DAC17A" />, // City tour
     jeep_tour: <FaCarSide size={32} color="#DAC17A" />, // Jeep Tour
     stream_beach: <FaUmbrellaBeach size={32} color="#DAC17A" />, // Stream and Beach
     special_tour: <FaStar size={32} color="#DAC17A" />, // Special Tours
     // BUS TICKETS
-    bus_hcm: <FaBusAlt size={32} color="#DAC17A" />,
-    bus_dl: <FaBusAlt size={32} color="#DAC17A" />,
-    bus_nt: <FaBusAlt size={32} color="#DAC17A" />,
+    bus_hcm: <span className="icon-bus-label">HCM</span>,
+    bus_dl: <span className="icon-bus-label">ĐL</span>,
+    bus_nt: <span className="icon-bus-label">NT</span>,
     bus_other: <FaRoute size={32} color="#DAC17A" />,
     // VEHICLE RENTAL
     motorcycle: <FaMotorcycle size={32} color="#DAC17A" />,
