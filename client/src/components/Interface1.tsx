@@ -60,7 +60,6 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
     motorcycle: <FaMotorcycle size={32} color="#DAC17A" />,
     car_driver: <FaTaxi size={32} color="#DAC17A" />,
     car_self: <FaCarSide size={32} color="#DAC17A" />,
-    vehicle_special: <FaCarSide size={32} color="#DAC17A" />,
     // CURRENCY EXCHANGE
     usd: <FaDollarSign size={32} color="#DAC17A" />,
     eur: <FaEuroSign size={32} color="#DAC17A" />,
@@ -100,7 +99,6 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
     motorcycle: 'Motorcycle Rental',
     car_driver: 'Car Rental (with driver)',
     car_self: 'Car Rental (self-drive)',
-    vehicle_special: 'Special Vehicle Rental',
     // CURRENCY EXCHANGE
     usd: 'USD',
     eur: 'EUR',
@@ -126,7 +124,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
   // Định nghĩa mảng iconName cho từng nhóm dịch vụ
   const travelTourIcons = ["sand_dunes", "sightseeing", "jeep_tour", "stream_beach", "special_tour"];
   const busTicketIcons = ["bus_hcm", "bus_dl", "bus_nt", "bus_other"];
-  const vehicleRentalIcons = ["motorcycle", "car_driver", "car_self", "vehicle_special"];
+  const vehicleRentalIcons = ["motorcycle", "car_driver", "car_self"];
   const currencyIcons = ["usd", "eur", "gbp", "sgd", "jpy", "krw", "rub", "currency_other"];
   const laundryIcons = ["laundry_regular", "laundry_special", "laundry_express", "laundry_additional"];
   const homestayIcons = ["homestay_300k", "homestay_300_600k", "homestay_600k", "homestay_longterm", "homestay_additional"];
