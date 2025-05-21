@@ -46,41 +46,41 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
   // Tạo object ánh xạ iconName -> React component icon sát nghĩa nhất
   const iconComponents: Record<string, JSX.Element> = {
     // TOURISM & TOURS
-    sand_dunes: <FaMountain size={32} color="#F9BF3B" />, // Đồi cát (fallback)
-    sightseeing: <FaMountain size={32} color="#F9BF3B" />, // Phan Thiet Sightseeing
-    jeep_tour: <FaCarSide size={32} color="#F9BF3B" />, // Jeep Tour
-    stream_beach: <FaUmbrellaBeach size={32} color="#F9BF3B" />, // Stream and Beach
-    special_tour: <FaStar size={32} color="#F9BF3B" />, // Special Tours
+    sand_dunes: <FaMountain size={32} color="#DAC17A" />, // Đồi cát (fallback)
+    sightseeing: <FaMountain size={32} color="#DAC17A" />, // Phan Thiet Sightseeing
+    jeep_tour: <FaCarSide size={32} color="#DAC17A" />, // Jeep Tour
+    stream_beach: <FaUmbrellaBeach size={32} color="#DAC17A" />, // Stream and Beach
+    special_tour: <FaStar size={32} color="#DAC17A" />, // Special Tours
     // BUS TICKETS
-    bus_hcm: <FaBusAlt size={32} color="#F9BF3B" />,
-    bus_dl: <FaBusAlt size={32} color="#F9BF3B" />,
-    bus_nt: <FaBusAlt size={32} color="#F9BF3B" />,
-    bus_other: <FaRoute size={32} color="#F9BF3B" />,
+    bus_hcm: <FaBusAlt size={32} color="#DAC17A" />,
+    bus_dl: <FaBusAlt size={32} color="#DAC17A" />,
+    bus_nt: <FaBusAlt size={32} color="#DAC17A" />,
+    bus_other: <FaRoute size={32} color="#DAC17A" />,
     // VEHICLE RENTAL
-    motorcycle: <FaMotorcycle size={32} color="#F9BF3B" />,
-    car_driver: <FaTaxi size={32} color="#F9BF3B" />,
-    car_self: <FaCarSide size={32} color="#F9BF3B" />,
-    vehicle_special: <FaCarSide size={32} color="#F9BF3B" />,
+    motorcycle: <FaMotorcycle size={32} color="#DAC17A" />,
+    car_driver: <FaTaxi size={32} color="#DAC17A" />,
+    car_self: <FaCarSide size={32} color="#DAC17A" />,
+    vehicle_special: <FaCarSide size={32} color="#DAC17A" />,
     // CURRENCY EXCHANGE
-    usd: <FaDollarSign size={32} color="#F9BF3B" />,
-    eur: <FaEuroSign size={32} color="#F9BF3B" />,
-    gbp: <FaPoundSign size={32} color="#F9BF3B" />,
-    sgd: <FaMoneyBillWave size={32} color="#F9BF3B" />,
-    jpy: <FaYenSign size={32} color="#F9BF3B" />,
-    krw: <FaWonSign size={32} color="#F9BF3B" />,
-    rub: <FaRubleSign size={32} color="#F9BF3B" />,
-    currency_other: <FaBitcoin size={32} color="#F9BF3B" />,
+    usd: <FaDollarSign size={32} color="#DAC17A" />,
+    eur: <FaEuroSign size={32} color="#DAC17A" />,
+    gbp: <FaPoundSign size={32} color="#DAC17A" />,
+    sgd: <FaMoneyBillWave size={32} color="#DAC17A" />,
+    jpy: <FaYenSign size={32} color="#DAC17A" />,
+    krw: <FaWonSign size={32} color="#DAC17A" />,
+    rub: <FaRubleSign size={32} color="#DAC17A" />,
+    currency_other: <FaBitcoin size={32} color="#DAC17A" />,
     // LAUNDRY SERVICE
-    laundry_regular: <FaTshirt size={32} color="#F9BF3B" />,
-    laundry_special: <FaSoap size={32} color="#F9BF3B" />,
-    laundry_express: <FaBolt size={32} color="#F9BF3B" />,
-    laundry_additional: <FaPlus size={32} color="#F9BF3B" />,
+    laundry_regular: <FaTshirt size={32} color="#DAC17A" />,
+    laundry_special: <FaSoap size={32} color="#DAC17A" />,
+    laundry_express: <FaBolt size={32} color="#DAC17A" />,
+    laundry_additional: <FaPlus size={32} color="#DAC17A" />,
     // HOMESTAY SERVICE
-    homestay_300k: <FaHome size={32} color="#F9BF3B" />,
-    homestay_300_600k: <FaHome size={32} color="#F9BF3B" />,
-    homestay_600k: <FaBuilding size={32} color="#F9BF3B" />,
-    homestay_longterm: <FaCalendarAlt size={32} color="#F9BF3B" />,
-    homestay_additional: <FaPlusSquare size={32} color="#F9BF3B" />,
+    homestay_300k: <FaHome size={32} color="#DAC17A" />,
+    homestay_300_600k: <FaHome size={32} color="#DAC17A" />,
+    homestay_600k: <FaBuilding size={32} color="#DAC17A" />,
+    homestay_longterm: <FaCalendarAlt size={32} color="#DAC17A" />,
+    homestay_additional: <FaPlusSquare size={32} color="#DAC17A" />,
   };
 
   // Thêm object ánh xạ iconName -> tên dịch vụ đúng chuẩn:
@@ -304,7 +304,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
               width: 'auto',
               border: '1px solid rgba(255, 255, 255, 0.1)'
             }}>
-            <FaGlobeAsia className="text-[#F9BF3B] text-xl mr-1.5" 
+            <FaGlobeAsia className="text-[#DAC17A] text-xl mr-1.5" 
               style={{ filter: 'drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.2))' }}
             />
             <label className="mr-2 font-semibold font-sans text-white whitespace-nowrap text-sm sm:text-base">{t('language', lang)}:</label>
@@ -326,7 +326,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                 <option value="ru">🇷🇺 Русский</option>
                 <option value="ko">🇰🇷 한국어</option>
               </select>
-              <FiChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 text-[#F9BF3B] pointer-events-none text-lg" />
+              <FiChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 text-[#DAC17A] pointer-events-none text-lg" />
             </div>
           </div>
         </div>
@@ -372,11 +372,11 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                     transform: 'translateY(0) translateZ(30px)',
                   }}
                 >
-                  <span className="material-icons text-4xl sm:text-6xl mb-2 text-[#F9BF3B] transition-all duration-300 group-hover:scale-110" 
+                  <span className="material-icons text-4xl sm:text-6xl mb-2 text-[#DAC17A] transition-all duration-300 group-hover:scale-110" 
                     style={{ 
                       filter: 'drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.2))',
                       color: lang === 'en' 
-                        ? '#F9BF3B' // Vàng cho tiếng Anh
+                        ? '#DAC17A' // Vàng cho tiếng Anh
                         : lang === 'fr' 
                         ? '#FFFFFF' // Trắng cho tiếng Pháp
                         : lang === 'zh' 
@@ -437,11 +437,11 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                     transform: 'translateY(0) translateZ(30px)',
                   }}
                 >
-                  <span className="material-icons text-4xl sm:text-6xl lg:text-7xl mb-2 text-[#F9BF3B] transition-all duration-300 group-hover:scale-110" 
+                  <span className="material-icons text-4xl sm:text-6xl lg:text-7xl mb-2 text-[#DAC17A] transition-all duration-300 group-hover:scale-110" 
                     style={{ 
                       filter: 'drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.2))',
                       color: lang === 'en' 
-                        ? '#F9BF3B' // Vàng cho tiếng Anh
+                        ? '#DAC17A' // Vàng cho tiếng Anh
                         : lang === 'fr' 
                         ? '#FFFFFF' // Trắng cho tiếng Pháp
                         : lang === 'zh' 

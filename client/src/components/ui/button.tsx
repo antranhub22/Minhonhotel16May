@@ -9,11 +9,11 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-gradient-to-tr from-[#4e5ab7] to-[#3f51b5] text-white hover:brightness-110 hover:shadow-lg",
-        yellow: "bg-gradient-to-b from-[#ffe066] to-[#ffd700] text-blue-900 border-2 border-[#d4af37] shadow-xl hover:brightness-105 hover:shadow-2xl text-shadow-white",
-        outline: "border-2 border-[#4e5ab7] bg-white text-[#4e5ab7] hover:bg-[#f5f7fa]",
-        secondary: "bg-white text-[#4e5ab7] border border-[#4e5ab7] hover:bg-[#e8eaf6]",
-        destructive: "bg-red-500 text-white hover:bg-red-600",
+        default: "bg-gradient-to-tr from-[#5E0B2B] to-[#FAE6EE] text-white hover:brightness-110 hover:shadow-lg",
+        yellow: "bg-gradient-to-b from-[#DAC17A] to-[#DAC17A] text-[#DAC17A] border-2 border-[#DAC17A] shadow-xl hover:brightness-105 hover:shadow-2xl text-shadow-white",
+        outline: "border-2 border-[#5E0B2B] bg-white text-[#5E0B2B] hover:bg-[#f5f7fa]",
+        secondary: "bg-white text-[#5E0B2B] border border-[#5E0B2B] hover:bg-[#e8eaf6]",
+        destructive: "bg-[#5E0B2B] text-white hover:bg-[#8B1A47]",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
       },

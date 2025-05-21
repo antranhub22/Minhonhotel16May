@@ -336,7 +336,7 @@ export class SiriButton {
   private drawTimeRing() {
     // Draw thin progress ring around the button
     const percent = Math.min(1, this.elapsedTime / this.timeTarget);
-    const color = percent < 0.5 ? '#E8B554' : percent < 1 ? '#d4af37' : '#e53935';
+    const color = percent < 0.5 ? '#E8B554' : percent < 1 ? '#d4af37' : '#5E0B2B';
     this.ctx.save();
     this.ctx.beginPath();
     this.ctx.arc(this.centerX, this.centerY, this.radius * 1.32, -Math.PI/2, -Math.PI/2 + percent * 2 * Math.PI);
