@@ -157,15 +157,15 @@ export class SiriButton {
       this.centerX - this.radius * 1.2 + offsetX, this.centerY - this.radius * 1.2 + offsetY,
       gradX + offsetX, gradY + offsetY
     );
-    outerGradient.addColorStop(0, this.isDarkMode ? '#559A9A' : '#5DB6B9');
-    outerGradient.addColorStop(1, this.isDarkMode ? '#559A9A' : '#5DB6B9');
+    outerGradient.addColorStop(0, this.isDarkMode ? '#8B1A47' : '#A82255');
+    outerGradient.addColorStop(1, this.isDarkMode ? '#8B1A47' : '#A82255');
     this.ctx.save();
     this.ctx.globalAlpha = 0.85;
     this.ctx.beginPath();
     this.ctx.arc(this.centerX + offsetX, this.centerY + offsetY, this.radius * 1.25, 0, Math.PI * 2);
     this.ctx.strokeStyle = outerGradient;
     this.ctx.lineWidth = 12;
-    this.ctx.shadowColor = this.isHovered ? '#559A9A' : '#559A9A';
+    this.ctx.shadowColor = this.isHovered ? '#8B1A47' : '#8B1A47';
     this.ctx.shadowBlur = this.isHovered ? 32 : 16;
     this.ctx.stroke();
     this.ctx.restore();
@@ -185,7 +185,7 @@ export class SiriButton {
     this.ctx.beginPath();
     this.ctx.arc(this.centerX + offsetX, this.centerY + offsetY, this.radius * 0.98, 0, Math.PI * 2);
     this.ctx.fillStyle = this.isDarkMode ? '#bfa133' : '#E8B554';
-    this.ctx.shadowColor = this.isDarkMode ? 'rgba(85,154,154,0.18)' : 'rgba(85,154,154,0.25)';
+    this.ctx.shadowColor = this.isDarkMode ? 'rgba(139,26,71,0.18)' : 'rgba(139,26,71,0.25)';
     this.ctx.shadowBlur = 10;
     this.ctx.fill();
     this.ctx.restore();
@@ -197,7 +197,7 @@ export class SiriButton {
     this.ctx.save();
     this.ctx.beginPath();
     this.ctx.arc(this.centerX + offsetX, this.centerY + offsetY, this.radius * 0.98, 0, Math.PI * 2);
-    this.ctx.shadowColor = this.isDarkMode ? 'rgba(85,154,154,0.10)' : 'rgba(85,154,154,0.18)';
+    this.ctx.shadowColor = this.isDarkMode ? 'rgba(139,26,71,0.10)' : 'rgba(139,26,71,0.18)';
     this.ctx.shadowBlur = 24;
     this.ctx.globalAlpha = 0.7;
     this.ctx.strokeStyle = 'rgba(0,0,0,0)';
@@ -257,7 +257,7 @@ export class SiriButton {
 
       this.ctx.beginPath();
       this.ctx.arc(this.centerX, this.centerY, ripple.radius, 0, Math.PI * 2);
-      this.ctx.strokeStyle = `rgba(85,154,154, ${ripple.alpha})`;
+      this.ctx.strokeStyle = `rgba(139,26,71, ${ripple.alpha})`;
       this.ctx.lineWidth = 2;
       this.ctx.stroke();
     }
@@ -291,7 +291,7 @@ export class SiriButton {
       this.ctx.arc(this.centerX, this.centerY, baseRadius, 0, Math.PI * 2);
       this.ctx.strokeStyle = `rgba(232,181,84,${0.18 + 0.08 * (rings-i)})`;
       this.ctx.lineWidth = 2 + this.volumeLevel * 2;
-      this.ctx.shadowColor = 'rgba(85,154,154,0.22)';
+      this.ctx.shadowColor = 'rgba(139,26,71,0.22)';
       this.ctx.shadowBlur = 8;
       this.ctx.stroke();
       this.ctx.restore();
@@ -326,7 +326,7 @@ export class SiriButton {
       this.ctx.beginPath();
       this.ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
       this.ctx.fillStyle = `rgba(232,181,84,${p.alpha})`;
-      this.ctx.shadowColor = 'rgba(85,154,154,0.22)';
+      this.ctx.shadowColor = 'rgba(139,26,71,0.22)';
       this.ctx.shadowBlur = 6;
       this.ctx.fill();
       this.ctx.restore();
@@ -360,7 +360,7 @@ export class SiriButton {
     this.ctx.font = '600 1.25rem Montserrat, Raleway, Arial, sans-serif';
     this.ctx.textAlign = 'center';
     this.ctx.textBaseline = 'top';
-    this.ctx.shadowColor = 'rgba(85,154,154,0.22)';
+    this.ctx.shadowColor = 'rgba(139,26,71,0.22)';
     this.ctx.shadowBlur = 8;
     this.ctx.fillStyle = '#fff';
     if (this.isDarkMode) this.ctx.fillStyle = '#e8e8e8';
@@ -407,7 +407,7 @@ export class SiriButton {
       this.ctx.beginPath();
       this.ctx.moveTo(x1, y1);
       this.ctx.lineTo(x2, y2);
-      this.ctx.shadowColor = 'rgba(85,154,154,0.22)';
+      this.ctx.shadowColor = 'rgba(139,26,71,0.22)';
       this.ctx.shadowBlur = 6;
       this.ctx.stroke();
       this.ctx.restore();

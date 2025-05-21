@@ -182,7 +182,7 @@ const Reference = ({ references, activeIconMedia }: ReferenceProps): JSX.Element
   if (activeIconMedia) {
     return (
       <div className="w-full sm:max-w-5xl mx-auto mt-2 mb-2 px-2 py-3 rounded-2xl flex flex-col items-center justify-center relative"
-        style={{ background: 'rgba(85,154,154,0.85)', minHeight: 260 }}>
+        style={{ background: 'rgba(139,26,71,0.85)', minHeight: 260 }}>
         <button
           className="absolute top-2 right-2 bg-white/80 hover:bg-white text-gray-800 rounded-full p-2 shadow-lg z-10"
           onClick={activeIconMedia.onClose}
@@ -210,7 +210,7 @@ const Reference = ({ references, activeIconMedia }: ReferenceProps): JSX.Element
 
   // Main render
   return (
-    <div className="w-full sm:max-w-5xl mx-auto mt-2 mb-2 px-2 py-3 rounded-2xl" style={{ background: 'rgba(85,154,154,0.85)', minHeight: 260 }}>
+    <div className="w-full sm:max-w-5xl mx-auto mt-2 mb-2 px-2 py-3 rounded-2xl" style={{ background: 'rgba(139,26,71,0.85)', minHeight: 260 }}>
       {/* Lightbox modal */}
       {lightboxImg && (
         <div

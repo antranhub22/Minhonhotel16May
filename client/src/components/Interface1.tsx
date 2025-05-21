@@ -481,7 +481,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
             <div
               className="py-0.5 px-1 sm:p-2 w-11/12 sm:w-4/5 md:w-64 mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
               style={{
-                background: 'rgba(85,154,154,0.4)',
+                background: 'rgba(139,26,71,0.4)',
                 backdropFilter: 'blur(8px)',
                 borderRadius: '6px',
                 boxShadow: '0px 1px 2px rgba(0,0,0,0.04)',
@@ -506,7 +506,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
             <div
               className="py-0.5 px-1 sm:p-2 w-11/12 sm:w-4/5 md:w-64 mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
               style={{
-                background: 'rgba(85,154,154,0.4)',
+                background: 'rgba(139,26,71,0.4)',
                 backdropFilter: 'blur(8px)',
                 borderRadius: '6px',
                 boxShadow: '0px 1px 2px rgba(0,0,0,0.04)',
@@ -531,7 +531,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
             <div
               className="py-0.5 px-1 sm:p-2 w-11/12 sm:w-4/5 md:w-64 mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
               style={{
-                background: 'rgba(85,154,154,0.4)',
+                background: 'rgba(139,26,71,0.4)',
                 backdropFilter: 'blur(8px)',
                 borderRadius: '6px',
                 boxShadow: '0px 1px 2px rgba(0,0,0,0.04)',
@@ -556,7 +556,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
             <div
               className="py-0.5 px-1 sm:p-2 w-11/12 sm:w-4/5 md:w-64 mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
               style={{
-                background: 'rgba(85,154,154,0.4)',
+                background: 'rgba(139,26,71,0.4)',
                 backdropFilter: 'blur(8px)',
                 borderRadius: '6px',
                 boxShadow: '0px 1px 2px rgba(0,0,0,0.04)',
@@ -581,7 +581,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
             <div
               className="py-0.5 px-1 sm:p-2 w-11/12 sm:w-4/5 md:w-64 mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
               style={{
-                background: 'rgba(85,154,154,0.4)',
+                background: 'rgba(139,26,71,0.4)',
                 backdropFilter: 'blur(8px)',
                 borderRadius: '6px',
                 boxShadow: '0px 1px 2px rgba(0,0,0,0.04)',
@@ -606,7 +606,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
             <div
               className="py-0.5 px-1 sm:p-2 w-11/12 sm:w-4/5 md:w-64 mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
               style={{
-                background: 'rgba(85,154,154,0.4)',
+                background: 'rgba(139,26,71,0.4)',
                 backdropFilter: 'blur(8px)',
                 borderRadius: '6px',
                 boxShadow: '0px 1px 2px rgba(0,0,0,0.04)',
@@ -644,7 +644,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                 <div key={o.reference} 
                   className="p-2 sm:p-3 text-gray-800 max-w-xs w-[220px] flex-shrink-0 transition-all duration-250 hover:rotate-1 hover:scale-105"
                   style={{
-                    background: 'rgba(255, 255, 255, 0.85)',
+                    background: 'rgba(139,26,71,0.85)',
                     backdropFilter: 'blur(8px)',
                     borderRadius: '24px',
                     boxShadow: '0px 10px 25px rgba(0, 0, 0, 0.15)',
