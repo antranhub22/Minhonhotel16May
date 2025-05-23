@@ -380,10 +380,10 @@ export const ReferenceMedia = ({ media }: { media: IconMedia }) => {
         <div
           className="mt-3 w-full px-2"
           style={{
-            color: '#FFE9B0',
+            color: typeof window !== 'undefined' && window.innerWidth < 640 ? '#222' : '#FFE9B0',
             fontFamily: 'var(--font-sans, sans-serif)',
             fontSize: '14px',
-            textShadow: '0px 1px 6px rgba(0,0,0,0.18)',
+            textShadow: typeof window !== 'undefined' && window.innerWidth < 640 ? 'none' : '0px 1px 6px rgba(0,0,0,0.18)',
             wordBreak: 'break-word',
             lineHeight: '1.6',
             fontWeight: 400,
@@ -397,7 +397,7 @@ export const ReferenceMedia = ({ media }: { media: IconMedia }) => {
             if (match) {
               return (
                 <div key={idx} style={{marginBottom: 2}}>
-                  <span style={{fontWeight: 600, color: '#FFE9B0'}}>{match[1]}:</span> <span style={{fontWeight: 400, color: '#FFE9B0'}}>{match[2]}</span>
+                  <span style={{fontWeight: 600, color: typeof window !== 'undefined' && window.innerWidth < 640 ? '#222' : '#FFE9B0'}}>{match[1]}:</span> <span style={{fontWeight: 400, color: typeof window !== 'undefined' && window.innerWidth < 640 ? '#222' : '#FFE9B0'}}>{match[2]}</span>
                 </div>
               );
             }
@@ -452,10 +452,10 @@ export const ReferenceSlider = ({ mediaList, activeIdx, onChange, side }: { medi
               <div
                 className="mt-3 w-full px-2"
                 style={{
-                  color: '#FFE9B0',
+                  color: typeof window !== 'undefined' && window.innerWidth < 640 ? '#222' : '#FFE9B0',
                   fontFamily: 'var(--font-sans, sans-serif)',
                   fontSize: '14px',
-                  textShadow: '0px 1px 6px rgba(0,0,0,0.18)',
+                  textShadow: typeof window !== 'undefined' && window.innerWidth < 640 ? 'none' : '0px 1px 6px rgba(0,0,0,0.18)',
                   wordBreak: 'break-word',
                   lineHeight: '1.6',
                   fontWeight: 400,
@@ -469,7 +469,7 @@ export const ReferenceSlider = ({ mediaList, activeIdx, onChange, side }: { medi
                   if (match) {
                     return (
                       <div key={idx} style={{marginBottom: 2}}>
-                        <span style={{fontWeight: 600, color: '#FFE9B0'}}>{match[1]}:</span> <span style={{fontWeight: 400, color: '#FFE9B0'}}>{match[2]}</span>
+                        <span style={{fontWeight: 600, color: typeof window !== 'undefined' && window.innerWidth < 640 ? '#222' : '#FFE9B0'}}>{match[1]}:</span> <span style={{fontWeight: 400, color: typeof window !== 'undefined' && window.innerWidth < 640 ? '#222' : '#FFE9B0'}}>{match[2]}</span>
                       </div>
                     );
                   }
