@@ -12,6 +12,7 @@ import { referenceService, ReferenceItem } from '@/services/ReferenceService';
 import { iconMediaMap, IconMedia } from '../assets/iconMediaMap';
 import { FaMountain, FaCarSide, FaUmbrellaBeach, FaStar, FaBusAlt, FaRoute, FaMotorcycle, FaTaxi, FaMoneyBillWave, FaEuroSign, FaPoundSign, FaYenSign, FaRubleSign, FaExchangeAlt, FaBitcoin, FaTshirt, FaSoap, FaBolt, FaPlus, FaHome, FaBuilding, FaCalendarAlt, FaPlusSquare, FaDollarSign, FaWonSign, FaCity } from 'react-icons/fa';
 import { ReferenceMedia, ReferenceSlider } from './Reference';
+import { OrderStatus } from '@shared/schema';
 
 interface Interface1Props {
   isActive: boolean;
@@ -232,13 +233,21 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
   // Hàm chuyển đổi trạng thái từ Staff UI sang key cho dịch thuật
   const getStatusTranslationKey = (status: string | undefined): string => {
     if (!status) return 'status_acknowledged';
-    const normalized = status.trim().toLowerCase();
-    if (normalized.includes('đã ghi nhận') || normalized.includes('acknowledged')) return 'status_acknowledged';
-    if (normalized.includes('đang thực hiện') || normalized.includes('in progress')) return 'status_in_progress';
-    if (normalized.includes('bàn giao') || normalized.includes('delivering')) return 'status_delivering';
-    if (normalized.includes('hoàn thiện') || normalized.includes('completed')) return 'status_completed';
-    if (normalized.includes('lưu ý') || normalized.includes('note')) return 'status_note';
-    return 'status_acknowledged';
+    
+    switch (status.toLowerCase()) {
+      case OrderStatus.ACKNOWLEDGED:
+        return 'status_acknowledged';
+      case OrderStatus.IN_PROGRESS:
+        return 'status_in_progress';
+      case OrderStatus.DELIVERING:
+        return 'status_delivering';
+      case OrderStatus.COMPLETED:
+        return 'status_completed';
+      case OrderStatus.NOTE:
+        return 'status_note';
+      default:
+        return 'status_acknowledged';
+    }
   };
 
   // Log dữ liệu order thực tế để debug

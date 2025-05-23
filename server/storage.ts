@@ -1,4 +1,4 @@
-import { users, type User, type InsertUser, transcripts, type Transcript, type InsertTranscript, orders, type Order, type InsertOrder, callSummaries, type CallSummary, type InsertCallSummary } from "@shared/schema";
+import { users, type User, type InsertUser, transcripts, type Transcript, type InsertTranscript, orders, type Order, type InsertOrder, callSummaries, type CallSummary, type InsertCallSummary, OrderStatus, orderStatusSchema } from "@shared/schema";
 import { db } from "./db";
 import { eq, and, gte, sql } from "drizzle-orm";
 
@@ -71,12 +71,22 @@ export class DatabaseStorage implements IStorage {
   }
   
   async updateOrderStatus(id: number, status: string): Promise<Order | undefined> {
-    const result = await db
-      .update(orders)
-      .set({ status })
-      .where(eq(orders.id, id))
-      .returning();
-    return result.length > 0 ? result[0] : undefined;
+    try {
+      // Validate status
+      const validatedStatus = orderStatusSchema.parse(status);
+      
+      const result = await db
+        .update(orders)
+        .set({ status: validatedStatus })
+        .where(eq(orders.id, id))
+        .returning();
+        
+      console.log(`Updated order ${id} status to ${validatedStatus}`);
+      return result.length > 0 ? result[0] : undefined;
+    } catch (error) {
+      console.error(`Failed to update order ${id} status:`, error);
+      throw error;
+    }
   }
   
   async getAllOrders(filter: { status?: string; roomNumber?: string }): Promise<Order[]> {

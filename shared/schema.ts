@@ -28,6 +28,28 @@ export const insertTranscriptSchema = createInsertSchema(transcripts).pick({
   content: true,
 });
 
+// Define valid order statuses
+export const OrderStatus = {
+  PENDING: 'pending',
+  ACKNOWLEDGED: 'acknowledged',
+  IN_PROGRESS: 'in_progress',
+  DELIVERING: 'delivering',
+  COMPLETED: 'completed',
+  NOTE: 'note'
+} as const;
+
+export type OrderStatusType = typeof OrderStatus[keyof typeof OrderStatus];
+
+// Validate order status
+export const orderStatusSchema = z.enum([
+  OrderStatus.PENDING,
+  OrderStatus.ACKNOWLEDGED,
+  OrderStatus.IN_PROGRESS,
+  OrderStatus.DELIVERING,
+  OrderStatus.COMPLETED,
+  OrderStatus.NOTE
+]);
+
 export const orders = pgTable("orders", {
   id: serial("id").primaryKey(),
   callId: text("call_id").notNull(),
@@ -37,7 +59,7 @@ export const orders = pgTable("orders", {
   specialInstructions: text("special_instructions"),
   items: jsonb("items").notNull(),
   totalAmount: integer("total_amount").notNull(),
-  status: text("status").notNull().default("pending"),
+  status: text("status").notNull().default(OrderStatus.PENDING),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
