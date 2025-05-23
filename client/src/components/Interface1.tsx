@@ -52,9 +52,9 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
     stream_beach: <FaUmbrellaBeach size={32} color="#DAC17A" />, // Stream and Beach
     special_tour: <FaStar size={32} color="#DAC17A" />, // Special Tours
     // BUS TICKETS
-    bus_hcm: <span className="icon-bus-label" style={{color:'#DAC17A',fontSize:14,fontWeight:500,background:'transparent',boxShadow:'none',border:'none',padding:'0 2px',display:'flex',alignItems:'center',justifyContent:'center',height:22,lineHeight:'22px',letterSpacing:'0.5px'}}>HCM</span>,
-    bus_dl: <span className="icon-bus-label" style={{color:'#DAC17A',fontSize:14,fontWeight:500,background:'transparent',boxShadow:'none',border:'none',padding:'0 2px',display:'flex',alignItems:'center',justifyContent:'center',height:22,lineHeight:'22px',letterSpacing:'0.5px'}}>DL</span>,
-    bus_nt: <span className="icon-bus-label" style={{color:'#DAC17A',fontSize:14,fontWeight:500,background:'transparent',boxShadow:'none',border:'none',padding:'0 2px',display:'flex',alignItems:'center',justifyContent:'center',height:22,lineHeight:'22px',letterSpacing:'0.5px'}}>NT</span>,
+    bus_hcm: <span className="icon-bus-label" style={{color:'#DAC17A',fontSize:14,fontWeight:500,background:'transparent',boxShadow:'none',border:'none',padding:'0 2px',display:'flex',alignItems:'center',justifyContent:'center',height:22,lineHeight:'22px',letterSpacing:'0.5px'}}>HoChiMinh</span>,
+    bus_dl: <span className="icon-bus-label" style={{color:'#DAC17A',fontSize:14,fontWeight:500,background:'transparent',boxShadow:'none',border:'none',padding:'0 2px',display:'flex',alignItems:'center',justifyContent:'center',height:22,lineHeight:'22px',letterSpacing:'0.5px'}}>Dalat</span>,
+    bus_nt: <span className="icon-bus-label" style={{color:'#DAC17A',fontSize:14,fontWeight:500,background:'transparent',boxShadow:'none',border:'none',padding:'0 2px',display:'flex',alignItems:'center',justifyContent:'center',height:22,lineHeight:'22px',letterSpacing:'0.5px'}}>NhaTrang</span>,
     bus_other: <FaRoute size={32} color="#DAC17A" />,
     // VEHICLE RENTAL
     motorcycle: <FaMotorcycle size={32} color="#DAC17A" />,
