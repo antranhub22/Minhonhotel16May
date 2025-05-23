@@ -50,11 +50,10 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
   // Tạo object ánh xạ iconName -> React component icon sát nghĩa nhất
   const iconComponents: Record<string, JSX.Element> = {
     // TOURISM & TOURS
-    sand_dunes: <FaMountain size={32} color="#DAC17A" />, // Đồi cát (fallback)
-    sightseeing: <FaCity size={32} color="#DAC17A" />, // City tour
-    jeep_tour: <FaCarSide size={32} color="#DAC17A" />, // Jeep Tour
-    stream_beach: <FaUmbrellaBeach size={32} color="#DAC17A" />, // Stream and Beach
-    special_tour: <FaStar size={32} color="#DAC17A" />, // Special Tours
+    tour_halfday: <span className="icon-bus-label" style={{color:'#FFD966'}}>Half-Day</span>,
+    tour_fullday: <span className="icon-bus-label" style={{color:'#FFD966'}}>Full-Day</span>,
+    tour_multiday: <span className="icon-bus-label" style={{color:'#FFD966'}}>Multi-Day</span>,
+    special_tour: <FaStar size={32} color="#FFD966" />, // Special Tours
     // BUS TICKETS
     bus_hcm: <span className="icon-bus-label">HCM</span>,
     bus_dl: <span className="icon-bus-label">ĐL</span>,
@@ -94,10 +93,9 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
   // Thêm object ánh xạ iconName -> tên dịch vụ đúng chuẩn:
   const iconDisplayNames: Record<string, string> = {
     // TRAVEL TOURS
-    sand_dunes: 'Sand Dunes',
-    sightseeing: 'Sightseeing',
-    jeep_tour: 'Jeep',
-    stream_beach: 'Stream and Beach',
+    tour_halfday: 'Half-Day',
+    tour_fullday: 'Full-Day',
+    tour_multiday: 'Multi-Day',
     special_tour: 'Special Tours',
     // BUS TICKETS
     bus_hcm: 'Mui Ne - Ho Chi Minh City Route',
