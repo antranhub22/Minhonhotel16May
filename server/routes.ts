@@ -301,18 +301,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
     
     // Emit WebSocket notification cho tất cả client
     if (globalThis.wss) {
-      if (updatedOrder.specialInstructions) {
-        globalThis.wss.clients.forEach((client) => {
-          if (client.readyState === 1) {
-            client.send(JSON.stringify({
-              type: 'order_status_update',
-              reference: updatedOrder.specialInstructions,
-              callId: updatedOrder.callId,
-              status: updatedOrder.status
-            }));
-          }
-        });
-      }
+      globalThis.wss.clients.forEach((client) => {
+        if (client.readyState === 1) {
+          client.send(JSON.stringify({
+            type: 'order_status_update',
+            reference: updatedOrder.specialInstructions || '',
+            callId: updatedOrder.callId,
+            status: updatedOrder.status
+          }));
+        }
+      });
     }
     
     res.json(updatedOrder);
@@ -1165,7 +1163,7 @@ Mi Nhon Hotel Mui Ne`
                 if (client.readyState === 1) {
                   client.send(JSON.stringify({
                     type: 'order_status_update',
-                    reference: updatedOrder.specialInstructions,
+                    reference: updatedOrder.specialInstructions || '',
                     callId: updatedOrder.callId,
                     status: updatedOrder.status
                   }));
