@@ -135,13 +135,28 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
     homestay_additional: 'Additional Homestay Services',
   };
 
-  // Định nghĩa mảng iconName cho từng nhóm dịch vụ
-  const travelTourIcons = ["sand_dunes", "sightseeing", "jeep_tour", "stream_beach", "special_tour"];
-  const busTicketIcons = ["bus_hcm", "bus_dl", "bus_nt", "bus_dn", "bus_ct", "bus_mt", "bus_vt", "bus_other"];
-  const vehicleRentalIcons = ["motorcycle", "car_driver", "car_self", "vehicle_special"];
-  const currencyIcons = ["usd", "eur", "gbp", "sgd", "jpy", "krw", "rub", "currency_other"];
-  const laundryIcons = ["laundry_regular", "laundry_special", "laundry_express", "laundry_additional"];
-  const homestayIcons = ["homestay_300k", "homestay_300_600k", "homestay_600k", "homestay_longterm", "homestay_additional"];
+  // Định nghĩa mảng iconName cho từng nhóm dịch vụ (theo danh sách mới)
+  const travelTourIcons = [
+    "tour_halfday", // Tour_Nửa_ngày
+    "tour_fullday", // Tour_Một_ngày
+    "tour_multiday", // Tour_Dài_ngày
+    "special_tour"   // Tour_đặc_biệt
+  ];
+  const busTicketIcons = [
+    "bus_hcm", "bus_dl", "bus_nt", "bus_dn", "bus_ct", "bus_mt", "bus_vt", "bus_other"
+  ];
+  const vehicleRentalIcons = [
+    "motorcycle", "car_driver", "car_self"
+  ];
+  const currencyIcons = [
+    "usd", "eur", "krw", "rub", "currency_other"
+  ];
+  const laundryIcons = [
+    "laundry_regular", "laundry_special", "laundry_express", "laundry_additional"
+  ];
+  const homestayIcons = [
+    "homestay_300k", "homestay_300_600k", "homestay_600k", "homestay_longterm", "homestay_fullhouse", "homestay_additional"
+  ];
 
   // Hàm dùng chung cho mọi ngôn ngữ
   const handleCall = async (lang: 'en' | 'fr' | 'zh' | 'ru' | 'ko') => {
