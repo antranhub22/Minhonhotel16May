@@ -1258,5 +1258,27 @@ Mi Nhon Hotel Mui Ne`
     }
   });
 
+  // Endpoint tạm thời: Xóa các request không có order tương ứng
+  app.delete('/api/admin/cleanup-orphan-requests', async (req, res) => {
+    try {
+      const requests = await db.select().from(requestTable);
+      const orders = await storage.getAllOrders({});
+      const orderRefs = new Set(orders.map(o => o.specialInstructions));
+      const orphanRequests = requests.filter(r => !orderRefs.has(r.orderId));
+      if (orphanRequests.length === 0) {
+        return res.json({ success: true, deleted: 0, message: 'No orphan requests found.' });
+      }
+      const deleted = [];
+      for (const req of orphanRequests) {
+        await db.delete(requestTable).where(eq(requestTable.id, req.id));
+        deleted.push(req.id);
+      }
+      res.json({ success: true, deleted: deleted.length, ids: deleted });
+    } catch (err) {
+      console.error('Error cleaning up orphan requests:', err);
+      res.status(500).json({ success: false, error: err.message });
+    }
+  });
+
   return httpServer;
 }
