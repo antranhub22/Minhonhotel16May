@@ -378,18 +378,31 @@ export const ReferenceMedia = ({ media }: { media: IconMedia }) => {
       {/* Description luôn hiển thị bên dưới, auto nới rộng, không giới hạn chiều cao */}
       {media.description && (
         <div
-          className="mt-3 text-center w-full px-2 font-medium"
+          className="mt-3 w-full px-2"
           style={{
             color: '#FFE9B0',
             fontFamily: 'var(--font-sans, sans-serif)',
-            fontSize: '18px',
+            fontSize: '14px',
             textShadow: '0px 1px 6px rgba(0,0,0,0.18)',
             wordBreak: 'break-word',
-            lineHeight: '1.5',
-            fontWeight: 500
+            lineHeight: '1.6',
+            fontWeight: 400,
+            textAlign: 'left',
+            whiteSpace: 'pre-line',
+            letterSpacing: 0.1
           }}
         >
-          {media.description}
+          {media.description.split(/\n|\r/).map((line, idx) => {
+            const match = line.match(/^([\w\s\-()']+):\s*(.*)$/);
+            if (match) {
+              return (
+                <div key={idx} style={{marginBottom: 2}}>
+                  <span style={{fontWeight: 600, color: '#FFE9B0'}}>{match[1]}:</span> <span style={{fontWeight: 400, color: '#FFE9B0'}}>{match[2]}</span>
+                </div>
+              );
+            }
+            return <div key={idx}>{line}</div>;
+          })}
         </div>
       )}
       {zoomed && (
