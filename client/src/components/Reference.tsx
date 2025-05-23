@@ -365,15 +365,11 @@ export const ReferenceMedia = ({ media }: { media: IconMedia }) => {
   return (
     <div className="flex flex-col items-center w-[320px] max-w-[90vw]">
       <div
-        className="w-full min-h-[220px] bg-white/80 rounded-2xl shadow-xl border border-white/30 flex items-center justify-center p-4 backdrop-blur-md cursor-zoom-in"
+        className="w-full min-h-[220px] bg-white/80 rounded-2xl shadow-xl border border-white/30 flex items-center justify-center p-2 backdrop-blur-md cursor-zoom-in"
         onClick={() => setZoomed(true)}
         title="Click to zoom"
       >
-        {media.type === 'image' || media.type === 'gif' ? (
-          <img src={media.src} alt={media.alt || ''} className="rounded-xl object-cover mx-auto" style={{width: 220, height: 160}} />
-        ) : media.type === 'video' ? (
-          <video src={media.src} controls autoPlay loop className="rounded-xl object-cover mx-auto" style={{width: 220, height: 160}} />
-        ) : null}
+        <img src={media.src} alt={media.alt || ''} className="rounded-xl object-cover mx-auto" style={{width: 320, height: 220}} />
       </div>
       {/* Description luôn hiển thị bên dưới, auto nới rộng, không giới hạn chiều cao */}
       {media.description && (
@@ -414,11 +410,7 @@ export const ReferenceMedia = ({ media }: { media: IconMedia }) => {
             >
               <span className="material-icons text-2xl">close</span>
             </button>
-            {media.type === 'image' || media.type === 'gif' ? (
-              <img src={media.src} alt={media.alt || ''} className="rounded-xl object-cover mx-auto" style={{width: 220, height: 160}} />
-            ) : media.type === 'video' ? (
-              <video src={media.src} controls autoPlay loop className="rounded-xl object-cover mx-auto" style={{width: 220, height: 160}} />
-            ) : null}
+            <img src={media.src} alt={media.alt || ''} className="rounded-xl object-cover mx-auto" style={{width: 320, height: 220}} />
           </div>
         </div>
       )}
@@ -428,7 +420,7 @@ export const ReferenceMedia = ({ media }: { media: IconMedia }) => {
 
 // ReferenceSlider: Slider cho mediaList, activeIdx, onChange
 export const ReferenceSlider = ({ mediaList, activeIdx, onChange, side }: { mediaList: IconMedia[], activeIdx: number, onChange: (idx: number) => void, side: 'left' | 'right' | 'mobile' }) => (
-  <div className="w-[320px] max-w-[90vw] min-h-[220px] bg-white/80 rounded-2xl shadow-xl border border-white/30 flex flex-col items-center justify-center p-4 backdrop-blur-md">
+  <div className="w-[320px] max-w-[90vw] min-h-[220px] bg-white/80 rounded-2xl shadow-xl border border-white/30 flex flex-col items-center justify-center p-2 backdrop-blur-md">
     <Swiper
       modules={[Navigation, Pagination, A11y]}
       spaceBetween={16}
@@ -443,11 +435,7 @@ export const ReferenceSlider = ({ mediaList, activeIdx, onChange, side }: { medi
       {mediaList.map((media, idx) => (
         <SwiperSlide key={idx}>
           <div className="flex flex-col items-center">
-            {media.type === 'image' || media.type === 'gif' ? (
-              <img src={media.src} alt={media.alt || ''} className="rounded-xl object-cover mx-auto" style={{width: 220, height: 160}} />
-            ) : media.type === 'video' ? (
-              <video src={media.src} controls autoPlay loop className="rounded-xl object-cover mx-auto" style={{width: 220, height: 160}} />
-            ) : null}
+            <img src={media.src} alt={media.alt || ''} className="rounded-xl object-cover mx-auto" style={{width: 320, height: 220}} />
             {media.description && (
               <div
                 className="mt-3 w-full px-2"
