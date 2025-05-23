@@ -521,6 +521,7 @@ export function AssistantProvider({ children }: { children: ReactNode }) {
               ...o,
               reference: o.specialInstructions || o.reference || '',
               requestedAt: o.createdAt ? new Date(o.createdAt) : new Date(),
+              callId: o.callId // Đảm bảo luôn có callId
             }));
             // Lọc các order local chưa có trong API (theo reference)
             const localOnly = prev.filter(localOrder => !apiOrders.some(apiOrder => apiOrder.reference === localOrder.reference));
