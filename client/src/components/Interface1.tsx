@@ -378,7 +378,8 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
           </div>
         </div>
         <h2 className="font-poppins font-bold text-2xl sm:text-3xl lg:text-4xl text-amber-400 mb-2 text-center"
-          style={{ textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)' }}>
+          style={{ textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)' }}
+        >
           <span style={{ color: 'red', fontStyle: 'italic', marginRight: 8 }}>Demo</span>{t('hotel_name', lang)}
         </h2>
         <p className="text-xs sm:text-lg lg:text-xl text-center max-w-full mb-4 truncate sm:whitespace-nowrap overflow-x-auto">AI-powered Voice Assistant - Supporting All Your Needs</p>
@@ -522,156 +523,72 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
           </div>
         </div>
         {/* Services Section - với hiệu ứng Glass Morphism và 3D */}
-        <div className="text-center w-full max-w-5xl mb-8 sm:mb-10" style={{ perspective: '1000px' }}>
-          <div className="flex flex-col md:flex-row md:flex-wrap justify-center gap-y-1.5 sm:gap-y-2 md:gap-3 text-left mx-auto w-full">
+        <div className="text-center w-full max-w-7xl mb-8 sm:mb-10 px-2 md:px-0" style={{ perspective: '1000px' }}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 md:gap-6 lg:gap-8 w-full mx-auto">
             {/* 1. TRAVEL TOURS */}
             <div
-              className="py-0.5 px-1 sm:p-2 w-11/12 sm:w-4/5 md:w-64 mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
-              style={{
-                background: 'rgba(139,26,71,0.4)',
-                backdropFilter: 'blur(8px)',
-                borderRadius: '6px',
-                boxShadow: '0px 1px 2px rgba(0,0,0,0.04)',
-                border: '1px solid rgba(255,255,255,0.10)',
-              }}
+              className="service-card group bg-white/50 backdrop-blur-md border border-white/30 rounded-xl shadow-md hover:shadow-xl transition-all duration-200 hover:scale-[1.03] flex flex-col items-center justify-between min-h-[180px] p-5 cursor-pointer relative overflow-hidden"
+              style={{ borderRadius: '8px' }}
             >
-              <h4 className="font-medium text-amber-300 pb-0 mb-0 text-xs sm:text-sm"
-                style={{
-                  borderBottom: 'none',
-                  textShadow: '0px 1px 2px rgba(0,0,0,0.08)'
-                }}
-              >{t('tourism_tour', lang)}</h4>
-              <ul className={
-                isMobile
-                  ? "flex flex-row flex-nowrap justify-center items-center gap-x-2 py-0"
-                  : "grid grid-cols-3 gap-x-1 gap-y-1 py-0.5 justify-items-center"
-              }>
-                {renderIconGroup(travelTourIcons, isMobile ? travelTourIcons.length : 3, isMobile ? 18 : 28)}
+              <div className="absolute inset-0 pointer-events-none" style={{background: 'linear-gradient(to bottom, rgba(139,26,71,0.10) 0%, rgba(139,26,71,0.18) 100%)'}}></div>
+              <h4 className="font-semibold text-[18px] leading-tight tracking-wide text-amber-400 mb-2 z-10" style={{textShadow:'0px 1px 2px rgba(0,0,0,0.08)'}}>{t('tourism_tour', lang)}</h4>
+              <ul className="w-full flex flex-row flex-wrap justify-center items-center gap-3 z-10">
+                {renderIconGroup(travelTourIcons, 4, 24)}
               </ul>
             </div>
             {/* 2. BUS TICKETS */}
             <div
-              className="py-0.5 px-1 sm:p-2 w-11/12 sm:w-[95%] md:w-[480px] mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
-              style={{
-                background: 'rgba(139,26,71,0.4)',
-                backdropFilter: 'blur(8px)',
-                borderRadius: '6px',
-                boxShadow: '0px 1px 2px rgba(0,0,0,0.04)',
-                border: '1px solid rgba(255,255,255,0.10)',
-              }}
+              className="service-card group bg-white/50 backdrop-blur-md border border-white/30 rounded-xl shadow-md hover:shadow-xl transition-all duration-200 hover:scale-[1.03] flex flex-col items-center justify-between min-h-[180px] p-5 cursor-pointer relative overflow-hidden"
+              style={{ borderRadius: '8px' }}
             >
-              <h4 className="font-medium text-amber-300 pb-0 mb-0 text-xs sm:text-sm"
-                style={{
-                  borderBottom: 'none',
-                  textShadow: '0px 1px 2px rgba(0,0,0,0.08)'
-                }}
-              >{t('ticket_bus', lang)}</h4>
-              <ul className={
-                isMobile
-                  ? "flex flex-row flex-wrap justify-center items-center gap-x-2 gap-y-2 py-0"
-                  : "grid grid-cols-4 gap-x-1 gap-y-1 py-0.5 justify-items-center"
-              }>
-                {renderIconGroup(busTicketIcons, isMobile ? 4 : 4, isMobile ? 18 : 28)}
+              <div className="absolute inset-0 pointer-events-none" style={{background: 'linear-gradient(to bottom, rgba(139,26,71,0.10) 0%, rgba(139,26,71,0.18) 100%)'}}></div>
+              <h4 className="font-semibold text-[18px] leading-tight tracking-wide text-amber-400 mb-2 z-10" style={{textShadow:'0px 1px 2px rgba(0,0,0,0.08)'}}>{t('ticket_bus', lang)}</h4>
+              <ul className="w-full flex flex-row flex-wrap justify-center items-center gap-3 z-10">
+                {renderIconGroup(busTicketIcons, 4, 24)}
               </ul>
             </div>
             {/* 3. VEHICLE RENTAL */}
             <div
-              className="py-0.5 px-1 sm:p-2 w-11/12 sm:w-4/5 md:w-64 mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
-              style={{
-                background: 'rgba(139,26,71,0.4)',
-                backdropFilter: 'blur(8px)',
-                borderRadius: '6px',
-                boxShadow: '0px 1px 2px rgba(0,0,0,0.04)',
-                border: '1px solid rgba(255,255,255,0.10)',
-              }}
+              className="service-card group bg-white/50 backdrop-blur-md border border-white/30 rounded-xl shadow-md hover:shadow-xl transition-all duration-200 hover:scale-[1.03] flex flex-col items-center justify-between min-h-[180px] p-5 cursor-pointer relative overflow-hidden"
+              style={{ borderRadius: '8px' }}
             >
-              <h4 className="font-medium text-amber-300 pb-0 mb-0 text-xs sm:text-sm"
-                style={{
-                  borderBottom: 'none',
-                  textShadow: '0px 1px 2px rgba(0,0,0,0.08)'
-                }}
-              >{t('rental_service', lang)}</h4>
-              <ul className={
-                isMobile
-                  ? "flex flex-row flex-nowrap justify-center items-center gap-x-2 py-0"
-                  : "grid grid-cols-2 gap-x-1 gap-y-1 py-0.5 justify-items-center"
-              }>
-                {renderIconGroup(vehicleRentalIcons, isMobile ? vehicleRentalIcons.length : 2, isMobile ? 18 : 28)}
+              <div className="absolute inset-0 pointer-events-none" style={{background: 'linear-gradient(to bottom, rgba(139,26,71,0.10) 0%, rgba(139,26,71,0.18) 100%)'}}></div>
+              <h4 className="font-semibold text-[18px] leading-tight tracking-wide text-amber-400 mb-2 z-10" style={{textShadow:'0px 1px 2px rgba(0,0,0,0.08)'}}>{t('rental_service', lang)}</h4>
+              <ul className="w-full flex flex-row flex-wrap justify-center items-center gap-3 z-10">
+                {renderIconGroup(vehicleRentalIcons, 3, 24)}
               </ul>
             </div>
             {/* 4. CURRENCY EXCHANGE */}
             <div
-              className="py-0.5 px-1 sm:p-2 w-11/12 sm:w-4/5 md:w-64 mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
-              style={{
-                background: 'rgba(139,26,71,0.4)',
-                backdropFilter: 'blur(8px)',
-                borderRadius: '6px',
-                boxShadow: '0px 1px 2px rgba(0,0,0,0.04)',
-                border: '1px solid rgba(255,255,255,0.10)',
-              }}
+              className="service-card group bg-white/50 backdrop-blur-md border border-white/30 rounded-xl shadow-md hover:shadow-xl transition-all duration-200 hover:scale-[1.03] flex flex-col items-center justify-between min-h-[180px] p-5 cursor-pointer relative overflow-hidden"
+              style={{ borderRadius: '8px' }}
             >
-              <h4 className="font-medium text-amber-300 pb-0 mb-0 text-xs sm:text-sm"
-                style={{
-                  borderBottom: 'none',
-                  textShadow: '0px 1px 2px rgba(0,0,0,0.08)'
-                }}
-              >{t('currency_exchange', lang)}</h4>
-              <ul className={
-                isMobile
-                  ? "flex flex-row flex-nowrap justify-center items-center gap-x-2 py-0"
-                  : "grid grid-cols-4 gap-x-1 gap-y-1 py-0.5 justify-items-center"
-              }>
-                {renderIconGroup(currencyIcons, isMobile ? currencyIcons.length : 4, isMobile ? 16 : 26)}
+              <div className="absolute inset-0 pointer-events-none" style={{background: 'linear-gradient(to bottom, rgba(139,26,71,0.10) 0%, rgba(139,26,71,0.18) 100%)'}}></div>
+              <h4 className="font-semibold text-[18px] leading-tight tracking-wide text-amber-400 mb-2 z-10" style={{textShadow:'0px 1px 2px rgba(0,0,0,0.08)'}}>{t('currency_exchange', lang)}</h4>
+              <ul className="w-full flex flex-row flex-wrap justify-center items-center gap-3 z-10">
+                {renderIconGroup(currencyIcons, 4, 24)}
               </ul>
             </div>
             {/* 5. LAUNDRY SERVICE */}
             <div
-              className="py-0.5 px-1 sm:p-2 w-11/12 sm:w-4/5 md:w-64 mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
-              style={{
-                background: 'rgba(139,26,71,0.4)',
-                backdropFilter: 'blur(8px)',
-                borderRadius: '6px',
-                boxShadow: '0px 1px 2px rgba(0,0,0,0.04)',
-                border: '1px solid rgba(255,255,255,0.10)',
-              }}
+              className="service-card group bg-white/50 backdrop-blur-md border border-white/30 rounded-xl shadow-md hover:shadow-xl transition-all duration-200 hover:scale-[1.03] flex flex-col items-center justify-between min-h-[180px] p-5 cursor-pointer relative overflow-hidden"
+              style={{ borderRadius: '8px' }}
             >
-              <h4 className="font-medium text-amber-300 pb-0 mb-0 text-xs sm:text-sm"
-                style={{
-                  borderBottom: 'none',
-                  textShadow: '0px 1px 2px rgba(0,0,0,0.08)'
-                }}
-              >{t('laundry_service', lang)}</h4>
-              <ul className={
-                isMobile
-                  ? "flex flex-row flex-nowrap justify-center items-center gap-x-2 py-0"
-                  : "grid grid-cols-3 gap-x-1 gap-y-1 py-0.5 justify-items-center"
-              }>
-                {renderIconGroup(laundryIcons, isMobile ? laundryIcons.length : 3, isMobile ? 18 : 28)}
+              <div className="absolute inset-0 pointer-events-none" style={{background: 'linear-gradient(to bottom, rgba(139,26,71,0.10) 0%, rgba(139,26,71,0.18) 100%)'}}></div>
+              <h4 className="font-semibold text-[18px] leading-tight tracking-wide text-amber-400 mb-2 z-10" style={{textShadow:'0px 1px 2px rgba(0,0,0,0.08)'}}>{t('laundry_service', lang)}</h4>
+              <ul className="w-full flex flex-row flex-wrap justify-center items-center gap-3 z-10">
+                {renderIconGroup(laundryIcons, 4, 24)}
               </ul>
             </div>
             {/* 6. HOMESTAY SERVICE */}
             <div
-              className="py-0.5 px-1 sm:p-2 w-11/12 sm:w-4/5 md:w-64 mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
-              style={{
-                background: 'rgba(139,26,71,0.4)',
-                backdropFilter: 'blur(8px)',
-                borderRadius: '6px',
-                boxShadow: '0px 1px 2px rgba(0,0,0,0.04)',
-                border: '1px solid rgba(255,255,255,0.10)',
-              }}
+              className="service-card group bg-white/50 backdrop-blur-md border border-white/30 rounded-xl shadow-md hover:shadow-xl transition-all duration-200 hover:scale-[1.03] flex flex-col items-center justify-between min-h-[180px] p-5 cursor-pointer relative overflow-hidden"
+              style={{ borderRadius: '8px' }}
             >
-              <h4 className="font-medium text-amber-300 pb-0 mb-0 text-xs sm:text-sm"
-                style={{
-                  borderBottom: 'none',
-                  textShadow: '0px 1px 2px rgba(0,0,0,0.08)'
-                }}
-              >{t('homestay_service', lang)}</h4>
-              <ul className={
-                isMobile
-                  ? "flex flex-row flex-nowrap justify-center items-center gap-x-2 py-0"
-                  : "grid grid-cols-3 gap-x-1 gap-y-1 py-0.5 justify-items-center"
-              }>
-                {renderIconGroup(homestayIcons, isMobile ? homestayIcons.length : 3, isMobile ? 18 : 28)}
+              <div className="absolute inset-0 pointer-events-none" style={{background: 'linear-gradient(to bottom, rgba(139,26,71,0.10) 0%, rgba(139,26,71,0.18) 100%)'}}></div>
+              <h4 className="font-semibold text-[18px] leading-tight tracking-wide text-amber-400 mb-2 z-10" style={{textShadow:'0px 1px 2px rgba(0,0,0,0.08)'}}>{t('homestay_service', lang)}</h4>
+              <ul className="w-full flex flex-row flex-wrap justify-center items-center gap-3 z-10">
+                {renderIconGroup(homestayIcons, 4, 24)}
               </ul>
             </div>
           </div>
