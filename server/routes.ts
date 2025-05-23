@@ -1169,8 +1169,24 @@ Mi Nhon Hotel Mui Ne`
       if (orderId) {
         // Tìm order theo specialInstructions (orderReference)
         const orders = await storage.getAllOrders({});
-        const order = orders.find(o => o.specialInstructions === orderId);
+        let order = orders.find(o => o.specialInstructions === orderId);
         console.log('[WebSocket][DEBUG] Order tìm được:', order);
+        if (!order) {
+          // Nếu không tìm thấy order, tự động tạo mới order với specialInstructions = orderId
+          console.log('[WebSocket][DEBUG] Không tìm thấy order, tạo mới order với specialInstructions:', orderId);
+          const newOrderData = {
+            callId: `auto-${orderId}`,
+            roomNumber: result[0].room_number || 'unknown',
+            orderType: 'AutoSync',
+            deliveryTime: new Date().toISOString(),
+            specialInstructions: orderId,
+            items: [],
+            totalAmount: 0,
+            status: status
+          };
+          order = await storage.createOrder(newOrderData);
+          console.log('[WebSocket][DEBUG] Đã tạo order mới:', order);
+        }
         if (order) {
           const updatedOrder = await storage.updateOrderStatus(order.id, status);
           // Emit WebSocket cho Guest UI nếu updatedOrder tồn tại
@@ -1206,7 +1222,7 @@ Mi Nhon Hotel Mui Ne`
             console.log('[WebSocket][DEBUG] Không có updatedOrder hoặc globalThis.wss');
           }
         } else {
-          console.log('[WebSocket][DEBUG] Không tìm thấy order với specialInstructions:', orderId);
+          console.log('[WebSocket][DEBUG] Không thể tạo order mới để đồng bộ');
         }
       } else {
         console.log('[WebSocket][DEBUG] Request không có orderId');
