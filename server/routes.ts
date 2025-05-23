@@ -881,33 +881,34 @@ Mi Nhon Hotel Mui Ne`
         });
         console.log('Kết quả gửi email tóm tắt cuộc gọi từ thiết bị di động:', result);
         // Thêm mới: Lưu request vào database để hiển thị trong staff UI
-        try {
-          console.log('Lưu request từ thiết bị di động vào database...');
-          const cleanedSummary = cleanSummaryContent(callDetails.summary);
-          await db.insert(requestTable).values({
-            room_number: callDetails.roomNumber,
-            orderId: callDetails.orderReference || orderReference,
-            guestName: callDetails.guestName || 'Guest',
-            request_content: cleanedSummary,
-            created_at: new Date(),
-            status: 'Đã ghi nhận',
-            updatedAt: new Date()
-          });
-          console.log('Đã lưu request thành công vào database với ID:', orderReference);
-          // Bổ sung: Lưu order vào bảng orders
-          await storage.createOrder({
-            callId: callDetails.callId || 'unknown',
-            roomNumber: callDetails.roomNumber,
-            orderType: 'Room Service',
-            deliveryTime: new Date(callDetails.timestamp || Date.now()).toISOString(),
-            specialInstructions: callDetails.orderReference || orderReference,
-            items: [],
-            totalAmount: 0
-          });
-          console.log('Đã lưu order vào bảng orders');
-        } catch (dbError) {
-          console.error('Lỗi khi lưu request hoặc order từ thiết bị di động vào DB:', dbError);
-        }
+        console.log("Lưu request từ thiết bị di động vào database...");
+        const cleanedSummary = cleanSummaryContent(callDetails.summary);
+        const requestData = {
+          room_number: callDetails.roomNumber,
+          orderId: callDetails.orderReference || orderReference,
+          guestName: callDetails.guestName || "Guest",
+          request_content: cleanedSummary,
+          created_at: new Date(),
+          status: "Đã ghi nhận",
+          updatedAt: new Date()
+        };
+        console.log("[DEBUG] Request data before insert:", requestData);
+        await db.insert(requestTable).values(requestData);
+        console.log("Đã lưu request thành công vào database với ID:", orderReference);
+
+        // Bổ sung: Lưu order vào bảng orders
+        const orderData = {
+          callId: callDetails.callId || "unknown",
+          roomNumber: callDetails.roomNumber,
+          orderType: "Room Service",
+          deliveryTime: new Date(callDetails.timestamp || Date.now()).toISOString(),
+          specialInstructions: callDetails.orderReference || orderReference,
+          items: [],
+          totalAmount: 0
+        };
+        console.log("[DEBUG] Order data before insert:", orderData);
+        await storage.createOrder(orderData);
+        console.log("Đã lưu order vào bảng orders");
       } catch (sendError) {
         console.error('Lỗi khi gửi email tóm tắt từ thiết bị di động:', sendError);
         // Không cần trả về lỗi cho client vì đã trả về success trước đó
@@ -1161,31 +1162,28 @@ Mi Nhon Hotel Mui Ne`
       if (orderId) {
         // Tìm order theo specialInstructions (orderReference)
         const orders = await storage.getAllOrders({});
+        console.log("[DEBUG] All orders:", orders);
+        console.log("[DEBUG] Looking for order with specialInstructions =", orderId);
         const order = orders.find(o => o.specialInstructions === orderId);
         if (!order) {
           console.warn(`[WebSocket][PATCH /api/staff/requests/:id/status] Không tìm thấy order có specialInstructions =`, orderId, '. Các specialInstructions hiện có:', orders.map(o => o.specialInstructions));
         }
         if (order) {
+          console.log("[DEBUG] Found matching order:", order);
           const updatedOrder = await storage.updateOrderStatus(order.id, status);
           // Emit WebSocket cho Guest UI nếu updatedOrder tồn tại
           if (updatedOrder && globalThis.wss) {
             if (updatedOrder.specialInstructions) {
-              let sentCount = 0;
+              console.log("[DEBUG] Emitting WebSocket with reference:", updatedOrder.specialInstructions);
               globalThis.wss.clients.forEach((client) => {
                 if (client.readyState === 1) {
-                  console.log('[WebSocket][PATCH /api/staff/requests/:id/status] Sending order_status_update:', {
-                    reference: updatedOrder.specialInstructions,
-                    status: updatedOrder.status
-                  });
                   client.send(JSON.stringify({
-                    type: 'order_status_update',
+                    type: "order_status_update",
                     reference: updatedOrder.specialInstructions,
                     status: updatedOrder.status
                   }));
-                  sentCount++;
                 }
               });
-              console.log(`[WebSocket][PATCH /api/staff/requests/:id/status] Sent to ${sentCount} clients`);
             }
           }
         }

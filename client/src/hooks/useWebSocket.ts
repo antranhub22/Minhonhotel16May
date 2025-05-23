@@ -54,19 +54,36 @@ export function useWebSocket() {
           // Chuẩn hóa reference để so sánh (bỏ #ORD-, lowercase, trim)
           const normalizeRef = (ref: string) => (ref || '').replace(/^#?ord[-_]?/i, '').toLowerCase().trim();
           const wsRef = data.reference ? normalizeRef(data.reference) : (data.orderId ? normalizeRef(data.orderId) : '');
-          console.log('[WebSocket] order_status_update:', { reference: data.reference, orderId: data.orderId, status: data.status, wsRef });
+          console.log('[WebSocket] Received order_status_update:', { 
+            rawReference: data.reference, 
+            rawOrderId: data.orderId, 
+            status: data.status, 
+            normalizedRef: wsRef 
+          });
           assistant.setActiveOrders((prevOrders: ActiveOrder[]) => {
-            console.log('[WebSocket] ActiveOrders before update:', prevOrders);
+            console.log('[WebSocket] ActiveOrders before update:', prevOrders.map(o => ({
+              reference: o.reference,
+              normalizedRef: normalizeRef(o.reference),
+              status: o.status
+            })));
             const updated = prevOrders.map((order: ActiveOrder) => {
               const orderRefNorm = normalizeRef(order.reference);
               const matchByReference = wsRef && orderRefNorm === wsRef;
               if (matchByReference) {
-                console.log('[WebSocket] Updating order', order.reference, 'to status', data.status);
+                console.log('[WebSocket] Found matching order:', {
+                  originalRef: order.reference,
+                  normalizedRef: orderRefNorm,
+                  newStatus: data.status
+                });
                 return { ...order, status: data.status };
               }
               return order;
             });
-            console.log('[WebSocket] ActiveOrders after update:', updated);
+            console.log('[WebSocket] ActiveOrders after update:', updated.map(o => ({
+              reference: o.reference,
+              normalizedRef: normalizeRef(o.reference),
+              status: o.status
+            })));
             return updated;
           });
         }
