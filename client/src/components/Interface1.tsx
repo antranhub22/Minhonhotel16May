@@ -731,31 +731,6 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
             Xóa lịch sử order
           </button>
         </div>
-        {showReference && getActiveIconMediaList().length > 0 && (
-          <div className="w-full flex flex-col items-center justify-center gap-4 my-4">
-            {/* Nếu có nhiều hơn 2 media, hiển thị slider, ngược lại hiển thị 1 hoặc 2 khung */}
-            {getActiveIconMediaList().length > 2 ? (
-              <ReferenceSlider
-                mediaList={getActiveIconMediaList()}
-                activeIdx={0}
-                onChange={() => {}}
-                side="mobile"
-              />
-            ) : (
-              <div className="flex flex-row items-center justify-center gap-4 w-full">
-                {getActiveIconMediaList().map((media, idx) => (
-                  <div key={idx} className="flex flex-col items-center">
-                    <ReferenceMedia media={media} />
-                    {/* Hiển thị mô tả nếu có */}
-                    {media.description && (
-                      <div className="mt-2 text-sm text-yellow-100 text-center max-w-xs px-2 opacity-90">{media.description}</div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
       </div>
     </div>
   );
