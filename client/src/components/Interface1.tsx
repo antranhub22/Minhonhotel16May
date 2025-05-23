@@ -677,6 +677,21 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
             })}
           </div>
         )}
+        {/* Nút xóa lịch sử order */}
+        <div className="w-full flex justify-end mb-2">
+          <button
+            onClick={async () => {
+              try {
+                await fetch('/api/orders/all', { method: 'DELETE' });
+              } catch {}
+              localStorage.removeItem('activeOrders');
+              window.location.reload();
+            }}
+            className="px-3 py-1.5 bg-red-500 hover:bg-red-600 text-white font-bold rounded shadow text-xs sm:text-sm"
+          >
+            Xóa lịch sử order
+          </button>
+        </div>
       </div>
     </div>
   );
