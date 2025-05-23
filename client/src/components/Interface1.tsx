@@ -48,44 +48,52 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
   // Thêm state để kiểm soát hiển thị reference media
   const [showReference, setShowReference] = useState(false);
 
-  // Tạo object ánh xạ iconName -> React component icon Lucide style Flat Modern
+  const iconBgStyle = {
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    background: '#FFCE00',
+    borderRadius: '8px',
+    width: 32,
+    height: 32
+  };
   const iconComponents: Record<string, JSX.Element> = {
     // TOURISM & TOURS
-    tour_halfday: <Sun color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // Half Day
-    tour_fullday: <CalendarDays color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // Full Day
-    tour_multiday: <CalendarCheck color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // Multi Day
-    special_tour: <Star color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // Special
+    tour_halfday: <span style={iconBgStyle}><Sun color="#fff" size={22} strokeWidth={2} /></span>,
+    tour_fullday: <span style={iconBgStyle}><CalendarDays color="#fff" size={22} strokeWidth={2} /></span>,
+    tour_multiday: <span style={iconBgStyle}><CalendarCheck color="#fff" size={22} strokeWidth={2} /></span>,
+    special_tour: <span style={iconBgStyle}><Star color="#fff" size={22} strokeWidth={2} /></span>,
     // BUS TICKETS
-    bus_hcm: <Bus color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // HCM
-    bus_dl: <Mountain color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // Dalat
-    bus_nt: <Umbrella color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // Nha Trang
-    bus_dn: <Landmark color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // Da Nang
-    bus_ct: <Ship color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // Can Tho
-    bus_mt: <Waves color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // My Tho
-    bus_vt: <Map color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // Vung Tau
-    bus_other: <ArrowRightLeft color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // Other
+    bus_hcm: <span style={iconBgStyle}><Bus color="#fff" size={22} strokeWidth={2} /></span>,
+    bus_dl: <span style={iconBgStyle}><Mountain color="#fff" size={22} strokeWidth={2} /></span>,
+    bus_nt: <span style={iconBgStyle}><Umbrella color="#fff" size={22} strokeWidth={2} /></span>,
+    bus_dn: <span style={iconBgStyle}><Landmark color="#fff" size={22} strokeWidth={2} /></span>,
+    bus_ct: <span style={iconBgStyle}><Ship color="#fff" size={22} strokeWidth={2} /></span>,
+    bus_mt: <span style={iconBgStyle}><Waves color="#fff" size={22} strokeWidth={2} /></span>,
+    bus_vt: <span style={iconBgStyle}><Map color="#fff" size={22} strokeWidth={2} /></span>,
+    bus_other: <span style={iconBgStyle}><ArrowRightLeft color="#fff" size={22} strokeWidth={2} /></span>,
     // VEHICLE RENTAL
-    motorcycle: <Bike color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // Motorbike
-    car_driver: <CarFront color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // Car with driver
-    car_self: <Car color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // Self-drive car
+    motorcycle: <span style={iconBgStyle}><Bike color="#fff" size={22} strokeWidth={2} /></span>,
+    car_driver: <span style={iconBgStyle}><CarFront color="#fff" size={22} strokeWidth={2} /></span>,
+    car_self: <span style={iconBgStyle}><Car color="#fff" size={22} strokeWidth={2} /></span>,
     // CURRENCY EXCHANGE
-    usd: <DollarSign color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // USD
-    eur: <Euro color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // EUR
-    krw: <Coins color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // KRW (Coins)
-    rub: <Coins color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // RUB (Coins)
-    currency_other: <Coins color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // Other
+    usd: <span style={iconBgStyle}><DollarSign color="#fff" size={22} strokeWidth={2} /></span>,
+    eur: <span style={iconBgStyle}><Euro color="#fff" size={22} strokeWidth={2} /></span>,
+    krw: <span style={iconBgStyle}><Coins color="#fff" size={22} strokeWidth={2} /></span>,
+    rub: <span style={iconBgStyle}><Coins color="#fff" size={22} strokeWidth={2} /></span>,
+    currency_other: <span style={iconBgStyle}><Coins color="#fff" size={22} strokeWidth={2} /></span>,
     // LAUNDRY SERVICE
-    laundry_regular: <Shirt color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // Regular
-    laundry_special: <Sparkles color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // Special
-    laundry_express: <Plus color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // Express
-    laundry_additional: <Plus color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // Additional
+    laundry_regular: <span style={iconBgStyle}><Shirt color="#fff" size={22} strokeWidth={2} /></span>,
+    laundry_special: <span style={iconBgStyle}><Sparkles color="#fff" size={22} strokeWidth={2} /></span>,
+    laundry_express: <span style={iconBgStyle}><Plus color="#fff" size={22} strokeWidth={2} /></span>,
+    laundry_additional: <span style={iconBgStyle}><Plus color="#fff" size={22} strokeWidth={2} /></span>,
     // HOMESTAY SERVICE
-    homestay_300k: <Home color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // <300k
-    homestay_300_600k: <Building2 color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // 300-600k
-    homestay_600k: <Building2 color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // >600k
-    homestay_longterm: <CalendarDays color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // Long-term
-    homestay_fullhouse: <KeyRound color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // Full house
-    homestay_additional: <UserRound color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // Additional
+    homestay_300k: <span style={iconBgStyle}><Home color="#fff" size={22} strokeWidth={2} /></span>,
+    homestay_300_600k: <span style={iconBgStyle}><Building2 color="#fff" size={22} strokeWidth={2} /></span>,
+    homestay_600k: <span style={iconBgStyle}><Building2 color="#fff" size={22} strokeWidth={2} /></span>,
+    homestay_longterm: <span style={iconBgStyle}><CalendarDays color="#fff" size={22} strokeWidth={2} /></span>,
+    homestay_fullhouse: <span style={iconBgStyle}><KeyRound color="#fff" size={22} strokeWidth={2} /></span>,
+    homestay_additional: <span style={iconBgStyle}><UserRound color="#fff" size={22} strokeWidth={2} /></span>,
   };
 
   // Object ánh xạ tên icon cho từng ngôn ngữ
