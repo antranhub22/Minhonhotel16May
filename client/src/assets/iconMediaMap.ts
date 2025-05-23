@@ -11,147 +11,177 @@ export interface IconMedia {
   description?: string;
 }
 
-export const iconMediaMap: Record<string, IconMedia | IconMedia[]> = {
-  // TOURISM & TOURS
-  sand_dunes: [
-    { type: 'image', src: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80', alt: 'Sand Dunes 1', description: 'Demo: Cảnh đồi cát nổi tiếng ở Mũi Né.' },
-    { type: 'image', src: 'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=600&q=80', alt: 'Sand Dunes 2', description: 'Demo: Trải nghiệm trượt cát và ngắm bình minh.' }
-  ],
-  sightseeing: [
-    { type: 'image', src: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80', alt: 'Sightseeing Demo 1', description: 'Demo: Tham quan các địa điểm nổi bật tại Phan Thiết.' },
-    { type: 'image', src: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=600&q=80', alt: 'Sightseeing Demo 2', description: 'Demo: Khám phá các điểm du lịch mới.' }
-  ],
-  jeep_tour: [
-    { type: 'image', src: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=600&q=80', alt: 'Jeep Tour 1', description: 'Demo: Tour xe Jeep khám phá đồi cát.' },
-    { type: 'image', src: 'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=600&q=80', alt: 'Jeep Tour 2', description: 'Demo: Hành trình thú vị cùng xe Jeep.' }
-  ],
-  stream_beach: [
-    { type: 'image', src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80', alt: 'Stream and Beach Demo 1', description: 'Demo: Khám phá suối và bãi biển đẹp.' },
-    { type: 'image', src: 'https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=600&q=80', alt: 'Stream and Beach Demo 2', description: 'Demo: Tận hưởng không khí biển trong lành.' }
-  ],
-  special_tour: [
-    { type: 'image', src: 'https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=600&q=80', alt: 'Special Tour Demo 1', description: 'Demo: Các tour đặc biệt, trải nghiệm độc đáo.' },
-    { type: 'image', src: 'https://images.unsplash.com/photo-1465101178521-c1a9136a3b99?auto=format&fit=crop&w=600&q=80', alt: 'Special Tour Demo 2', description: 'Demo: Tour dành cho nhóm nhỏ, cá nhân.' }
-  ],
-  // BUS TICKETS
+export const iconMediaMap: Record<string, IconMedia[]> = {
+  // ================ BUS TICKETS ================
   bus_hcm: [
-    { type: 'image', src: 'https://images.unsplash.com/photo-1511918984145-48de785d4c4e?auto=format&fit=crop&w=600&q=80', alt: 'Bus HCM Demo 1', description: 'Demo: Xe bus chất lượng cao tuyến Mũi Né - HCM.' },
-    { type: 'image', src: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80', alt: 'Bus HCM Demo 2', description: 'Demo: Nội thất xe bus hiện đại.' }
+    {
+      type: 'image',
+      src: 'https://images.unsplash.com/photo-1511918984145-48de785d4c4e?auto=format&fit=crop&w=600&q=80',
+      alt: 'Bus HCM Demo 1',
+      description: `Destination: Ho Chi Minh City\nPickup Point: Your hotel or main office in Mui Ne\nDeparture Time: Daily from 01:00 - 04:00 - 06:00 - 08:00 - 10:00 - 13:00 - 15:00 - 17:00 - 19:00 - 21:00 - 23:00\nTravel Time: ~4–5 hours\nBus Type: Limousine\nPrice: 320.000 Vnd\nAmenities: WiFi, A/C, Water, USB charging\nRefund Policy: Free cancellation up to 24h before departure\nPayment Method: Cash, Bank Transfer, Online Booking`
+    },
+    {
+      type: 'image',
+      src: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80',
+      alt: 'Bus HCM Demo 2',
+      description: `Destination: Ho Chi Minh City\nPickup Point: Your hotel or main office in Mui Ne\nDeparture Time: Daily from 01:00 - 04:00 - 06:00 - 08:00 - 10:00 - 13:00 - 15:00 - 17:00 - 19:00 - 21:00 - 23:00\nTravel Time: ~4–5 hours\nBus Type: Sleeper Bus\nPrice: 260,000 VND\nAmenities: WiFi, A/C, Water, USB charging\nRefund Policy: Free cancellation up to 24h before departure\nPayment Method: Cash, Bank Transfer, Online Booking`
+    }
   ],
   bus_dl: [
-    { type: 'image', src: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=600&q=80', alt: 'Bus Da Lat Demo 1', description: 'Demo: Xe bus tuyến Mũi Né - Đà Lạt, khởi hành hàng ngày.' },
-    { type: 'image', src: 'https://images.unsplash.com/photo-1511918984145-48de785d4c4e?auto=format&fit=crop&w=600&q=80', alt: 'Bus Da Lat Demo 2', description: 'Demo: Cảnh đẹp trên đường đi Đà Lạt.' }
+    {
+      type: 'image',
+      src: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=600&q=80',
+      alt: 'Bus Da Lat Demo 1',
+      description: `Destination: Da Lat\nPickup Point: Hotel pickup or Nguyễn Đình Chiểu Office\nDeparture Time: 06:30, 10:30, 12:00\nTravel Time: ~4.5–5 hours\nBus Type: Sleeper\nPrice: 150,000 – 250,000 VND\nAmenities: WiFi, A/C, Water\nRefund Policy: Free cancellation up to 24h before departure\nPayment Method: Cash, Online Booking`
+    }
   ],
   bus_nt: [
-    { type: 'image', src: 'https://images.unsplash.com/photo-1465101178521-c1a9136a3b99?auto=format&fit=crop&w=600&q=80', alt: 'Bus Nha Trang Demo 1', description: 'Demo: Xe bus tuyến Mũi Né - Nha Trang.' },
-    { type: 'image', src: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=600&q=80', alt: 'Bus Nha Trang Demo 2', description: 'Demo: Không gian xe bus rộng rãi.' }
+    {
+      type: 'image',
+      src: 'https://images.unsplash.com/photo-1465101178521-c1a9136a3b99?auto=format&fit=crop&w=600&q=80',
+      alt: 'Bus Nha Trang Demo 1',
+      description: `Destination: Nha Trang\nPickup Point: Hotel or agency pickup\nDeparture Time: Morning & Afternoon trips\nTravel Time: ~4.5 hours\nBus Type: Sleeper, Limousine\nPrice: 180,000 – 300,000 VND\nAmenities: WiFi, A/C, Water\nRefund Policy: Free cancellation up to 24h before departure\nPayment Method: Cash, Online Booking`
+    }
   ],
   bus_dn: [
-    { type: 'image', src: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80', alt: 'Bus Da Nang Demo 1', description: 'Demo: Xe bus tuyến Mũi Né - Đà Nẵng.' },
-    { type: 'image', src: 'https://images.unsplash.com/photo-1511918984145-48de785d4c4e?auto=format&fit=crop&w=600&q=80', alt: 'Bus Da Nang Demo 2', description: 'Demo: Dịch vụ tiện nghi trên xe.' }
+    {
+      type: 'image',
+      src: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80',
+      alt: 'Bus Da Nang Demo 1',
+      description: `Destination: Da Nang\nPickup Point: 117 Nguyễn Đình Chiểu or hotel pickup\nDeparture Time: Evening trips\nTravel Time: ~10–11 hours\nBus Type: Sleeper, Limousine\nPrice: 530,000 – 590,000 VND\nAmenities: A/C, Water, Blanket\nRefund Policy: Free cancellation up to 24h before departure\nPayment Method: Cash, Online`
+    }
   ],
-  bus_ct: [
-    { type: 'image', src: 'https://images.unsplash.com/photo-1465101178521-c1a9136a3b99?auto=format&fit=crop&w=600&q=80', alt: 'Bus Can Tho Demo 1', description: 'Demo: Xe bus tuyến Mũi Né - Cần Thơ.' },
-    { type: 'image', src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80', alt: 'Bus Can Tho Demo 2', description: 'Demo: Hành trình an toàn, thoải mái.' }
-  ],
-  bus_mt: [
-    { type: 'image', src: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=600&q=80', alt: 'Bus My Tho Demo 1', description: 'Demo: Xe bus tuyến Mũi Né - Mỹ Tho.' },
-    { type: 'image', src: 'https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=600&q=80', alt: 'Bus My Tho Demo 2', description: 'Demo: Xe bus sạch sẽ, tiện nghi.' }
-  ],
-  bus_vt: [
-    { type: 'image', src: 'https://images.unsplash.com/photo-1511918984145-48de785d4c4e?auto=format&fit=crop&w=600&q=80', alt: 'Bus Vung Tau Demo 1', description: 'Demo: Xe bus tuyến Mũi Né - Vũng Tàu.' },
-    { type: 'image', src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80', alt: 'Bus Vung Tau Demo 2', description: 'Demo: Phong cảnh biển trên đường đi.' }
-  ],
-  bus_other: [
-    { type: 'image', src: 'https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=600&q=80', alt: 'Other Bus Demo 1', description: 'Demo: Các tuyến bus khác.' },
-    { type: 'image', src: 'https://images.unsplash.com/photo-1465101178521-c1a9136a3b99?auto=format&fit=crop&w=600&q=80', alt: 'Other Bus Demo 2', description: 'Demo: Xe bus phục vụ nhiều tuyến.' }
-  ],
-  // VEHICLE RENTAL
+  // ================ VEHICLE RENTAL ================
   motorcycle: [
-    { type: 'image', src: 'https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=600&q=80', alt: 'Motorcycle Rental Demo 1', description: 'Demo: Dịch vụ thuê xe máy.' },
-    { type: 'image', src: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80', alt: 'Motorcycle Rental Demo 2', description: 'Demo: Xe máy đời mới, tiết kiệm xăng.' }
+    {
+      type: 'image',
+      src: 'https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=600&q=80',
+      alt: 'Motorbike Rental Demo 1',
+      description: `Type: Motorbike\nRental Duration: Full-day | Multi-day\nPickup Location: Hotel or agency in Mui Ne\nRequired Documents: Passport\nPrice Range: 150,000 VND/day\nInclusions: Helmet\nDeposit: No Deposit required\nPayment Method: Cash, Bank Transfer`
+    }
   ],
   car_driver: [
-    { type: 'image', src: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=600&q=80', alt: 'Car Rental with Driver Demo 1', description: 'Demo: Thuê xe ô tô có tài xế.' },
-    { type: 'image', src: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=600&q=80', alt: 'Car Rental with Driver Demo 2', description: 'Demo: Xe rộng rãi, tài xế chuyên nghiệp.' }
+    {
+      type: 'image',
+      src: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=600&q=80',
+      alt: 'Car Rental with Driver Demo 1',
+      description: `Type: Car with Driver\nRental Duration: Half-day | Full-day | Multi-day\nPickup Location: Hotel or agency in Mui Ne\nRequired Documents: Passport\nPrice Range: 800,000 – 1,200,000 VND/day\nInclusions: Driver, Fuel, Insurance\nDeposit: No deposit required\nPayment Method: Cash, Bank Transfer`
+    }
   ],
   car_self: [
-    { type: 'image', src: 'https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=600&q=80', alt: 'Car Rental Self-drive Demo 1', description: 'Demo: Thuê xe tự lái.' },
-    { type: 'image', src: 'https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=600&q=80', alt: 'Car Rental Self-drive Demo 2', description: 'Demo: Xe tự lái đa dạng mẫu mã.' }
+    {
+      type: 'image',
+      src: 'https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=600&q=80',
+      alt: 'Car Rental Self-drive Demo 1',
+      description: `Type: Car without Driver\nRental Duration: Full-day | Multi-day\nPickup Location: Hotel or agency in Mui Ne\nRequired Documents: Passport, Driver's License (Int'l Preferred)\nPrice Range: 700,000 – 1,000,000 VND/day\nInclusions: Insurance, Unlimited km\nDeposit: 2,000,000 VND + Passport\nPayment Method: Cash, Bank Transfer`
+    }
   ],
-  vehicle_special: [
-    { type: 'image', src: 'https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=600&q=80', alt: 'Special Vehicle Rental Demo 1', description: 'Demo: Thuê xe đặc biệt.' },
-    { type: 'image', src: 'https://images.unsplash.com/photo-1511918984145-48de785d4c4e?auto=format&fit=crop&w=600&q=80', alt: 'Special Vehicle Rental Demo 2', description: 'Demo: Xe phục vụ sự kiện, nhóm đông.' }
-  ],
-  // CURRENCY EXCHANGE
+  // ================ CURRENCY EXCHANGE ================
   usd: [
-    { type: 'image', src: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=600&q=80', alt: 'USD Exchange Demo 1', description: 'Demo: Đổi tiền USD.' },
-    { type: 'image', src: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=600&q=80', alt: 'USD Exchange Demo 2', description: 'Demo: Giao dịch nhanh chóng, an toàn.' }
+    {
+      type: 'image',
+      src: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=600&q=80',
+      alt: 'USD Exchange Demo 1',
+      description: `Currency: USD\nRate Info: 25,600 Vnd/Usd\nProviders: SCB Bank, Hotels, Mui Ne Adventure\nAccepted Notes: $10 and above, no damage\nPayment Method: Cash only`
+    }
   ],
   eur: [
-    { type: 'image', src: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=600&q=80', alt: 'EUR Exchange Demo 1', description: 'Demo: Đổi tiền EUR.' },
-    { type: 'image', src: 'https://images.unsplash.com/photo-1465101178521-c1a9136a3b99?auto=format&fit=crop&w=600&q=80', alt: 'EUR Exchange Demo 2', description: 'Demo: Tỷ giá cạnh tranh.' }
-  ],
-  gbp: [
-    { type: 'image', src: 'https://images.unsplash.com/photo-1465101178521-c1a9136a3b99?auto=format&fit=crop&w=600&q=80', alt: 'GBP Exchange Demo 1', description: 'Demo: Đổi tiền GBP.' },
-    { type: 'image', src: 'https://images.unsplash.com/photo-1511918984145-48de785d4c4e?auto=format&fit=crop&w=600&q=80', alt: 'GBP Exchange Demo 2', description: 'Demo: Đổi tiền nhanh, tiện lợi.' }
-  ],
-  sgd: [
-    { type: 'image', src: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80', alt: 'SGD Exchange Demo 1', description: 'Demo: Đổi tiền SGD.' },
-    { type: 'image', src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80', alt: 'SGD Exchange Demo 2', description: 'Demo: Hỗ trợ nhiều loại ngoại tệ.' }
-  ],
-  jpy: [
-    { type: 'image', src: 'https://images.unsplash.com/photo-1511918984145-48de785d4c4e?auto=format&fit=crop&w=600&q=80', alt: 'JPY Exchange Demo 1', description: 'Demo: Đổi tiền JPY.' },
-    { type: 'image', src: 'https://images.unsplash.com/photo-1465101178521-c1a9136a3b99?auto=format&fit=crop&w=600&q=80', alt: 'JPY Exchange Demo 2', description: 'Demo: Đổi tiền Nhật Bản uy tín.' }
-  ],
-  krw: [
-    { type: 'image', src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80', alt: 'KRW Exchange Demo 1', description: 'Demo: Đổi tiền KRW.' },
-    { type: 'image', src: 'https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=600&q=80', alt: 'KRW Exchange Demo 2', description: 'Demo: Đổi tiền Hàn Quốc nhanh chóng.' }
-  ],
-  rub: [
-    { type: 'image', src: 'https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=600&q=80', alt: 'RUB Exchange Demo 1', description: 'Demo: Đổi tiền RUB.' },
-    { type: 'image', src: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=600&q=80', alt: 'RUB Exchange Demo 2', description: 'Demo: Đổi tiền Nga tiện lợi.' }
+    {
+      type: 'image',
+      src: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=600&q=80',
+      alt: 'EUR Exchange Demo 1',
+      description: `Currency: EUR\nRate Info: May be limited\nProviders: Hotels, Travel Desks\nAccepted Notes: New notes only\nPayment Method: Cash only`
+    }
   ],
   currency_other: [
-    { type: 'image', src: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=600&q=80', alt: 'Other Currency Demo 1', description: 'Demo: Đổi các loại tiền khác.' },
-    { type: 'image', src: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=600&q=80', alt: 'Other Currency Demo 2', description: 'Demo: Đổi ngoại tệ đa dạng.' }
+    {
+      type: 'image',
+      src: 'https://images.unsplash.com/photo-1511918984145-48de785d4c4e?auto=format&fit=crop&w=600&q=80',
+      alt: 'Other Currency Exchange Demo 1',
+      description: `Currency: Others (GBP, JPY, KRW, RUB)\nRate Info: Availability limited\nProviders: Hotel reception, Mui Ne Adventure\nAccepted Notes: Clean, undamaged bills\nPayment Method: Cash only`
+    }
   ],
-  // LAUNDRY SERVICE
+  // ================ LAUNDRY SERVICE ================
   laundry_regular: [
-    { type: 'image', src: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=600&q=80', alt: 'Regular Laundry Demo 1', description: 'Demo: Giặt ủi thông thường.' },
-    { type: 'image', src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80', alt: 'Regular Laundry Demo 2', description: 'Demo: Dịch vụ giặt ủi sạch sẽ.' }
-  ],
-  laundry_special: [
-    { type: 'image', src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80', alt: 'Special Laundry Demo 1', description: 'Demo: Giặt ủi đặc biệt.' },
-    { type: 'image', src: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80', alt: 'Special Laundry Demo 2', description: 'Demo: Giặt ủi cho đồ cao cấp.' }
+    {
+      type: 'image',
+      src: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=600&q=80',
+      alt: 'Regular Laundry Demo 1',
+      description: `Type: Regular Wash\nTurnaround Time: 24h\nPrice: 30,000 VND/kg\nExtras: Ironing optional\nPayment Method: Cash, Hotel bill`
+    }
   ],
   laundry_express: [
-    { type: 'image', src: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80', alt: 'Express Laundry Demo 1', description: 'Demo: Giặt ủi nhanh.' },
-    { type: 'image', src: 'https://images.unsplash.com/photo-1511918984145-48de785d4c4e?auto=format&fit=crop&w=600&q=80', alt: 'Express Laundry Demo 2', description: 'Demo: Giao đồ nhanh trong ngày.' }
+    {
+      type: 'image',
+      src: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80',
+      alt: 'Express Laundry Demo 1',
+      description: `Type: Express Wash\nTurnaround Time: 4–6h\nPrice: 40,000 – 50,000 VND/kg\nExtras: Quick return, Eco detergent\nPayment Method: Cash`
+    }
   ],
-  laundry_additional: [
-    { type: 'image', src: 'https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=600&q=80', alt: 'Additional Laundry Demo 1', description: 'Demo: Dịch vụ giặt ủi bổ sung.' },
-    { type: 'image', src: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=600&q=80', alt: 'Additional Laundry Demo 2', description: 'Demo: Nhận giặt ủi tận nơi.' }
+  laundry_special: [
+    {
+      type: 'image',
+      src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80',
+      alt: 'Delicates Laundry Demo 1',
+      description: `Type: Delicates & Special Garments\nTurnaround Time: Next-day\nPrice: 15,000 – 60,000 VND/item\nExtras: Hand wash, Low heat drying\nPayment Method: Cash`
+    }
   ],
-  // HOMESTAY SERVICE
+  // ================ HOMESTAY ================
   homestay_300k: [
-    { type: 'image', src: 'https://images.unsplash.com/photo-1511918984145-48de785d4c4e?auto=format&fit=crop&w=600&q=80', alt: 'Homestay <300k Demo 1', description: 'Demo: Homestay giá dưới 300k.' },
-    { type: 'image', src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80', alt: 'Homestay <300k Demo 2', description: 'Demo: Phòng sạch sẽ, tiện nghi.' }
+    {
+      type: 'image',
+      src: 'https://images.unsplash.com/photo-1511918984145-48de785d4c4e?auto=format&fit=crop&w=600&q=80',
+      alt: 'Homestay <300k Demo 1',
+      description: `Price Range: Under 300,000 VND\nRoom Type: Fan Room, Shared Dorm\nAmenities: WiFi, Fan, Shared Bathroom\nLocation: Backpacker zone, alleys\nBooking Method: Direct, WhatsApp`
+    }
   ],
   homestay_300_600k: [
-    { type: 'image', src: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=600&q=80', alt: 'Homestay 300-600k Demo 1', description: 'Demo: Homestay giá 300k-600k.' },
-    { type: 'image', src: 'https://images.unsplash.com/photo-1465101178521-c1a9136a3b99?auto=format&fit=crop&w=600&q=80', alt: 'Homestay 300-600k Demo 2', description: 'Demo: Không gian rộng rãi, thoáng mát.' }
+    {
+      type: 'image',
+      src: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=600&q=80',
+      alt: 'Homestay 300-600k Demo 1',
+      description: `Price Range: 300,000 – 600,000 VND\nRoom Type: Private Room\nAmenities: WiFi, A/C, Private Bathroom\nLocation: Near beach, tourist area\nBooking Method: Hotel desk, Online`
+    }
   ],
   homestay_600k: [
-    { type: 'image', src: 'https://images.unsplash.com/photo-1465101178521-c1a9136a3b99?auto=format&fit=crop&w=600&q=80', alt: 'Homestay >600k Demo 1', description: 'Demo: Homestay giá trên 600k.' },
-    { type: 'image', src: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=600&q=80', alt: 'Homestay >600k Demo 2', description: 'Demo: Dịch vụ cao cấp, sang trọng.' }
+    {
+      type: 'image',
+      src: 'https://images.unsplash.com/photo-1465101178521-c1a9136a3b99?auto=format&fit=crop&w=600&q=80',
+      alt: 'Homestay >600k Demo 1',
+      description: `Price Range: Over 600,000 VND\nRoom Type: Deluxe, Family Room\nAmenities: A/C, Breakfast, View\nLocation: Beachfront or mid-range\nBooking Method: Online booking`
+    }
   ],
-  homestay_longterm: [
-    { type: 'image', src: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80', alt: 'Homestay Longterm Demo 1', description: 'Demo: Homestay dài hạn.' },
-    { type: 'image', src: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=600&q=80', alt: 'Homestay Longterm Demo 2', description: 'Demo: Giá ưu đãi cho thuê dài hạn.' }
+  // ================ TOURS ================
+  tour_halfday: [
+    {
+      type: 'image',
+      src: 'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=600&q=80',
+      alt: 'Tour Half Day Demo 1',
+      description: `Tour: West\nDuration: Half-day\nPickup: Hotel in Mui Ne\nItinerary: White Dunes, Red Dunes, Fishing Village, Fairy Stream\nInclusions: Jeep, Driver, Water\nExclusions: ATV, Breakfast\nLanguage: English, Vietnamese\nPrice: 550,000 VND/jeep (1–4 pax)\nBooking Method: Hotel, Agency, WhatsApp`
+    }
   ],
-  homestay_additional: [
-    { type: 'image', src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80', alt: 'Homestay Additional Demo 1', description: 'Demo: Dịch vụ homestay bổ sung.' },
-    { type: 'image', src: 'https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=600&q=80', alt: 'Homestay Additional Demo 2', description: 'Demo: Hỗ trợ khách hàng 24/7.' }
+  tour_fullday: [
+    {
+      type: 'image',
+      src: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80',
+      alt: 'Tour Full Day Demo 1',
+      description: `Tour: East Of Mui Ne\nDuration: Full-day\nPickup: Hotel\nItinerary: Tà Cú Pagoda, Cable Car, Poshanu Cham Towers\nInclusions: Transport, Tickets, Guide\nPrice: ~850,000 VND/person\nLanguage: Vietnamese (EN on request)`
+    }
   ],
+  tour_multiday: [
+    {
+      type: 'image',
+      src: 'https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=600&q=80',
+      alt: 'Tour Multi Day Demo 1',
+      description: `Tour: Mui Ne – Da Lat 2D1N\nItinerary: Prenn waterfall, Langbiang, Tuyen Lam Lake, Flower Garden\nInclusions: Hotel, Meals, Entrance Fees, Guide\nPrice: ~2,500,000 – 3,000,000 VND/person\nLanguage: Vietnamese, English`
+    }
+  ],
+  special_tour: [
+    {
+      type: 'image',
+      src: 'https://images.unsplash.com/photo-1465101178521-c1a9136a3b99?auto=format&fit=crop&w=600&q=80',
+      alt: 'Special Tour Demo 1',
+      description: `Tour: Hot Air Balloon Ride\nDuration: ~30 min flight + transfer\nPickup: Hotel in early morning\nInclusions: Balloon Ride, Transport, Drink\nPrice: 3,800,000 VND/person\nLanguage: English, Vietnamese`
+    }
+  ]
 }; 
