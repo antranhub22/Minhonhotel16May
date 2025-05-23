@@ -17,10 +17,22 @@
   }
 }
 
+.card-title {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+}
+.card-subcategory {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+}
 .icon-bus-label {
   display: inline-block;
   font-weight: 500;
-  font-size: 0.98em;
+  font-size: 24px;
   color: #FFD966;
   background: none;
   border: none;

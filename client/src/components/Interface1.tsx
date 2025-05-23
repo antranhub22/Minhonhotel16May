@@ -535,7 +535,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                 border: '1px solid rgba(255,255,255,0.10)',
               }}
             >
-              <h4 className="font-medium text-amber-300 pb-0 mb-0 text-xs sm:text-sm"
+              <h4 className="card-title font-medium text-amber-300 pb-0 mb-0 text-xs sm:text-sm"
                 style={{
                   borderBottom: 'none',
                   textShadow: '0px 1px 2px rgba(0,0,0,0.08)'
@@ -560,7 +560,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                 border: '1px solid rgba(255,255,255,0.10)',
               }}
             >
-              <h4 className="font-medium text-amber-300 pb-0 mb-0 text-xs sm:text-sm"
+              <h4 className="card-title font-medium text-amber-300 pb-0 mb-0 text-xs sm:text-sm"
                 style={{ 
                   borderBottom: 'none',
                   textShadow: '0px 1px 2px rgba(0,0,0,0.08)'
@@ -585,7 +585,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                 border: '1px solid rgba(255,255,255,0.10)',
               }}
             >
-              <h4 className="font-medium text-amber-300 pb-0 mb-0 text-xs sm:text-sm"
+              <h4 className="card-title font-medium text-amber-300 pb-0 mb-0 text-xs sm:text-sm"
                 style={{ 
                   borderBottom: 'none',
                   textShadow: '0px 1px 2px rgba(0,0,0,0.08)'
@@ -610,7 +610,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                 border: '1px solid rgba(255,255,255,0.10)',
               }}
             >
-              <h4 className="font-medium text-amber-300 pb-0 mb-0 text-xs sm:text-sm"
+              <h4 className="card-title font-medium text-amber-300 pb-0 mb-0 text-xs sm:text-sm"
                 style={{ 
                   borderBottom: 'none',
                   textShadow: '0px 1px 2px rgba(0,0,0,0.08)'
@@ -635,7 +635,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                 border: '1px solid rgba(255,255,255,0.10)',
               }}
             >
-              <h4 className="font-medium text-amber-300 pb-0 mb-0 text-xs sm:text-sm"
+              <h4 className="card-title font-medium text-amber-300 pb-0 mb-0 text-xs sm:text-sm"
                 style={{ 
                   borderBottom: 'none',
                   textShadow: '0px 1px 2px rgba(0,0,0,0.08)'
@@ -660,7 +660,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                 border: '1px solid rgba(255,255,255,0.10)',
               }}
             >
-              <h4 className="font-medium text-amber-300 pb-0 mb-0 text-xs sm:text-sm"
+              <h4 className="card-title font-medium text-amber-300 pb-0 mb-0 text-xs sm:text-sm"
                 style={{ 
                   borderBottom: 'none',
                   textShadow: '0px 1px 2px rgba(0,0,0,0.08)'
