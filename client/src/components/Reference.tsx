@@ -370,9 +370,9 @@ export const ReferenceMedia = ({ media }: { media: IconMedia }) => {
         title="Click to zoom"
       >
         {media.type === 'image' || media.type === 'gif' ? (
-          <img src={media.src} alt={media.alt || ''} className="rounded-xl max-h-[200px] w-auto object-contain shadow-lg mx-auto" />
+          <img src={media.src} alt={media.alt || ''} className="rounded-xl object-cover mx-auto" style={{width: 220, height: 160}} />
         ) : media.type === 'video' ? (
-          <video src={media.src} controls autoPlay loop className="rounded-xl max-h-[200px] w-auto object-contain shadow-lg mx-auto" />
+          <video src={media.src} controls autoPlay loop className="rounded-xl object-cover mx-auto" style={{width: 220, height: 160}} />
         ) : null}
       </div>
       {/* Description luôn hiển thị bên dưới, auto nới rộng, không giới hạn chiều cao */}
@@ -415,9 +415,9 @@ export const ReferenceMedia = ({ media }: { media: IconMedia }) => {
               <span className="material-icons text-2xl">close</span>
             </button>
             {media.type === 'image' || media.type === 'gif' ? (
-              <img src={media.src} alt={media.alt || ''} className="rounded-xl max-h-[92vh] max-w-[96vw] w-auto object-contain border-4 border-white shadow-2xl" onClick={e => e.stopPropagation()} />
+              <img src={media.src} alt={media.alt || ''} className="rounded-xl object-cover mx-auto" style={{width: 220, height: 160}} />
             ) : media.type === 'video' ? (
-              <video src={media.src} controls autoPlay loop className="rounded-xl max-h-[92vh] max-w-[96vw] w-auto object-contain border-4 border-white shadow-2xl" onClick={e => e.stopPropagation()} />
+              <video src={media.src} controls autoPlay loop className="rounded-xl object-cover mx-auto" style={{width: 220, height: 160}} />
             ) : null}
           </div>
         </div>
@@ -444,9 +444,9 @@ export const ReferenceSlider = ({ mediaList, activeIdx, onChange, side }: { medi
         <SwiperSlide key={idx}>
           <div className="flex flex-col items-center">
             {media.type === 'image' || media.type === 'gif' ? (
-              <img src={media.src} alt={media.alt || ''} className="rounded-xl max-h-[200px] w-auto object-contain shadow-lg" />
+              <img src={media.src} alt={media.alt || ''} className="rounded-xl object-cover mx-auto" style={{width: 220, height: 160}} />
             ) : media.type === 'video' ? (
-              <video src={media.src} controls autoPlay loop className="rounded-xl max-h-[200px] w-auto object-contain shadow-lg" />
+              <video src={media.src} controls autoPlay loop className="rounded-xl object-cover mx-auto" style={{width: 220, height: 160}} />
             ) : null}
             {media.description && (
               <div
