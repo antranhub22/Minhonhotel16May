@@ -725,13 +725,26 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
           </button>
         </div>
         {showReference && getActiveIconMediaList().length > 0 && (
-          <div className="w-full flex flex-col md:flex-row items-center justify-center gap-4 my-4">
-            <div className="flex-1 flex items-center justify-center min-h-[220px]">
-              {getActiveIconMediaList()[0] && <ReferenceMedia media={getActiveIconMediaList()[0]} />}
-            </div>
-            {getActiveIconMediaList()[1] && (
-              <div className="flex-1 flex items-center justify-center min-h-[220px]">
-                <ReferenceMedia media={getActiveIconMediaList()[1]} />
+          <div className="w-full flex flex-col items-center justify-center gap-4 my-4">
+            {/* Nếu có nhiều hơn 2 media, hiển thị slider, ngược lại hiển thị 1 hoặc 2 khung */}
+            {getActiveIconMediaList().length > 2 ? (
+              <ReferenceSlider
+                mediaList={getActiveIconMediaList()}
+                activeIdx={0}
+                onChange={() => {}}
+                side="mobile"
+              />
+            ) : (
+              <div className="flex flex-row items-center justify-center gap-4 w-full">
+                {getActiveIconMediaList().map((media, idx) => (
+                  <div key={idx} className="flex flex-col items-center">
+                    <ReferenceMedia media={media} />
+                    {/* Hiển thị mô tả nếu có */}
+                    {media.description && (
+                      <div className="mt-2 text-sm text-yellow-100 text-center max-w-xs px-2 opacity-90">{media.description}</div>
+                    )}
+                  </div>
+                ))}
               </div>
             )}
           </div>
