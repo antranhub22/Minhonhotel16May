@@ -233,7 +233,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
   // Component hiển thị icon với tooltip
   const IconWithTooltip = ({ iconName, className, iconSize = 32 }: { iconName: string, className?: string, iconSize?: number }) => (
     <div className="relative flex flex-col items-center justify-center cursor-pointer">
-      <span
+      <span 
         className={className || ''}
         style={{ filter: 'drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.2))' }}
         onClick={() => handleIconClick(iconName)}
@@ -284,7 +284,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
       case OrderStatus.NOTE:
         return 'status_note';
       default:
-        return 'status_acknowledged';
+    return 'status_acknowledged';
     }
   };
 
@@ -378,8 +378,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
           </div>
         </div>
         <h2 className="font-poppins font-bold text-2xl sm:text-3xl lg:text-4xl text-amber-400 mb-2 text-center"
-          style={{ textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)' }}
-        >
+          style={{ textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)' }}>
           <span style={{ color: 'red', fontStyle: 'italic', marginRight: 8 }}>Demo</span>{t('hotel_name', lang)}
         </h2>
         <p className="text-xs sm:text-lg lg:text-xl text-center max-w-full mb-4 truncate sm:whitespace-nowrap overflow-x-auto">AI-powered Voice Assistant - Supporting All Your Needs</p>
@@ -461,15 +460,15 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
             {/* Nút gọi luôn ở giữa */}
             <div className="flex items-center justify-center min-h-[240px]">
               <div className="relative flex items-center justify-center">
-                {/* Ripple Animation (luôn hiển thị, mạnh hơn khi hover) */}
-                <div className="absolute inset-0 rounded-full border-4 border-amber-400 animate-[ripple_1.5s_linear_infinite] pointer-events-none transition-opacity duration-300 group-hover:opacity-80 opacity-60"></div>
-                <div className="absolute inset-0 rounded-full border-4 border-amber-400/70 animate-[ripple_2s_linear_infinite] pointer-events-none transition-opacity duration-300 group-hover:opacity-60 opacity-40"></div>
-                {/* Main Button */}
-                <button 
+          {/* Ripple Animation (luôn hiển thị, mạnh hơn khi hover) */}
+          <div className="absolute inset-0 rounded-full border-4 border-amber-400 animate-[ripple_1.5s_linear_infinite] pointer-events-none transition-opacity duration-300 group-hover:opacity-80 opacity-60"></div>
+          <div className="absolute inset-0 rounded-full border-4 border-amber-400/70 animate-[ripple_2s_linear_infinite] pointer-events-none transition-opacity duration-300 group-hover:opacity-60 opacity-40"></div>
+          {/* Main Button */}
+            <button 
                   id={`vapiButton${lang === 'en' ? 'En' : lang === 'fr' ? 'Fr' : lang === 'zh' ? 'Zh' : lang === 'ru' ? 'Ru' : 'Ko'}`}
-                  className="group relative w-36 h-36 sm:w-40 sm:h-40 lg:w-56 lg:h-56 rounded-full font-poppins font-bold flex flex-col items-center justify-center overflow-hidden hover:translate-y-[-2px] hover:shadow-[0px_12px_20px_rgba(0,0,0,0.2)]"
+            className="group relative w-36 h-36 sm:w-40 sm:h-40 lg:w-56 lg:h-56 rounded-full font-poppins font-bold flex flex-col items-center justify-center overflow-hidden hover:translate-y-[-2px] hover:shadow-[0px_12px_20px_rgba(0,0,0,0.2)]"
                   onClick={() => handleCall(lang as any)}
-                  style={{
+            style={{
                     background: lang === 'en' 
                       ? 'linear-gradient(180deg, rgba(139,26,71,0.9) 0%, rgba(139,26,71,0.9) 100%)' // Tiếng Anh - Plum Red
                       : lang === 'fr' 
@@ -479,41 +478,41 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                       : lang === 'ru' 
                       ? 'linear-gradient(180deg, rgba(139,26,71,0.9) 0%, rgba(139,26,71,0.9) 100%)' // Tiếng Nga - Plum Red
                       : 'linear-gradient(180deg, rgba(139,26,71,0.9) 0%, rgba(139,26,71,0.9) 100%)', // Tiếng Hàn - Plum Red
-                    boxShadow: '0px 12px 24px rgba(0, 0, 0, 0.25), 0px 6px 12px rgba(0, 0, 0, 0.15), inset 0px 1px 0px rgba(255, 255, 255, 0.3)',
-                    border: '1px solid rgba(255, 255, 255, 0.5)',
-                    transition: 'all 0.3s ease',
-                    transform: 'translateY(0) translateZ(30px)',
-                  }}
-                >
+              boxShadow: '0px 12px 24px rgba(0, 0, 0, 0.25), 0px 6px 12px rgba(0, 0, 0, 0.15), inset 0px 1px 0px rgba(255, 255, 255, 0.3)',
+              border: '1px solid rgba(255, 255, 255, 0.5)',
+              transition: 'all 0.3s ease',
+              transform: 'translateY(0) translateZ(30px)',
+            }}
+          >
                   <span className="material-icons text-4xl sm:text-6xl lg:text-7xl mb-2 text-[#DAC17A] transition-all duration-300 group-hover:scale-110" 
-                    style={{ 
-                      filter: 'drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.2))',
+              style={{ 
+                filter: 'drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.2))',
                       color: lang === 'en' 
                         ? '#DAC17A' // Vàng cho tiếng Anh
                         : lang === 'fr' 
-                        ? '#FFFFFF' // Trắng cho tiếng Pháp
+                  ? '#FFFFFF' // Trắng cho tiếng Pháp
                         : lang === 'zh' 
-                        ? '#FFEB3B' // Vàng sáng cho tiếng Trung
+                  ? '#FFEB3B' // Vàng sáng cho tiếng Trung
                         : lang === 'ru' 
-                        ? '#F48FB1' // Hồng nhạt cho tiếng Nga
-                        : '#4ADE80' // Xanh lá sáng cho tiếng Hàn
-                    }}
-                  >mic</span>
+                  ? '#F48FB1' // Hồng nhạt cho tiếng Nga
+                  : '#4ADE80' // Xanh lá sáng cho tiếng Hàn
+              }}
+            >mic</span>
                   {lang === 'fr' ? (
-                    <span className="text-sm sm:text-lg lg:text-2xl font-bold text-white px-2 text-center"
-                      style={{ textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)' }}
+              <span className="text-sm sm:text-lg lg:text-2xl font-bold text-white px-2 text-center"
+                style={{ textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)' }}
                     >{t('press_to_call', lang)}</span>
                   ) : lang === 'ru' || lang === 'ko' ? (
-                    <span className="text-sm sm:text-lg lg:text-xl font-bold text-white px-2 text-center"
-                      style={{ textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)' }}
+              <span className="text-sm sm:text-lg lg:text-xl font-bold text-white px-2 text-center"
+                style={{ textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)' }}
                     >{t('press_to_call', lang)}</span>
-                  ) : (
-                    <span className="text-lg sm:text-2xl lg:text-3xl font-bold whitespace-nowrap text-white"
-                      style={{ textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)' }}
+            ) : (
+              <span className="text-lg sm:text-2xl lg:text-3xl font-bold whitespace-nowrap text-white"
+                style={{ textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)' }}
                     >{t('press_to_call', lang)}</span>
-                  )}
-                  <span className="absolute w-full h-full rounded-full pointer-events-none"></span>
-                </button>
+            )}
+            <span className="absolute w-full h-full rounded-full pointer-events-none"></span>
+            </button>
               </div>
             </div>
             {/* ReferenceMedia bên phải */}
@@ -523,72 +522,156 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
           </div>
         </div>
         {/* Services Section - với hiệu ứng Glass Morphism và 3D */}
-        <div className="text-center w-full max-w-7xl mb-8 sm:mb-10 px-2 md:px-0" style={{ perspective: '1000px' }}>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4 md:gap-6 lg:gap-8 w-full mx-auto">
+        <div className="text-center w-full max-w-5xl mb-8 sm:mb-10" style={{ perspective: '1000px' }}>
+          <div className="flex flex-col md:flex-row md:flex-wrap justify-center gap-y-1.5 sm:gap-y-2 md:gap-3 text-left mx-auto w-full">
             {/* 1. TRAVEL TOURS */}
             <div
-              className="service-card group bg-white/50 backdrop-blur-md border border-white/30 rounded-xl shadow-md hover:shadow-xl transition-all duration-200 hover:scale-[1.03] flex flex-col items-center justify-between min-h-[180px] p-5 cursor-pointer relative overflow-hidden"
-              style={{ borderRadius: '8px' }}
+              className="py-0.5 px-1 sm:p-2 w-11/12 sm:w-4/5 md:w-64 mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
+              style={{
+                background: 'rgba(139,26,71,0.4)',
+                backdropFilter: 'blur(8px)',
+                borderRadius: '6px',
+                boxShadow: '0px 1px 2px rgba(0,0,0,0.04)',
+                border: '1px solid rgba(255,255,255,0.10)',
+              }}
             >
-              <div className="absolute inset-0 pointer-events-none" style={{background: 'linear-gradient(to bottom, rgba(139,26,71,0.10) 0%, rgba(139,26,71,0.18) 100%)'}}></div>
-              <h4 className="font-semibold text-[18px] leading-tight tracking-wide text-amber-400 mb-2 z-10" style={{textShadow:'0px 1px 2px rgba(0,0,0,0.08)'}}>{t('tourism_tour', lang)}</h4>
-              <ul className="w-full flex flex-row flex-wrap justify-center items-center gap-3 z-10">
-                {renderIconGroup(travelTourIcons, 4, 24)}
+              <h4 className="font-medium text-amber-300 pb-0 mb-0 text-xs sm:text-sm"
+                style={{
+                  borderBottom: 'none',
+                  textShadow: '0px 1px 2px rgba(0,0,0,0.08)'
+                }}
+              >{t('tourism_tour', lang)}</h4>
+              <ul className={
+                isMobile
+                  ? "flex flex-row flex-nowrap justify-center items-center gap-x-2 py-0"
+                  : "grid grid-cols-3 gap-x-1 gap-y-1 py-0.5 justify-items-center"
+              }>
+                {renderIconGroup(travelTourIcons, isMobile ? travelTourIcons.length : 3, isMobile ? 18 : 28)}
               </ul>
             </div>
             {/* 2. BUS TICKETS */}
             <div
-              className="service-card group bg-white/50 backdrop-blur-md border border-white/30 rounded-xl shadow-md hover:shadow-xl transition-all duration-200 hover:scale-[1.03] flex flex-col items-center justify-between min-h-[180px] p-5 cursor-pointer relative overflow-hidden"
-              style={{ borderRadius: '8px' }}
+              className="py-0.5 px-1 sm:p-2 w-11/12 sm:w-[95%] md:w-[480px] mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
+              style={{
+                background: 'rgba(139,26,71,0.4)',
+                backdropFilter: 'blur(8px)',
+                borderRadius: '6px',
+                boxShadow: '0px 1px 2px rgba(0,0,0,0.04)',
+                border: '1px solid rgba(255,255,255,0.10)',
+              }}
             >
-              <div className="absolute inset-0 pointer-events-none" style={{background: 'linear-gradient(to bottom, rgba(139,26,71,0.10) 0%, rgba(139,26,71,0.18) 100%)'}}></div>
-              <h4 className="font-semibold text-[18px] leading-tight tracking-wide text-amber-400 mb-2 z-10" style={{textShadow:'0px 1px 2px rgba(0,0,0,0.08)'}}>{t('ticket_bus', lang)}</h4>
-              <ul className="w-full flex flex-row flex-wrap justify-center items-center gap-3 z-10">
-                {renderIconGroup(busTicketIcons, 4, 24)}
+              <h4 className="font-medium text-amber-300 pb-0 mb-0 text-xs sm:text-sm"
+                style={{ 
+                  borderBottom: 'none',
+                  textShadow: '0px 1px 2px rgba(0,0,0,0.08)'
+                }}
+              >{t('ticket_bus', lang)}</h4>
+              <ul className={
+                isMobile
+                  ? "flex flex-row flex-wrap justify-center items-center gap-x-2 gap-y-2 py-0"
+                  : "grid grid-cols-4 gap-x-1 gap-y-1 py-0.5 justify-items-center"
+              }>
+                {renderIconGroup(busTicketIcons, isMobile ? 4 : 4, isMobile ? 18 : 28)}
               </ul>
             </div>
             {/* 3. VEHICLE RENTAL */}
             <div
-              className="service-card group bg-white/50 backdrop-blur-md border border-white/30 rounded-xl shadow-md hover:shadow-xl transition-all duration-200 hover:scale-[1.03] flex flex-col items-center justify-between min-h-[180px] p-5 cursor-pointer relative overflow-hidden"
-              style={{ borderRadius: '8px' }}
+              className="py-0.5 px-1 sm:p-2 w-11/12 sm:w-4/5 md:w-64 mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
+              style={{
+                background: 'rgba(139,26,71,0.4)',
+                backdropFilter: 'blur(8px)',
+                borderRadius: '6px',
+                boxShadow: '0px 1px 2px rgba(0,0,0,0.04)',
+                border: '1px solid rgba(255,255,255,0.10)',
+              }}
             >
-              <div className="absolute inset-0 pointer-events-none" style={{background: 'linear-gradient(to bottom, rgba(139,26,71,0.10) 0%, rgba(139,26,71,0.18) 100%)'}}></div>
-              <h4 className="font-semibold text-[18px] leading-tight tracking-wide text-amber-400 mb-2 z-10" style={{textShadow:'0px 1px 2px rgba(0,0,0,0.08)'}}>{t('rental_service', lang)}</h4>
-              <ul className="w-full flex flex-row flex-wrap justify-center items-center gap-3 z-10">
-                {renderIconGroup(vehicleRentalIcons, 3, 24)}
+              <h4 className="font-medium text-amber-300 pb-0 mb-0 text-xs sm:text-sm"
+                style={{ 
+                  borderBottom: 'none',
+                  textShadow: '0px 1px 2px rgba(0,0,0,0.08)'
+                }}
+              >{t('rental_service', lang)}</h4>
+              <ul className={
+                isMobile
+                  ? "flex flex-row flex-nowrap justify-center items-center gap-x-2 py-0"
+                  : "grid grid-cols-2 gap-x-1 gap-y-1 py-0.5 justify-items-center"
+              }>
+                {renderIconGroup(vehicleRentalIcons, isMobile ? vehicleRentalIcons.length : 2, isMobile ? 18 : 28)}
               </ul>
             </div>
             {/* 4. CURRENCY EXCHANGE */}
             <div
-              className="service-card group bg-white/50 backdrop-blur-md border border-white/30 rounded-xl shadow-md hover:shadow-xl transition-all duration-200 hover:scale-[1.03] flex flex-col items-center justify-between min-h-[180px] p-5 cursor-pointer relative overflow-hidden"
-              style={{ borderRadius: '8px' }}
+              className="py-0.5 px-1 sm:p-2 w-11/12 sm:w-4/5 md:w-64 mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
+              style={{
+                background: 'rgba(139,26,71,0.4)',
+                backdropFilter: 'blur(8px)',
+                borderRadius: '6px',
+                boxShadow: '0px 1px 2px rgba(0,0,0,0.04)',
+                border: '1px solid rgba(255,255,255,0.10)',
+              }}
             >
-              <div className="absolute inset-0 pointer-events-none" style={{background: 'linear-gradient(to bottom, rgba(139,26,71,0.10) 0%, rgba(139,26,71,0.18) 100%)'}}></div>
-              <h4 className="font-semibold text-[18px] leading-tight tracking-wide text-amber-400 mb-2 z-10" style={{textShadow:'0px 1px 2px rgba(0,0,0,0.08)'}}>{t('currency_exchange', lang)}</h4>
-              <ul className="w-full flex flex-row flex-wrap justify-center items-center gap-3 z-10">
-                {renderIconGroup(currencyIcons, 4, 24)}
+              <h4 className="font-medium text-amber-300 pb-0 mb-0 text-xs sm:text-sm"
+                style={{ 
+                  borderBottom: 'none',
+                  textShadow: '0px 1px 2px rgba(0,0,0,0.08)'
+                }}
+              >{t('currency_exchange', lang)}</h4>
+              <ul className={
+                isMobile
+                  ? "flex flex-row flex-nowrap justify-center items-center gap-x-2 py-0"
+                  : "grid grid-cols-4 gap-x-1 gap-y-1 py-0.5 justify-items-center"
+              }>
+                {renderIconGroup(currencyIcons, isMobile ? currencyIcons.length : 4, isMobile ? 16 : 26)}
               </ul>
             </div>
             {/* 5. LAUNDRY SERVICE */}
             <div
-              className="service-card group bg-white/50 backdrop-blur-md border border-white/30 rounded-xl shadow-md hover:shadow-xl transition-all duration-200 hover:scale-[1.03] flex flex-col items-center justify-between min-h-[180px] p-5 cursor-pointer relative overflow-hidden"
-              style={{ borderRadius: '8px' }}
+              className="py-0.5 px-1 sm:p-2 w-11/12 sm:w-4/5 md:w-64 mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
+              style={{
+                background: 'rgba(139,26,71,0.4)',
+                backdropFilter: 'blur(8px)',
+                borderRadius: '6px',
+                boxShadow: '0px 1px 2px rgba(0,0,0,0.04)',
+                border: '1px solid rgba(255,255,255,0.10)',
+              }}
             >
-              <div className="absolute inset-0 pointer-events-none" style={{background: 'linear-gradient(to bottom, rgba(139,26,71,0.10) 0%, rgba(139,26,71,0.18) 100%)'}}></div>
-              <h4 className="font-semibold text-[18px] leading-tight tracking-wide text-amber-400 mb-2 z-10" style={{textShadow:'0px 1px 2px rgba(0,0,0,0.08)'}}>{t('laundry_service', lang)}</h4>
-              <ul className="w-full flex flex-row flex-wrap justify-center items-center gap-3 z-10">
-                {renderIconGroup(laundryIcons, 4, 24)}
+              <h4 className="font-medium text-amber-300 pb-0 mb-0 text-xs sm:text-sm"
+                style={{ 
+                  borderBottom: 'none',
+                  textShadow: '0px 1px 2px rgba(0,0,0,0.08)'
+                }}
+              >{t('laundry_service', lang)}</h4>
+              <ul className={
+                isMobile
+                  ? "flex flex-row flex-nowrap justify-center items-center gap-x-2 py-0"
+                  : "grid grid-cols-3 gap-x-1 gap-y-1 py-0.5 justify-items-center"
+              }>
+                {renderIconGroup(laundryIcons, isMobile ? laundryIcons.length : 3, isMobile ? 18 : 28)}
               </ul>
             </div>
             {/* 6. HOMESTAY SERVICE */}
             <div
-              className="service-card group bg-white/50 backdrop-blur-md border border-white/30 rounded-xl shadow-md hover:shadow-xl transition-all duration-200 hover:scale-[1.03] flex flex-col items-center justify-between min-h-[180px] p-5 cursor-pointer relative overflow-hidden"
-              style={{ borderRadius: '8px' }}
+              className="py-0.5 px-1 sm:p-2 w-11/12 sm:w-4/5 md:w-64 mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
+              style={{
+                background: 'rgba(139,26,71,0.4)',
+                backdropFilter: 'blur(8px)',
+                borderRadius: '6px',
+                boxShadow: '0px 1px 2px rgba(0,0,0,0.04)',
+                border: '1px solid rgba(255,255,255,0.10)',
+              }}
             >
-              <div className="absolute inset-0 pointer-events-none" style={{background: 'linear-gradient(to bottom, rgba(139,26,71,0.10) 0%, rgba(139,26,71,0.18) 100%)'}}></div>
-              <h4 className="font-semibold text-[18px] leading-tight tracking-wide text-amber-400 mb-2 z-10" style={{textShadow:'0px 1px 2px rgba(0,0,0,0.08)'}}>{t('homestay_service', lang)}</h4>
-              <ul className="w-full flex flex-row flex-wrap justify-center items-center gap-3 z-10">
-                {renderIconGroup(homestayIcons, 4, 24)}
+              <h4 className="font-medium text-amber-300 pb-0 mb-0 text-xs sm:text-sm"
+                style={{ 
+                  borderBottom: 'none',
+                  textShadow: '0px 1px 2px rgba(0,0,0,0.08)'
+                }}
+              >{t('homestay_service', lang)}</h4>
+              <ul className={
+                isMobile
+                  ? "flex flex-row flex-nowrap justify-center items-center gap-x-2 py-0"
+                  : "grid grid-cols-3 gap-x-1 gap-y-1 py-0.5 justify-items-center"
+              }>
+                {renderIconGroup(homestayIcons, isMobile ? homestayIcons.length : 3, isMobile ? 18 : 28)}
               </ul>
             </div>
           </div>
