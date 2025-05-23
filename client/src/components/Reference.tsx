@@ -442,11 +442,42 @@ export const ReferenceSlider = ({ mediaList, activeIdx, onChange, side }: { medi
     >
       {mediaList.map((media, idx) => (
         <SwiperSlide key={idx}>
-          {media.type === 'image' || media.type === 'gif' ? (
-            <img src={media.src} alt={media.alt || ''} className="rounded-xl max-h-[200px] w-auto object-contain shadow-lg" />
-          ) : media.type === 'video' ? (
-            <video src={media.src} controls autoPlay loop className="rounded-xl max-h-[200px] w-auto object-contain shadow-lg" />
-          ) : null}
+          <div className="flex flex-col items-center">
+            {media.type === 'image' || media.type === 'gif' ? (
+              <img src={media.src} alt={media.alt || ''} className="rounded-xl max-h-[200px] w-auto object-contain shadow-lg" />
+            ) : media.type === 'video' ? (
+              <video src={media.src} controls autoPlay loop className="rounded-xl max-h-[200px] w-auto object-contain shadow-lg" />
+            ) : null}
+            {media.description && (
+              <div
+                className="mt-3 w-full px-2"
+                style={{
+                  color: '#FFE9B0',
+                  fontFamily: 'var(--font-sans, sans-serif)',
+                  fontSize: '14px',
+                  textShadow: '0px 1px 6px rgba(0,0,0,0.18)',
+                  wordBreak: 'break-word',
+                  lineHeight: '1.6',
+                  fontWeight: 400,
+                  textAlign: 'left',
+                  whiteSpace: 'pre-line',
+                  letterSpacing: 0.1
+                }}
+              >
+                {media.description.split(/\n|\r/).map((line, idx) => {
+                  const match = line.match(/^([\w\s\-()']+):\s*(.*)$/);
+                  if (match) {
+                    return (
+                      <div key={idx} style={{marginBottom: 2}}>
+                        <span style={{fontWeight: 600, color: '#FFE9B0'}}>{match[1]}:</span> <span style={{fontWeight: 400, color: '#FFE9B0'}}>{match[2]}</span>
+                      </div>
+                    );
+                  }
+                  return <div key={idx}>{line}</div>;
+                })}
+              </div>
+            )}
+          </div>
         </SwiperSlide>
       ))}
     </Swiper>
