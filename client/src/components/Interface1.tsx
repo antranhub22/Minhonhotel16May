@@ -83,11 +83,12 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
     laundry_express: <FaBolt size={32} color="#DAC17A" />,
     laundry_additional: <FaPlus size={32} color="#DAC17A" />,
     // HOMESTAY SERVICE
-    homestay_300k: <FaHome size={32} color="#DAC17A" />,
-    homestay_300_600k: <FaHome size={32} color="#DAC17A" />,
-    homestay_600k: <FaBuilding size={32} color="#DAC17A" />,
-    homestay_longterm: <FaCalendarAlt size={32} color="#DAC17A" />,
-    homestay_additional: <FaPlusSquare size={32} color="#DAC17A" />,
+    homestay_300k: <span className="icon-bus-label" style={{color:'#FFD966'}}>&lt;300k</span>,
+    homestay_300_600k: <span className="icon-bus-label" style={{color:'#FFD966'}}>300k-600k</span>,
+    homestay_600k: <span className="icon-bus-label" style={{color:'#FFD966'}}>over 600k</span>,
+    homestay_longterm: <FaCalendarAlt size={32} color="#FFD966" />, // Long-term Rental
+    homestay_fullhouse: <FaHome size={32} color="#FFD966" />, // Full House Rent
+    homestay_additional: <FaPlusSquare size={32} color="#FFD966" />, // Additional Homestay Services
   };
 
   // Thêm object ánh xạ iconName -> tên dịch vụ đúng chuẩn:
@@ -130,6 +131,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
     homestay_300_600k: 'Price Range/day: 300k-600k',
     homestay_600k: 'Price Range/day: Above 600k',
     homestay_longterm: 'Long-term Rental',
+    homestay_fullhouse: 'Full House Rent',
     homestay_additional: 'Additional Homestay Services',
   };
 
