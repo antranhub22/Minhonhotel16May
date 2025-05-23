@@ -155,9 +155,81 @@ export const iconMediaMap: Record<string, IconMedia[]> = {
   tour_halfday: [
     {
       type: 'image',
-      src: 'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=600&q=80',
-      alt: 'Tour Half Day Demo 1',
-      description: `Tour: West\nDuration: Half-day\nPickup: Hotel in Mui Ne\nItinerary: White Dunes, Red Dunes, Fishing Village, Fairy Stream\nInclusions: Jeep, Driver, Water\nPrice: 550,000 VND/jeep (1–4 pax)`
+      src: '/assets/tour_halfday/tour_halfday_1.jpg',
+      alt: 'Tour Half Day 1',
+      description: ''
+    },
+    {
+      type: 'image',
+      src: '/assets/tour_halfday/tour_halfday_2.jpg',
+      alt: 'Tour Half Day 2',
+      description: ''
+    },
+    {
+      type: 'image',
+      src: '/assets/tour_halfday/tour_halfday_3.jpg',
+      alt: 'Tour Half Day 3',
+      description: ''
+    },
+    {
+      type: 'image',
+      src: '/assets/tour_halfday/tour_halfday_4.jpg',
+      alt: 'Tour Half Day 4',
+      description: ''
+    },
+    {
+      type: 'image',
+      src: '/assets/tour_halfday/tour_halfday_5.jpg',
+      alt: 'Tour Half Day 5',
+      description: ''
+    },
+    {
+      type: 'image',
+      src: '/assets/tour_halfday/tour_halfday_6.jpg',
+      alt: 'Tour Half Day 6',
+      description: ''
+    },
+    {
+      type: 'image',
+      src: '/assets/tour_halfday/tour_halfday_7.jpg',
+      alt: 'Tour Half Day 7',
+      description: ''
+    },
+    {
+      type: 'image',
+      src: '/assets/tour_halfday/tour_halfday_8.jpg',
+      alt: 'Tour Half Day 8',
+      description: ''
+    },
+    {
+      type: 'image',
+      src: '/assets/tour_halfday/tour_halfday_9.jpg',
+      alt: 'Tour Half Day 9',
+      description: ''
+    },
+    {
+      type: 'image',
+      src: '/assets/tour_halfday/tour_halfday_10.jpg',
+      alt: 'Tour Half Day 10',
+      description: ''
+    },
+    {
+      type: 'image',
+      src: '/assets/tour_halfday/tour_halfday_11.jpg',
+      alt: 'Tour Half Day 11',
+      description: ''
+    },
+    {
+      type: 'image',
+      src: '/assets/tour_halfday/tour_halfday_12.jpg',
+      alt: 'Tour Half Day 12',
+      description: ''
+    },
+    {
+      type: 'image',
+      src: '/assets/tour_halfday/tour_halfday_13.jpg',
+      alt: 'Tour Half Day 13',
+      description: ''
     }
   ],
   tour_fullday: [
