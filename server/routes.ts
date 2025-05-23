@@ -1146,6 +1146,7 @@ Mi Nhon Hotel Mui Ne`
       const { status } = req.body;
       
       if (!status) {
+        console.log('[WebSocket][DEBUG] Không có status trong body');
         return res.status(400).json({ error: 'Status is required' });
       }
       
@@ -1159,14 +1160,17 @@ Mi Nhon Hotel Mui Ne`
         .returning();
       
       if (result.length === 0) {
+        console.log('[WebSocket][DEBUG] Không tìm thấy request với id', id);
         return res.status(404).json({ error: 'Request not found' });
       }
       // Đồng bộ status sang order nếu có orderId
       const orderId = result[0].orderId;
+      console.log('[WebSocket][DEBUG] orderId lấy từ request:', orderId);
       if (orderId) {
         // Tìm order theo specialInstructions (orderReference)
         const orders = await storage.getAllOrders({});
         const order = orders.find(o => o.specialInstructions === orderId);
+        console.log('[WebSocket][DEBUG] Order tìm được:', order);
         if (order) {
           const updatedOrder = await storage.updateOrderStatus(order.id, status);
           // Emit WebSocket cho Guest UI nếu updatedOrder tồn tại
@@ -1178,7 +1182,12 @@ Mi Nhon Hotel Mui Ne`
                 status: updatedOrder.status,
                 clientCount: globalThis.wss.clients.size
               });
-              globalThis.wss.clients.forEach((client: WebSocketClient) => {
+              let sentCount = 0;
+              globalThis.wss.clients.forEach((client: any) => {
+                console.log('[WebSocket] Client:', {
+                  clientCallId: client.callId,
+                  readyState: client.readyState
+                });
                 if (client.readyState === 1) {
                   client.send(JSON.stringify({
                     type: 'order_status_update',
@@ -1186,11 +1195,21 @@ Mi Nhon Hotel Mui Ne`
                     callId: updatedOrder.callId,
                     status: updatedOrder.status
                   }));
+                  sentCount++;
                 }
               });
+              console.log(`[WebSocket] order_status_update sent to ${sentCount} clients.`);
+            } else {
+              console.log('[WebSocket][DEBUG] updatedOrder không có specialInstructions');
             }
+          } else {
+            console.log('[WebSocket][DEBUG] Không có updatedOrder hoặc globalThis.wss');
           }
+        } else {
+          console.log('[WebSocket][DEBUG] Không tìm thấy order với specialInstructions:', orderId);
         }
+      } else {
+        console.log('[WebSocket][DEBUG] Request không có orderId');
       }
       res.json(result[0]);
     } catch (error) {
