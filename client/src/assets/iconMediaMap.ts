@@ -14,47 +14,144 @@ export interface IconMedia {
 export const iconMediaMap: Record<string, IconMedia | IconMedia[]> = {
   // TOURISM & TOURS
   sand_dunes: [
-    { type: 'image', src: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80', alt: 'Sand Dunes 1', description: 'Cảnh đồi cát nổi tiếng ở Mũi Né.' },
-    { type: 'image', src: 'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=600&q=80', alt: 'Sand Dunes 2', description: 'Trải nghiệm trượt cát và ngắm bình minh.' }
+    { type: 'image', src: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80', alt: 'Sand Dunes 1', description: 'Demo: Cảnh đồi cát nổi tiếng ở Mũi Né.' },
+    { type: 'image', src: 'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=600&q=80', alt: 'Sand Dunes 2', description: 'Demo: Trải nghiệm trượt cát và ngắm bình minh.' }
   ],
-  sightseeing: { type: 'image', src: '', alt: 'Phan Thiet Sightseeing', description: 'Tham quan các địa điểm nổi bật tại Phan Thiết.' },
+  sightseeing: [
+    { type: 'image', src: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80', alt: 'Sightseeing Demo 1', description: 'Demo: Tham quan các địa điểm nổi bật tại Phan Thiết.' },
+    { type: 'image', src: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=600&q=80', alt: 'Sightseeing Demo 2', description: 'Demo: Khám phá các điểm du lịch mới.' }
+  ],
   jeep_tour: [
-    { type: 'image', src: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=600&q=80', alt: 'Jeep Tour 1', description: 'Tour xe Jeep khám phá đồi cát.' },
-    { type: 'image', src: 'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=600&q=80', alt: 'Jeep Tour 2', description: 'Hành trình thú vị cùng xe Jeep.' }
+    { type: 'image', src: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=600&q=80', alt: 'Jeep Tour 1', description: 'Demo: Tour xe Jeep khám phá đồi cát.' },
+    { type: 'image', src: 'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=600&q=80', alt: 'Jeep Tour 2', description: 'Demo: Hành trình thú vị cùng xe Jeep.' }
   ],
-  stream_beach: { type: 'image', src: '', alt: 'Stream and Beach Tour', description: 'Khám phá suối và bãi biển đẹp.' },
-  special_tour: { type: 'image', src: '', alt: 'Special Tours', description: 'Các tour đặc biệt, trải nghiệm độc đáo.' },
+  stream_beach: [
+    { type: 'image', src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80', alt: 'Stream and Beach Demo 1', description: 'Demo: Khám phá suối và bãi biển đẹp.' },
+    { type: 'image', src: 'https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=600&q=80', alt: 'Stream and Beach Demo 2', description: 'Demo: Tận hưởng không khí biển trong lành.' }
+  ],
+  special_tour: [
+    { type: 'image', src: 'https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=600&q=80', alt: 'Special Tour Demo 1', description: 'Demo: Các tour đặc biệt, trải nghiệm độc đáo.' },
+    { type: 'image', src: 'https://images.unsplash.com/photo-1465101178521-c1a9136a3b99?auto=format&fit=crop&w=600&q=80', alt: 'Special Tour Demo 2', description: 'Demo: Tour dành cho nhóm nhỏ, cá nhân.' }
+  ],
   // BUS TICKETS
-  bus_hcm: { type: 'image', src: '', alt: 'Mui Ne - Ho Chi Minh City Route', description: 'Xe bus chất lượng cao tuyến Mũi Né - HCM.' },
-  bus_dl: { type: 'image', src: '', alt: 'Mui Ne - Da Lat Route', description: 'Xe bus tuyến Mũi Né - Đà Lạt, khởi hành hàng ngày.' },
-  bus_nt: { type: 'image', src: '', alt: 'Mui Ne - Nha Trang Route', description: 'Xe bus tuyến Mũi Né - Nha Trang.' },
-  bus_dn: { type: 'image', src: '', alt: 'Mui Ne - Da Nang Route', description: 'Xe bus tuyến Mũi Né - Đà Nẵng.' },
-  bus_ct: { type: 'image', src: '', alt: 'Mui Ne - Can Tho Route', description: 'Xe bus tuyến Mũi Né - Cần Thơ.' },
-  bus_mt: { type: 'image', src: '', alt: 'Mui Ne - My Tho Route', description: 'Xe bus tuyến Mũi Né - Mỹ Tho.' },
-  bus_vt: { type: 'image', src: '', alt: 'Mui Ne - Vung Tau Route', description: 'Xe bus tuyến Mũi Né - Vũng Tàu.' },
-  bus_other: { type: 'image', src: '', alt: 'Other Bus Routes', description: 'Các tuyến bus khác.' },
+  bus_hcm: [
+    { type: 'image', src: 'https://images.unsplash.com/photo-1511918984145-48de785d4c4e?auto=format&fit=crop&w=600&q=80', alt: 'Bus HCM Demo 1', description: 'Demo: Xe bus chất lượng cao tuyến Mũi Né - HCM.' },
+    { type: 'image', src: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80', alt: 'Bus HCM Demo 2', description: 'Demo: Nội thất xe bus hiện đại.' }
+  ],
+  bus_dl: [
+    { type: 'image', src: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=600&q=80', alt: 'Bus Da Lat Demo 1', description: 'Demo: Xe bus tuyến Mũi Né - Đà Lạt, khởi hành hàng ngày.' },
+    { type: 'image', src: 'https://images.unsplash.com/photo-1511918984145-48de785d4c4e?auto=format&fit=crop&w=600&q=80', alt: 'Bus Da Lat Demo 2', description: 'Demo: Cảnh đẹp trên đường đi Đà Lạt.' }
+  ],
+  bus_nt: [
+    { type: 'image', src: 'https://images.unsplash.com/photo-1465101178521-c1a9136a3b99?auto=format&fit=crop&w=600&q=80', alt: 'Bus Nha Trang Demo 1', description: 'Demo: Xe bus tuyến Mũi Né - Nha Trang.' },
+    { type: 'image', src: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=600&q=80', alt: 'Bus Nha Trang Demo 2', description: 'Demo: Không gian xe bus rộng rãi.' }
+  ],
+  bus_dn: [
+    { type: 'image', src: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80', alt: 'Bus Da Nang Demo 1', description: 'Demo: Xe bus tuyến Mũi Né - Đà Nẵng.' },
+    { type: 'image', src: 'https://images.unsplash.com/photo-1511918984145-48de785d4c4e?auto=format&fit=crop&w=600&q=80', alt: 'Bus Da Nang Demo 2', description: 'Demo: Dịch vụ tiện nghi trên xe.' }
+  ],
+  bus_ct: [
+    { type: 'image', src: 'https://images.unsplash.com/photo-1465101178521-c1a9136a3b99?auto=format&fit=crop&w=600&q=80', alt: 'Bus Can Tho Demo 1', description: 'Demo: Xe bus tuyến Mũi Né - Cần Thơ.' },
+    { type: 'image', src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80', alt: 'Bus Can Tho Demo 2', description: 'Demo: Hành trình an toàn, thoải mái.' }
+  ],
+  bus_mt: [
+    { type: 'image', src: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=600&q=80', alt: 'Bus My Tho Demo 1', description: 'Demo: Xe bus tuyến Mũi Né - Mỹ Tho.' },
+    { type: 'image', src: 'https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=600&q=80', alt: 'Bus My Tho Demo 2', description: 'Demo: Xe bus sạch sẽ, tiện nghi.' }
+  ],
+  bus_vt: [
+    { type: 'image', src: 'https://images.unsplash.com/photo-1511918984145-48de785d4c4e?auto=format&fit=crop&w=600&q=80', alt: 'Bus Vung Tau Demo 1', description: 'Demo: Xe bus tuyến Mũi Né - Vũng Tàu.' },
+    { type: 'image', src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80', alt: 'Bus Vung Tau Demo 2', description: 'Demo: Phong cảnh biển trên đường đi.' }
+  ],
+  bus_other: [
+    { type: 'image', src: 'https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=600&q=80', alt: 'Other Bus Demo 1', description: 'Demo: Các tuyến bus khác.' },
+    { type: 'image', src: 'https://images.unsplash.com/photo-1465101178521-c1a9136a3b99?auto=format&fit=crop&w=600&q=80', alt: 'Other Bus Demo 2', description: 'Demo: Xe bus phục vụ nhiều tuyến.' }
+  ],
   // VEHICLE RENTAL
-  motorcycle: { type: 'image', src: '', alt: 'Motorcycle Rental' },
-  car_driver: { type: 'image', src: '', alt: 'Car Rental (with driver)' },
-  car_self: { type: 'image', src: '', alt: 'Car Rental (self-drive)' },
-  vehicle_special: { type: 'image', src: '', alt: 'Special Vehicle Rental' },
+  motorcycle: [
+    { type: 'image', src: 'https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=600&q=80', alt: 'Motorcycle Rental Demo 1', description: 'Demo: Dịch vụ thuê xe máy.' },
+    { type: 'image', src: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80', alt: 'Motorcycle Rental Demo 2', description: 'Demo: Xe máy đời mới, tiết kiệm xăng.' }
+  ],
+  car_driver: [
+    { type: 'image', src: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=600&q=80', alt: 'Car Rental with Driver Demo 1', description: 'Demo: Thuê xe ô tô có tài xế.' },
+    { type: 'image', src: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=600&q=80', alt: 'Car Rental with Driver Demo 2', description: 'Demo: Xe rộng rãi, tài xế chuyên nghiệp.' }
+  ],
+  car_self: [
+    { type: 'image', src: 'https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=600&q=80', alt: 'Car Rental Self-drive Demo 1', description: 'Demo: Thuê xe tự lái.' },
+    { type: 'image', src: 'https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=600&q=80', alt: 'Car Rental Self-drive Demo 2', description: 'Demo: Xe tự lái đa dạng mẫu mã.' }
+  ],
+  vehicle_special: [
+    { type: 'image', src: 'https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=600&q=80', alt: 'Special Vehicle Rental Demo 1', description: 'Demo: Thuê xe đặc biệt.' },
+    { type: 'image', src: 'https://images.unsplash.com/photo-1511918984145-48de785d4c4e?auto=format&fit=crop&w=600&q=80', alt: 'Special Vehicle Rental Demo 2', description: 'Demo: Xe phục vụ sự kiện, nhóm đông.' }
+  ],
   // CURRENCY EXCHANGE
-  usd: { type: 'image', src: '', alt: 'USD (US Dollar)' },
-  eur: { type: 'image', src: '', alt: 'EUR (Euro)' },
-  gbp: { type: 'image', src: '', alt: 'GBP (British Pound)' },
-  jpy: { type: 'image', src: '', alt: 'JPY (Japanese Yen)' },
-  rub: { type: 'image', src: '', alt: 'RUB (Russian Ruble)' },
-  currency_exchange: { type: 'image', src: '', alt: 'Additional Currency Services' },
-  currency_other: { type: 'image', src: '', alt: 'Additional Currency Services' },
+  usd: [
+    { type: 'image', src: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=600&q=80', alt: 'USD Exchange Demo 1', description: 'Demo: Đổi tiền USD.' },
+    { type: 'image', src: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=600&q=80', alt: 'USD Exchange Demo 2', description: 'Demo: Giao dịch nhanh chóng, an toàn.' }
+  ],
+  eur: [
+    { type: 'image', src: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=600&q=80', alt: 'EUR Exchange Demo 1', description: 'Demo: Đổi tiền EUR.' },
+    { type: 'image', src: 'https://images.unsplash.com/photo-1465101178521-c1a9136a3b99?auto=format&fit=crop&w=600&q=80', alt: 'EUR Exchange Demo 2', description: 'Demo: Tỷ giá cạnh tranh.' }
+  ],
+  gbp: [
+    { type: 'image', src: 'https://images.unsplash.com/photo-1465101178521-c1a9136a3b99?auto=format&fit=crop&w=600&q=80', alt: 'GBP Exchange Demo 1', description: 'Demo: Đổi tiền GBP.' },
+    { type: 'image', src: 'https://images.unsplash.com/photo-1511918984145-48de785d4c4e?auto=format&fit=crop&w=600&q=80', alt: 'GBP Exchange Demo 2', description: 'Demo: Đổi tiền nhanh, tiện lợi.' }
+  ],
+  sgd: [
+    { type: 'image', src: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80', alt: 'SGD Exchange Demo 1', description: 'Demo: Đổi tiền SGD.' },
+    { type: 'image', src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80', alt: 'SGD Exchange Demo 2', description: 'Demo: Hỗ trợ nhiều loại ngoại tệ.' }
+  ],
+  jpy: [
+    { type: 'image', src: 'https://images.unsplash.com/photo-1511918984145-48de785d4c4e?auto=format&fit=crop&w=600&q=80', alt: 'JPY Exchange Demo 1', description: 'Demo: Đổi tiền JPY.' },
+    { type: 'image', src: 'https://images.unsplash.com/photo-1465101178521-c1a9136a3b99?auto=format&fit=crop&w=600&q=80', alt: 'JPY Exchange Demo 2', description: 'Demo: Đổi tiền Nhật Bản uy tín.' }
+  ],
+  krw: [
+    { type: 'image', src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80', alt: 'KRW Exchange Demo 1', description: 'Demo: Đổi tiền KRW.' },
+    { type: 'image', src: 'https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=600&q=80', alt: 'KRW Exchange Demo 2', description: 'Demo: Đổi tiền Hàn Quốc nhanh chóng.' }
+  ],
+  rub: [
+    { type: 'image', src: 'https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=600&q=80', alt: 'RUB Exchange Demo 1', description: 'Demo: Đổi tiền RUB.' },
+    { type: 'image', src: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=600&q=80', alt: 'RUB Exchange Demo 2', description: 'Demo: Đổi tiền Nga tiện lợi.' }
+  ],
+  currency_other: [
+    { type: 'image', src: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=600&q=80', alt: 'Other Currency Demo 1', description: 'Demo: Đổi các loại tiền khác.' },
+    { type: 'image', src: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=600&q=80', alt: 'Other Currency Demo 2', description: 'Demo: Đổi ngoại tệ đa dạng.' }
+  ],
   // LAUNDRY SERVICE
-  laundry_regular: { type: 'image', src: '', alt: 'Regular Laundry Service' },
-  laundry_special: { type: 'image', src: '', alt: 'Special Laundry Service' },
-  laundry_express: { type: 'image', src: '', alt: 'Express Laundry Service' },
-  laundry_additional: { type: 'image', src: '', alt: 'Additional Laundry Services' },
+  laundry_regular: [
+    { type: 'image', src: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=600&q=80', alt: 'Regular Laundry Demo 1', description: 'Demo: Giặt ủi thông thường.' },
+    { type: 'image', src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80', alt: 'Regular Laundry Demo 2', description: 'Demo: Dịch vụ giặt ủi sạch sẽ.' }
+  ],
+  laundry_special: [
+    { type: 'image', src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80', alt: 'Special Laundry Demo 1', description: 'Demo: Giặt ủi đặc biệt.' },
+    { type: 'image', src: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80', alt: 'Special Laundry Demo 2', description: 'Demo: Giặt ủi cho đồ cao cấp.' }
+  ],
+  laundry_express: [
+    { type: 'image', src: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80', alt: 'Express Laundry Demo 1', description: 'Demo: Giặt ủi nhanh.' },
+    { type: 'image', src: 'https://images.unsplash.com/photo-1511918984145-48de785d4c4e?auto=format&fit=crop&w=600&q=80', alt: 'Express Laundry Demo 2', description: 'Demo: Giao đồ nhanh trong ngày.' }
+  ],
+  laundry_additional: [
+    { type: 'image', src: 'https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=600&q=80', alt: 'Additional Laundry Demo 1', description: 'Demo: Dịch vụ giặt ủi bổ sung.' },
+    { type: 'image', src: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=600&q=80', alt: 'Additional Laundry Demo 2', description: 'Demo: Nhận giặt ủi tận nơi.' }
+  ],
   // HOMESTAY SERVICE
-  homestay_300k: { type: 'image', src: '', alt: 'Price Range/day: < 300k' },
-  homestay_300_600k: { type: 'image', src: '', alt: 'Price Range/day: 300k - 600k' },
-  homestay_600k: { type: 'image', src: '', alt: 'Price Range/day: Above 600k' },
-  homestay_longterm: { type: 'image', src: '', alt: 'Long-term Rental' },
-  homestay_additional: { type: 'image', src: '', alt: 'Additional Homestay Services' },
+  homestay_300k: [
+    { type: 'image', src: 'https://images.unsplash.com/photo-1511918984145-48de785d4c4e?auto=format&fit=crop&w=600&q=80', alt: 'Homestay <300k Demo 1', description: 'Demo: Homestay giá dưới 300k.' },
+    { type: 'image', src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80', alt: 'Homestay <300k Demo 2', description: 'Demo: Phòng sạch sẽ, tiện nghi.' }
+  ],
+  homestay_300_600k: [
+    { type: 'image', src: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=600&q=80', alt: 'Homestay 300-600k Demo 1', description: 'Demo: Homestay giá 300k-600k.' },
+    { type: 'image', src: 'https://images.unsplash.com/photo-1465101178521-c1a9136a3b99?auto=format&fit=crop&w=600&q=80', alt: 'Homestay 300-600k Demo 2', description: 'Demo: Không gian rộng rãi, thoáng mát.' }
+  ],
+  homestay_600k: [
+    { type: 'image', src: 'https://images.unsplash.com/photo-1465101178521-c1a9136a3b99?auto=format&fit=crop&w=600&q=80', alt: 'Homestay >600k Demo 1', description: 'Demo: Homestay giá trên 600k.' },
+    { type: 'image', src: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=600&q=80', alt: 'Homestay >600k Demo 2', description: 'Demo: Dịch vụ cao cấp, sang trọng.' }
+  ],
+  homestay_longterm: [
+    { type: 'image', src: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80', alt: 'Homestay Longterm Demo 1', description: 'Demo: Homestay dài hạn.' },
+    { type: 'image', src: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=600&q=80', alt: 'Homestay Longterm Demo 2', description: 'Demo: Giá ưu đãi cho thuê dài hạn.' }
+  ],
+  homestay_additional: [
+    { type: 'image', src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80', alt: 'Homestay Additional Demo 1', description: 'Demo: Dịch vụ homestay bổ sung.' },
+    { type: 'image', src: 'https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=600&q=80', alt: 'Homestay Additional Demo 2', description: 'Demo: Hỗ trợ khách hàng 24/7.' }
+  ],
 }; 
