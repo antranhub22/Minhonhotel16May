@@ -307,7 +307,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
         status: updatedOrder.status,
         clientCount: globalThis.wss.clients.size
       });
-      globalThis.wss.clients.forEach((client: WebSocketClient) => {
+      let sentCount = 0;
+      globalThis.wss.clients.forEach((client: any) => {
+        console.log('[WebSocket] Client:', {
+          clientCallId: client.callId,
+          readyState: client.readyState
+        });
         if (client.readyState === 1) {
           client.send(JSON.stringify({
             type: 'order_status_update',
@@ -315,8 +320,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
             callId: updatedOrder.callId,
             status: updatedOrder.status
           }));
+          sentCount++;
         }
       });
+      console.log(`[WebSocket] order_status_update sent to ${sentCount} clients.`);
     }
     
     res.json(updatedOrder);
