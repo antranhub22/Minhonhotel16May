@@ -157,79 +157,79 @@ export const iconMediaMap: Record<string, IconMedia[]> = {
       type: 'image',
       src: '/assets/tour_halfday/tour_halfday_1.jpg',
       alt: 'Tour Half Day 1',
-      description: ''
+      description: 'Destination: White Sand Dunes\nTime: 04:30 - 06:00\nActivity: Sunrise Jeep Tour\nGuide: Mr. A'
     },
     {
       type: 'image',
       src: '/assets/tour_halfday/tour_halfday_2.jpg',
       alt: 'Tour Half Day 2',
-      description: ''
+      description: 'Destination: Red Sand Dunes\nTime: 06:15 - 07:00\nActivity: Sand Sliding\nGuide: Mr. B'
     },
     {
       type: 'image',
       src: '/assets/tour_halfday/tour_halfday_3.jpg',
       alt: 'Tour Half Day 3',
-      description: ''
+      description: 'Destination: Fairy Stream\nTime: 07:15 - 08:00\nActivity: Walking in the stream\nGuide: Ms. C'
     },
     {
       type: 'image',
       src: '/assets/tour_halfday/tour_halfday_4.jpg',
       alt: 'Tour Half Day 4',
-      description: ''
+      description: 'Destination: Fishing Village\nTime: 08:15 - 08:45\nActivity: Local Life Experience\nGuide: Mr. D'
     },
     {
       type: 'image',
       src: '/assets/tour_halfday/tour_halfday_5.jpg',
       alt: 'Tour Half Day 5',
-      description: ''
+      description: 'Destination: Mui Ne Beach\nTime: 09:00 - 09:30\nActivity: Relaxing\nGuide: Ms. E'
     },
     {
       type: 'image',
       src: '/assets/tour_halfday/tour_halfday_6.jpg',
       alt: 'Tour Half Day 6',
-      description: ''
+      description: 'Destination: Lotus Lake\nTime: 09:45 - 10:15\nActivity: Photo Stop\nGuide: Mr. F'
     },
     {
       type: 'image',
       src: '/assets/tour_halfday/tour_halfday_7.jpg',
       alt: 'Tour Half Day 7',
-      description: ''
+      description: 'Destination: Local Market\nTime: 10:30 - 11:00\nActivity: Shopping\nGuide: Ms. G'
     },
     {
       type: 'image',
       src: '/assets/tour_halfday/tour_halfday_8.jpg',
       alt: 'Tour Half Day 8',
-      description: ''
+      description: 'Destination: Dragon Fruit Farm\nTime: 11:15 - 11:45\nActivity: Farm Visit\nGuide: Mr. H'
     },
     {
       type: 'image',
       src: '/assets/tour_halfday/tour_halfday_9.jpg',
       alt: 'Tour Half Day 9',
-      description: ''
+      description: 'Destination: Cham Tower\nTime: 12:00 - 12:30\nActivity: Sightseeing\nGuide: Ms. I'
     },
     {
       type: 'image',
       src: '/assets/tour_halfday/tour_halfday_10.jpg',
       alt: 'Tour Half Day 10',
-      description: ''
+      description: 'Destination: Sand Sculpture Park\nTime: 12:45 - 13:15\nActivity: Art Visit\nGuide: Mr. J'
     },
     {
       type: 'image',
       src: '/assets/tour_halfday/tour_halfday_11.jpg',
       alt: 'Tour Half Day 11',
-      description: ''
+      description: 'Destination: Mui Ne Harbor\nTime: 13:30 - 14:00\nActivity: Boat Watching\nGuide: Ms. K'
     },
     {
       type: 'image',
       src: '/assets/tour_halfday/tour_halfday_12.jpg',
       alt: 'Tour Half Day 12',
-      description: ''
+      description: 'Destination: Local Pagoda\nTime: 14:15 - 14:45\nActivity: Cultural Visit\nGuide: Mr. L'
     },
     {
       type: 'image',
       src: '/assets/tour_halfday/tour_halfday_13.jpg',
       alt: 'Tour Half Day 13',
-      description: ''
+      description: 'Destination: Sunset Point\nTime: 15:00 - 15:30\nActivity: Sunset Watching\nGuide: Ms. M'
     }
   ],
   tour_fullday: [
