@@ -11,7 +11,26 @@ export interface IconMedia {
   description?: string;
 }
 
-export const iconMediaMap: Record<string, IconMedia | IconMedia[]> = {
+export const iconMediaMap: Record<string, IconMedia[]> = {
+  tour_halfday: [
+    { type: 'image', src: '/assets/tour_halfday/Fairy_Stream.jpg', alt: 'Fairy Stream', description: 'Ảnh Fairy Stream' },
+    { type: 'image', src: '/assets/tour_halfday/Fishing_Village.jpg', alt: 'Fishing Village', description: 'Ảnh Fishing Village' },
+    { type: 'image', src: '/assets/tour_halfday/Jeep.jpg', alt: 'Jeep', description: 'Ảnh Jeep' },
+    { type: 'image', src: '/assets/tour_halfday/Jeep01.jpg', alt: 'Jeep01', description: 'Ảnh Jeep01' },
+    { type: 'image', src: '/assets/tour_halfday/Jeep02.jpg', alt: 'Jeep02', description: 'Ảnh Jeep02' },
+    { type: 'image', src: '/assets/tour_halfday/Red_Sand_Dune.jpg', alt: 'Red Sand Dune', description: 'Ảnh Red Sand Dune' },
+    { type: 'image', src: '/assets/tour_halfday/Red_Sand_Dune01.jpg', alt: 'Red Sand Dune01', description: 'Ảnh Red Sand Dune01' }
+  ],
+  tour_fullday: [
+    { type: 'video', src: '/assets/tour_fullday/6627467707052.mp4', alt: 'Video Tour Full Day', description: 'Video tour full day' },
+    { type: 'image', src: '/assets/tour_fullday/Jeep03.jpg', alt: 'Jeep03', description: 'Ảnh Jeep03' },
+    { type: 'image', src: '/assets/tour_fullday/Jeep04.jpg', alt: 'Jeep04', description: 'Ảnh Jeep04' },
+    { type: 'image', src: '/assets/tour_fullday/Jeep05.jpg', alt: 'Jeep05', description: 'Ảnh Jeep05' },
+    { type: 'image', src: '/assets/tour_fullday/Sand_surfing.jpg', alt: 'Sand surfing', description: 'Ảnh Sand surfing' },
+    { type: 'image', src: '/assets/tour_fullday/White-Sand_Dune.jpg', alt: 'White Sand Dune', description: 'Ảnh White Sand Dune' }
+  ],
+  tour_multiday: [],
+  special_tour: [],
   // TOURISM & TOURS
   sand_dunes: [
     { type: 'image', src: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80', alt: 'Sand Dunes 1', description: 'Demo: Cảnh đồi cát nổi tiếng ở Mũi Né.' },
@@ -28,10 +47,6 @@ export const iconMediaMap: Record<string, IconMedia | IconMedia[]> = {
   stream_beach: [
     { type: 'image', src: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80', alt: 'Stream and Beach Demo 1', description: 'Demo: Khám phá suối và bãi biển đẹp.' },
     { type: 'image', src: 'https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=600&q=80', alt: 'Stream and Beach Demo 2', description: 'Demo: Tận hưởng không khí biển trong lành.' }
-  ],
-  special_tour: [
-    { type: 'image', src: 'https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=600&q=80', alt: 'Special Tour Demo 1', description: 'Demo: Các tour đặc biệt, trải nghiệm độc đáo.' },
-    { type: 'image', src: 'https://images.unsplash.com/photo-1465101178521-c1a9136a3b99?auto=format&fit=crop&w=600&q=80', alt: 'Special Tour Demo 2', description: 'Demo: Tour dành cho nhóm nhỏ, cá nhân.' }
   ],
   // BUS TICKETS
   bus_hcm: [
