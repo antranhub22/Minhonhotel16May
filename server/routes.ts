@@ -349,7 +349,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
     const idNum = parseInt(req.params.id, 10);
     const { status } = req.body;
     try {
-      const updatedOrder = await storage.updateOrderStatus(idNum, status);
+      // Map status tiếng Việt sang enum tiếng Anh nếu cần
+      const statusMap: Record<string, string> = {
+        'Đã ghi nhận': 'acknowledged',
+        'Đang thực hiện': 'in_progress',
+        'Hoàn thiện': 'completed',
+        'Đang thực hiện và đang bàn giao cho khách': 'delivering',
+        'Ghi chú': 'note',
+        'Chờ xử lý': 'pending',
+        'pending': 'pending',
+        'acknowledged': 'acknowledged',
+        'in_progress': 'in_progress',
+        'delivering': 'delivering',
+        'completed': 'completed',
+        'note': 'note'
+      };
+      let mappedStatus = statusMap[status] || status;
+      if (!Object.values(statusMap).includes(mappedStatus)) {
+        console.log('[WebSocket][DEBUG] Status không hợp lệ, giữ nguyên:', status);
+        mappedStatus = status;
+      }
+      const updatedOrder = await storage.updateOrderStatus(idNum, mappedStatus);
       // Emit WebSocket notification
       const io = req.app.get('io');
       io.to(String(idNum)).emit('order_status_update', { orderId: String(idNum), status });
@@ -1150,10 +1170,31 @@ Mi Nhon Hotel Mui Ne`
         return res.status(400).json({ error: 'Status is required' });
       }
       
+      // Map status tiếng Việt sang enum tiếng Anh nếu cần
+      const statusMap: Record<string, string> = {
+        'Đã ghi nhận': 'acknowledged',
+        'Đang thực hiện': 'in_progress',
+        'Hoàn thiện': 'completed',
+        'Đang thực hiện và đang bàn giao cho khách': 'delivering',
+        'Ghi chú': 'note',
+        'Chờ xử lý': 'pending',
+        'pending': 'pending',
+        'acknowledged': 'acknowledged',
+        'in_progress': 'in_progress',
+        'delivering': 'delivering',
+        'completed': 'completed',
+        'note': 'note'
+      };
+      let mappedStatus = statusMap[status] || status;
+      if (!Object.values(statusMap).includes(mappedStatus)) {
+        console.log('[WebSocket][DEBUG] Status không hợp lệ, giữ nguyên:', status);
+        mappedStatus = status;
+      }
+      
       // Cập nhật trong cơ sở dữ liệu thay vì mảng trong bộ nhớ
       const result = await db.update(requestTable)
         .set({ 
-          status,
+          status: mappedStatus,
           updatedAt: new Date() 
         })
         .where(eq(requestTable.id, id))
@@ -1182,13 +1223,13 @@ Mi Nhon Hotel Mui Ne`
             specialInstructions: orderId,
             items: [],
             totalAmount: 0,
-            status: status
+            status: mappedStatus
           };
           order = await storage.createOrder(newOrderData);
           console.log('[WebSocket][DEBUG] Đã tạo order mới:', order);
         }
         if (order) {
-          const updatedOrder = await storage.updateOrderStatus(order.id, status);
+          const updatedOrder = await storage.updateOrderStatus(order.id, mappedStatus);
           // Emit WebSocket cho Guest UI nếu updatedOrder tồn tại
           if (updatedOrder && globalThis.wss) {
             if (updatedOrder.specialInstructions) {
