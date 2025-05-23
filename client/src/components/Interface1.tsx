@@ -44,6 +44,9 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
 
   const [activeIcon, setActiveIcon] = useState<string | null>(null);
 
+  // Thêm state để kiểm soát hiển thị reference media
+  const [showReference, setShowReference] = useState(false);
+
   // Tạo object ánh xạ iconName -> React component icon sát nghĩa nhất
   const iconComponents: Record<string, JSX.Element> = {
     // TOURISM & TOURS
@@ -174,13 +177,22 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
     }
   };
 
-  // Khi nhấn icon, set activeIcon (nếu nhấn lại icon đang chọn thì bỏ chọn)
+  // Khi nhấn icon, set activeIcon và showReference (nếu nhấn lại icon đang chọn thì bỏ chọn)
   const handleIconClick = (iconName: string) => {
-    setActiveIcon(prev => prev === iconName ? null : iconName);
-    // Nếu đang hiển thị tooltip cho icon này rồi thì ẩn đi, ngược lại thì hiển thị
+    if (activeIcon === iconName && showReference) {
+      setActiveIcon(null);
+      setShowReference(false);
+    } else {
+      setActiveIcon(iconName);
+      // Chỉ show reference nếu icon có media
+      if (iconMediaMap[iconName] && (Array.isArray(iconMediaMap[iconName]) ? iconMediaMap[iconName].length > 0 : iconMediaMap[iconName].src)) {
+        setShowReference(true);
+      } else {
+        setShowReference(false);
+      }
+    }
+    // Tooltip logic giữ nguyên
     setActiveTooltip(activeTooltip === iconName ? null : iconName);
-    
-    // Tự động ẩn tooltip sau 3 giây
     if (activeTooltip !== iconName) {
       setTimeout(() => {
         setActiveTooltip(currentTooltip => currentTooltip === iconName ? null : currentTooltip);
@@ -189,7 +201,10 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
   };
 
   // Hàm truyền vào Reference để đóng media động
-  const handleCloseMedia = () => setActiveIcon(null);
+  const handleCloseMedia = () => {
+    setActiveIcon(null);
+    setShowReference(false);
+  };
 
   // Lấy media động tương ứng nếu có (hỗ trợ nhiều media)
   const getActiveIconMediaList = () => {
@@ -709,6 +724,18 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
             Xóa lịch sử order
           </button>
         </div>
+        {showReference && getActiveIconMediaList().length > 0 && (
+          <div className="w-full flex flex-col md:flex-row items-center justify-center gap-4 my-4">
+            <div className="flex-1 flex items-center justify-center min-h-[220px]">
+              {getActiveIconMediaList()[0] && <ReferenceMedia media={getActiveIconMediaList()[0]} />}
+            </div>
+            {getActiveIconMediaList()[1] && (
+              <div className="flex-1 flex items-center justify-center min-h-[220px]">
+                <ReferenceMedia media={getActiveIconMediaList()[1]} />
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
