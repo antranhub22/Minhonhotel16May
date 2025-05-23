@@ -2114,14 +2114,16 @@ Mi Nhon Hotel Mui Ne`
       console.log("Fetching requests from database...");
       const dbRequests = await db2.select().from(request);
       console.log(`Found ${dbRequests.length} requests in database:`, dbRequests);
-      if (!Array.isArray(dbRequests) || dbRequests.length === 0) {
+      if (dbRequests.length === 0) {
         console.log("No requests found in database, returning dummy test data");
-        return res.json([]);
+        return res.json([
+          { id: 1, room_number: "101", guestName: "Tony", request_content: "Beef burger x 2", created_at: /* @__PURE__ */ new Date(), status: "\u0110\xE3 ghi nh\u1EADn", notes: "", orderId: "ORD-10001", updatedAt: /* @__PURE__ */ new Date() },
+          { id: 2, room_number: "202", guestName: "Anna", request_content: "Spa booking at 10:00", created_at: /* @__PURE__ */ new Date(), status: "\u0110ang th\u1EF1c hi\u1EC7n", notes: "", orderId: "ORD-10002", updatedAt: /* @__PURE__ */ new Date() }
+        ]);
       }
-      res.json(Array.isArray(dbRequests) ? dbRequests : []);
+      res.json(dbRequests);
     } catch (err) {
-      console.error("Error in /api/staff/requests:", err);
-      return res.json([]);
+      handleApiError(res, err, "Error in /api/staff/requests:");
     }
   });
   app2.patch("/api/staff/requests/:id/status", verifyJWT, async (req, res) => {
@@ -2201,10 +2203,9 @@ Mi Nhon Hotel Mui Ne`
   app2.get("/api/orders", async (req, res) => {
     try {
       const orders2 = await storage.getAllOrders({});
-      res.json(Array.isArray(orders2) ? orders2 : []);
+      res.json(orders2);
     } catch (error) {
-      console.error("Failed to retrieve all orders:", error);
-      res.json([]);
+      handleApiError(res, error, "Failed to retrieve all orders");
     }
   });
   app2.delete("/api/orders/all", async (req, res) => {

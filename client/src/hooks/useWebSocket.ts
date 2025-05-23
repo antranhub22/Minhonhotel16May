@@ -39,8 +39,7 @@ export function useWebSocket() {
     newSocket.onmessage = (event) => {
       try {
         const data = JSON.parse(event.data);
-        // Debug log cho mọi message
-        console.log('[WebSocket] Received message:', data);
+        
         // Handle transcript messages
         if (data.type === 'transcript') {
           assistant.addTranscript({
@@ -51,41 +50,14 @@ export function useWebSocket() {
         }
         // Handle order status update (realtime from staff UI)
         if (data.type === 'order_status_update' && (data.orderId || data.reference) && data.status) {
-          // Chuẩn hóa reference để so sánh (bỏ #ORD-, lowercase, trim)
-          const normalizeRef = (ref: string) => (ref || '').replace(/^#?ord[-_]?/i, '').toLowerCase().trim();
-          const wsRef = data.reference ? normalizeRef(data.reference) : (data.orderId ? normalizeRef(data.orderId) : '');
-          console.log('[WebSocket] Received order_status_update:', { 
-            rawReference: data.reference, 
-            rawOrderId: data.orderId, 
-            status: data.status, 
-            normalizedRef: wsRef 
-          });
-          assistant.setActiveOrders((prevOrders: ActiveOrder[]) => {
-            console.log('[WebSocket] ActiveOrders before update:', prevOrders.map(o => ({
-              reference: o.reference,
-              normalizedRef: normalizeRef(o.reference),
-              status: o.status
-            })));
-            const updated = prevOrders.map((order: ActiveOrder) => {
-              const orderRefNorm = normalizeRef(order.reference);
-              const matchByReference = wsRef && orderRefNorm === wsRef;
-              if (matchByReference) {
-                console.log('[WebSocket] Found matching order:', {
-                  originalRef: order.reference,
-                  normalizedRef: orderRefNorm,
-                  newStatus: data.status
-                });
-                return { ...order, status: data.status };
-              }
-              return order;
-            });
-            console.log('[WebSocket] ActiveOrders after update:', updated.map(o => ({
-              reference: o.reference,
-              normalizedRef: normalizeRef(o.reference),
-              status: o.status
-            })));
-            return updated;
-          });
+          assistant.setActiveOrders((prevOrders: ActiveOrder[]) => prevOrders.map((order: ActiveOrder) => {
+            // So sánh theo reference (mã order)
+            const matchByReference = (data.reference && order.reference === data.reference) || (data.orderId && order.reference === data.orderId);
+            if (matchByReference) {
+              return { ...order, status: data.status };
+            }
+            return order;
+          }));
         }
       } catch (error) {
         console.error('Error parsing WebSocket message:', error);

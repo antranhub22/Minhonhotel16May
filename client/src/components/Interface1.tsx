@@ -60,6 +60,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
     motorcycle: <FaMotorcycle size={32} color="#DAC17A" />,
     car_driver: <FaTaxi size={32} color="#DAC17A" />,
     car_self: <FaCarSide size={32} color="#DAC17A" />,
+    vehicle_special: <FaCarSide size={32} color="#DAC17A" />,
     // CURRENCY EXCHANGE
     usd: <FaDollarSign size={32} color="#DAC17A" />,
     eur: <FaEuroSign size={32} color="#DAC17A" />,
@@ -99,6 +100,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
     motorcycle: 'Motorcycle Rental',
     car_driver: 'Car Rental (with driver)',
     car_self: 'Car Rental (self-drive)',
+    vehicle_special: 'Special Vehicle Rental',
     // CURRENCY EXCHANGE
     usd: 'USD',
     eur: 'EUR',
@@ -109,7 +111,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
     rub: 'RUB',
     currency_other: 'Additional Currency Services',
     // LAUNDRY SERVICE
-    laundry_regular: 'Regularly Laundry Service for 25k/kg',
+    laundry_regular: 'Regular Laundry Service',
     laundry_special: 'Special Laundry Service',
     laundry_express: 'Express Laundry Service',
     laundry_additional: 'Additional Laundry Services',
@@ -124,7 +126,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
   // Định nghĩa mảng iconName cho từng nhóm dịch vụ
   const travelTourIcons = ["sand_dunes", "sightseeing", "jeep_tour", "stream_beach", "special_tour"];
   const busTicketIcons = ["bus_hcm", "bus_dl", "bus_nt", "bus_other"];
-  const vehicleRentalIcons = ["motorcycle", "car_driver", "car_self"];
+  const vehicleRentalIcons = ["motorcycle", "car_driver", "car_self", "vehicle_special"];
   const currencyIcons = ["usd", "eur", "gbp", "sgd", "jpy", "krw", "rub", "currency_other"];
   const laundryIcons = ["laundry_regular", "laundry_special", "laundry_express", "laundry_additional"];
   const homestayIcons = ["homestay_300k", "homestay_300_600k", "homestay_600k", "homestay_longterm", "homestay_additional"];
@@ -192,7 +194,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
   // Component hiển thị icon với tooltip
   const IconWithTooltip = ({ iconName, className, iconSize = 32 }: { iconName: string, className?: string, iconSize?: number }) => (
     <div className="relative flex flex-col items-center justify-center cursor-pointer">
-      <span
+      <span 
         className={className || ''}
         style={{ filter: 'drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.2))' }}
         onClick={() => handleIconClick(iconName)}
@@ -411,15 +413,15 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
             {/* Nút gọi luôn ở giữa */}
             <div className="flex items-center justify-center min-h-[240px]">
               <div className="relative flex items-center justify-center">
-                {/* Ripple Animation (luôn hiển thị, mạnh hơn khi hover) */}
-                <div className="absolute inset-0 rounded-full border-4 border-amber-400 animate-[ripple_1.5s_linear_infinite] pointer-events-none transition-opacity duration-300 group-hover:opacity-80 opacity-60"></div>
-                <div className="absolute inset-0 rounded-full border-4 border-amber-400/70 animate-[ripple_2s_linear_infinite] pointer-events-none transition-opacity duration-300 group-hover:opacity-60 opacity-40"></div>
-                {/* Main Button */}
-                <button 
+          {/* Ripple Animation (luôn hiển thị, mạnh hơn khi hover) */}
+          <div className="absolute inset-0 rounded-full border-4 border-amber-400 animate-[ripple_1.5s_linear_infinite] pointer-events-none transition-opacity duration-300 group-hover:opacity-80 opacity-60"></div>
+          <div className="absolute inset-0 rounded-full border-4 border-amber-400/70 animate-[ripple_2s_linear_infinite] pointer-events-none transition-opacity duration-300 group-hover:opacity-60 opacity-40"></div>
+          {/* Main Button */}
+            <button 
                   id={`vapiButton${lang === 'en' ? 'En' : lang === 'fr' ? 'Fr' : lang === 'zh' ? 'Zh' : lang === 'ru' ? 'Ru' : 'Ko'}`}
-                  className="group relative w-36 h-36 sm:w-40 sm:h-40 lg:w-56 lg:h-56 rounded-full font-poppins font-bold flex flex-col items-center justify-center overflow-hidden hover:translate-y-[-2px] hover:shadow-[0px_12px_20px_rgba(0,0,0,0.2)]"
+            className="group relative w-36 h-36 sm:w-40 sm:h-40 lg:w-56 lg:h-56 rounded-full font-poppins font-bold flex flex-col items-center justify-center overflow-hidden hover:translate-y-[-2px] hover:shadow-[0px_12px_20px_rgba(0,0,0,0.2)]"
                   onClick={() => handleCall(lang as any)}
-                  style={{
+            style={{
                     background: lang === 'en' 
                       ? 'linear-gradient(180deg, rgba(139,26,71,0.9) 0%, rgba(139,26,71,0.9) 100%)' // Tiếng Anh - Plum Red
                       : lang === 'fr' 
@@ -429,41 +431,41 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                       : lang === 'ru' 
                       ? 'linear-gradient(180deg, rgba(139,26,71,0.9) 0%, rgba(139,26,71,0.9) 100%)' // Tiếng Nga - Plum Red
                       : 'linear-gradient(180deg, rgba(139,26,71,0.9) 0%, rgba(139,26,71,0.9) 100%)', // Tiếng Hàn - Plum Red
-                    boxShadow: '0px 12px 24px rgba(0, 0, 0, 0.25), 0px 6px 12px rgba(0, 0, 0, 0.15), inset 0px 1px 0px rgba(255, 255, 255, 0.3)',
-                    border: '1px solid rgba(255, 255, 255, 0.5)',
-                    transition: 'all 0.3s ease',
-                    transform: 'translateY(0) translateZ(30px)',
-                  }}
-                >
+              boxShadow: '0px 12px 24px rgba(0, 0, 0, 0.25), 0px 6px 12px rgba(0, 0, 0, 0.15), inset 0px 1px 0px rgba(255, 255, 255, 0.3)',
+              border: '1px solid rgba(255, 255, 255, 0.5)',
+              transition: 'all 0.3s ease',
+              transform: 'translateY(0) translateZ(30px)',
+            }}
+          >
                   <span className="material-icons text-4xl sm:text-6xl lg:text-7xl mb-2 text-[#DAC17A] transition-all duration-300 group-hover:scale-110" 
-                    style={{ 
-                      filter: 'drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.2))',
+              style={{ 
+                filter: 'drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.2))',
                       color: lang === 'en' 
                         ? '#DAC17A' // Vàng cho tiếng Anh
                         : lang === 'fr' 
-                        ? '#FFFFFF' // Trắng cho tiếng Pháp
+                  ? '#FFFFFF' // Trắng cho tiếng Pháp
                         : lang === 'zh' 
-                        ? '#FFEB3B' // Vàng sáng cho tiếng Trung
+                  ? '#FFEB3B' // Vàng sáng cho tiếng Trung
                         : lang === 'ru' 
-                        ? '#F48FB1' // Hồng nhạt cho tiếng Nga
-                        : '#4ADE80' // Xanh lá sáng cho tiếng Hàn
-                    }}
-                  >mic</span>
+                  ? '#F48FB1' // Hồng nhạt cho tiếng Nga
+                  : '#4ADE80' // Xanh lá sáng cho tiếng Hàn
+              }}
+            >mic</span>
                   {lang === 'fr' ? (
-                    <span className="text-sm sm:text-lg lg:text-2xl font-bold text-white px-2 text-center"
-                      style={{ textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)' }}
+              <span className="text-sm sm:text-lg lg:text-2xl font-bold text-white px-2 text-center"
+                style={{ textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)' }}
                     >{t('press_to_call', lang)}</span>
                   ) : lang === 'ru' || lang === 'ko' ? (
-                    <span className="text-sm sm:text-lg lg:text-xl font-bold text-white px-2 text-center"
-                      style={{ textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)' }}
+              <span className="text-sm sm:text-lg lg:text-xl font-bold text-white px-2 text-center"
+                style={{ textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)' }}
                     >{t('press_to_call', lang)}</span>
-                  ) : (
-                    <span className="text-lg sm:text-2xl lg:text-3xl font-bold whitespace-nowrap text-white"
-                      style={{ textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)' }}
+            ) : (
+              <span className="text-lg sm:text-2xl lg:text-3xl font-bold whitespace-nowrap text-white"
+                style={{ textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)' }}
                     >{t('press_to_call', lang)}</span>
-                  )}
-                  <span className="absolute w-full h-full rounded-full pointer-events-none"></span>
-                </button>
+            )}
+            <span className="absolute w-full h-full rounded-full pointer-events-none"></span>
+            </button>
               </div>
             </div>
             {/* ReferenceMedia bên phải */}
@@ -512,7 +514,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
               }}
             >
               <h4 className="font-medium text-amber-300 pb-0 mb-0 text-xs sm:text-sm"
-                style={{
+                style={{ 
                   borderBottom: 'none',
                   textShadow: '0px 1px 2px rgba(0,0,0,0.08)'
                 }}
@@ -537,7 +539,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
               }}
             >
               <h4 className="font-medium text-amber-300 pb-0 mb-0 text-xs sm:text-sm"
-                style={{
+                style={{ 
                   borderBottom: 'none',
                   textShadow: '0px 1px 2px rgba(0,0,0,0.08)'
                 }}
@@ -562,7 +564,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
               }}
             >
               <h4 className="font-medium text-amber-300 pb-0 mb-0 text-xs sm:text-sm"
-                style={{
+                style={{ 
                   borderBottom: 'none',
                   textShadow: '0px 1px 2px rgba(0,0,0,0.08)'
                 }}
@@ -587,7 +589,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
               }}
             >
               <h4 className="font-medium text-amber-300 pb-0 mb-0 text-xs sm:text-sm"
-                style={{
+                style={{ 
                   borderBottom: 'none',
                   textShadow: '0px 1px 2px rgba(0,0,0,0.08)'
                 }}
@@ -612,7 +614,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
               }}
             >
               <h4 className="font-medium text-amber-300 pb-0 mb-0 text-xs sm:text-sm"
-                style={{
+                style={{ 
                   borderBottom: 'none',
                   textShadow: '0px 1px 2px rgba(0,0,0,0.08)'
                 }}

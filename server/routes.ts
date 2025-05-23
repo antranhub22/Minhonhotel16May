@@ -302,22 +302,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
     // Emit WebSocket notification cho tất cả client
     if (globalThis.wss) {
       if (updatedOrder.specialInstructions) {
-        let sentCount = 0;
         globalThis.wss.clients.forEach((client) => {
           if (client.readyState === 1) {
-            console.log('[WebSocket][PATCH /api/orders/:id/status] Sending order_status_update:', {
-              reference: updatedOrder.specialInstructions,
-              status: updatedOrder.status
-            });
             client.send(JSON.stringify({
               type: 'order_status_update',
               reference: updatedOrder.specialInstructions,
               status: updatedOrder.status
             }));
-            sentCount++;
           }
         });
-        console.log(`[WebSocket][PATCH /api/orders/:id/status] Sent to ${sentCount} clients`);
       }
     }
     
@@ -881,34 +874,33 @@ Mi Nhon Hotel Mui Ne`
         });
         console.log('Kết quả gửi email tóm tắt cuộc gọi từ thiết bị di động:', result);
         // Thêm mới: Lưu request vào database để hiển thị trong staff UI
-        console.log("Lưu request từ thiết bị di động vào database...");
-        const cleanedSummary = cleanSummaryContent(callDetails.summary);
-        const requestData = {
-          room_number: callDetails.roomNumber,
-          orderId: callDetails.orderReference || orderReference,
-          guestName: callDetails.guestName || "Guest",
-          request_content: cleanedSummary,
-          created_at: new Date(),
-          status: "Đã ghi nhận",
-          updatedAt: new Date()
-        };
-        console.log("[DEBUG] Request data before insert:", requestData);
-        await db.insert(requestTable).values(requestData);
-        console.log("Đã lưu request thành công vào database với ID:", orderReference);
-
-        // Bổ sung: Lưu order vào bảng orders
-        const orderData = {
-          callId: callDetails.callId || "unknown",
-          roomNumber: callDetails.roomNumber,
-          orderType: "Room Service",
-          deliveryTime: new Date(callDetails.timestamp || Date.now()).toISOString(),
-          specialInstructions: callDetails.orderReference || orderReference,
-          items: [],
-          totalAmount: 0
-        };
-        console.log("[DEBUG] Order data before insert:", orderData);
-        await storage.createOrder(orderData);
-        console.log("Đã lưu order vào bảng orders");
+        try {
+          console.log('Lưu request từ thiết bị di động vào database...');
+          const cleanedSummary = cleanSummaryContent(callDetails.summary);
+          await db.insert(requestTable).values({
+            room_number: callDetails.roomNumber,
+            orderId: callDetails.orderReference || orderReference,
+            guestName: callDetails.guestName || 'Guest',
+            request_content: cleanedSummary,
+            created_at: new Date(),
+            status: 'Đã ghi nhận',
+            updatedAt: new Date()
+          });
+          console.log('Đã lưu request thành công vào database với ID:', orderReference);
+          // Bổ sung: Lưu order vào bảng orders
+          await storage.createOrder({
+            callId: callDetails.callId || 'unknown',
+            roomNumber: callDetails.roomNumber,
+            orderType: 'Room Service',
+            deliveryTime: new Date(callDetails.timestamp || Date.now()).toISOString(),
+            specialInstructions: callDetails.orderReference || orderReference,
+            items: [],
+            totalAmount: 0
+          });
+          console.log('Đã lưu order vào bảng orders');
+        } catch (dbError) {
+          console.error('Lỗi khi lưu request hoặc order từ thiết bị di động vào DB:', dbError);
+        }
       } catch (sendError) {
         console.error('Lỗi khi gửi email tóm tắt từ thiết bị di động:', sendError);
         // Không cần trả về lỗi cho client vì đã trả về success trước đó
@@ -1162,23 +1154,16 @@ Mi Nhon Hotel Mui Ne`
       if (orderId) {
         // Tìm order theo specialInstructions (orderReference)
         const orders = await storage.getAllOrders({});
-        console.log("[DEBUG] All orders:", orders);
-        console.log("[DEBUG] Looking for order with specialInstructions =", orderId);
         const order = orders.find(o => o.specialInstructions === orderId);
-        if (!order) {
-          console.warn(`[WebSocket][PATCH /api/staff/requests/:id/status] Không tìm thấy order có specialInstructions =`, orderId, '. Các specialInstructions hiện có:', orders.map(o => o.specialInstructions));
-        }
         if (order) {
-          console.log("[DEBUG] Found matching order:", order);
           const updatedOrder = await storage.updateOrderStatus(order.id, status);
           // Emit WebSocket cho Guest UI nếu updatedOrder tồn tại
           if (updatedOrder && globalThis.wss) {
             if (updatedOrder.specialInstructions) {
-              console.log("[DEBUG] Emitting WebSocket with reference:", updatedOrder.specialInstructions);
               globalThis.wss.clients.forEach((client) => {
                 if (client.readyState === 1) {
                   client.send(JSON.stringify({
-                    type: "order_status_update",
+                    type: 'order_status_update',
                     reference: updatedOrder.specialInstructions,
                     status: updatedOrder.status
                   }));
@@ -1255,28 +1240,6 @@ Mi Nhon Hotel Mui Ne`
       res.json({ success: true, deletedCount: deleted });
     } catch (error) {
       handleApiError(res, error, 'Error deleting all orders');
-    }
-  });
-
-  // Endpoint tạm thời: Xóa các request không có order tương ứng
-  app.delete('/api/admin/cleanup-orphan-requests', async (req, res) => {
-    try {
-      const requests = await db.select().from(requestTable);
-      const orders = await storage.getAllOrders({});
-      const orderRefs = new Set(orders.map(o => o.specialInstructions));
-      const orphanRequests = requests.filter(r => !orderRefs.has(r.orderId));
-      if (orphanRequests.length === 0) {
-        return res.json({ success: true, deleted: 0, message: 'No orphan requests found.' });
-      }
-      const deleted = [];
-      for (const req of orphanRequests) {
-        await db.delete(requestTable).where(eq(requestTable.id, req.id));
-        deleted.push(req.id);
-      }
-      res.json({ success: true, deleted: deleted.length, ids: deleted });
-    } catch (err) {
-      console.error('Error cleaning up orphan requests:', err);
-      res.status(500).json({ success: false, error: err.message });
     }
   });
 
