@@ -1493,7 +1493,6 @@ async function registerRoutes(app2) {
             client.send(JSON.stringify({
               type: "order_status_update",
               reference: updatedOrder.specialInstructions,
-              callId: updatedOrder.callId,
               status: updatedOrder.status
             }));
           }
@@ -2152,7 +2151,6 @@ Mi Nhon Hotel Mui Ne`
                   client.send(JSON.stringify({
                     type: "order_status_update",
                     reference: updatedOrder.specialInstructions,
-                    callId: updatedOrder.callId,
                     status: updatedOrder.status
                   }));
                 }
