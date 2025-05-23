@@ -48,52 +48,44 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
   // Thêm state để kiểm soát hiển thị reference media
   const [showReference, setShowReference] = useState(false);
 
-  const iconBgStyle = {
-    display: 'inline-flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    background: '#FFCE00',
-    borderRadius: '8px',
-    width: 32,
-    height: 32
-  };
+  const iconColor = '#FFC94A'; // Màu vàng giống tiêu đề
   const iconComponents: Record<string, JSX.Element> = {
     // TOURISM & TOURS
-    tour_halfday: <span style={iconBgStyle}><Sun color="#fff" size={22} strokeWidth={2} /></span>,
-    tour_fullday: <span style={iconBgStyle}><CalendarDays color="#fff" size={22} strokeWidth={2} /></span>,
-    tour_multiday: <span style={iconBgStyle}><CalendarCheck color="#fff" size={22} strokeWidth={2} /></span>,
-    special_tour: <span style={iconBgStyle}><Star color="#fff" size={22} strokeWidth={2} /></span>,
+    tour_halfday: <Sun color={iconColor} size={28} strokeWidth={2} />, // Half Day
+    tour_fullday: <CalendarDays color={iconColor} size={28} strokeWidth={2} />, // Full Day
+    tour_multiday: <CalendarCheck color={iconColor} size={28} strokeWidth={2} />, // Multi Day
+    special_tour: <Star color={iconColor} size={28} strokeWidth={2} />, // Special
     // BUS TICKETS
-    bus_hcm: <span style={iconBgStyle}><Bus color="#fff" size={22} strokeWidth={2} /></span>,
-    bus_dl: <span style={iconBgStyle}><Mountain color="#fff" size={22} strokeWidth={2} /></span>,
-    bus_nt: <span style={iconBgStyle}><Umbrella color="#fff" size={22} strokeWidth={2} /></span>,
-    bus_dn: <span style={iconBgStyle}><Landmark color="#fff" size={22} strokeWidth={2} /></span>,
-    bus_ct: <span style={iconBgStyle}><Ship color="#fff" size={22} strokeWidth={2} /></span>,
-    bus_mt: <span style={iconBgStyle}><Waves color="#fff" size={22} strokeWidth={2} /></span>,
-    bus_vt: <span style={iconBgStyle}><Map color="#fff" size={22} strokeWidth={2} /></span>,
-    bus_other: <span style={iconBgStyle}><ArrowRightLeft color="#fff" size={22} strokeWidth={2} /></span>,
+    bus_hcm: <Bus color={iconColor} size={28} strokeWidth={2} />, // HCM
+    bus_dl: <Mountain color={iconColor} size={28} strokeWidth={2} />, // Dalat
+    bus_nt: <Umbrella color={iconColor} size={28} strokeWidth={2} />, // Nha Trang
+    bus_dn: <Landmark color={iconColor} size={28} strokeWidth={2} />, // Da Nang
+    bus_ct: <Ship color={iconColor} size={28} strokeWidth={2} />, // Can Tho
+    bus_mt: <Waves color={iconColor} size={28} strokeWidth={2} />, // My Tho
+    bus_vt: <Map color={iconColor} size={28} strokeWidth={2} />, // Vung Tau
+    bus_other: <ArrowRightLeft color={iconColor} size={28} strokeWidth={2} />, // Other
     // VEHICLE RENTAL
-    motorcycle: <span style={iconBgStyle}><Bike color="#fff" size={22} strokeWidth={2} /></span>,
-    car_driver: <span style={iconBgStyle}><CarFront color="#fff" size={22} strokeWidth={2} /></span>,
-    car_self: <span style={iconBgStyle}><Car color="#fff" size={22} strokeWidth={2} /></span>,
+    motorcycle: <Bike color={iconColor} size={28} strokeWidth={2} />, // Motorbike
+    car_driver: <CarFront color={iconColor} size={28} strokeWidth={2} />, // Car with driver
+    car_self: <Car color={iconColor} size={28} strokeWidth={2} />, // Self-drive car
     // CURRENCY EXCHANGE
-    usd: <span style={iconBgStyle}><DollarSign color="#fff" size={22} strokeWidth={2} /></span>,
-    eur: <span style={iconBgStyle}><Euro color="#fff" size={22} strokeWidth={2} /></span>,
-    krw: <span style={iconBgStyle}><Coins color="#fff" size={22} strokeWidth={2} /></span>,
-    rub: <span style={iconBgStyle}><Coins color="#fff" size={22} strokeWidth={2} /></span>,
-    currency_other: <span style={iconBgStyle}><Coins color="#fff" size={22} strokeWidth={2} /></span>,
+    usd: <DollarSign color={iconColor} size={28} strokeWidth={2} />, // USD
+    eur: <Euro color={iconColor} size={28} strokeWidth={2} />, // EUR
+    krw: <Coins color={iconColor} size={28} strokeWidth={2} />, // KRW (Coins)
+    rub: <Coins color={iconColor} size={28} strokeWidth={2} />, // RUB (Coins)
+    currency_other: <Coins color={iconColor} size={28} strokeWidth={2} />, // Other
     // LAUNDRY SERVICE
-    laundry_regular: <span style={iconBgStyle}><Shirt color="#fff" size={22} strokeWidth={2} /></span>,
-    laundry_special: <span style={iconBgStyle}><Sparkles color="#fff" size={22} strokeWidth={2} /></span>,
-    laundry_express: <span style={iconBgStyle}><Plus color="#fff" size={22} strokeWidth={2} /></span>,
-    laundry_additional: <span style={iconBgStyle}><Plus color="#fff" size={22} strokeWidth={2} /></span>,
+    laundry_regular: <Shirt color={iconColor} size={28} strokeWidth={2} />, // Regular
+    laundry_special: <Sparkles color={iconColor} size={28} strokeWidth={2} />, // Special
+    laundry_express: <Plus color={iconColor} size={28} strokeWidth={2} />, // Express
+    laundry_additional: <Plus color={iconColor} size={28} strokeWidth={2} />, // Additional
     // HOMESTAY SERVICE
-    homestay_300k: <span style={iconBgStyle}><Home color="#fff" size={22} strokeWidth={2} /></span>,
-    homestay_300_600k: <span style={iconBgStyle}><Building2 color="#fff" size={22} strokeWidth={2} /></span>,
-    homestay_600k: <span style={iconBgStyle}><Building2 color="#fff" size={22} strokeWidth={2} /></span>,
-    homestay_longterm: <span style={iconBgStyle}><CalendarDays color="#fff" size={22} strokeWidth={2} /></span>,
-    homestay_fullhouse: <span style={iconBgStyle}><KeyRound color="#fff" size={22} strokeWidth={2} /></span>,
-    homestay_additional: <span style={iconBgStyle}><UserRound color="#fff" size={22} strokeWidth={2} /></span>,
+    homestay_300k: <Home color={iconColor} size={28} strokeWidth={2} />, // <300k
+    homestay_300_600k: <Building2 color={iconColor} size={28} strokeWidth={2} />, // 300-600k
+    homestay_600k: <Building2 color={iconColor} size={28} strokeWidth={2} />, // >600k
+    homestay_longterm: <CalendarDays color={iconColor} size={28} strokeWidth={2} />, // Long-term
+    homestay_fullhouse: <KeyRound color={iconColor} size={28} strokeWidth={2} />, // Full house
+    homestay_additional: <UserRound color={iconColor} size={28} strokeWidth={2} />, // Additional
   };
 
   // Object ánh xạ tên icon cho từng ngôn ngữ
