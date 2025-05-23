@@ -50,19 +50,19 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
   // Tạo object ánh xạ iconName -> React component icon sát nghĩa nhất
   const iconComponents: Record<string, JSX.Element> = {
     // TOURISM & TOURS
-    tour_halfday: <span className="icon-bus-label" style={{color:'#FFD966'}}>Half-Day</span>,
-    tour_fullday: <span className="icon-bus-label" style={{color:'#FFD966'}}>Full-Day</span>,
-    tour_multiday: <span className="icon-bus-label" style={{color:'#FFD966'}}>Multi-Day</span>,
-    special_tour: <FaStar size={32} color="#FFD966" />, // Special Tours
+    tour_halfday: <span className="icon-bus-label" role="img" aria-label="Sunrise">🌅</span>,
+    tour_fullday: <span className="icon-bus-label" role="img" aria-label="Sun">☀️</span>,
+    tour_multiday: <span className="icon-bus-label" role="img" aria-label="Calendar">📅</span>,
+    special_tour: <span className="icon-bus-label" role="img" aria-label="Star">⭐️</span>,
     // BUS TICKETS
-    bus_hcm: <span className="icon-bus-label">HCM</span>,
-    bus_dl: <span className="icon-bus-label">ĐL</span>,
-    bus_nt: <span className="icon-bus-label">NT</span>,
-    bus_dn: <span className="icon-bus-label">DN</span>,
-    bus_ct: <span className="icon-bus-label">CT</span>,
-    bus_mt: <span className="icon-bus-label">MT</span>,
-    bus_vt: <span className="icon-bus-label">VT</span>,
-    bus_other: <FaRoute size={32} color="#DAC17A" />,
+    bus_hcm: <span className="icon-bus-label" role="img" aria-label="City">🏙️</span>,
+    bus_dl: <span className="icon-bus-label" role="img" aria-label="Mountain">🏔️</span>,
+    bus_nt: <span className="icon-bus-label" role="img" aria-label="Beach">🏖️</span>,
+    bus_dn: <span className="icon-bus-label" role="img" aria-label="Bridge">🌉</span>,
+    bus_ct: <span className="icon-bus-label" role="img" aria-label="Boat">🛶</span>,
+    bus_mt: <span className="icon-bus-label" role="img" aria-label="Rice">🌾</span>,
+    bus_vt: <span className="icon-bus-label" role="img" aria-label="Sailboat">⛵️</span>,
+    bus_other: <span className="icon-bus-label" role="img" aria-label="Target">🎯</span>,
     // VEHICLE RENTAL
     motorcycle: <FaMotorcycle size={32} color="#DAC17A" />,
     car_driver: <FaTaxi size={32} color="#DAC17A" />,
@@ -78,17 +78,17 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
     rub: <FaRubleSign size={32} color="#DAC17A" />,
     currency_other: <FaBitcoin size={32} color="#DAC17A" />,
     // LAUNDRY SERVICE
-    laundry_regular: <FaTshirt size={32} color="#DAC17A" />,
-    laundry_special: <FaSoap size={32} color="#DAC17A" />,
-    laundry_express: <FaBolt size={32} color="#DAC17A" />,
-    laundry_additional: <FaPlus size={32} color="#DAC17A" />,
+    laundry_regular: <span className="icon-bus-label" role="img" aria-label="T-shirt">👕</span>,
+    laundry_special: <span className="icon-bus-label" role="img" aria-label="Shirt">👔</span>,
+    laundry_express: <span className="icon-bus-label" role="img" aria-label="Lightning">⚡️</span>,
+    laundry_additional: <span className="icon-bus-label" role="img" aria-label="Plus">➕</span>,
     // HOMESTAY SERVICE
-    homestay_300k: <span className="icon-bus-label" style={{color:'#FFD966'}}>&lt;300k</span>,
-    homestay_300_600k: <span className="icon-bus-label" style={{color:'#FFD966'}}>300k-600k</span>,
-    homestay_600k: <span className="icon-bus-label" style={{color:'#FFD966'}}>over 600k</span>,
-    homestay_longterm: <FaCalendarAlt size={32} color="#FFD966" />, // Long-term Rental
-    homestay_fullhouse: <FaHome size={32} color="#FFD966" />, // Full House Rent
-    homestay_additional: <FaPlusSquare size={32} color="#FFD966" />, // Additional Homestay Services
+    homestay_300k: <span className="icon-bus-label" role="img" aria-label="House">🏠</span>,
+    homestay_300_600k: <span className="icon-bus-label" role="img" aria-label="House with garden">🏡</span>,
+    homestay_600k: <span className="icon-bus-label" role="img" aria-label="Houses">🏘️</span>,
+    homestay_longterm: <span className="icon-bus-label" role="img" aria-label="Calendar">📅</span>,
+    homestay_fullhouse: <span className="icon-bus-label" role="img" aria-label="Key">🔑</span>,
+    homestay_additional: <span className="icon-bus-label" role="img" aria-label="Tools">🛠️</span>,
   };
 
   // Thêm object ánh xạ iconName -> tên dịch vụ đúng chuẩn:
