@@ -13,6 +13,7 @@ import { iconMediaMap, IconMedia } from '../assets/iconMediaMap';
 import { FaMountain, FaCarSide, FaUmbrellaBeach, FaStar, FaBusAlt, FaRoute, FaMotorcycle, FaTaxi, FaMoneyBillWave, FaEuroSign, FaPoundSign, FaYenSign, FaRubleSign, FaExchangeAlt, FaBitcoin, FaTshirt, FaSoap, FaBolt, FaPlus, FaHome, FaBuilding, FaCalendarAlt, FaPlusSquare, FaDollarSign, FaWonSign, FaCity } from 'react-icons/fa';
 import { ReferenceMedia, ReferenceSlider } from './Reference';
 import { OrderStatus } from '@shared/schema';
+import { Bus, Mountain, Landmark, Car, CarFront, Bike, Coins, Euro, DollarSign, Shirt, Sparkles, Home, Building2, CalendarDays, KeyRound, UserRound, Plus, Star, Sun, CalendarCheck, Umbrella, Map, Ship, Waves, ArrowRightLeft } from 'lucide-react';
 
 interface Interface1Props {
   isActive: boolean;
@@ -47,44 +48,44 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
   // Thêm state để kiểm soát hiển thị reference media
   const [showReference, setShowReference] = useState(false);
 
-  // Tạo object ánh xạ iconName -> React component icon sát nghĩa nhất
+  // Tạo object ánh xạ iconName -> React component icon Lucide style Flat Modern
   const iconComponents: Record<string, JSX.Element> = {
     // TOURISM & TOURS
-    tour_halfday: <span className="icon-bus-label" role="img" aria-label="Sunrise">🌅</span>,
-    tour_fullday: <span className="icon-bus-label" role="img" aria-label="Sun">☀️</span>,
-    tour_multiday: <span className="icon-bus-label" role="img" aria-label="Calendar">📅</span>,
-    special_tour: <span className="icon-bus-label" role="img" aria-label="Star">⭐️</span>,
+    tour_halfday: <Sun color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // Half Day
+    tour_fullday: <CalendarDays color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // Full Day
+    tour_multiday: <CalendarCheck color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // Multi Day
+    special_tour: <Star color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // Special
     // BUS TICKETS
-    bus_hcm: <span className="icon-bus-label" role="img" aria-label="City">🏙️</span>,
-    bus_dl: <span className="icon-bus-label" role="img" aria-label="Mountain">🏔️</span>,
-    bus_nt: <span className="icon-bus-label" role="img" aria-label="Beach">🏖️</span>,
-    bus_dn: <span className="icon-bus-label" role="img" aria-label="Bridge">🌉</span>,
-    bus_ct: <span className="icon-bus-label" role="img" aria-label="Boat">🛶</span>,
-    bus_mt: <span className="icon-bus-label" role="img" aria-label="Rice">🌾</span>,
-    bus_vt: <span className="icon-bus-label" role="img" aria-label="Sailboat">⛵️</span>,
-    bus_other: <span className="icon-bus-label" role="img" aria-label="Route">🗺️</span>,
+    bus_hcm: <Bus color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // HCM
+    bus_dl: <Mountain color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // Dalat
+    bus_nt: <Umbrella color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // Nha Trang
+    bus_dn: <Landmark color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // Da Nang
+    bus_ct: <Ship color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // Can Tho
+    bus_mt: <Waves color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // My Tho
+    bus_vt: <Map color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // Vung Tau
+    bus_other: <ArrowRightLeft color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // Other
     // VEHICLE RENTAL
-    motorcycle: <span className="icon-bus-label" role="img" aria-label="Bike">🏍️</span>,
-    car_driver: <span className="icon-bus-label" role="img" aria-label="Driver">🧑‍✈️</span>,
-    car_self: <span className="icon-bus-label" role="img" aria-label="Key">🔑</span>,
+    motorcycle: <Bike color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // Motorbike
+    car_driver: <CarFront color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // Car with driver
+    car_self: <Car color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // Self-drive car
     // CURRENCY EXCHANGE
-    usd: <span className="icon-bus-label" role="img" aria-label="Dollar">💵</span>,
-    eur: <span className="icon-bus-label" role="img" aria-label="Euro">💶</span>,
-    krw: <span className="icon-bus-label" role="img" aria-label="Won">🇰🇷</span>,
-    rub: <span className="icon-bus-label" role="img" aria-label="Ruble">💴</span>,
-    currency_other: <span className="icon-bus-label" role="img" aria-label="Exchange">🔁</span>,
+    usd: <DollarSign color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // USD
+    eur: <Euro color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // EUR
+    krw: <Coins color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // KRW (Coins)
+    rub: <Coins color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // RUB (Coins)
+    currency_other: <Coins color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // Other
     // LAUNDRY SERVICE
-    laundry_regular: <span className="icon-bus-label" role="img" aria-label="T-shirt">👕</span>,
-    laundry_special: <span className="icon-bus-label" role="img" aria-label="Crown">👑</span>,
-    laundry_express: <span className="icon-bus-label" role="img" aria-label="Lightning">⚡️</span>,
-    laundry_additional: <span className="icon-bus-label" role="img" aria-label="Plus">➕</span>,
+    laundry_regular: <Shirt color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // Regular
+    laundry_special: <Sparkles color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // Special
+    laundry_express: <Plus color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // Express
+    laundry_additional: <Plus color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // Additional
     // HOMESTAY SERVICE
-    homestay_300k: <span className="icon-bus-label" role="img" aria-label="Home">🏠</span>,
-    homestay_300_600k: <span className="icon-bus-label" role="img" aria-label="House">🏡</span>,
-    homestay_600k: <span className="icon-bus-label" role="img" aria-label="Building">🏢</span>,
-    homestay_longterm: <span className="icon-bus-label" role="img" aria-label="Calendar">🗓️</span>,
-    homestay_fullhouse: <span className="icon-bus-label" role="img" aria-label="Key">🗝️</span>,
-    homestay_additional: <span className="icon-bus-label" role="img" aria-label="Settings">🛠️</span>,
+    homestay_300k: <Home color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // <300k
+    homestay_300_600k: <Building2 color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // 300-600k
+    homestay_600k: <Building2 color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // >600k
+    homestay_longterm: <CalendarDays color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // Long-term
+    homestay_fullhouse: <KeyRound color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // Full house
+    homestay_additional: <UserRound color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // Additional
   };
 
   // Object ánh xạ tên icon cho từng ngôn ngữ
@@ -113,7 +114,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
     laundry_special: 'Special Laundry',
     laundry_express: 'Express Laundry',
     laundry_additional: 'Additional Laundry',
-    homestay_300k: 'under 300k',
+    homestay_300k: '< 300k',
     homestay_300_600k: '300-600k',
     homestay_600k: 'over 600k',
     homestay_longterm: 'Long-term',
