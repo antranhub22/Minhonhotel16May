@@ -56,6 +56,10 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
     bus_hcm: <span className="icon-bus-label">HCM</span>,
     bus_dl: <span className="icon-bus-label">ĐL</span>,
     bus_nt: <span className="icon-bus-label">NT</span>,
+    bus_dn: <span className="icon-bus-label">DN</span>,
+    bus_ct: <span className="icon-bus-label">CT</span>,
+    bus_mt: <span className="icon-bus-label">MT</span>,
+    bus_vt: <span className="icon-bus-label">VT</span>,
     bus_other: <FaRoute size={32} color="#DAC17A" />,
     // VEHICLE RENTAL
     motorcycle: <FaMotorcycle size={32} color="#DAC17A" />,
@@ -96,6 +100,10 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
     bus_hcm: 'Mui Ne - Ho Chi Minh City Route',
     bus_dl: 'Mui Ne - Da Lat Route',
     bus_nt: 'Mui Ne - Nha Trang Route',
+    bus_dn: 'Mui Ne - Da Nang Route',
+    bus_ct: 'Mui Ne - Can Tho Route',
+    bus_mt: 'Mui Ne - My Tho Route',
+    bus_vt: 'Mui Ne - Vung Tau Route',
     bus_other: 'Other Routes',
     // VEHICLE RENTAL
     motorcycle: 'Motorcycle Rental',
@@ -126,7 +134,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
 
   // Định nghĩa mảng iconName cho từng nhóm dịch vụ
   const travelTourIcons = ["sand_dunes", "sightseeing", "jeep_tour", "stream_beach", "special_tour"];
-  const busTicketIcons = ["bus_hcm", "bus_dl", "bus_nt", "bus_other"];
+  const busTicketIcons = ["bus_hcm", "bus_dl", "bus_nt", "bus_dn", "bus_ct", "bus_mt", "bus_vt", "bus_other"];
   const vehicleRentalIcons = ["motorcycle", "car_driver", "car_self", "vehicle_special"];
   const currencyIcons = ["usd", "eur", "gbp", "sgd", "jpy", "krw", "rub", "currency_other"];
   const laundryIcons = ["laundry_regular", "laundry_special", "laundry_express", "laundry_additional"];
@@ -513,7 +521,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
             </div>
             {/* 2. BUS TICKETS */}
             <div
-              className="py-0.5 px-1 sm:p-2 w-11/12 sm:w-4/5 md:w-64 mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
+              className="py-0.5 px-1 sm:p-2 w-11/12 sm:w-[95%] md:w-[480px] mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
               style={{
                 background: 'rgba(139,26,71,0.4)',
                 backdropFilter: 'blur(8px)',
@@ -530,10 +538,10 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
               >{t('ticket_bus', lang)}</h4>
               <ul className={
                 isMobile
-                  ? "flex flex-row flex-nowrap justify-center items-center gap-x-2 py-0"
-                  : "grid grid-cols-2 gap-x-1 gap-y-1 py-0.5 justify-items-center"
+                  ? "flex flex-row flex-wrap justify-center items-center gap-x-2 gap-y-2 py-0"
+                  : "grid grid-cols-4 gap-x-1 gap-y-1 py-0.5 justify-items-center"
               }>
-                {renderIconGroup(busTicketIcons, isMobile ? busTicketIcons.length : 2, isMobile ? 18 : 28)}
+                {renderIconGroup(busTicketIcons, isMobile ? 4 : 4, isMobile ? 18 : 28)}
               </ul>
             </div>
             {/* 3. VEHICLE RENTAL */}
