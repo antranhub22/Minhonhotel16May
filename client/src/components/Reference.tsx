@@ -378,7 +378,7 @@ export const ReferenceMedia = ({ media }: { media: IconMedia }) => {
       {/* Description luôn hiển thị bên dưới, auto nới rộng, không giới hạn chiều cao */}
       {media.description && (
         <div
-          className="mt-3 w-full px-2"
+          className="mt-3 w-full px-2 hidden sm:block"
           style={{
             color: '#FFE9B0',
             fontFamily: 'var(--font-sans, sans-serif)',
