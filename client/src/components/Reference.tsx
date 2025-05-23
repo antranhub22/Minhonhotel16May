@@ -363,17 +363,24 @@ export const DualReference: React.FC<{ mediaList: IconMedia[] }> = ({ mediaList 
 export const ReferenceMedia = ({ media }: { media: IconMedia }) => {
   const [zoomed, setZoomed] = useState(false);
   return (
-    <>
-      <div className="w-[320px] max-w-[90vw] min-h-[220px] bg-white/80 rounded-2xl shadow-xl border border-white/30 flex items-center justify-center p-4 backdrop-blur-md cursor-zoom-in"
+    <div className="flex flex-col items-center w-[320px] max-w-[90vw]">
+      <div
+        className="w-full min-h-[220px] bg-white/80 rounded-2xl shadow-xl border border-white/30 flex items-center justify-center p-4 backdrop-blur-md cursor-zoom-in"
         onClick={() => setZoomed(true)}
         title="Click to zoom"
       >
         {media.type === 'image' || media.type === 'gif' ? (
-          <img src={media.src} alt={media.alt || ''} className="rounded-xl max-h-[200px] w-auto object-contain shadow-lg" />
+          <img src={media.src} alt={media.alt || ''} className="rounded-xl max-h-[200px] w-auto object-contain shadow-lg mx-auto" />
         ) : media.type === 'video' ? (
-          <video src={media.src} controls autoPlay loop className="rounded-xl max-h-[200px] w-auto object-contain shadow-lg" />
+          <video src={media.src} controls autoPlay loop className="rounded-xl max-h-[200px] w-auto object-contain shadow-lg mx-auto" />
         ) : null}
       </div>
+      {/* Description luôn hiển thị bên dưới, auto nới rộng, không giới hạn chiều cao */}
+      {media.description && (
+        <div className="mt-3 text-base text-yellow-900 text-center w-full px-2 font-medium opacity-90" style={{ wordBreak: 'break-word', lineHeight: '1.5' }}>
+          {media.description}
+        </div>
+      )}
       {zoomed && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm" onClick={() => setZoomed(false)}>
           <div className="relative max-w-3xl w-full flex flex-col items-center">
@@ -391,7 +398,7 @@ export const ReferenceMedia = ({ media }: { media: IconMedia }) => {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 
