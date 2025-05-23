@@ -1113,18 +1113,17 @@ Mi Nhon Hotel Mui Ne`
       console.log(`Found ${dbRequests.length} requests in database:`, dbRequests);
       
       // Thêm kiểm tra nếu không có requests từ DB
-      if (dbRequests.length === 0) {
+      if (!Array.isArray(dbRequests) || dbRequests.length === 0) {
         console.log('No requests found in database, returning dummy test data');
         // Trả về dữ liệu mẫu nếu không có dữ liệu trong DB
-        return res.json([
-          { id: 1, room_number: '101', guestName: 'Tony', request_content: 'Beef burger x 2', created_at: new Date(), status: 'Đã ghi nhận', notes: '', orderId: 'ORD-10001', updatedAt: new Date() },
-          { id: 2, room_number: '202', guestName: 'Anna', request_content: 'Spa booking at 10:00', created_at: new Date(), status: 'Đang thực hiện', notes: '', orderId: 'ORD-10002', updatedAt: new Date() },
-        ]);
+        return res.json([]); // Trả về mảng rỗng thay vì dữ liệu mẫu
       }
       
-      res.json(dbRequests);
+      res.json(Array.isArray(dbRequests) ? dbRequests : []);
     } catch (err) {
-      handleApiError(res, err, 'Error in /api/staff/requests:');
+      // Nếu có lỗi, trả về mảng rỗng thay vì object lỗi
+      console.error('Error in /api/staff/requests:', err);
+      return res.json([]);
     }
   });
 
@@ -1226,9 +1225,11 @@ Mi Nhon Hotel Mui Ne`
   app.get('/api/orders', async (req, res) => {
     try {
       const orders = await storage.getAllOrders({});
-      res.json(orders);
+      res.json(Array.isArray(orders) ? orders : []);
     } catch (error) {
-      handleApiError(res, error, 'Failed to retrieve all orders');
+      // Nếu có lỗi, trả về mảng rỗng thay vì object lỗi
+      console.error('Failed to retrieve all orders:', error);
+      res.json([]);
     }
   });
 
