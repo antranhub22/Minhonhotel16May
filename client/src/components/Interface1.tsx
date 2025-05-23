@@ -51,41 +51,41 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
   // Tạo object ánh xạ iconName -> React component icon Lucide style Flat Modern
   const iconComponents: Record<string, JSX.Element> = {
     // TOURISM & TOURS
-    tour_halfday: <Sun color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // Half Day
-    tour_fullday: <CalendarDays color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // Full Day
-    tour_multiday: <CalendarCheck color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // Multi Day
-    special_tour: <Star color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // Special
+    tour_halfday: <Sun color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // Half Day
+    tour_fullday: <CalendarDays color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // Full Day
+    tour_multiday: <CalendarCheck color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // Multi Day
+    special_tour: <Star color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // Special
     // BUS TICKETS
-    bus_hcm: <Bus color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // HCM
-    bus_dl: <Mountain color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // Dalat
-    bus_nt: <Umbrella color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // Nha Trang
-    bus_dn: <Landmark color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // Da Nang
-    bus_ct: <Ship color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // Can Tho
-    bus_mt: <Waves color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // My Tho
-    bus_vt: <Map color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // Vung Tau
-    bus_other: <ArrowRightLeft color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // Other
+    bus_hcm: <Bus color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // HCM
+    bus_dl: <Mountain color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // Dalat
+    bus_nt: <Umbrella color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // Nha Trang
+    bus_dn: <Landmark color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // Da Nang
+    bus_ct: <Ship color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // Can Tho
+    bus_mt: <Waves color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // My Tho
+    bus_vt: <Map color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // Vung Tau
+    bus_other: <ArrowRightLeft color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // Other
     // VEHICLE RENTAL
-    motorcycle: <Bike color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // Motorbike
-    car_driver: <CarFront color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // Car with driver
-    car_self: <Car color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // Self-drive car
+    motorcycle: <Bike color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // Motorbike
+    car_driver: <CarFront color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // Car with driver
+    car_self: <Car color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // Self-drive car
     // CURRENCY EXCHANGE
-    usd: <DollarSign color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // USD
-    eur: <Euro color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // EUR
-    krw: <Coins color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // KRW (Coins)
-    rub: <Coins color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // RUB (Coins)
-    currency_other: <Coins color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // Other
+    usd: <DollarSign color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // USD
+    eur: <Euro color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // EUR
+    krw: <Coins color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // KRW (Coins)
+    rub: <Coins color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // RUB (Coins)
+    currency_other: <Coins color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // Other
     // LAUNDRY SERVICE
-    laundry_regular: <Shirt color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // Regular
-    laundry_special: <Sparkles color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // Special
-    laundry_express: <Plus color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // Express
-    laundry_additional: <Plus color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // Additional
+    laundry_regular: <Shirt color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // Regular
+    laundry_special: <Sparkles color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // Special
+    laundry_express: <Plus color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // Express
+    laundry_additional: <Plus color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // Additional
     // HOMESTAY SERVICE
-    homestay_300k: <Home color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // <300k
-    homestay_300_600k: <Building2 color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // 300-600k
-    homestay_600k: <Building2 color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // >600k
-    homestay_longterm: <CalendarDays color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // Long-term
-    homestay_fullhouse: <KeyRound color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // Full house
-    homestay_additional: <UserRound color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={2} style={{borderRadius: 8}} />, // Additional
+    homestay_300k: <Home color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // <300k
+    homestay_300_600k: <Building2 color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // 300-600k
+    homestay_600k: <Building2 color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // >600k
+    homestay_longterm: <CalendarDays color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // Long-term
+    homestay_fullhouse: <KeyRound color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // Full house
+    homestay_additional: <UserRound color="#FFCE00" fill="#FFCE00" size={28} strokeWidth={0} style={{borderRadius: 8, background: '#FFCE00', padding: 2}} />, // Additional
   };
 
   // Object ánh xạ tên icon cho từng ngôn ngữ
