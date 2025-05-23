@@ -223,23 +223,30 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
   };
 
   // Component hiển thị icon với tooltip
-  const IconWithTooltip = ({ iconName, className, iconSize = 32 }: { iconName: string, className?: string, iconSize?: number }) => (
-    <div className="relative flex flex-col items-center justify-center cursor-pointer">
-      <span 
-        className={className || ''}
-        style={{ filter: 'drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.2))' }}
-        onClick={() => handleIconClick(iconName)}
-      >
-        {React.cloneElement(iconComponents[iconName] || <span className="text-red-500">?</span>, { size: iconSize })}
-      </span>
-      {activeTooltip === iconName && (
-        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-max max-w-[120px] sm:max-w-[180px] bg-white/90 text-gray-800 text-xs sm:text-sm font-medium py-1 px-2 rounded shadow-lg z-50 pointer-events-none text-center">
-          {iconDisplayNames[iconName] || iconName}
-          <div className="absolute w-2 h-2 bg-white/90 transform rotate-45 left-1/2 -translate-x-1/2 top-full -mt-1"></div>
-        </div>
-      )}
-    </div>
-  );
+  const IconWithTooltip = ({ iconName, className, iconSize = 32 }: { iconName: string, className?: string, iconSize?: number }) => {
+    // Lấy tên hiển thị gốc
+    const displayName = iconDisplayNames[iconName] || iconName;
+    // Regex lấy phần trong ngoặc
+    const match = displayName.match(/\(([^)]+)\)/);
+    const tooltipText = match ? match[1] : displayName;
+    return (
+      <div className="relative flex flex-col items-center justify-center cursor-pointer">
+        <span 
+          className={className || ''}
+          style={{ filter: 'drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.2))' }}
+          onClick={() => handleIconClick(iconName)}
+        >
+          {React.cloneElement(iconComponents[iconName] || <span className="text-red-500">?</span>, { size: iconSize })}
+        </span>
+        {activeTooltip === iconName && (
+          <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-max max-w-[120px] sm:max-w-[180px] bg-white/90 text-gray-800 text-xs sm:text-sm font-medium py-1 px-2 rounded shadow-lg z-50 pointer-events-none text-center">
+            {tooltipText}
+            <div className="absolute w-2 h-2 bg-white/90 transform rotate-45 left-1/2 -translate-x-1/2 top-full -mt-1"></div>
+          </div>
+        )}
+      </div>
+    );
+  };
 
   // Hàm để xác định màu sắc và icon dựa trên trạng thái
   const getStatusStyle = (status: string | undefined) => {
