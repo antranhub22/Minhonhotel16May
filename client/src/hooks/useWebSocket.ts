@@ -39,7 +39,7 @@ export function useWebSocket() {
     newSocket.onmessage = (event) => {
       try {
         const data = JSON.parse(event.data);
-        
+        console.log('[WebSocket] Received message:', data);
         // Handle transcript messages
         if (data.type === 'transcript') {
           assistant.addTranscript({
@@ -50,6 +50,7 @@ export function useWebSocket() {
         }
         // Handle order status update (realtime from staff UI)
         if (data.type === 'order_status_update' && data.status && (data.reference || data.callId)) {
+          console.log('[WebSocket] Updating order status for reference/callId:', data.reference, data.callId, '->', data.status);
           assistant.setActiveOrders((prevOrders: ActiveOrder[]) => prevOrders.map((order: ActiveOrder) => {
             if ((data.reference && order.reference === data.reference) || (data.callId && order.callId === data.callId)) {
               return { ...order, status: data.status };

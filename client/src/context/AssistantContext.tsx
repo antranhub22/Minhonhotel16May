@@ -116,6 +116,7 @@ export function AssistantProvider({ children }: { children: ReactNode }) {
     if (typeof window === 'undefined') return;
     try {
       localStorage.setItem('activeOrders', JSON.stringify(activeOrders));
+      console.log('[AssistantContext] activeOrders updated:', activeOrders);
     } catch {
       console.error('Failed to persist activeOrders to localStorage');
     }
