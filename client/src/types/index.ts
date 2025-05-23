@@ -114,4 +114,5 @@ export interface ActiveOrder {
   requestedAt: Date;
   estimatedTime: string;
   status?: string; // Thêm trường status để hiển thị trạng thái từ Staff UI
+  callId?: string; // Thêm trường callId để đồng bộ realtime status
 }

@@ -49,11 +49,12 @@ export function useWebSocket() {
           });
         }
         // Handle order status update (realtime from staff UI)
-        if (data.type === 'order_status_update' && (data.orderId || data.reference) && data.status) {
+        if (data.type === 'order_status_update' && (data.reference || data.callId) && data.status) {
           assistant.setActiveOrders((prevOrders: ActiveOrder[]) => prevOrders.map((order: ActiveOrder) => {
-            // So sánh theo reference (mã order)
-            const matchByReference = (data.reference && order.reference === data.reference) || (data.orderId && order.reference === data.orderId);
-            if (matchByReference) {
+            // So sánh theo reference hoặc callId
+            const matchByReference = data.reference && order.reference === data.reference;
+            const matchByCallId = data.callId && order.callId === data.callId;
+            if (matchByReference || matchByCallId) {
               return { ...order, status: data.status };
             }
             return order;
