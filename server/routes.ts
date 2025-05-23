@@ -302,15 +302,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
     // Emit WebSocket notification cho tất cả client
     if (globalThis.wss) {
       if (updatedOrder.specialInstructions) {
+        let sentCount = 0;
         globalThis.wss.clients.forEach((client) => {
           if (client.readyState === 1) {
+            console.log('[WebSocket][PATCH /api/orders/:id/status] Sending order_status_update:', {
+              reference: updatedOrder.specialInstructions,
+              status: updatedOrder.status
+            });
             client.send(JSON.stringify({
               type: 'order_status_update',
               reference: updatedOrder.specialInstructions,
               status: updatedOrder.status
             }));
+            sentCount++;
           }
         });
+        console.log(`[WebSocket][PATCH /api/orders/:id/status] Sent to ${sentCount} clients`);
       }
     }
     
@@ -1160,15 +1167,22 @@ Mi Nhon Hotel Mui Ne`
           // Emit WebSocket cho Guest UI nếu updatedOrder tồn tại
           if (updatedOrder && globalThis.wss) {
             if (updatedOrder.specialInstructions) {
+              let sentCount = 0;
               globalThis.wss.clients.forEach((client) => {
                 if (client.readyState === 1) {
+                  console.log('[WebSocket][PATCH /api/staff/requests/:id/status] Sending order_status_update:', {
+                    reference: updatedOrder.specialInstructions,
+                    status: updatedOrder.status
+                  });
                   client.send(JSON.stringify({
                     type: 'order_status_update',
                     reference: updatedOrder.specialInstructions,
                     status: updatedOrder.status
                   }));
+                  sentCount++;
                 }
               });
+              console.log(`[WebSocket][PATCH /api/staff/requests/:id/status] Sent to ${sentCount} clients`);
             }
           }
         }

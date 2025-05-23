@@ -39,7 +39,8 @@ export function useWebSocket() {
     newSocket.onmessage = (event) => {
       try {
         const data = JSON.parse(event.data);
-        
+        // Debug log cho mọi message
+        console.log('[WebSocket] Received message:', data);
         // Handle transcript messages
         if (data.type === 'transcript') {
           assistant.addTranscript({
@@ -50,14 +51,20 @@ export function useWebSocket() {
         }
         // Handle order status update (realtime from staff UI)
         if (data.type === 'order_status_update' && (data.orderId || data.reference) && data.status) {
-          assistant.setActiveOrders((prevOrders: ActiveOrder[]) => prevOrders.map((order: ActiveOrder) => {
-            // So sánh theo reference (mã order)
-            const matchByReference = (data.reference && order.reference === data.reference) || (data.orderId && order.reference === data.orderId);
-            if (matchByReference) {
-              return { ...order, status: data.status };
-            }
-            return order;
-          }));
+          console.log('[WebSocket] order_status_update:', { reference: data.reference, orderId: data.orderId, status: data.status });
+          assistant.setActiveOrders((prevOrders: ActiveOrder[]) => {
+            console.log('[WebSocket] ActiveOrders before update:', prevOrders);
+            const updated = prevOrders.map((order: ActiveOrder) => {
+              const matchByReference = (data.reference && order.reference === data.reference) || (data.orderId && order.reference === data.orderId);
+              if (matchByReference) {
+                console.log('[WebSocket] Updating order', order.reference, 'to status', data.status);
+                return { ...order, status: data.status };
+              }
+              return order;
+            });
+            console.log('[WebSocket] ActiveOrders after update:', updated);
+            return updated;
+          });
         }
       } catch (error) {
         console.error('Error parsing WebSocket message:', error);
