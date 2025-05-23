@@ -51,11 +51,15 @@ export function useWebSocket() {
         }
         // Handle order status update (realtime from staff UI)
         if (data.type === 'order_status_update' && (data.orderId || data.reference) && data.status) {
-          console.log('[WebSocket] order_status_update:', { reference: data.reference, orderId: data.orderId, status: data.status });
+          // Chuẩn hóa reference để so sánh (bỏ #ORD-, lowercase, trim)
+          const normalizeRef = (ref: string) => (ref || '').replace(/^#?ord[-_]?/i, '').toLowerCase().trim();
+          const wsRef = data.reference ? normalizeRef(data.reference) : (data.orderId ? normalizeRef(data.orderId) : '');
+          console.log('[WebSocket] order_status_update:', { reference: data.reference, orderId: data.orderId, status: data.status, wsRef });
           assistant.setActiveOrders((prevOrders: ActiveOrder[]) => {
             console.log('[WebSocket] ActiveOrders before update:', prevOrders);
             const updated = prevOrders.map((order: ActiveOrder) => {
-              const matchByReference = (data.reference && order.reference === data.reference) || (data.orderId && order.reference === data.orderId);
+              const orderRefNorm = normalizeRef(order.reference);
+              const matchByReference = wsRef && orderRefNorm === wsRef;
               if (matchByReference) {
                 console.log('[WebSocket] Updating order', order.reference, 'to status', data.status);
                 return { ...order, status: data.status };
