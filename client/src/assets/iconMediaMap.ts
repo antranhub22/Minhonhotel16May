@@ -27,6 +27,10 @@ export const iconMediaMap: Record<string, IconMedia | IconMedia[]> = {
   bus_hcm: { type: 'image', src: '', alt: 'Mui Ne - Ho Chi Minh City Route' },
   bus_dl: { type: 'image', src: '', alt: 'Mui Ne - Da Lat Route' },
   bus_nt: { type: 'image', src: '', alt: 'Mui Ne - Nha Trang Route' },
+  bus_dn: { type: 'image', src: '', alt: 'Mui Ne - Da Nang Route' },
+  bus_ct: { type: 'image', src: '', alt: 'Mui Ne - Can Tho Route' },
+  bus_mt: { type: 'image', src: '', alt: 'Mui Ne - My Tho Route' },
+  bus_vt: { type: 'image', src: '', alt: 'Mui Ne - Vung Tau Route' },
   bus_other: { type: 'image', src: '', alt: 'Other Bus Routes' },
   // VEHICLE RENTAL
   motorcycle: { type: 'image', src: '', alt: 'Motorcycle Rental' },
