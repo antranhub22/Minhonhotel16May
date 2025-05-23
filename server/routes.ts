@@ -1162,6 +1162,9 @@ Mi Nhon Hotel Mui Ne`
         // Tìm order theo specialInstructions (orderReference)
         const orders = await storage.getAllOrders({});
         const order = orders.find(o => o.specialInstructions === orderId);
+        if (!order) {
+          console.warn(`[WebSocket][PATCH /api/staff/requests/:id/status] Không tìm thấy order có specialInstructions =`, orderId, '. Các specialInstructions hiện có:', orders.map(o => o.specialInstructions));
+        }
         if (order) {
           const updatedOrder = await storage.updateOrderStatus(order.id, status);
           // Emit WebSocket cho Guest UI nếu updatedOrder tồn tại
