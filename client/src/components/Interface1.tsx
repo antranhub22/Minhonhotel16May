@@ -47,23 +47,21 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
   // Tạo object ánh xạ iconName -> React component icon sát nghĩa nhất
   const iconComponents: Record<string, JSX.Element> = {
     // TOURISM & TOURS
-    tour_halfday: <span className="icon-bus-label">½</span>,
-    tour_oneday: <span className="icon-bus-label">1D</span>,
-    tour_multiday: <span className="icon-bus-label">3D+</span>,
-    special_tour: <FaStar size={32} color="#DAC17A" />, // Tour Đặc biệt
+    sand_dunes: <FaMountain size={32} color="#DAC17A" />, // Đồi cát (fallback)
+    sightseeing: <FaCity size={32} color="#DAC17A" />, // City tour
+    jeep_tour: <FaCarSide size={32} color="#DAC17A" />, // Jeep Tour
+    stream_beach: <FaUmbrellaBeach size={32} color="#DAC17A" />, // Stream and Beach
+    special_tour: <FaStar size={32} color="#DAC17A" />, // Special Tours
     // BUS TICKETS
     bus_hcm: <span className="icon-bus-label">HCM</span>,
     bus_dl: <span className="icon-bus-label">ĐL</span>,
     bus_nt: <span className="icon-bus-label">NT</span>,
-    bus_dn: <span className="icon-bus-label">ĐN</span>,
-    bus_ct: <span className="icon-bus-label">CT</span>,
-    bus_mt: <span className="icon-bus-label">MT</span>,
-    bus_vt: <span className="icon-bus-label">VT</span>,
     bus_other: <FaRoute size={32} color="#DAC17A" />,
     // VEHICLE RENTAL
     motorcycle: <FaMotorcycle size={32} color="#DAC17A" />,
     car_driver: <FaTaxi size={32} color="#DAC17A" />,
     car_self: <FaCarSide size={32} color="#DAC17A" />,
+    vehicle_special: <FaCarSide size={32} color="#DAC17A" />,
     // CURRENCY EXCHANGE
     usd: <FaDollarSign size={32} color="#DAC17A" />,
     eur: <FaEuroSign size={32} color="#DAC17A" />,
@@ -83,30 +81,27 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
     homestay_300_600k: <FaHome size={32} color="#DAC17A" />,
     homestay_600k: <FaBuilding size={32} color="#DAC17A" />,
     homestay_longterm: <FaCalendarAlt size={32} color="#DAC17A" />,
-    homestay_wholehouse: <FaHome size={32} color="#DAC17A" />,
     homestay_additional: <FaPlusSquare size={32} color="#DAC17A" />,
   };
 
   // Thêm object ánh xạ iconName -> tên dịch vụ đúng chuẩn:
   const iconDisplayNames: Record<string, string> = {
     // TRAVEL TOURS
-    tour_halfday: 'Half-day Tour',
-    tour_oneday: 'One-day Tour',
-    tour_multiday: 'Multi-day Tour',
-    special_tour: 'Special Tour',
+    sand_dunes: 'Sand Dunes',
+    sightseeing: 'Sightseeing',
+    jeep_tour: 'Jeep',
+    stream_beach: 'Stream and Beach',
+    special_tour: 'Special Tours',
     // BUS TICKETS
     bus_hcm: 'Mui Ne - Ho Chi Minh City Route',
     bus_dl: 'Mui Ne - Da Lat Route',
     bus_nt: 'Mui Ne - Nha Trang Route',
-    bus_dn: 'Mui Ne - Da Nang Route',
-    bus_ct: 'Mui Ne - Can Tho Route',
-    bus_mt: 'Mui Ne - My Tho Route',
-    bus_vt: 'Mui Ne - Vung Tau Route',
     bus_other: 'Other Routes',
     // VEHICLE RENTAL
     motorcycle: 'Motorcycle Rental',
     car_driver: 'Car Rental (with driver)',
     car_self: 'Car Rental (self-drive)',
+    vehicle_special: 'Special Vehicle Rental',
     // CURRENCY EXCHANGE
     usd: 'USD',
     eur: 'EUR',
@@ -126,17 +121,16 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
     homestay_300_600k: 'Price Range/day: 300k-600k',
     homestay_600k: 'Price Range/day: Above 600k',
     homestay_longterm: 'Long-term Rental',
-    homestay_wholehouse: 'Whole House Rental',
     homestay_additional: 'Additional Homestay Services',
   };
 
   // Định nghĩa mảng iconName cho từng nhóm dịch vụ
-  const travelTourIcons = ["tour_halfday", "tour_oneday", "tour_multiday", "special_tour"];
-  const busTicketIcons = ["bus_hcm", "bus_dl", "bus_nt", "bus_dn", "bus_ct", "bus_mt", "bus_vt", "bus_other"];
-  const vehicleRentalIcons = ["motorcycle", "car_driver", "car_self"];
+  const travelTourIcons = ["sand_dunes", "sightseeing", "jeep_tour", "stream_beach", "special_tour"];
+  const busTicketIcons = ["bus_hcm", "bus_dl", "bus_nt", "bus_other"];
+  const vehicleRentalIcons = ["motorcycle", "car_driver", "car_self", "vehicle_special"];
   const currencyIcons = ["usd", "eur", "gbp", "sgd", "jpy", "krw", "rub", "currency_other"];
   const laundryIcons = ["laundry_regular", "laundry_special", "laundry_express", "laundry_additional"];
-  const homestayIcons = ["homestay_300k", "homestay_300_600k", "homestay_600k", "homestay_longterm", "homestay_wholehouse", "homestay_additional"];
+  const homestayIcons = ["homestay_300k", "homestay_300_600k", "homestay_600k", "homestay_longterm", "homestay_additional"];
 
   // Hàm dùng chung cho mọi ngôn ngữ
   const handleCall = async (lang: 'en' | 'fr' | 'zh' | 'ru' | 'ko') => {

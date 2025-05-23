@@ -23,18 +23,10 @@ export const iconMediaMap: Record<string, IconMedia | IconMedia[]> = {
   ],
   stream_beach: { type: 'image', src: '', alt: 'Stream and Beach Tour' },
   special_tour: { type: 'image', src: '', alt: 'Special Tours' },
-  tour_halfday: { type: 'image', src: '', alt: 'Half-day Tour' },
-  tour_oneday: { type: 'image', src: '', alt: 'One-day Tour' },
-  tour_multiday: { type: 'image', src: '', alt: 'Multi-day Tour' },
-  homestay_wholehouse: { type: 'image', src: '', alt: 'Whole House Rental' },
   // BUS TICKETS
   bus_hcm: { type: 'image', src: '', alt: 'Mui Ne - Ho Chi Minh City Route' },
   bus_dl: { type: 'image', src: '', alt: 'Mui Ne - Da Lat Route' },
   bus_nt: { type: 'image', src: '', alt: 'Mui Ne - Nha Trang Route' },
-  bus_dn: { type: 'image', src: '', alt: 'Mui Ne - Da Nang Route' },
-  bus_ct: { type: 'image', src: '', alt: 'Mui Ne - Can Tho Route' },
-  bus_mt: { type: 'image', src: '', alt: 'Mui Ne - My Tho Route' },
-  bus_vt: { type: 'image', src: '', alt: 'Mui Ne - Vung Tau Route' },
   bus_other: { type: 'image', src: '', alt: 'Other Bus Routes' },
   // VEHICLE RENTAL
   motorcycle: { type: 'image', src: '', alt: 'Motorcycle Rental' },

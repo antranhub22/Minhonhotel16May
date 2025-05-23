@@ -75,14 +75,14 @@ export class DatabaseStorage implements IStorage {
       // Validate status
       const validatedStatus = orderStatusSchema.parse(status);
       
-      const result = await db
-        .update(orders)
+    const result = await db
+      .update(orders)
         .set({ status: validatedStatus })
-        .where(eq(orders.id, id))
-        .returning();
+      .where(eq(orders.id, id))
+      .returning();
         
       console.log(`Updated order ${id} status to ${validatedStatus}`);
-      return result.length > 0 ? result[0] : undefined;
+    return result.length > 0 ? result[0] : undefined;
     } catch (error) {
       console.error(`Failed to update order ${id} status:`, error);
       throw error;
