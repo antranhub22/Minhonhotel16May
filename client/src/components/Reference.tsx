@@ -377,7 +377,18 @@ export const ReferenceMedia = ({ media }: { media: IconMedia }) => {
       </div>
       {/* Description luôn hiển thị bên dưới, auto nới rộng, không giới hạn chiều cao */}
       {media.description && (
-        <div className="mt-3 text-base text-yellow-900 text-center w-full px-2 font-medium opacity-90" style={{ wordBreak: 'break-word', lineHeight: '1.5' }}>
+        <div
+          className="mt-3 text-center w-full px-2 font-medium"
+          style={{
+            color: '#FFE9B0',
+            fontFamily: 'var(--font-sans, sans-serif)',
+            fontSize: '18px',
+            textShadow: '0px 1px 6px rgba(0,0,0,0.18)',
+            wordBreak: 'break-word',
+            lineHeight: '1.5',
+            fontWeight: 500
+          }}
+        >
           {media.description}
         </div>
       )}
