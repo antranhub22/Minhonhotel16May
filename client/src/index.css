@@ -19,14 +19,15 @@
 
 .icon-bus-label {
   display: inline-block;
-  font-weight: bold;
-  font-size: 1.1em;
+  font-weight: 500;
+  font-size: 0.98em;
   color: #FFD966;
   background: none;
   border: none;
-  border-radius: 0;
-  padding: 0 8px;
+  border-radius: 4px;
+  padding: 0 4px;
   box-shadow: none;
-  letter-spacing: 1px;
-  margin: 0 2px;
+  letter-spacing: 0.5px;
+  margin: 0 1px;
+  line-height: 1.1;
 }
