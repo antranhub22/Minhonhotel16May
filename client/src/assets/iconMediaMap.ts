@@ -18,13 +18,13 @@ export const iconMediaMap: Record<string, IconMedia[]> = {
       type: 'image',
       src: 'https://images.unsplash.com/photo-1511918984145-48de785d4c4e?auto=format&fit=crop&w=600&q=80',
       alt: 'Bus HCM Demo 1',
-      description: `Destination: Ho Chi Minh City\nPickup Point: Your hotel or main office in Mui Ne\nDeparture Time: Daily from 01:00 - 04:00 - 06:00 - 08:00 - 10:00 - 13:00 - 15:00 - 17:00 - 19:00 - 21:00 - 23:00\nTravel Time: ~4–5 hours\nBus Type: Limousine\nPrice: 320.000 Vnd\nAmenities: WiFi, A/C, Water, USB charging\nRefund Policy: Free cancellation up to 24h before departure\nPayment Method: Cash, Bank Transfer, Online Booking`
+      description: `Destination: Ho Chi Minh City\nPickup Point: Your hotel or main office in Mui Ne\nDeparture Time: Daily from 01:00 - 04:00 - 06:00 - 08:00 - 10:00 - 13:00 - 15:00 - 17:00 - 19:00 - 21:00 - 23:00\nTravel Time: ~4–5 hours\nBus Type: Limousine\nPrice: 320.000 VND`
     },
     {
       type: 'image',
       src: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80',
       alt: 'Bus HCM Demo 2',
-      description: `Destination: Ho Chi Minh City\nPickup Point: Your hotel or main office in Mui Ne\nDeparture Time: Daily from 01:00 - 04:00 - 06:00 - 08:00 - 10:00 - 13:00 - 15:00 - 17:00 - 19:00 - 21:00 - 23:00\nTravel Time: ~4–5 hours\nBus Type: Sleeper Bus\nPrice: 260,000 VND\nAmenities: WiFi, A/C, Water, USB charging\nRefund Policy: Free cancellation up to 24h before departure\nPayment Method: Cash, Bank Transfer, Online Booking`
+      description: `Destination: Ho Chi Minh City\nPickup Point: Your hotel or main office in Mui Ne\nDeparture Time: Daly from 01:00 - 04:00 - 06:00 - 08:00 - 10:00 - 13:00 - 15:00 - 17:00 - 19:00 - 21:00 - 23:00\nTravel Time: ~4–5 hours\nBus Type: Sleeper Bus\nPrice: 260,000 VND`
     }
   ],
   bus_dl: [
@@ -32,7 +32,7 @@ export const iconMediaMap: Record<string, IconMedia[]> = {
       type: 'image',
       src: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=600&q=80',
       alt: 'Bus Da Lat Demo 1',
-      description: `Destination: Da Lat\nPickup Point: Hotel pickup or Nguyễn Đình Chiểu Office\nDeparture Time: 06:30, 10:30, 12:00\nTravel Time: ~4.5–5 hours\nBus Type: Sleeper\nPrice: 150,000 – 250,000 VND\nAmenities: WiFi, A/C, Water\nRefund Policy: Free cancellation up to 24h before departure\nPayment Method: Cash, Online Booking`
+      description: `Destination: Da Lat\nPickup Point: Hotel pickup or Nguyễn Đình Chiểu Office\nDeparture Time: 06:30, 10:30, 12:00\nTravel Time: ~4.5–5 hours\nBus Type: Sleeper\nPrice: 150,000 – 250,000 VND`
     }
   ],
   bus_nt: [
@@ -40,7 +40,7 @@ export const iconMediaMap: Record<string, IconMedia[]> = {
       type: 'image',
       src: 'https://images.unsplash.com/photo-1465101178521-c1a9136a3b99?auto=format&fit=crop&w=600&q=80',
       alt: 'Bus Nha Trang Demo 1',
-      description: `Destination: Nha Trang\nPickup Point: Hotel or agency pickup\nDeparture Time: Morning & Afternoon trips\nTravel Time: ~4.5 hours\nBus Type: Sleeper, Limousine\nPrice: 180,000 – 300,000 VND\nAmenities: WiFi, A/C, Water\nRefund Policy: Free cancellation up to 24h before departure\nPayment Method: Cash, Online Booking`
+      description: `Destination: Nha Trang\nPickup Point: Hotel or agency pickup\nDeparture Time: Morning & Afternoon trips\nTravel Time: ~4.5 hours\nBus Type: Sleeper, Limousine\nPrice: 180,000 – 300,000 VND`
     }
   ],
   bus_dn: [
@@ -48,7 +48,7 @@ export const iconMediaMap: Record<string, IconMedia[]> = {
       type: 'image',
       src: 'https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=600&q=80',
       alt: 'Bus Da Nang Demo 1',
-      description: `Destination: Da Nang\nPickup Point: 117 Nguyễn Đình Chiểu or hotel pickup\nDeparture Time: Evening trips\nTravel Time: ~10–11 hours\nBus Type: Sleeper, Limousine\nPrice: 530,000 – 590,000 VND\nAmenities: A/C, Water, Blanket\nRefund Policy: Free cancellation up to 24h before departure\nPayment Method: Cash, Online`
+      description: `Destination: Da Nang\nPickup Point: 117 Nguyễn Đình Chiểu or hotel pickup\nDeparture Time: Evening trips\nTravel Time: ~10–11 hours\nBus Type: Sleeper, Limousine\nPrice: 530,000 – 590,000 VND`
     }
   ],
   // ================ VEHICLE RENTAL ================
@@ -157,7 +157,7 @@ export const iconMediaMap: Record<string, IconMedia[]> = {
       type: 'image',
       src: 'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=600&q=80',
       alt: 'Tour Half Day Demo 1',
-      description: `Tour: West\nDuration: Half-day\nPickup: Hotel in Mui Ne\nItinerary: White Dunes, Red Dunes, Fishing Village, Fairy Stream\nInclusions: Jeep, Driver, Water\nExclusions: ATV, Breakfast\nLanguage: English, Vietnamese\nPrice: 550,000 VND/jeep (1–4 pax)\nBooking Method: Hotel, Agency, WhatsApp`
+      description: `Tour: West\nDuration: Half-day\nPickup: Hotel in Mui Ne\nItinerary: White Dunes, Red Dunes, Fishing Village, Fairy Stream\nInclusions: Jeep, Driver, Water\nPrice: 550,000 VND/jeep (1–4 pax)`
     }
   ],
   tour_fullday: [
@@ -165,7 +165,7 @@ export const iconMediaMap: Record<string, IconMedia[]> = {
       type: 'image',
       src: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80',
       alt: 'Tour Full Day Demo 1',
-      description: `Tour: East Of Mui Ne\nDuration: Full-day\nPickup: Hotel\nItinerary: Tà Cú Pagoda, Cable Car, Poshanu Cham Towers\nInclusions: Transport, Tickets, Guide\nPrice: ~850,000 VND/person\nLanguage: Vietnamese (EN on request)`
+      description: `Tour: East Of Mui Ne\nDuration: Full-day\nPickup: Hotel\nItinerary: Tà Cú Pagoda, Cable Car, Poshanu Cham Towers\nInclusions: Transport, Tickets, Guide\nPrice: ~850,000 VND/person`
     }
   ],
   tour_multiday: [
