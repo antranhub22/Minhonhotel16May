@@ -49,9 +49,9 @@ export function useWebSocket() {
           });
         }
         // Handle order status update (realtime from staff UI)
-        if (data.type === 'order_status_update' && data.reference && data.status) {
+        if (data.type === 'order_status_update' && data.status && (data.reference || data.callId)) {
           assistant.setActiveOrders((prevOrders: ActiveOrder[]) => prevOrders.map((order: ActiveOrder) => {
-            if (order.reference === data.reference) {
+            if ((data.reference && order.reference === data.reference) || (data.callId && order.callId === data.callId)) {
               return { ...order, status: data.status };
             }
             return order;
