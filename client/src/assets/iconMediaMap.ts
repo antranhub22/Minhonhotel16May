@@ -23,6 +23,10 @@ export const iconMediaMap: Record<string, IconMedia | IconMedia[]> = {
   ],
   stream_beach: { type: 'image', src: '', alt: 'Stream and Beach Tour' },
   special_tour: { type: 'image', src: '', alt: 'Special Tours' },
+  tour_halfday: { type: 'image', src: '', alt: 'Half-day Tour' },
+  tour_oneday: { type: 'image', src: '', alt: 'One-day Tour' },
+  tour_multiday: { type: 'image', src: '', alt: 'Multi-day Tour' },
+  homestay_wholehouse: { type: 'image', src: '', alt: 'Whole House Rental' },
   // BUS TICKETS
   bus_hcm: { type: 'image', src: '', alt: 'Mui Ne - Ho Chi Minh City Route' },
   bus_dl: { type: 'image', src: '', alt: 'Mui Ne - Da Lat Route' },

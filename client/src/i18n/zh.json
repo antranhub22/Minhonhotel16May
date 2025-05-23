@@ -132,5 +132,9 @@
   "xe_khach_dn": "美奈-岘港大巴",
   "xe_khach_ct": "美奈-芹苴大巴",
   "xe_khach_mt": "美奈-美拖大巴",
-  "xe_khach_vt": "美奈-头顿大巴"
+  "xe_khach_vt": "美奈-头顿大巴",
+  "tour_halfday": "半日游",
+  "tour_oneday": "一日游",
+  "tour_multiday": "多日游",
+  "homestay_wholehouse": "整栋房屋租赁"
 } 

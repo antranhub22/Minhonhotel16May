@@ -133,5 +133,9 @@
   "homestay_300_600k": "Цена/день: 300k - 600k",
   "homestay_600k": "Цена/день: > 600k",
   "homestay_daihan": "Долгосрочная аренда",
-  "homestay_bo_sung": "Дополнительные услуги Homestay"
+  "homestay_bo_sung": "Дополнительные услуги Homestay",
+  "tour_halfday": "Экскурсия на полдня",
+  "tour_oneday": "Однодневная экскурсия",
+  "tour_multiday": "Многодневный тур",
+  "homestay_wholehouse": "Аренда всего дома"
 } 

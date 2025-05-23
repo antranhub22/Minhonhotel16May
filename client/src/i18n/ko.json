@@ -134,5 +134,9 @@
   "xe_khach_dn": "무이네-다낭 버스",
   "xe_khach_ct": "무이네-껀터 버스",
   "xe_khach_mt": "무이네-미토 버스",
-  "xe_khach_vt": "무이네-붕따우 버스"
+  "xe_khach_vt": "무이네-붕따우 버스",
+  "tour_halfday": "반나절 투어",
+  "tour_oneday": "당일치기 투어",
+  "tour_multiday": "다일 투어",
+  "homestay_wholehouse": "단독주택 렌탈"
 } 

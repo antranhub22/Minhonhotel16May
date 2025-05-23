@@ -132,5 +132,9 @@
   "xe_khach_dn": "Bus Mui Ne - Da Nang",
   "xe_khach_ct": "Bus Mui Ne - Can Tho",
   "xe_khach_mt": "Bus Mui Ne - My Tho",
-  "xe_khach_vt": "Bus Mui Ne - Vung Tau"
+  "xe_khach_vt": "Bus Mui Ne - Vung Tau",
+  "tour_halfday": "Excursion demi-journée",
+  "tour_oneday": "Excursion d'une journée",
+  "tour_multiday": "Circuit de plusieurs jours",
+  "homestay_wholehouse": "Location maison entière"
 } 
