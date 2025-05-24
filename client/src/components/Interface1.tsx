@@ -609,7 +609,21 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
       <div className="absolute bottom-2 right-2 bg-amber-400 rounded-full p-2 shadow"><span className="material-icons text-pink-900">arrow_outward</span></div>
       <div className="p-4">
         <h3 className="font-bold text-lg text-pink-900 mb-1">{refItem.title}</h3>
-        <p className="text-sm text-gray-700 mb-2">{refItem.description}</p>
+        <p className="text-sm text-gray-700 mb-2 whitespace-pre-line">
+          {refItem.description
+            ? refItem.description.split(/\n|\r/).map((line, idx) => {
+                const match = line.match(/^([\w\s\-()']+):\s*(.*)$/);
+                if (match) {
+                  return (
+                    <div key={idx} className="mb-0.5">
+                      <span className="font-bold text-pink-900">{match[1]}:</span> <span className="font-medium">{match[2]}</span>
+                    </div>
+                  );
+                }
+                return <div key={idx}>{line}</div>;
+              })
+            : null}
+        </p>
       </div>
     </div>
   );
