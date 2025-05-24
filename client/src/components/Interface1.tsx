@@ -290,6 +290,13 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
     homestay: homestayIcons,
   };
 
+  // Thêm useEffect để tự động set activeIcon khi activeMenu thay đổi
+  useEffect(() => {
+    if (iconMap[activeMenu] && iconMap[activeMenu].length > 0) {
+      setActiveIcon(iconMap[activeMenu][0]);
+    }
+  }, [activeMenu]);
+
   // Hàm dùng chung cho mọi ngôn ngữ
   const handleCall = async (lang: 'en' | 'fr' | 'zh' | 'ru' | 'ko') => {
     setEmailSentForCurrentSession(false);
