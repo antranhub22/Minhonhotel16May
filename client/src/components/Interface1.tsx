@@ -499,32 +499,41 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
     .scroll-snap-align-start { scroll-snap-align: start; }
   `}</style>
 
+  // Thêm vào đầu component:
+  const LANGUAGES = [
+    { code: 'en', label: 'English', flag: '🇬🇧' },
+    { code: 'fr', label: 'French', flag: '🇫🇷' },
+    { code: 'zh', label: 'Chinese', flag: '🇨🇳' },
+    { code: 'ru', label: 'Russian', flag: '🇷🇺' },
+    { code: 'ko', label: 'Korean', flag: '🇰🇷' },
+  ];
+  const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
+  const handleLangSelect = (code: string) => {
+    setLanguage(code as Lang);
+    setIsLangDropdownOpen(false);
+  };
+  const selectedLang = LANGUAGES.find(l => l.code === language) || LANGUAGES[0];
+
   // 1. HEADER: Đưa avatar sang phải, menu/hướng dẫn sang trái, thêm tiêu đề lớn dưới header
   const Header = () => (
     <div className="flex items-center justify-between w-full mb-4">
       <style>{shimmerAnimation}</style>
-      <div className="w-12 h-12 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/40 transition-all duration-200 shadow mr-2">
-        <select
-          value={language}
-          onChange={e => setLanguage(e.target.value as Lang)}
-          className="lang-flag-only bg-transparent font-bold text-lg outline-none border-none cursor-pointer w-full h-full text-center appearance-none"
-          style={{
-            background: 'transparent',
-            fontWeight: 700,
-            textAlign: 'center',
-            WebkitAppearance: 'none',
-            MozAppearance: 'none',
-            appearance: 'none',
-            padding: 0,
-          }}
-          aria-label="Select language"
-        >
-          <option value="en">🇬🇧 English</option>
-          <option value="fr">🇫🇷 French</option>
-          <option value="zh">🇨🇳 Chinese</option>
-          <option value="ru">🇷🇺 Russian</option>
-          <option value="ko">🇰🇷 Korean</option>
-        </select>
+      <div className="relative w-12 h-12 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/40 transition-all duration-200 shadow mr-2 cursor-pointer select-none" onClick={() => setIsLangDropdownOpen(v => !v)}>
+        <span className="text-2xl" style={{fontSize: '2rem'}}>{selectedLang.flag}</span>
+        {isLangDropdownOpen && (
+          <div className="absolute left-0 top-14 z-50 bg-white rounded-xl shadow-lg py-2 w-40 border border-gray-200 animate-fade-in">
+            {LANGUAGES.map(lang => (
+              <div
+                key={lang.code}
+                className={`flex items-center gap-2 px-4 py-2 cursor-pointer hover:bg-amber-100 rounded-lg transition text-gray-900 ${lang.code === language ? 'bg-amber-50 font-bold' : ''}`}
+                onClick={e => { e.stopPropagation(); handleLangSelect(lang.code); }}
+              >
+                <span className="text-xl">{lang.flag}</span>
+                <span className="text-base">{lang.label}</span>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
       <div className="flex flex-col items-center w-full mb-4">
         <div className="flex flex-row items-end justify-center w-full mb-4 gap-1">
