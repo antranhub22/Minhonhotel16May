@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useWebSocket } from '@/hooks/useWebSocket';
-import { useAssistant } from '@/context/AssistantContext';
+import { useCallPopup } from '@/context/CallPopupContext';
 import { t, Lang } from '@/i18n';
 
 interface Transcript {
@@ -8,19 +7,43 @@ interface Transcript {
   callId: string;
   role: 'user' | 'assistant';
   content: string;
-  timestamp: Date;
+  timestamp: string | Date;
 }
 
 export const RealtimeConversation: React.FC = () => {
-  const { language, callDetails, transcripts } = useAssistant();
-  const { connected } = useWebSocket();
+  const { currentCallId } = useCallPopup();
   const [conversation, setConversation] = useState<Transcript[]>([]);
   const conversationRef = useRef<HTMLDivElement>(null);
-  const lang = language as Lang;
+  const [lang, setLang] = useState<Lang>('en');
+
+  // Lấy ngôn ngữ từ localStorage hoặc context nếu cần
+  useEffect(() => {
+    const storedLang = localStorage.getItem('language') as Lang;
+    if (storedLang) setLang(storedLang);
+  }, []);
 
   useEffect(() => {
-    setConversation(transcripts);
-  }, [transcripts]);
+    if (!currentCallId) return;
+    // Fetch initial transcript
+    fetch(`/api/transcripts/${currentCallId}`)
+      .then(res => res.json())
+      .then(data => setConversation(Array.isArray(data) ? data : []));
+
+    // Listen WebSocket for realtime transcript (nếu backend hỗ trợ)
+    let ws: WebSocket | null = null;
+    try {
+      ws = new WebSocket(`wss://${window.location.host}/ws/transcripts/${currentCallId}`);
+      ws.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        if (data.type === 'transcript' && data.callId === currentCallId) {
+          setConversation(prev => [...prev, data]);
+        }
+      };
+    } catch {}
+    return () => {
+      if (ws) ws.close();
+    };
+  }, [currentCallId]);
 
   useEffect(() => {
     if (conversationRef.current) {
@@ -32,7 +55,7 @@ export const RealtimeConversation: React.FC = () => {
     <div className="bg-white rounded-lg shadow-md p-4 h-96 overflow-y-auto" ref={conversationRef}>
       <div className="flex justify-between items-center mb-2">
         <h2 className="text-lg font-semibold">{t('realtimeConversation', lang)}</h2>
-        <span className={`text-xs ${connected ? 'text-green-600' : 'text-red-500'}`}>{connected ? t('connected', lang) : t('disconnected', lang)}</span>
+        {/* Có thể thêm trạng thái kết nối WebSocket nếu muốn */}
       </div>
       {conversation.length === 0 ? (
         <div className="text-gray-400 text-center py-8">{t('noConversation', lang)}</div>
