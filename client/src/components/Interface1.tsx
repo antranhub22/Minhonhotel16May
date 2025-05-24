@@ -665,12 +665,12 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
         perspective: '1000px'
       }}
     >
-      <Header />
-      <TabBar />
       <div className="container mx-auto flex flex-col items-center justify-start text-white p-3 pt-6 sm:p-5 sm:pt-10 lg:pt-16 overflow-visible pb-32 sm:pb-24" 
         style={{ transform: 'translateZ(20px)', minHeight: 'fit-content' }}
       >
         {/* --- LAYOUT MỚI MOBILE --- */}
+        <Header />
+        <TabBar />
         <IconGroup />
         {activeIcon && iconMediaMap[activeIcon] && iconMediaMap[activeIcon].length > 0 && (
           <div className="w-full overflow-x-auto flex flex-row gap-4 pb-4">
