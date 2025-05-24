@@ -1204,19 +1204,20 @@ Mi Nhon Hotel Mui Ne`
       console.log('Fetching requests from database...');
       const dbRequests = await db.select().from(requestTable);
       console.log(`Found ${dbRequests.length} requests in database:`, dbRequests);
-      
-      // Thêm kiểm tra nếu không có requests từ DB
-      if (!Array.isArray(dbRequests) || dbRequests.length === 0) {
-        console.log('No requests found in database, returning dummy test data');
-        // Trả về dữ liệu mẫu nếu không có dữ liệu trong DB
-        return res.json([]); // Trả về mảng rỗng thay vì dữ liệu mẫu
-      }
-      
-      res.json(Array.isArray(dbRequests) ? dbRequests : []);
+
+      // Validation từng phần tử
+      const validRequests = Array.isArray(dbRequests) ? dbRequests.filter(r => r && r.room_number && r.request_content) : [];
+      const invalidCount = Array.isArray(dbRequests) ? dbRequests.length - validRequests.length : 0;
+
+      res.json({
+        success: true,
+        count: validRequests.length,
+        invalidCount,
+        requests: validRequests
+      });
     } catch (err) {
-      // Nếu có lỗi, trả về mảng rỗng thay vì object lỗi
       console.error('Error in /api/staff/requests:', err);
-      return res.json([]);
+      return res.json({ success: false, count: 0, requests: [], error: (err && typeof err === 'object' && 'message' in err) ? (err as any).message : 'Unknown error' });
     }
   });
 
