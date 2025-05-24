@@ -26,19 +26,21 @@ const VoiceAssistant: React.FC = () => {
           <div className="w-24 flex-shrink-0 flex items-center justify-start ml-1 sm:ml-4 mr-2 sm:mr-6">
             <img src="/assets/references/images/haily-logo1.jpg" alt="Haily Logo" className="h-16 sm:h-20 w-auto rounded-lg shadow-md bg-white/80 p-1" />
           </div>
-          {/* Center: InfographicSteps - luôn ngang, nhỏ lại trên mobile */}
-          <div className="hidden sm:flex flex-1 justify-center">
-            <div className="w-full max-w-xs sm:max-w-md">
-              <InfographicSteps 
-                horizontal 
-                compact 
-                currentStep={
-                  currentInterface === 'interface3' ? 3 :
-                  currentInterface === 'interface2' ? 2 : 1
-                }
-                language={language}
-              />
-            </div>
+          {/* Center: HaiLy Travel brand name */}
+          <div className="flex-1 flex justify-center">
+            <span className="font-extrabold text-2xl sm:text-3xl tracking-wide select-none" style={{
+              background: 'linear-gradient(90deg, #FFD700 60%, #fff 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              textShadow: '0 2px 8px rgba(0,0,0,0.18)',
+              letterSpacing: '0.04em',
+              fontFamily: 'Poppins, sans-serif',
+              padding: '0 0.5rem',
+              borderRadius: '8px',
+              lineHeight: 1.1
+            }}>
+              <span style={{color: '#FFD700', WebkitTextFillColor: '#FFD700'}}>HaiLy</span> <span style={{color: '#fff', WebkitTextFillColor: '#fff'}}>Travel</span>
+            </span>
           </div>
           {/* Right: Call History */}
           <div className="w-10 flex-shrink-0 flex items-center justify-end ml-2 sm:ml-6 mr-1 sm:mr-2">
