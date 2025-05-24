@@ -26,6 +26,9 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
   // State để lưu trữ tooltip đang hiển thị
   const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
   
+  // State để kiểm soát hiển thị modal Guidance
+  const [showGuidance, setShowGuidance] = useState(false);
+  
   // Track current time for countdown calculations
   const [now, setNow] = useState(new Date());
   useEffect(() => {
@@ -461,9 +464,9 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
       <div className="container mx-auto flex flex-col items-center justify-start text-white p-3 pt-6 sm:p-5 sm:pt-10 lg:pt-16 overflow-visible pb-32 sm:pb-24" 
         style={{ transform: 'translateZ(20px)', minHeight: 'fit-content' }}
       >
-        {/* Thay thế block Language Switcher nâng cao */}
+        {/* Header với 3 phần: Language - Guidance - Call History */}
         <div className="flex items-center justify-between w-full max-w-2xl mb-4 sm:mb-2">
-          {/* Language selector chỉ hiển thị trên mobile, nằm bên trái */}
+          {/* Language selector bên trái */}
           {isMobile && (
             <div className="flex items-center gap-1 ml-1">
               <FaGlobeAsia className="text-[#DAC17A] text-xl" style={{ filter: 'drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.2))' }} />
@@ -484,12 +487,23 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
               </div>
             </div>
           )}
-          {/* Call History icon giữ nguyên bên phải */}
-          <div className="flex-1 flex justify-end items-center">
-            {/* Nút Refresh bên trái */}
+
+          {/* Guidance icon ở giữa */}
+          {isMobile && (
+            <button
+              onClick={() => setShowGuidance(true)}
+              className="flex items-center justify-center p-2 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-200"
+              style={{ minWidth: 40, minHeight: 40 }}
+            >
+              <span className="material-icons text-[#DAC17A] text-xl">help_outline</span>
+            </button>
+          )}
+
+          {/* Call History và Refresh bên phải */}
+          <div className="flex items-center gap-2">
             <button
               onClick={() => window.location.reload()}
-              className="flex items-center justify-center mr-3 px-3 py-2 sm:py-1.5 bg-white/80 hover:bg-yellow-100 border border-amber-400 rounded-full shadow transition-all duration-200 text-blue-900 font-bold text-base sm:text-lg"
+              className="flex items-center justify-center px-3 py-2 sm:py-1.5 bg-white/80 hover:bg-yellow-100 border border-amber-400 rounded-full shadow transition-all duration-200 text-blue-900 font-bold text-base sm:text-lg"
               style={{ minWidth: 40, minHeight: 40 }}
               title="Refresh"
             >
@@ -498,6 +512,45 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
             </button>
           </div>
         </div>
+
+        {/* Modal Guidance */}
+        {showGuidance && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-lg p-6 max-w-sm w-full relative">
+              <button
+                onClick={() => setShowGuidance(false)}
+                className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+              >
+                <span className="material-icons">close</span>
+              </button>
+              <h3 className="text-lg font-bold text-gray-800 mb-4">{t('how_to_order', lang)}</h3>
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <span className="material-icons text-amber-500">mic</span>
+                  <div>
+                    <p className="font-semibold text-gray-800">{t('press_to_order', lang)}</p>
+                    <p className="text-sm text-gray-600">{t('press_to_order_desc', lang)}</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="material-icons text-amber-500">check_circle</span>
+                  <div>
+                    <p className="font-semibold text-gray-800">{t('confirm_request', lang)}</p>
+                    <p className="text-sm text-gray-600">{t('confirm_request_desc', lang)}</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="material-icons text-amber-500">mail</span>
+                  <div>
+                    <p className="font-semibold text-gray-800">{t('send_to_reception', lang)}</p>
+                    <p className="text-sm text-gray-600">{t('send_to_reception_desc', lang)}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Thanh menu box cho mobile - scroll ngang native */}
         <div className="block sm:hidden w-full max-w-2xl mx-auto mb-2">
           <div className="flex flex-row flex-nowrap overflow-x-auto whitespace-nowrap gap-1 bg-white/10 rounded-lg p-1 shadow no-scrollbar">
