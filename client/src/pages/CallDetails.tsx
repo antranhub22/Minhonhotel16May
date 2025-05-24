@@ -2,10 +2,18 @@ import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useParams, Link } from 'wouter';
 import { Transcript } from '@/types';
+import { RealtimeConversation } from '@/components/RealtimeConversation';
+import { CallSummaryBox } from '@/components/CallSummaryBox';
+import { CallModal } from '@/components/CallModal';
+import { useAssistant } from '@/context/AssistantContext';
+import { t, Lang } from '@/i18n';
 
 const CallDetails: React.FC = () => {
   const { callId } = useParams();
   const [copying, setCopying] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { language } = useAssistant();
+  const lang = language as Lang;
   
   // Fetch call summary
   const { data: summary, isLoading: summaryLoading, isError: summaryError } = useQuery({
@@ -78,26 +86,51 @@ const CallDetails: React.FC = () => {
   const isError = summaryError || transcriptsError;
   
   return (
-    <div className="container mx-auto p-5">
+    <div className="container mx-auto p-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Left column: Realtime Conversation */}
+        <div>
+          <RealtimeConversation />
+        </div>
+        
+        {/* Right column: Call Summary */}
+        <div>
+          {callId && <CallSummaryBox callId={callId} />}
+        </div>
+      </div>
+      
       <header className="mb-8">
         <div className="flex items-center justify-between mb-4">
-          <h1 className="text-3xl font-bold text-primary">Call Details</h1>
+          <h1 className="text-3xl font-bold text-primary">{t('callDetails', lang)}</h1>
           <div className="flex space-x-3">
+            <button 
+              onClick={() => setIsModalOpen(true)}
+              className="px-4 py-2 rounded-md bg-blue-500 text-white hover:bg-blue-600 transition-colors flex items-center"
+            >
+              <span className="material-icons align-middle mr-1 text-sm">visibility</span>
+              {t('viewLiveCall', lang)}
+            </button>
             <Link to="/call-history">
               <button className="px-4 py-2 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors flex items-center">
                 <span className="material-icons align-middle mr-1 text-sm">history</span>
-                Call History
+                {t('callHistory', lang)}
               </button>
             </Link>
             <Link to="/">
               <button className="px-4 py-2 rounded-md bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors flex items-center">
                 <span className="material-icons align-middle mr-1 text-sm">home</span>
-                Home
+                {t('home', lang)}
               </button>
             </Link>
           </div>
         </div>
       </header>
+      
+      {/* Call Modal */}
+      <CallModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+      />
       
       <main className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {isLoading ? (

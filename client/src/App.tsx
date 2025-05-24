@@ -13,6 +13,7 @@ import { StaffProvider } from './context/StaffContext';
 import { StaffLogin } from './components/StaffLogin';
 import { StaffDashboard } from './components/StaffDashboard';
 import { useStaff } from './context/StaffContext';
+import { CallPopupProvider } from '@/context/CallPopupContext';
 
 // Lazy-loaded components
 const CallHistory = React.lazy(() => import('@/pages/CallHistory'));
@@ -80,7 +81,11 @@ function App() {
   useWebSocket();
   return (
     <ErrorBoundary>
-      <Router />
+      <AssistantProvider>
+        <CallPopupProvider>
+          <Router />
+        </CallPopupProvider>
+      </AssistantProvider>
       <Toaster />
     </ErrorBoundary>
   );

@@ -223,7 +223,7 @@ const VoiceAssistant: React.FC = () => {
           <span className="text-sm font-semibold mt-2 text-center whitespace-nowrap" style={{lineHeight:1.15}}>{ICON_DISPLAY_NAMES[icon]}</span>
         </button>
       ))}
-    </div>
+            </div>
   );
 
   // Render card dịch vụ từ mediaList

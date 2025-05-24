@@ -103,4 +103,20 @@ highestPriority: 'Highest Priority',
 minutes: 'minutes',
 waitTime: 'Wait Time',
 answer: 'Answer',
-noQueuedCalls: 'No calls in queue', 
+noQueuedCalls: 'No calls in queue',
+
+// New translations
+callDetails: 'Call Details',
+viewLiveCall: 'View Live Call',
+callHistory: 'Call History',
+home: 'Home',
+
+// New translations
+liveConversation: 'Live Conversation',
+callSummary: 'Call Summary',
+confirm: 'Confirm',
+
+export default {
+  // ... existing translations ...
+  // ... existing translations ...
+}; 

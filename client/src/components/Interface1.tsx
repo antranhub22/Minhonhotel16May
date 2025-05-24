@@ -976,7 +976,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
               >
                 {t('retry', lang)}
               </button>
-            </div>
+                  </div>
           )}
 
           {!ordersLoading && !ordersError && (!activeOrders || activeOrders.length === 0) && (
@@ -1001,7 +1001,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                     </div>
                     <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusStyle(order.status)}`}>
                       {t(getStatusTranslationKey(order.status), lang)}
-                    </span>
+                        </span>
                   </div>
                   {order.scheduledTime && (
                     <div className="mt-2 text-sm text-gray-500">
@@ -1010,8 +1010,8 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                   )}
                 </div>
               ))}
-            </div>
-          )}
+          </div>
+        )}
         </div>
         {/* Nút xóa lịch sử order */}
         <div className="w-full flex justify-end mb-2">
