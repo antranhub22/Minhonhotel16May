@@ -14,6 +14,7 @@ import { FaMountain, FaCarSide, FaUmbrellaBeach, FaStar, FaBusAlt, FaRoute, FaMo
 import { ReferenceMedia, ReferenceSlider } from './Reference';
 import { OrderStatus } from '@shared/schema';
 import { Bus, Mountain, Landmark, Car, CarFront, Bike, Coins, Euro, DollarSign, Shirt, Sparkles, Home, Building2, CalendarDays, KeyRound, UserRound, Plus, Star, Sun, CalendarCheck, Umbrella, Map, Ship, Waves, ArrowRightLeft } from 'lucide-react';
+import hailyLogo from '../assets/haily-logo.png';
 
 interface Interface1Props {
   isActive: boolean;
@@ -516,7 +517,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
         {/* Header: Logo trái, Info & History phải (mobile) */}
         <div className="flex items-center justify-between w-full max-w-2xl mb-4 sm:mb-2">
           {/* Logo bên trái */}
-          <img src={require('../assets/haily-logo.png')} alt="Haily Travel Agency" className="w-16 h-16 rounded-xl shadow bg-white p-2" />
+          <img src={hailyLogo} alt="Haily Travel Agency" className="w-16 h-16 rounded-xl shadow bg-white p-2" />
           {/* Nhóm nút bên phải */}
           <div className="flex items-center gap-2">
             {/* Nút Info */}
