@@ -522,6 +522,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
   const Header = () => (
     <div className="flex items-center justify-between w-full mb-4">
       <style>{shimmerAnimation}</style>
+      {/* Flag (ngôn ngữ) bên trái */}
       <div className="relative w-12 h-12 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/40 transition-all duration-200 shadow mr-2 cursor-pointer select-none" onClick={() => setIsLangDropdownOpen(v => !v)}>
         <span className="text-2xl" style={{fontSize: '2rem'}}>{selectedLang.flag}</span>
         {isLangDropdownOpen && (
@@ -539,51 +540,31 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
           </div>
         )}
       </div>
-      <div className="flex flex-col items-center w-full mb-4">
-        <div className="hidden sm:flex flex-row items-end justify-center w-full mb-4 gap-1">
-          <span style={{
-            color: '#FFC94A',
-            fontWeight: 900,
-            fontSize: '3.2rem',
-            letterSpacing: '0.1em',
-            fontFamily: 'Impact, Arial Black, sans-serif',
-            textShadow: '0 2px 8px rgba(0,0,0,0.18)',
-            background: 'linear-gradient(90deg, #FFC94A, #FFD700, #FFC94A)',
-            backgroundSize: '200% auto',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            animation: 'shimmer 3s linear infinite',
-            filter: 'drop-shadow(0 0 8px rgba(255, 201, 74, 0.5))'
-          }}>HAI</span>
-          <span style={{
-            color: '#4FC3F7',
-            fontWeight: 900,
-            fontSize: '3.2rem',
-            letterSpacing: '0.1em',
-            fontFamily: 'Impact, Arial Black, sans-serif',
-            textShadow: '0 2px 8px rgba(0,0,0,0.18)',
-            background: 'linear-gradient(90deg, #4FC3F7, #81D4FA, #4FC3F7)',
-            backgroundSize: '200% auto',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            animation: 'shimmer 3s linear infinite',
-            filter: 'drop-shadow(0 0 8px rgba(79, 195, 247, 0.5))'
-          }}>LY</span>
-          <span style={{
-            color: '#444',
-            fontWeight: 700,
-            fontSize: '1.5rem',
-            letterSpacing: '0.18em',
-            marginLeft: '0.3em',
-            fontFamily: 'Montserrat, Arial, sans-serif',
-            textShadow: '0 1px 4px rgba(0,0,0,0.10)',
-            background: 'linear-gradient(90deg, #444, #666, #444)',
-            backgroundSize: '200% auto',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            animation: 'shimmer 3s linear infinite',
-            filter: 'drop-shadow(0 0 4px rgba(68, 68, 68, 0.3))'
-          }}>TRAVEL</span>
+      {/* Dropdown tab nằm giữa trên mobile */}
+      <div className="flex-1 flex justify-center items-center">
+        <div className="block sm:hidden w-full max-w-xs mx-auto">
+          <div className="relative w-full">
+            <button
+              className="w-full px-4 py-3 rounded-full bg-white/80 text-pink-900 font-bold text-base flex items-center justify-between shadow border border-amber-200"
+              onClick={() => setShowTabDropdown(v => !v)}
+            >
+              {tabOptions.find(opt => opt.key === activeMenu)?.label}
+              <span className="material-icons ml-2 text-amber-400">expand_more</span>
+            </button>
+            {showTabDropdown && (
+              <div className="absolute left-0 right-0 mt-2 bg-white rounded-xl shadow-lg z-50 border border-amber-100 overflow-hidden animate-fade-in">
+                {tabOptions.map(opt => (
+                  <button
+                    key={opt.key}
+                    className={`w-full text-left px-4 py-3 text-base font-bold ${activeMenu === opt.key ? 'bg-amber-100 text-pink-900' : 'text-gray-700 hover:bg-amber-50'}`}
+                    onClick={() => { setActiveMenu(opt.key as MenuKey); setShowTabDropdown(false); }}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
       {/* Nút info/avatar ở góc phải */}
