@@ -471,11 +471,11 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
           style={{ WebkitAppearance: 'none', MozAppearance: 'none', appearance: 'none' }}
           aria-label="Select language"
         >
-          <option value="en">🇬🇧</option>
-          <option value="fr">🇫🇷</option>
-          <option value="zh">🇨🇳</option>
-          <option value="ru">🇷🇺</option>
-          <option value="ko">🇰🇷</option>
+          <option value="en">🇬🇧 English</option>
+          <option value="fr">🇫🇷 French</option>
+          <option value="zh">🇨🇳 Chinese</option>
+          <option value="ru">🇷🇺 Russian</option>
+          <option value="ko">🇰🇷 Korean</option>
         </select>
       </div>
       <h1 className="text-4xl sm:text-5xl font-extrabold uppercase text-center flex-1 bg-gradient-to-r from-yellow-300 via-white to-yellow-400 bg-clip-text text-transparent drop-shadow-lg tracking-wide" style={{textShadow: '0 4px 24px rgba(0,0,0,0.35), 0 1px 0 #fff'}}>HaiLy Travel</h1>
