@@ -54,6 +54,22 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
   // State để điều khiển popup infographic
   const [showInfographic, setShowInfographic] = useState(false);
 
+  // Thêm state loading, error cho orders
+  const [ordersLoading, setOrdersLoading] = useState(false);
+  const [ordersError, setOrdersError] = useState<string | null>(null);
+
+  // Theo dõi thay đổi activeOrders để xác định trạng thái loading/error
+  useEffect(() => {
+    setOrdersLoading(false);
+    setOrdersError(null);
+    // Nếu activeOrders là undefined hoặc null, coi như đang loading
+    if (typeof activeOrders === 'undefined' || activeOrders === null) {
+      setOrdersLoading(true);
+    } else if (Array.isArray(activeOrders) && activeOrders.length === 0) {
+      setOrdersError('Không có đơn hàng nào đang hoạt động.');
+    }
+  }, [activeOrders]);
+
   const iconColor = '#FFC94A'; // Màu vàng giống tiêu đề
   const iconComponents: Record<string, JSX.Element> = {
     // TOURISM & TOURS
@@ -936,7 +952,13 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
         </div>
         )}
         {/* Active orders status panels - thêm hiệu ứng 3D và đường viền sáng */}
-        {activeOrders && activeOrders.length > 0 && (
+        {ordersLoading && (
+          <div className="text-center py-8 text-blue-600 font-semibold text-lg">Đang tải đơn hàng...</div>
+        )}
+        {!ordersLoading && ordersError && (
+          <div className="text-center py-8 text-red-600 font-semibold text-lg">{ordersError}</div>
+        )}
+        {!ordersLoading && !ordersError && activeOrders && activeOrders.length > 0 && (
           <div className="flex flex-col items-center gap-y-4 mb-20 pb-16 w-full px-2 sm:mb-12 sm:pb-8 sm:flex-row sm:flex-nowrap sm:gap-x-4 sm:overflow-x-auto sm:justify-start"
             style={{ perspective: '1000px', zIndex: 30 }}
           >
