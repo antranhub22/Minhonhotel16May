@@ -448,58 +448,58 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
     return items;
   };
 
-  // 1. Tạo component LanguageSelector để tái sử dụng ở header
-  const LanguageSelector = () => (
-    <div className="flex items-center justify-center w-full max-w-2xl mb-4 sm:mb-2">
-      {/* Icon infographic bên trái Language trên mobile */}
-      <button
-        onClick={() => setShowInfographic(true)}
-        className="flex items-center justify-center mr-2 p-2 bg-white/10 rounded-full hover:bg-white/20 transition-all duration-200 sm:hidden"
-        title="Guidance"
-      >
-        <span className="material-icons text-2xl text-amber-400">info</span>
+  // 1. HEADER: Đưa avatar sang phải, menu/hướng dẫn sang trái, thêm tiêu đề lớn dưới header
+  const Header = () => (
+    <div className="flex items-center justify-between w-full mb-4">
+      <button onClick={() => setShowInfographic(true)} className="p-2 bg-white/10 rounded-full hover:bg-white/20 transition-all duration-200">
+        <span className="material-icons text-2xl text-amber-400">menu</span>
       </button>
-      {/* Nút Refresh chỉ hiện trên sm trở lên */}
-      <button
-        onClick={() => window.location.reload()}
-        className="hidden sm:flex items-center justify-center mr-3 px-2 py-1.5 sm:py-1.5 bg-white/80 hover:bg-yellow-100 border border-amber-400 rounded-full shadow transition-all duration-200 text-blue-900 font-bold text-sm sm:text-lg"
-        style={{ minWidth: 32, minHeight: 32 }}
-        title="Refresh"
-      >
-        <span className="material-icons text-lg sm:text-2xl mr-1 text-amber-400">refresh</span>
-        <span className="hidden sm:inline font-semibold">Refresh</span>
-      </button>
-      <div className="flex items-center px-2 py-1.5 sm:py-1.5 gap-2 transition-all duration-300 mx-auto sm:mx-0" 
-        style={{
-          background: 'linear-gradient(135deg, #4e5ab7 0%, #3f51b5 100%)',
-          boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.15)', 
-          borderRadius: '8px',
-          minWidth: '90px',
-          maxWidth: '60%',
-          width: 'auto',
-          border: '1px solid rgba(255, 255, 255, 0.1)'
-        }}>
-        <FaGlobeAsia className="text-[#DAC17A] text-lg mr-1.5 hidden sm:inline" 
-          style={{ filter: 'drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.2))' }}
-        />
-        <label className="mr-2 font-semibold font-sans text-white whitespace-nowrap text-xs sm:text-base hidden sm:inline">{t('language', lang)}:</label>
-        <div className="relative flex-1">
-          <select
-            value={language}
-            onChange={e => setLanguage(e.target.value as 'en' | 'fr' | 'zh' | 'ru' | 'ko')}
-            className="appearance-none w-full pl-4 sm:pl-8 pr-4 py-1 sm:py-1.5 font-sans bg-transparent focus:outline-none transition-all duration-200 text-xs sm:text-base"
-            style={{ fontWeight: 600, color: '#fff', textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)', borderRadius: '8px' }}
-          >
-            <option value="en">🇬🇧 English</option>
-            <option value="fr">🇫🇷 Français</option>
-            <option value="zh">🇨🇳 中文</option>
-            <option value="ru">🇷🇺 Русский</option>
-            <option value="ko">🇰🇷 한국어</option>
-          </select>
-          <FiChevronDown className="absolute right-1 top-1/2 -translate-y-1/2 text-[#DAC17A] pointer-events-none text-base" />
-        </div>
+      <h1 className="text-2xl font-bold text-amber-300 text-center flex-1">{t('simplify_travels', lang)}</h1>
+      <img src="/path/to/avatar.jpg" alt="avatar" className="w-10 h-10 rounded-full border-2 border-amber-300 object-cover" />
+    </div>
+  );
+
+  // 2. TABS: Style lại thanh menu ngang thành tab bo tròn, scroll ngang
+  const TabBar = () => (
+    <div className="flex flex-row flex-nowrap overflow-x-auto whitespace-nowrap gap-2 bg-white/10 rounded-lg p-1 shadow no-scrollbar mb-4">
+      <button onClick={() => setActiveMenu('tours')} className={`flex-shrink-0 px-4 py-2 rounded-full font-bold text-sm ${activeMenu==='tours' ? 'bg-amber-400 text-pink-900 shadow' : 'bg-transparent text-amber-300'}`}>{t('all_package', lang)}</button>
+      <button onClick={() => setActiveMenu('bus')} className={`flex-shrink-0 px-4 py-2 rounded-full font-bold text-sm ${activeMenu==='bus' ? 'bg-amber-400 text-pink-900 shadow' : 'bg-transparent text-amber-300'}`}>{t('flight_package', lang)}</button>
+      <button onClick={() => setActiveMenu('vehicle')} className={`flex-shrink-0 px-4 py-2 rounded-full font-bold text-sm ${activeMenu==='vehicle' ? 'bg-amber-400 text-pink-900 shadow' : 'bg-transparent text-amber-300'}`}>{t('hotel_package', lang)}</button>
+      {/* ... các tab khác ... */}
+    </div>
+  );
+
+  // 3. ICON GROUP: Style lại icon group cho bo tròn, nhỏ gọn, đặt phía trên card
+  const IconGroup = () => (
+    <div className="flex flex-row gap-2 mb-2 justify-center">
+      {renderIconGroup(travelTourIcons, travelTourIcons.length, 20)}
+    </div>
+  );
+
+  // 4. CARD DỊCH VỤ: Style lại card/reference: ảnh lớn, overlay, tag, nút heart/arrow, slider ngang
+  const ServiceCard = ({ refItem }: { refItem: ReferenceItem }) => (
+    <div className="relative min-w-[280px] max-w-xs rounded-2xl shadow-lg overflow-hidden bg-white/90">
+      <img src={refItem.image && typeof refItem.image === 'string' ? refItem.image : hotelImage} alt={refItem.title || 'Service'} className="w-full h-40 object-cover" />
+      <div className="absolute top-2 left-2 flex gap-1">
+        <span className="bg-amber-400 text-xs font-bold px-2 py-1 rounded-full">AI</span>
+        <span className="bg-blue-400 text-xs font-bold px-2 py-1 rounded-full">3 Days</span>
+        <span className="bg-pink-400 text-xs font-bold px-2 py-1 rounded-full">{t('tour_package', lang)}</span>
+      </div>
+      <button className="absolute top-2 right-2 bg-white/80 rounded-full p-1 shadow"><span className="material-icons text-pink-500">favorite_border</span></button>
+      <div className="absolute bottom-2 right-2 bg-amber-400 rounded-full p-2 shadow"><span className="material-icons text-pink-900">arrow_outward</span></div>
+      <div className="p-4">
+        <h3 className="font-bold text-lg text-pink-900 mb-1">{refItem.title}</h3>
+        <p className="text-sm text-gray-700 mb-2">{refItem.description}</p>
       </div>
     </div>
+  );
+
+  // 5. NÚT CHAT AI: Style lại nút gọi AI cho lớn, glow, fixed bottom center
+  const CallButton = () => (
+    <button className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white px-8 py-4 rounded-full shadow-lg text-lg font-bold flex items-center gap-2 animate-pulse z-50" onClick={() => handleCall(lang as any)}>
+      <span className="material-icons text-3xl mr-2">auto_mode</span>
+      {t('chat_with_ai', lang)}
+    </button>
   );
 
   return (
@@ -799,13 +799,9 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                     textShadow: '0px 1px 2px rgba(0,0,0,0.08)'
                   }}
                 >{t('tourism_tour', lang)}</h4>
-                <ul className={
-                  isMobile
-                    ? "flex flex-row flex-nowrap justify-center items-center gap-x-[0.85rem] py-0"
-                    : "grid grid-cols-3 gap-x-1 gap-y-1 py-0.5 justify-items-center"
-                }>
-                  {renderIconGroup(travelTourIcons, isMobile ? travelTourIcons.length : 3, isMobile ? 14 : 28)}
-                </ul>
+                <div className="flex flex-row gap-2 mb-2 justify-center">
+                  {renderIconGroup(travelTourIcons, travelTourIcons.length, 20)}
+                </div>
               </div>
               {/* 2. BUS TICKETS */}
               <div
@@ -824,14 +820,10 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                     textShadow: '0px 1px 2px rgba(0,0,0,0.08)'
                   }}
                 >{t('ticket_bus', lang)}</h4>
-                <ul className={
-                  isMobile
-                    ? "flex flex-row flex-wrap justify-center items-center gap-x-[0.85rem] gap-y-2 py-0"
-                    : "grid grid-cols-4 gap-x-1 gap-y-1 py-0.5 justify-items-center"
-                }>
-                  {renderIconGroup(busTicketIcons, isMobile ? 4 : 4, isMobile ? 14 : 28)}
-              </ul>
-            </div>
+                <div className="flex flex-row gap-2 mb-2 justify-center">
+                  {renderIconGroup(busTicketIcons, busTicketIcons.length, 20)}
+                </div>
+              </div>
               {/* 3. VEHICLE RENTAL */}
               <div
                 className="py-0.5 px-1 sm:p-2 w-[90%] sm:w-4/5 md:w-64 mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
@@ -849,14 +841,10 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                     textShadow: '0px 1px 2px rgba(0,0,0,0.08)'
                   }}
                 >{t('rental_service', lang)}</h4>
-                <ul className={
-                  isMobile
-                    ? "flex flex-row flex-nowrap justify-center items-center gap-x-[0.85rem] py-0"
-                    : "grid grid-cols-2 gap-x-1 gap-y-1 py-0.5 justify-items-center"
-                }>
-                  {renderIconGroup(vehicleRentalIcons, isMobile ? vehicleRentalIcons.length : 2, isMobile ? 14 : 28)}
-              </ul>
-            </div>
+                <div className="flex flex-row gap-2 mb-2 justify-center">
+                  {renderIconGroup(vehicleRentalIcons, vehicleRentalIcons.length, 20)}
+                </div>
+              </div>
               {/* 4. CURRENCY EXCHANGE */}
               <div
                 className="py-0.5 px-1 sm:p-2 w-[90%] sm:w-4/5 md:w-64 mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
@@ -874,14 +862,10 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                     textShadow: '0px 1px 2px rgba(0,0,0,0.08)'
                   }}
                 >{t('currency_exchange', lang)}</h4>
-                <ul className={
-                  isMobile
-                    ? "flex flex-row flex-nowrap justify-center items-center gap-x-[0.85rem] py-0"
-                    : "grid grid-cols-4 gap-x-1 gap-y-1 py-0.5 justify-items-center"
-                }>
-                  {renderIconGroup(currencyIcons, isMobile ? currencyIcons.length : 4, isMobile ? 14 : 26)}
-              </ul>
-            </div>
+                <div className="flex flex-row gap-2 mb-2 justify-center">
+                  {renderIconGroup(currencyIcons, currencyIcons.length, 20)}
+                </div>
+              </div>
               {/* 5. LAUNDRY SERVICE */}
               <div
                 className="py-0.5 px-1 sm:p-2 w-[90%] sm:w-4/5 md:w-64 mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
@@ -899,14 +883,10 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                     textShadow: '0px 1px 2px rgba(0,0,0,0.08)'
                   }}
                 >{t('laundry_service', lang)}</h4>
-                <ul className={
-                  isMobile
-                    ? "flex flex-row flex-nowrap justify-center items-center gap-x-[0.85rem] py-0"
-                    : "grid grid-cols-3 gap-x-1 gap-y-1 py-0.5 justify-items-center"
-                }>
-                  {renderIconGroup(laundryIcons, isMobile ? laundryIcons.length : 3, isMobile ? 14 : 28)}
-              </ul>
-            </div>
+                <div className="flex flex-row gap-2 mb-2 justify-center">
+                  {renderIconGroup(laundryIcons, laundryIcons.length, 20)}
+                </div>
+              </div>
               {/* 6. HOMESTAY SERVICE */}
               <div
                 className="py-0.5 px-1 sm:p-2 w-[90%] sm:w-4/5 md:w-64 mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
@@ -924,16 +904,12 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                     textShadow: '0px 1px 2px rgba(0,0,0,0.08)'
                   }}
                 >{t('homestay_service', lang)}</h4>
-                <ul className={
-                  isMobile
-                    ? "flex flex-row flex-nowrap justify-center items-center gap-x-[0.85rem] py-0"
-                    : "grid grid-cols-3 gap-x-1 gap-y-1 py-0.5 justify-items-center"
-                }>
-                  {renderIconGroup(homestayIcons, isMobile ? homestayIcons.length : 3, isMobile ? 14 : 28)}
-              </ul>
+                <div className="flex flex-row gap-2 mb-2 justify-center">
+                  {renderIconGroup(homestayIcons, homestayIcons.length, 20)}
+                </div>
+              </div>
             </div>
           </div>
-        </div>
         )}
         {/* Active orders status panels - thêm hiệu ứng 3D và đường viền sáng */}
         {activeOrders && activeOrders.length > 0 && (
@@ -999,6 +975,15 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
           </button>
         </div>
       </div>
+      <Header />
+      <TabBar />
+      <IconGroup />
+      <div className="w-full overflow-x-auto flex flex-row gap-4 pb-4">
+        {references.map((ref, idx) => (
+          <ServiceCard key={typeof ref === 'object' && 'id' in ref ? (ref as any).id : idx} refItem={ref} />
+        ))}
+      </div>
+      <CallButton />
     </div>
   );
 };
