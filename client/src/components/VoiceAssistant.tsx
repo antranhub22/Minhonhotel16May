@@ -43,7 +43,7 @@ const VoiceAssistant: React.FC = () => {
             </span>
           </div>
           {/* Right: Call History */}
-          <div className="w-10 flex-shrink-0 flex items-center justify-end ml-2 sm:ml-6 mr-1 sm:mr-2">
+          <div className="w-10 flex-shrink-0 flex items-center justify-end ml-2 sm:ml-6 mr-2 sm:mr-8">
             <Link href="/call-history">
               <a className="flex items-center gap-1 px-2 py-1 rounded bg-primary-dark text-white text-xs sm:text-sm">
                 <History className="w-4 h-4" />
