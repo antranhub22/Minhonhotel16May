@@ -595,15 +595,15 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
 
   // 2. TABS: Style lại thanh menu ngang thành tab bo tròn, scroll ngang, slider mượt, snap từng tab
   const TabBar = () => (
-    <div className="flex flex-row flex-nowrap overflow-x-auto whitespace-nowrap gap-2 bg-white/10 rounded-lg p-1 shadow no-scrollbar mb-4 scrollbar-hide scroll-snap-x"
-      style={{ WebkitOverflowScrolling: 'touch', scrollBehavior: 'smooth', scrollSnapType: 'x mandatory' }}
+    <div className="w-full overflow-x-auto sm:overflow-x-visible flex flex-row flex-nowrap whitespace-nowrap gap-2 bg-white/10 rounded-lg p-1 shadow no-scrollbar mb-4 scrollbar-hide scroll-snap-x"
+      style={{ WebkitOverflowScrolling: 'touch', scrollBehavior: 'smooth', scrollSnapType: 'x mandatory', minWidth: 0 }}
     >
-      <button onClick={() => setActiveMenu('tours')} className={`flex-shrink-0 min-w-[120px] px-4 py-2 rounded-full font-bold text-sm scroll-snap-align-start ${activeMenu==='tours' ? 'bg-amber-400 text-pink-900 shadow' : 'bg-transparent text-amber-300'}`}>Tours</button>
-      <button onClick={() => setActiveMenu('bus')} className={`flex-shrink-0 min-w-[120px] px-4 py-2 rounded-full font-bold text-sm scroll-snap-align-start ${activeMenu==='bus' ? 'bg-amber-400 text-pink-900 shadow' : 'bg-transparent text-amber-300'}`}>Bus Tickets</button>
-      <button onClick={() => setActiveMenu('vehicle')} className={`flex-shrink-0 min-w-[120px] px-4 py-2 rounded-full font-bold text-sm scroll-snap-align-start ${activeMenu==='vehicle' ? 'bg-amber-400 text-pink-900 shadow' : 'bg-transparent text-amber-300'}`}>Vehicle Rental</button>
-      <button onClick={() => setActiveMenu('currency')} className={`flex-shrink-0 min-w-[120px] px-4 py-2 rounded-full font-bold text-sm scroll-snap-align-start ${activeMenu==='currency' ? 'bg-amber-400 text-pink-900 shadow' : 'bg-transparent text-amber-300'}`}>Currency Exchange</button>
-      <button onClick={() => setActiveMenu('laundry')} className={`flex-shrink-0 min-w-[120px] px-4 py-2 rounded-full font-bold text-sm scroll-snap-align-start ${activeMenu==='laundry' ? 'bg-amber-400 text-pink-900 shadow' : 'bg-transparent text-amber-300'}`}>Laundry Service</button>
-      <button onClick={() => setActiveMenu('homestay')} className={`flex-shrink-0 min-w-[120px] px-4 py-2 rounded-full font-bold text-sm scroll-snap-align-start ${activeMenu==='homestay' ? 'bg-amber-400 text-pink-900 shadow' : 'bg-transparent text-amber-300'}`}>Homestay</button>
+      <button onClick={() => setActiveMenu('tours')} className={`flex-shrink-0 min-w-[160px] sm:min-w-[120px] px-4 py-2 rounded-full font-bold text-base sm:text-sm scroll-snap-align-start ${activeMenu==='tours' ? 'bg-amber-400 text-pink-900 shadow' : 'bg-transparent text-amber-300'}`}>Tours</button>
+      <button onClick={() => setActiveMenu('bus')} className={`flex-shrink-0 min-w-[160px] sm:min-w-[120px] px-4 py-2 rounded-full font-bold text-base sm:text-sm scroll-snap-align-start ${activeMenu==='bus' ? 'bg-amber-400 text-pink-900 shadow' : 'bg-transparent text-amber-300'}`}>Bus Tickets</button>
+      <button onClick={() => setActiveMenu('vehicle')} className={`flex-shrink-0 min-w-[160px] sm:min-w-[120px] px-4 py-2 rounded-full font-bold text-base sm:text-sm scroll-snap-align-start ${activeMenu==='vehicle' ? 'bg-amber-400 text-pink-900 shadow' : 'bg-transparent text-amber-300'}`}>Vehicle Rental</button>
+      <button onClick={() => setActiveMenu('currency')} className={`flex-shrink-0 min-w-[160px] sm:min-w-[120px] px-4 py-2 rounded-full font-bold text-base sm:text-sm scroll-snap-align-start ${activeMenu==='currency' ? 'bg-amber-400 text-pink-900 shadow' : 'bg-transparent text-amber-300'}`}>Currency Exchange</button>
+      <button onClick={() => setActiveMenu('laundry')} className={`flex-shrink-0 min-w-[160px] sm:min-w-[120px] px-4 py-2 rounded-full font-bold text-base sm:text-sm scroll-snap-align-start ${activeMenu==='laundry' ? 'bg-amber-400 text-pink-900 shadow' : 'bg-transparent text-amber-300'}`}>Laundry Service</button>
+      <button onClick={() => setActiveMenu('homestay')} className={`flex-shrink-0 min-w-[160px] sm:min-w-[120px] px-4 py-2 rounded-full font-bold text-base sm:text-sm scroll-snap-align-start ${activeMenu==='homestay' ? 'bg-amber-400 text-pink-900 shadow' : 'bg-transparent text-amber-300'}`}>Homestay</button>
     </div>
   );
 
