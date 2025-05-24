@@ -74,6 +74,15 @@ export const orderTypeSchema = z.enum([
 // Validation schema for delivery time
 export const deliveryTimeSchema = z.enum(['asap', '30min', '1hour', 'specific']);
 
+// Validation schema for items in order
+export const orderItemSchema = z.object({
+  id: z.string().min(1, 'Item ID is required'),
+  name: z.string().min(1, 'Item name is required'),
+  description: z.string().optional(),
+  quantity: z.number().min(1, 'Quantity must be at least 1'),
+  price: z.number().min(0, 'Price cannot be negative')
+});
+
 // Enhanced order schema with validation
 export const orderSchema = z.object({
   id: z.number().optional(),
@@ -82,14 +91,8 @@ export const orderSchema = z.object({
   orderType: orderTypeSchema,
   deliveryTime: deliveryTimeSchema,
   specialInstructions: z.string().optional(),
-  items: z.array(z.object({
-    id: z.string(),
-    name: z.string(),
-    description: z.string(),
-    quantity: z.number().min(1),
-    price: z.number().min(0)
-  })),
-  totalAmount: z.number().min(0),
+  items: z.array(orderItemSchema).min(1, 'Order must contain at least one item'),
+  totalAmount: z.number().min(0, 'Total amount cannot be negative'),
   status: orderStatusSchema,
   createdAt: z.date().optional()
 });

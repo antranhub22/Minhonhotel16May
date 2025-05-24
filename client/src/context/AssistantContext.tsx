@@ -4,6 +4,7 @@ import { initVapi, getVapiInstance, FORCE_BASIC_SUMMARY } from '@/lib/vapiClient
 import { apiRequest } from '@/lib/queryClient';
 import { parseSummaryToOrderDetails } from '@/lib/summaryParser';
 import ReactDOM from 'react-dom';
+import { orderSchema } from '@shared/schema';
 
 export type Language = 'en' | 'fr' | 'zh' | 'ru' | 'ko';
 
@@ -506,6 +507,10 @@ export function AssistantProvider({ children }: { children: ReactNode }) {
   // Polling API để lấy trạng thái order mới nhất mỗi 5 giây
   useEffect(() => {
     let polling: NodeJS.Timeout | null = null;
+    let retryCount = 0;
+    const MAX_RETRIES = 3;
+    const RETRY_DELAY = 5000; // 5 seconds
+
     const fetchOrders = async () => {
       try {
         const API_HOST = import.meta.env.VITE_API_HOST || "https://minhnhotelben.onrender.com";
@@ -518,8 +523,19 @@ export function AssistantProvider({ children }: { children: ReactNode }) {
             statusText: res.statusText,
             error: errorData
           });
+
+          // Implement retry logic
+          if (retryCount < MAX_RETRIES) {
+            retryCount++;
+            console.log(`[AssistantContext] Retrying fetch (${retryCount}/${MAX_RETRIES})...`);
+            setTimeout(fetchOrders, RETRY_DELAY);
+            return;
+          }
           return;
         }
+
+        // Reset retry count on successful fetch
+        retryCount = 0;
 
         const data = await res.json();
         console.log('[AssistantContext] Fetched orders from API:', data);
@@ -529,19 +545,31 @@ export function AssistantProvider({ children }: { children: ReactNode }) {
             try {
               // Validate each order against schema
               const apiOrders = data.map((o: any) => {
-                // Basic validation
-                if (!o.roomNumber || !o.orderType) {
-                  console.warn('[AssistantContext] Invalid order data:', o);
+                try {
+                  // Basic validation
+                  if (!o.roomNumber || !o.orderType) {
+                    console.warn('[AssistantContext] Invalid order data:', o);
+                    return null;
+                  }
+
+                  // Validate against schema
+                  const validatedOrder = orderSchema.parse(o);
+                  const activeOrder: ActiveOrder = {
+                    ...validatedOrder,
+                    reference: validatedOrder.specialInstructions || o.reference || '',
+                    requestedAt: validatedOrder.createdAt ? new Date(validatedOrder.createdAt) : new Date(),
+                    callId: validatedOrder.callId || '',
+                    status: validatedOrder.status || 'pending',
+                    estimatedTime: validatedOrder.deliveryTime === 'asap' ? 'ASAP' : 
+                                   validatedOrder.deliveryTime === '30min' ? '30 minutes' :
+                                   validatedOrder.deliveryTime === '1hour' ? '1 hour' : 'Specific time'
+                  };
+                  return activeOrder;
+                } catch (validationError) {
+                  console.error('[AssistantContext] Order validation error:', validationError);
                   return null;
                 }
-
-                return {
-                  ...o,
-                  reference: o.specialInstructions || o.reference || '',
-                  requestedAt: o.createdAt ? new Date(o.createdAt) : new Date(),
-                  callId: o.callId || ''
-                };
-              }).filter(Boolean); // Remove invalid orders
+              }).filter((order): order is ActiveOrder => order !== null);
 
               // Lọc các order local chưa có trong API
               const localOnly = prev.filter(localOrder => 
@@ -558,6 +586,13 @@ export function AssistantProvider({ children }: { children: ReactNode }) {
         }
       } catch (err) {
         console.error('[AssistantContext] Network error:', err);
+        
+        // Implement retry logic for network errors
+        if (retryCount < MAX_RETRIES) {
+          retryCount++;
+          console.log(`[AssistantContext] Retrying fetch after network error (${retryCount}/${MAX_RETRIES})...`);
+          setTimeout(fetchOrders, RETRY_DELAY);
+        }
       }
     };
 
