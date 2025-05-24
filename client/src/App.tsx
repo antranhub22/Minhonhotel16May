@@ -14,6 +14,7 @@ import { StaffLogin } from './components/StaffLogin';
 import { StaffDashboard } from './components/StaffDashboard';
 import { useStaff } from './context/StaffContext';
 import { CallPopupProvider } from '@/context/CallPopupContext';
+import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 
 // Lazy-loaded components
 const CallHistory = React.lazy(() => import('@/pages/CallHistory'));
@@ -83,6 +84,9 @@ function App() {
     <ErrorBoundary>
       <AssistantProvider>
         <CallPopupProvider>
+          <div className="w-full flex justify-end items-center p-4 bg-white shadow-sm sticky top-0 z-40">
+            <LanguageSwitcher />
+          </div>
           <Router />
         </CallPopupProvider>
       </AssistantProvider>
