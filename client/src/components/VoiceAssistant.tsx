@@ -168,20 +168,20 @@ const VoiceAssistant: React.FC = () => {
 
   // Render slider sub-item
   const renderSubSlider = () => (
-    <div className="flex flex-row gap-2 px-4 pb-3 overflow-x-auto no-scrollbar">
+    <div className="flex flex-row gap-3 px-2 pb-3 overflow-x-auto no-scrollbar">
       {subIcons.map(icon => (
         <button
           key={icon}
           onClick={() => setSelectedSub(icon)}
-          className={`flex flex-col items-center px-3 py-2 rounded-xl shadow transition-all duration-150
+          className={`flex flex-col items-center px-4 py-3 rounded-xl shadow transition-all duration-150
             ${selectedSub === icon ? 'bg-[var(--accent-yellow)] text-black scale-105 border-2 border-yellow-400 shadow-lg' : 'bg-card-bg text-white hover:bg-[var(--accent-yellow)] hover:text-black hover:scale-105'}
           `}
-          style={{ minWidth: 72, minHeight: 72 }}
+          style={{ minWidth: 80, minHeight: 80, touchAction: 'manipulation' }}
         >
           <div className="transition-transform duration-150">
             {ICON_COMPONENTS[icon] || <span className="material-icons text-2xl mb-1">star</span>}
           </div>
-          <span className="text-xs font-semibold mt-1 text-center whitespace-nowrap" style={{lineHeight:1.1}}>{ICON_DISPLAY_NAMES[icon]}</span>
+          <span className="text-sm font-semibold mt-2 text-center whitespace-nowrap" style={{lineHeight:1.15}}>{ICON_DISPLAY_NAMES[icon]}</span>
         </button>
       ))}
     </div>
@@ -189,23 +189,24 @@ const VoiceAssistant: React.FC = () => {
 
   // Render card dịch vụ từ mediaList
   const renderMediaCards = () => (
-    <div className="flex flex-col gap-6 px-4 pb-24">
+    <div className="flex flex-col gap-7 px-2 pb-28">
       {mediaList.length === 0 ? (
         <div className="text-center text-white py-12">Chọn một hạng mục để xem chi tiết.</div>
       ) : mediaList.map((media, idx) => (
-        <div key={idx} className="bg-card-bg rounded-3xl shadow-lg p-4 cursor-pointer transition hover:scale-[1.025] hover:shadow-2xl relative" style={{boxShadow: 'var(--card-shadow)'}} onClick={() => setModalMedia(media)}>
+        <div key={idx} className="bg-card-bg rounded-3xl shadow-lg p-4 cursor-pointer transition hover:scale-[1.025] hover:shadow-2xl relative" style={{boxShadow: 'var(--card-shadow)', minHeight: 180}} onClick={() => setModalMedia(media)}>
           <button
-            className={`absolute top-3 right-3 z-10 p-1 rounded-full transition ${isBookmarked(media) ? 'bg-yellow-400 text-pink-900' : 'bg-black/30 text-white hover:bg-yellow-400 hover:text-pink-900'}`}
+            className={`absolute top-3 right-3 z-10 p-2 rounded-full transition ${isBookmarked(media) ? 'bg-yellow-400 text-pink-900' : 'bg-black/30 text-white hover:bg-yellow-400 hover:text-pink-900'}`}
             onClick={e => { e.stopPropagation(); toggleBookmark(media); }}
             title={isBookmarked(media) ? 'Bỏ yêu thích' : 'Lưu vào yêu thích'}
+            style={{ minWidth: 40, minHeight: 40 }}
           >
             <span className="material-icons text-xl">bookmark{isBookmarked(media) ? '' : '_border'}</span>
           </button>
           <div className="h-40 bg-gray-700 rounded-2xl mb-3 overflow-hidden flex items-center justify-center">
             <img src={media.src} alt={media.alt || ''} className="object-cover w-full h-full rounded-2xl" />
           </div>
-          <h3 className="text-lg font-bold text-white mb-1">{media.alt}</h3>
-          <p className="text-gray-300 text-sm mb-2 whitespace-pre-line">{media.description}</p>
+          <h3 className="text-lg font-bold text-white mb-1" style={{fontSize: '1.15rem'}}>{media.alt}</h3>
+          <p className="text-gray-300 text-base mb-2 whitespace-pre-line" style={{fontSize: '1rem'}}>{media.description}</p>
         </div>
       ))}
     </div>
@@ -262,16 +263,17 @@ const VoiceAssistant: React.FC = () => {
     return () => document.removeEventListener('keydown', handleKey);
   }, [showBookmarkModal]);
 
-  // Render modal chi tiết
+  // Render modal chi tiết (tối ưu mobile)
   const renderModal = () => modalMedia && (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm animate-fadein" onClick={() => setModalMedia(null)}>
-      <div ref={modalRef} className="bg-card-bg rounded-2xl shadow-2xl p-4 max-w-md w-[90vw] relative animate-scalein" onClick={e => e.stopPropagation()} tabIndex={-1} aria-modal="true" role="dialog">
-        <button aria-label="Đóng chi tiết dịch vụ" className="absolute top-2 right-2 text-white bg-black/30 rounded-full p-1 hover:bg-black/60" onClick={() => setModalMedia(null)}>
+      <div ref={modalRef} className="bg-card-bg rounded-2xl shadow-2xl p-4 max-w-md w-[96vw] relative animate-scalein" style={{maxHeight: '92vh', overflowY: 'auto'}} onClick={e => e.stopPropagation()} tabIndex={-1} aria-modal="true" role="dialog">
+        <button aria-label="Đóng chi tiết dịch vụ" className="absolute top-2 right-2 text-white bg-black/30 rounded-full p-2 hover:bg-black/60" style={{minWidth: 40, minHeight: 40}} onClick={() => setModalMedia(null)}>
           <span className="material-icons text-2xl">close</span>
         </button>
         <button
           aria-label={isBookmarked(modalMedia) ? 'Bỏ yêu thích' : 'Lưu vào yêu thích'}
-          className={`absolute top-2 left-2 z-10 p-1 rounded-full transition ${isBookmarked(modalMedia) ? 'bg-yellow-400 text-pink-900' : 'bg-black/30 text-white hover:bg-yellow-400 hover:text-pink-900'}`}
+          className={`absolute top-2 left-2 z-10 p-2 rounded-full transition ${isBookmarked(modalMedia) ? 'bg-yellow-400 text-pink-900' : 'bg-black/30 text-white hover:bg-yellow-400 hover:text-pink-900'}`}
+          style={{minWidth: 40, minHeight: 40}}
           onClick={e => { e.stopPropagation(); toggleBookmark(modalMedia); }}
           title={isBookmarked(modalMedia) ? 'Bỏ yêu thích' : 'Lưu vào yêu thích'}
         >
@@ -280,17 +282,17 @@ const VoiceAssistant: React.FC = () => {
         <div className="w-full h-56 bg-gray-700 rounded-xl mb-4 overflow-hidden flex items-center justify-center">
           <img src={modalMedia.src} alt={modalMedia.alt || ''} className="object-cover w-full h-full rounded-xl" />
         </div>
-        <h3 className="text-xl font-bold text-white mb-2">{modalMedia.alt}</h3>
-        <p className="text-gray-200 text-base whitespace-pre-line">{modalMedia.description}</p>
+        <h3 className="text-xl font-bold text-white mb-2" style={{fontSize: '1.2rem'}}>{modalMedia.alt}</h3>
+        <p className="text-gray-200 text-base whitespace-pre-line" style={{fontSize: '1.05rem'}}>{modalMedia.description}</p>
       </div>
     </div>
   );
 
-  // Render modal bookmark
+  // Render modal bookmark (tối ưu mobile)
   const renderBookmarkModal = () => showBookmarkModal && (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm animate-fadein" onClick={() => setShowBookmarkModal(false)}>
-      <div ref={bookmarkModalRef} className="bg-card-bg rounded-2xl shadow-2xl p-4 max-w-md w-[90vw] relative max-h-[90vh] overflow-y-auto animate-scalein" onClick={e => e.stopPropagation()} tabIndex={-1} aria-modal="true" role="dialog">
-        <button aria-label="Đóng danh sách bookmark" className="absolute top-2 right-2 text-white bg-black/30 rounded-full p-1 hover:bg-black/60" onClick={() => setShowBookmarkModal(false)}>
+      <div ref={bookmarkModalRef} className="bg-card-bg rounded-2xl shadow-2xl p-4 max-w-md w-[96vw] relative max-h-[92vh] overflow-y-auto animate-scalein" onClick={e => e.stopPropagation()} tabIndex={-1} aria-modal="true" role="dialog">
+        <button aria-label="Đóng danh sách bookmark" className="absolute top-2 right-2 text-white bg-black/30 rounded-full p-2 hover:bg-black/60" style={{minWidth: 40, minHeight: 40}} onClick={() => setShowBookmarkModal(false)}>
           <span className="material-icons text-2xl">close</span>
         </button>
         <h2 className="text-xl font-bold text-white mb-4 text-center">Dịch vụ đã lưu</h2>
@@ -299,15 +301,16 @@ const VoiceAssistant: React.FC = () => {
         ) : (
           <div className="flex flex-col gap-4">
             {bookmarkedMedia.map((media, idx) => (
-              <div key={idx} className="bg-black/20 rounded-xl p-3 flex gap-3 items-center relative">
+              <div key={idx} className="bg-black/20 rounded-xl p-3 flex gap-3 items-center relative" style={{minHeight: 80}}>
                 <img src={media.src} alt={media.alt || ''} className="w-16 h-16 object-cover rounded-lg flex-shrink-0" />
                 <div className="flex-1 min-w-0">
-                  <div className="font-bold text-white truncate">{media.alt}</div>
-                  <div className="text-xs text-gray-300 truncate">{media.description?.split('\n')[0]}</div>
+                  <div className="font-bold text-white truncate" style={{fontSize: '1rem'}}>{media.alt}</div>
+                  <div className="text-xs text-gray-300 truncate" style={{fontSize: '0.95rem'}}>{media.description?.split('\n')[0]}</div>
                 </div>
                 <button
                   aria-label={isBookmarked(media) ? 'Bỏ yêu thích' : 'Lưu vào yêu thích'}
                   className={`ml-2 p-1 rounded-full transition ${isBookmarked(media) ? 'bg-yellow-400 text-pink-900' : 'bg-black/30 text-white hover:bg-yellow-400 hover:text-pink-900'}`}
+                  style={{minWidth: 36, minHeight: 36}}
                   onClick={() => toggleBookmark(media)}
                   title={isBookmarked(media) ? 'Bỏ yêu thích' : 'Lưu vào yêu thích'}
                 >
@@ -316,6 +319,7 @@ const VoiceAssistant: React.FC = () => {
                 <button
                   aria-label="Xem chi tiết dịch vụ"
                   className="ml-2 p-1 rounded-full bg-blue-500 text-white hover:bg-blue-600"
+                  style={{minWidth: 36, minHeight: 36}}
                   onClick={() => { setModalMedia(media); setShowBookmarkModal(false); }}
                   title="Xem chi tiết"
                 >
