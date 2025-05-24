@@ -528,6 +528,16 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
     }
   `}</style>
 
+  // Thêm CSS ẩn scrollbar và scroll-snap-x nếu chưa có:
+  <style>{`
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .scrollbar-hide { scrollbar-width: none; -ms-overflow-style: none; }
+    .scrollbar-hide::-webkit-scrollbar { display: none; }
+    .scroll-snap-x { scroll-snap-type: x mandatory; }
+    .scroll-snap-align-start { scroll-snap-align: start; }
+  `}</style>
+
   // 1. HEADER: Đưa avatar sang phải, menu/hướng dẫn sang trái, thêm tiêu đề lớn dưới header
   const Header = () => (
     <div className="flex items-center justify-between w-full mb-4">
@@ -607,13 +617,13 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
 
   // 2. TABS: Style lại thanh menu ngang thành tab bo tròn, scroll ngang
   const TabBar = () => (
-    <div className="flex flex-row flex-nowrap overflow-x-auto whitespace-nowrap gap-2 bg-white/10 rounded-lg p-1 shadow no-scrollbar mb-4">
-      <button onClick={() => setActiveMenu('tours')} className={`flex-shrink-0 px-4 py-2 rounded-full font-bold text-sm ${activeMenu==='tours' ? 'bg-amber-400 text-pink-900 shadow' : 'bg-transparent text-amber-300'}`}>Tours</button>
-      <button onClick={() => setActiveMenu('bus')} className={`flex-shrink-0 px-4 py-2 rounded-full font-bold text-sm ${activeMenu==='bus' ? 'bg-amber-400 text-pink-900 shadow' : 'bg-transparent text-amber-300'}`}>Bus Tickets</button>
-      <button onClick={() => setActiveMenu('vehicle')} className={`flex-shrink-0 px-4 py-2 rounded-full font-bold text-sm ${activeMenu==='vehicle' ? 'bg-amber-400 text-pink-900 shadow' : 'bg-transparent text-amber-300'}`}>Vehicle Rental</button>
-      <button onClick={() => setActiveMenu('currency')} className={`flex-shrink-0 px-4 py-2 rounded-full font-bold text-sm ${activeMenu==='currency' ? 'bg-amber-400 text-pink-900 shadow' : 'bg-transparent text-amber-300'}`}>Currency Exchange</button>
-      <button onClick={() => setActiveMenu('laundry')} className={`flex-shrink-0 px-4 py-2 rounded-full font-bold text-sm ${activeMenu==='laundry' ? 'bg-amber-400 text-pink-900 shadow' : 'bg-transparent text-amber-300'}`}>Laundry Service</button>
-      <button onClick={() => setActiveMenu('homestay')} className={`flex-shrink-0 px-4 py-2 rounded-full font-bold text-sm ${activeMenu==='homestay' ? 'bg-amber-400 text-pink-900 shadow' : 'bg-transparent text-amber-300'}`}>Homestay</button>
+    <div className="flex flex-row flex-nowrap overflow-x-auto whitespace-nowrap gap-2 bg-white/10 rounded-lg p-1 shadow no-scrollbar mb-4 scrollbar-hide scroll-snap-x" style={{ WebkitOverflowScrolling: 'touch' }}>
+      <button onClick={() => setActiveMenu('tours')} className={`flex-shrink-0 min-w-[120px] px-4 py-2 rounded-full font-bold text-sm scroll-snap-align-start ${activeMenu==='tours' ? 'bg-amber-400 text-pink-900 shadow' : 'bg-transparent text-amber-300'}`}>Tours</button>
+      <button onClick={() => setActiveMenu('bus')} className={`flex-shrink-0 min-w-[120px] px-4 py-2 rounded-full font-bold text-sm scroll-snap-align-start ${activeMenu==='bus' ? 'bg-amber-400 text-pink-900 shadow' : 'bg-transparent text-amber-300'}`}>Bus Tickets</button>
+      <button onClick={() => setActiveMenu('vehicle')} className={`flex-shrink-0 min-w-[120px] px-4 py-2 rounded-full font-bold text-sm scroll-snap-align-start ${activeMenu==='vehicle' ? 'bg-amber-400 text-pink-900 shadow' : 'bg-transparent text-amber-300'}`}>Vehicle Rental</button>
+      <button onClick={() => setActiveMenu('currency')} className={`flex-shrink-0 min-w-[120px] px-4 py-2 rounded-full font-bold text-sm scroll-snap-align-start ${activeMenu==='currency' ? 'bg-amber-400 text-pink-900 shadow' : 'bg-transparent text-amber-300'}`}>Currency Exchange</button>
+      <button onClick={() => setActiveMenu('laundry')} className={`flex-shrink-0 min-w-[120px] px-4 py-2 rounded-full font-bold text-sm scroll-snap-align-start ${activeMenu==='laundry' ? 'bg-amber-400 text-pink-900 shadow' : 'bg-transparent text-amber-300'}`}>Laundry Service</button>
+      <button onClick={() => setActiveMenu('homestay')} className={`flex-shrink-0 min-w-[120px] px-4 py-2 rounded-full font-bold text-sm scroll-snap-align-start ${activeMenu==='homestay' ? 'bg-amber-400 text-pink-900 shadow' : 'bg-transparent text-amber-300'}`}>Homestay</button>
     </div>
   );
 
