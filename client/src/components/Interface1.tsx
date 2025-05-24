@@ -525,7 +525,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
           <span style={{
             color: '#FFC94A',
             fontWeight: 900,
-            fontSize: '2.5rem',
+            fontSize: '3.2rem',
             letterSpacing: '0.1em',
             fontFamily: 'Impact, Arial Black, sans-serif',
             textShadow: '0 2px 8px rgba(0,0,0,0.18)',
@@ -539,7 +539,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
           <span style={{
             color: '#4FC3F7',
             fontWeight: 900,
-            fontSize: '2.5rem',
+            fontSize: '3.2rem',
             letterSpacing: '0.1em',
             fontFamily: 'Impact, Arial Black, sans-serif',
             textShadow: '0 2px 8px rgba(0,0,0,0.18)',
@@ -553,7 +553,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
           <span style={{
             color: '#444',
             fontWeight: 700,
-            fontSize: '1.1rem',
+            fontSize: '1.5rem',
             letterSpacing: '0.18em',
             marginLeft: '0.3em',
             fontFamily: 'Montserrat, Arial, sans-serif',
