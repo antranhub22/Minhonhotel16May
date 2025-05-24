@@ -43,7 +43,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
     loadAllReferences();
   }, []);
 
-  const [activeIcon, setActiveIcon] = useState<string | null>(null);
+  const [activeIcon, setActiveIcon] = useState<string>('tour_halfday');
 
   // Thêm state để kiểm soát hiển thị reference media
   const [showReference, setShowReference] = useState(false);
