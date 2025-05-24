@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { t, Lang } from '../i18n';
 import { useAssistant } from '../context/AssistantContext';
 
@@ -10,6 +10,7 @@ interface InfographicStepsProps {
 }
 
 export default function InfographicSteps({ currentStep = 1, compact = false, horizontal = false, language: propLanguage }: InfographicStepsProps) {
+  const [showProgress, setShowProgress] = useState(false);
   // Lấy language từ prop hoặc context
   const { language: contextLanguage } = useAssistant ? useAssistant() : { language: 'en' };
   const language: Lang = (propLanguage || contextLanguage || 'en') as Lang;
@@ -34,39 +35,17 @@ const steps = [
 
   // Responsive: mobile sẽ là dọc, icon nhỏ, chữ nhỏ
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
-  if (isMobile) {
+
+  // Nếu là mobile và chưa show progress, chỉ hiển thị icon
+  if (isMobile && !showProgress) {
     return (
-      <div className="w-full max-w-xs mx-auto flex flex-col items-center gap-2 py-2">
-        {steps.map((step, idx) => (
-          <div
-            key={step.title}
-            className={`flex flex-col items-center w-full transition-all duration-300 ${
-              idx + 1 === currentStep
-                ? 'opacity-100 scale-105'
-                : idx + 1 < currentStep
-                ? 'opacity-60'
-                : 'opacity-40'
-            }`}
-          >
-            <div
-              className={`flex items-center justify-center rounded-full shadow-lg mb-1 transition-all duration-300 ${
-                idx + 1 === currentStep
-                  ? 'bg-[#d4af37] text-blue-900 border-2 border-[#d4af37]'
-                  : 'bg-white/30 text-white border border-gray-200'
-              }`}
-              style={{
-                width: 20,
-                height: 20,
-                fontSize: 12,
-              }}
-            >
-              <span className="material-icons">{step.icon}</span>
-            </div>
-            <div className="text-center">
-              <div className={`font-semibold font-poppins mb-0 text-xs ${idx + 1 === currentStep ? 'text-white' : 'text-white/70'}`}>{step.title}</div>
-            </div>
-          </div>
-        ))}
+      <div className="flex justify-center items-center mb-4">
+        <button 
+          onClick={() => setShowProgress(true)}
+          className="flex items-center justify-center p-2 bg-white/10 rounded-full hover:bg-white/20 transition-all duration-200"
+        >
+          <span className="material-icons text-2xl text-amber-400">info</span>
+        </button>
       </div>
     );
   }
@@ -114,49 +93,26 @@ const steps = [
   }
   // Dọc như cũ
   return (
-    <div
-      className={`w-full ${compact ? 'max-w-[160px] py-2 gap-3' : 'max-w-xs py-6 gap-6'} mx-auto flex flex-col items-center`}
-    >
-      {steps.map((step, idx) => (
-        <div
-          key={step.title}
-          className={`flex flex-col items-center w-full transition-all duration-300 ${
-            idx + 1 === currentStep
-              ? 'opacity-100 scale-105'
-              : idx + 1 < currentStep
-              ? 'opacity-60'
-              : 'opacity-40'
-          }`}
-        >
-          <div
-            className={`flex items-center justify-center rounded-full shadow-lg mb-2 transition-all duration-300 ${
-              idx + 1 === currentStep
-                ? 'bg-[#d4af37] text-blue-900 border-2 border-[#d4af37]'
-                : 'bg-white/30 text-white border border-gray-200'
-            }`}
-            style={{
-              width: compact ? 32 : 48,
-              height: compact ? 32 : 48,
-              fontSize: compact ? 18 : 28,
-            }}
-          >
-            <span className="material-icons">{step.icon}</span>
-          </div>
-          <div className="text-center">
-            <div
-              className={`font-semibold font-poppins mb-1 ${compact ? 'text-xs' : 'text-base'} ${
-                idx + 1 === currentStep ? 'text-white' : 'text-white/70'
-              }`}
-            >
-              {step.title}
+    <div className="w-full max-w-2xl mx-auto mb-4">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 bg-white/10 rounded-lg">
+        {steps.map((step, idx) => (
+          <div key={step.title} className="flex items-center gap-2">
+            <span className="material-icons text-amber-400">{step.icon}</span>
+            <div>
+              <h3 className="text-sm font-bold text-white">{step.title}</h3>
+              <p className="text-xs text-white/80">{step.desc}</p>
             </div>
-            <div className={`font-light ${compact ? 'text-[10px]' : 'text-sm'} text-white/80`}>{step.desc}</div>
           </div>
-          {idx < steps.length - 1 && (
-            <div className={`mx-auto my-1 rounded-full ${compact ? 'w-0.5 h-4' : 'w-1 h-8'} bg-gradient-to-b from-[#d4af37]/80 to-transparent`} />
-          )}
-        </div>
-      ))}
+        ))}
+        {isMobile && showProgress && (
+          <button 
+            onClick={() => setShowProgress(false)}
+            className="absolute top-2 right-2 text-white/60 hover:text-white"
+          >
+            <span className="material-icons">close</span>
+          </button>
+        )}
+      </div>
     </div>
   );
 } 

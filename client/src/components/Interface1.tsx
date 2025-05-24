@@ -447,22 +447,46 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
 
   // 1. Tạo component LanguageSelector để tái sử dụng ở header
   const LanguageSelector = () => (
-    <div className="flex items-center gap-1">
-      <FaGlobeAsia className="text-[#DAC17A] text-xl mr-0.5" style={{ filter: 'drop-shadow(0px 2px 3px rgba(0,0,0,0.2))' }} />
-      <div className="relative">
-        <select
-          value={language}
-          onChange={e => setLanguage(e.target.value as 'en' | 'fr' | 'zh' | 'ru' | 'ko')}
-          className="appearance-none pl-5 pr-2 py-1 font-sans bg-transparent focus:outline-none text-xs sm:text-base font-bold text-white"
-          style={{ borderRadius: '8px', minWidth: 80 }}
-        >
-          <option value="en">🇬🇧 English</option>
-          <option value="fr">🇫🇷 Français</option>
-          <option value="zh">🇨🇳 中文</option>
-          <option value="ru">🇷🇺 Русский</option>
-          <option value="ko">🇰🇷 한국어</option>
-        </select>
-        <FiChevronDown className="absolute right-1 top-1/2 -translate-y-1/2 text-[#DAC17A] pointer-events-none text-lg" />
+    <div className="flex items-center justify-center w-full max-w-2xl mb-4 sm:mb-2">
+      {/* Nút Refresh bên trái */}
+      <button
+        onClick={() => window.location.reload()}
+        className="flex items-center justify-center mr-3 px-2 py-1.5 sm:py-1.5 bg-white/80 hover:bg-yellow-100 border border-amber-400 rounded-full shadow transition-all duration-200 text-blue-900 font-bold text-sm sm:text-lg"
+        style={{ minWidth: 32, minHeight: 32 }}
+        title="Refresh"
+      >
+        <span className="material-icons text-lg sm:text-2xl mr-1 text-amber-400">refresh</span>
+        <span className="hidden sm:inline font-semibold">Refresh</span>
+      </button>
+      <div className="flex items-center px-2 py-1.5 sm:py-1.5 gap-2 transition-all duration-300 mx-auto sm:mx-0" 
+        style={{
+          background: 'linear-gradient(135deg, #4e5ab7 0%, #3f51b5 100%)',
+          boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.15)', 
+          borderRadius: '8px',
+          minWidth: '90px',
+          maxWidth: '60%',
+          width: 'auto',
+          border: '1px solid rgba(255, 255, 255, 0.1)'
+        }}>
+        <FaGlobeAsia className="text-[#DAC17A] text-lg mr-1.5 hidden sm:inline" 
+          style={{ filter: 'drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.2))' }}
+        />
+        <label className="mr-2 font-semibold font-sans text-white whitespace-nowrap text-xs sm:text-base hidden sm:inline">{t('language', lang)}:</label>
+        <div className="relative flex-1">
+          <select
+            value={language}
+            onChange={e => setLanguage(e.target.value as 'en' | 'fr' | 'zh' | 'ru' | 'ko')}
+            className="appearance-none w-full pl-4 sm:pl-8 pr-4 py-1 sm:py-1.5 font-sans bg-transparent focus:outline-none transition-all duration-200 text-xs sm:text-base"
+            style={{ fontWeight: 600, color: '#fff', textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)', borderRadius: '8px' }}
+          >
+            <option value="en">🇬🇧 English</option>
+            <option value="fr">🇫🇷 Français</option>
+            <option value="zh">🇨🇳 中文</option>
+            <option value="ru">🇷🇺 Русский</option>
+            <option value="ko">🇰🇷 한국어</option>
+          </select>
+          <FiChevronDown className="absolute right-1 top-1/2 -translate-y-1/2 text-[#DAC17A] pointer-events-none text-base" />
+        </div>
       </div>
     </div>
   );
@@ -484,34 +508,36 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
         style={{ transform: 'translateZ(20px)', minHeight: 'fit-content' }}
       >
         {/* Language Switcher nâng cao */}
-        <div className="flex items-center justify-center sm:justify-end w-full max-w-2xl mb-4 sm:mb-2">
+        <div className="flex items-center justify-center w-full max-w-2xl mb-4 sm:mb-2">
           {/* Nút Refresh bên trái */}
           <button
             onClick={() => window.location.reload()}
-            className="flex items-center justify-center mr-3 px-3 py-2 sm:py-1.5 bg-white/80 hover:bg-yellow-100 border border-amber-400 rounded-full shadow transition-all duration-200 text-blue-900 font-bold text-base sm:text-lg"
-            style={{ minWidth: 40, minHeight: 40 }}
+            className="flex items-center justify-center mr-3 px-2 py-1.5 sm:py-1.5 bg-white/80 hover:bg-yellow-100 border border-amber-400 rounded-full shadow transition-all duration-200 text-blue-900 font-bold text-sm sm:text-lg"
+            style={{ minWidth: 32, minHeight: 32 }}
             title="Refresh"
           >
-            <span className="material-icons text-xl sm:text-2xl mr-1 text-amber-400">refresh</span>
+            <span className="material-icons text-lg sm:text-2xl mr-1 text-amber-400">refresh</span>
             <span className="hidden sm:inline font-semibold">Refresh</span>
           </button>
-          <div className="flex items-center px-3 py-2 sm:py-1.5 gap-2 transition-all duration-300 mx-auto sm:mx-0"
+          <div className="flex items-center px-2 py-1.5 sm:py-1.5 gap-2 transition-all duration-300 mx-auto sm:mx-0" 
             style={{
               background: 'linear-gradient(135deg, #4e5ab7 0%, #3f51b5 100%)',
-              boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.15)',
+              boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.15)', 
               borderRadius: '8px',
-              minWidth: '150px',
-              maxWidth: '95%',
+              minWidth: '90px',
+              maxWidth: '60%',
               width: 'auto',
               border: '1px solid rgba(255, 255, 255, 0.1)'
             }}>
-            <FaGlobeAsia className="text-[#DAC17A] text-xl mr-1.5 hidden sm:inline" style={{ filter: 'drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.2))' }} />
+            <FaGlobeAsia className="text-[#DAC17A] text-lg mr-1.5 hidden sm:inline" 
+              style={{ filter: 'drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.2))' }}
+            />
             <label className="mr-2 font-semibold font-sans text-white whitespace-nowrap text-xs sm:text-base hidden sm:inline">{t('language', lang)}:</label>
             <div className="relative flex-1">
               <select
                 value={language}
                 onChange={e => setLanguage(e.target.value as 'en' | 'fr' | 'zh' | 'ru' | 'ko')}
-                className="appearance-none w-full pl-6 sm:pl-8 pr-6 py-1 sm:py-1.5 font-sans bg-transparent focus:outline-none transition-all duration-200"
+                className="appearance-none w-full pl-4 sm:pl-8 pr-4 py-1 sm:py-1.5 font-sans bg-transparent focus:outline-none transition-all duration-200 text-xs sm:text-base"
                 style={{ fontWeight: 600, color: '#fff', textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)', borderRadius: '8px' }}
               >
                 <option value="en">🇬🇧 English</option>
@@ -520,7 +546,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                 <option value="ru">🇷🇺 Русский</option>
                 <option value="ko">🇰🇷 한국어</option>
               </select>
-              <FiChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 text-[#DAC17A] pointer-events-none text-lg" />
+              <FiChevronDown className="absolute right-1 top-1/2 -translate-y-1/2 text-[#DAC17A] pointer-events-none text-base" />
             </div>
           </div>
         </div>
