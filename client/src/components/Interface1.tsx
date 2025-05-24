@@ -51,6 +51,9 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
   // Thêm state để quản lý menu đang chọn trên mobile
   const [activeMenu, setActiveMenu] = useState<string>('tours');
 
+  // State để điều khiển popup infographic
+  const [showInfographic, setShowInfographic] = useState(false);
+
   const iconColor = '#FFC94A'; // Màu vàng giống tiêu đề
   const iconComponents: Record<string, JSX.Element> = {
     // TOURISM & TOURS
@@ -448,10 +451,18 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
   // 1. Tạo component LanguageSelector để tái sử dụng ở header
   const LanguageSelector = () => (
     <div className="flex items-center justify-center w-full max-w-2xl mb-4 sm:mb-2">
-      {/* Nút Refresh bên trái */}
+      {/* Icon infographic bên trái Language trên mobile */}
+      <button
+        onClick={() => setShowInfographic(true)}
+        className="flex items-center justify-center mr-2 p-2 bg-white/10 rounded-full hover:bg-white/20 transition-all duration-200 sm:hidden"
+        title="Guidance"
+      >
+        <span className="material-icons text-2xl text-amber-400">info</span>
+      </button>
+      {/* Nút Refresh chỉ hiện trên sm trở lên */}
       <button
         onClick={() => window.location.reload()}
-        className="flex items-center justify-center mr-3 px-2 py-1.5 sm:py-1.5 bg-white/80 hover:bg-yellow-100 border border-amber-400 rounded-full shadow transition-all duration-200 text-blue-900 font-bold text-sm sm:text-lg"
+        className="hidden sm:flex items-center justify-center mr-3 px-2 py-1.5 sm:py-1.5 bg-white/80 hover:bg-yellow-100 border border-amber-400 rounded-full shadow transition-all duration-200 text-blue-900 font-bold text-sm sm:text-lg"
         style={{ minWidth: 32, minHeight: 32 }}
         title="Refresh"
       >
@@ -509,10 +520,18 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
       >
         {/* Language Switcher nâng cao */}
         <div className="flex items-center justify-center w-full max-w-2xl mb-4 sm:mb-2">
-          {/* Nút Refresh bên trái */}
+          {/* Icon infographic bên trái Language trên mobile */}
+          <button
+            onClick={() => setShowInfographic(true)}
+            className="flex items-center justify-center mr-2 p-2 bg-white/10 rounded-full hover:bg-white/20 transition-all duration-200 sm:hidden"
+            title="Guidance"
+          >
+            <span className="material-icons text-2xl text-amber-400">info</span>
+          </button>
+          {/* Nút Refresh chỉ hiện trên sm trở lên */}
           <button
             onClick={() => window.location.reload()}
-            className="flex items-center justify-center mr-3 px-2 py-1.5 sm:py-1.5 bg-white/80 hover:bg-yellow-100 border border-amber-400 rounded-full shadow transition-all duration-200 text-blue-900 font-bold text-sm sm:text-lg"
+            className="hidden sm:flex items-center justify-center mr-3 px-2 py-1.5 sm:py-1.5 bg-white/80 hover:bg-yellow-100 border border-amber-400 rounded-full shadow transition-all duration-200 text-blue-900 font-bold text-sm sm:text-lg"
             style={{ minWidth: 32, minHeight: 32 }}
             title="Refresh"
           >
@@ -550,6 +569,37 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
             </div>
           </div>
         </div>
+        {/* Popup infographic guidance cho mobile */}
+        {isMobile && showInfographic && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
+            <div className="bg-white rounded-lg shadow-lg p-5 max-w-xs w-full relative animate-fadeIn">
+              <button
+                onClick={() => setShowInfographic(false)}
+                className="absolute top-2 right-2 text-gray-500 hover:text-red-500"
+                title="Close"
+              >
+                <span className="material-icons text-xl">close</span>
+              </button>
+              <div className="flex flex-col items-center gap-4">
+                <div className="flex flex-col items-center gap-2">
+                  <span className="material-icons text-amber-400 text-3xl">call</span>
+                  <div className="text-base font-bold text-gray-800">{t('press_to_order', lang)}</div>
+                  <div className="text-xs text-gray-600 text-center">{t('press_to_call_desc', lang)}</div>
+                </div>
+                <div className="flex flex-col items-center gap-2">
+                  <span className="material-icons text-amber-400 text-3xl">check_circle</span>
+                  <div className="text-base font-bold text-gray-800">{t('confirm_request', lang)}</div>
+                  <div className="text-xs text-gray-600 text-center">{t('confirm_request_desc', lang)}</div>
+                </div>
+                <div className="flex flex-col items-center gap-2">
+                  <span className="material-icons text-amber-400 text-3xl">mail</span>
+                  <div className="text-base font-bold text-gray-800">{t('send_to_reception', lang)}</div>
+                  <div className="text-xs text-gray-600 text-center">{t('send_to_reception_desc', lang)}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
         {/* Thanh menu box cho mobile - scroll ngang native */}
         <div className="block sm:hidden w-full max-w-2xl mx-auto mb-2">
           <div className="flex flex-row flex-nowrap overflow-x-auto whitespace-nowrap gap-1 bg-white/10 rounded-lg p-1 shadow no-scrollbar">
