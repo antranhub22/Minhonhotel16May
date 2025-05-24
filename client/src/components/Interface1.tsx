@@ -951,60 +951,68 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
           </div>
         </div>
         )}
-        {/* Active orders status panels - thêm hiệu ứng 3D và đường viền sáng */}
-        {ordersLoading && (
-          <div className="text-center py-8 text-blue-600 font-semibold text-lg">Đang tải đơn hàng...</div>
-        )}
-        {!ordersLoading && ordersError && (
-          <div className="text-center py-8 text-red-600 font-semibold text-lg">{ordersError}</div>
-        )}
-        {!ordersLoading && !ordersError && activeOrders && activeOrders.length > 0 && (
-          <div className="flex flex-col items-center gap-y-4 mb-20 pb-16 w-full px-2 sm:mb-12 sm:pb-8 sm:flex-row sm:flex-nowrap sm:gap-x-4 sm:overflow-x-auto sm:justify-start"
-            style={{ perspective: '1000px', zIndex: 30 }}
-          >
-            {[...activeOrders].sort((a, b) => b.requestedAt.getTime() - a.requestedAt.getTime()).map((o: ActiveOrder) => {
-              const deadline = new Date(o.requestedAt.getTime() + 60 * 60 * 1000);
-              const diffSec = Math.max(Math.ceil((deadline.getTime() - now.getTime()) / 1000), 0);
-              if (diffSec <= 0) return null;
-              const mins = Math.floor(diffSec / 60).toString().padStart(2, '0');
-              const secs = (diffSec % 60).toString().padStart(2, '0');
-              return (
-                <div key={o.reference} 
-                  className="p-2 sm:p-3 text-gray-800 max-w-xs w-[260px] flex-shrink-0 transition-all duration-250 hover:rotate-1 hover:scale-105"
-                  style={{
-                    background: 'rgba(139,26,71,0.85)',
-                    backdropFilter: 'blur(8px)',
-                    borderRadius: '24px',
-                    boxShadow: '0px 10px 25px rgba(0, 0, 0, 0.15)',
-                    border: '1px solid rgba(255, 255, 255, 0.4)',
-                    transform: 'translateZ(20px)',
-                    transformStyle: 'preserve-3d',
-                    zIndex: 20,
-                    marginBottom: '8px',
-                    transition: 'all 0.3s ease-in-out'
-                  }}
-                >
-                  {/* Đồng hồ đếm ngược ở trên đầu */}
-                  <div className="flex justify-center items-center mb-1.5">
-                    <span className="font-bold text-lg text-blue-800 bg-blue-50 px-4 py-1.5 rounded-full shadow-sm" 
-                      style={{
-                        borderRadius: '16px',
-                        boxShadow: '0px 2px 6px rgba(0, 0, 0, 0.1)'
-                      }}
-                    >{`${mins}:${secs}`}</span>
+        {/* Orders Section */}
+        <div className="orders-section bg-white rounded-lg shadow-md p-4 mb-4">
+          <h2 className="text-xl font-semibold mb-4 text-gray-800">{t('activeOrders', lang)}</h2>
+          
+          {ordersLoading && (
+            <div className="flex items-center justify-center py-8">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+              <span className="ml-3 text-gray-600">{t('loading', lang)}</span>
+            </div>
+          )}
+
+          {ordersError && (
+            <div className="text-center py-6">
+              <div className="text-red-500 mb-2">
+                <svg className="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+              </div>
+              <p className="text-gray-700">{ordersError}</p>
+              <button 
+                onClick={() => window.location.reload()} 
+                className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+              >
+                {t('retry', lang)}
+              </button>
+            </div>
+          )}
+
+          {!ordersLoading && !ordersError && (!activeOrders || activeOrders.length === 0) && (
+            <div className="text-center py-8">
+              <div className="text-gray-400 mb-2">
+                <svg className="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                </svg>
+              </div>
+              <p className="text-gray-600">{t('noActiveOrders', lang)}</p>
+            </div>
+          )}
+
+          {!ordersLoading && !ordersError && activeOrders && activeOrders.length > 0 && (
+            <div className="space-y-4">
+              {activeOrders.map((order) => (
+                <div key={order.id} className="border rounded-lg p-4 hover:shadow-md transition-shadow">
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <h3 className="font-medium text-gray-800">{order.serviceName}</h3>
+                      <p className="text-sm text-gray-600">{order.description}</p>
+                    </div>
+                    <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusStyle(order.status)}`}>
+                      {t(getStatusTranslationKey(order.status), lang)}
+                    </span>
                   </div>
-                  {/* Thông tin đơn hàng */}
-                  <div className="space-y-1 text-sm text-white/90">
-                    <div><b>{t('order_reference', lang)}:</b> <span className="font-mono">{o.reference}</span></div>
-                    {o.status && <div><b>{t('status', lang)}:</b> {t(getStatusTranslationKey(o.status), lang)}</div>}
-                    <div><b>{t('created_at', lang)}:</b> {o.requestedAt.toLocaleString()}</div>
-                    {o.estimatedTime && <div><b>{t('estimated_delivery_time', lang)}:</b> {o.estimatedTime}</div>}
-                  </div>
+                  {order.scheduledTime && (
+                    <div className="mt-2 text-sm text-gray-500">
+                      {t('scheduledFor', lang)}: {new Date(order.scheduledTime).toLocaleString()}
+                    </div>
+                  )}
                 </div>
-              );
-            })}
-          </div>
-        )}
+              ))}
+            </div>
+          )}
+        </div>
         {/* Nút xóa lịch sử order */}
         <div className="w-full flex justify-end mb-2">
           <button

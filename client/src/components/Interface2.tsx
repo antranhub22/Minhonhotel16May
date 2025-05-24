@@ -4,7 +4,7 @@ import Reference from './Reference';
 import SiriCallButton from './SiriCallButton';
 import { referenceService, ReferenceItem } from '@/services/ReferenceService';
 import InfographicSteps from './InfographicSteps';
-import { t } from '@/i18n';
+import { t, Lang } from '@/i18n';
 import { Button } from './ui/button';
 
 interface Interface2Props {
@@ -41,6 +41,9 @@ const Interface2: React.FC<Interface2Props> = ({ isActive }) => {
     modelOutput,
     language
   } = useAssistant();
+  
+  // Cast language to Lang type
+  const lang = language as Lang;
   
   // State cho Paint-on effect
   const [visibleChars, setVisibleChars] = useState<VisibleCharState>({});
@@ -326,95 +329,75 @@ const Interface2: React.FC<Interface2Props> = ({ isActive }) => {
             </div>
           </div>
           
-          {/* Realtime conversation container spans full width */}
-          {showRealtimeConversation && (
-            <div
-              id="realTimeConversation"
-              ref={conversationRef}
-              className="w-full flex flex-col-reverse gap-1 pr-2 relative max-w-full sm:max-w-2xl mx-auto min-h-[60px] max-h-[12vh] overflow-y-auto mb-1"
-              style={{
-                background: 'rgba(255,255,255,0.88)',
-                borderRadius: 12,
-                border: '1px solid rgba(255,255,255,0.35)',
-                boxShadow: '0px 4px 10px rgba(0,0,0,0.15)',
-                padding: '8px',
-                transition: 'box-shadow 0.3s, background 0.3s',
-                fontFamily: 'SF Pro Text, Roboto, Open Sans, Arial, sans-serif',
-                fontSize: window.innerWidth < 640 ? 14 : 16,
-                lineHeight: 1.5,
-                color: '#222',
-                fontWeight: 400,
-                backdropFilter: 'blur(2px)',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'flex-end',
-              }}
-            >
-              {/* Nút đóng transcript (ẩn realtime conversation) */}
+          {/* Conversation Section */}
+          <div className="conversation-section bg-white rounded-lg shadow-md p-4 mb-4">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-semibold text-gray-800">{t('conversation', lang)}</h2>
               <button
-                className="absolute top-1.5 right-1.5 w-5 h-5 flex items-center justify-center rounded-full bg-white/40 hover:bg-white/70 text-gray-400 hover:text-gray-700 shadow z-10 opacity-60 hover:opacity-90 transition-all"
-                style={{fontSize: 14, display: 'block'}}
-                title="Ẩn realtime conversation"
-                onClick={() => setShowRealtimeConversation(false)}
+                onClick={() => setShowRealtimeConversation(!showRealtimeConversation)}
+                className="text-sm text-blue-500 hover:text-blue-600"
               >
-                <span className="material-icons" style={{fontSize: 16}}>close</span>
+                {showRealtimeConversation ? t('hide', lang) : t('show', lang)}
               </button>
-              {/* Display conversation turns */}
-              <div className="w-full flex flex-col gap-1 pr-2" style={{overflowY: 'auto', maxHeight: '28vh'}}>
-                {conversationTurns.length === 0 && (
-                  <div className="text-gray-400 text-base text-center select-none" style={{opacity: 0.7}}>
-                    {t('tap_to_speak', language)}
+            </div>
+
+            {showRealtimeConversation && (
+              <div className="space-y-4">
+                {conversationTurns.length === 0 ? (
+                  <div className="text-center py-8">
+                    <div className="text-gray-400 mb-2">
+                      <svg className="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                      </svg>
+                    </div>
+                    <p className="text-gray-600">{t('noConversation', lang)}</p>
                   </div>
-                )}
-                {[...conversationTurns].reverse().map((turn, turnIdx) => (
-                  <div key={turn.id} className="mb-1">
-                    <div className="flex items-start">
-                      <div className="flex-grow">
-                        {turn.role === 'user' ? (
-                          <p className="text-base md:text-lg font-medium text-gray-900" style={{marginBottom: 2}}>
-                            {turn.messages[0].content}
-                          </p>
-                        ) : (
-                          <p
-                            className="text-base md:text-lg font-medium"
-                            style={{
-                              marginBottom: 2,
-                              position: 'relative',
-                              background: 'linear-gradient(90deg, #FF512F, #F09819, #FFD700, #56ab2f, #43cea2, #1e90ff, #6a11cb, #FF512F)',
-                              WebkitBackgroundClip: 'text',
-                              WebkitTextFillColor: 'transparent',
-                              fontWeight: 600,
-                              letterSpacing: 0.2,
-                              transition: 'background 0.5s'
-                            }}
-                          >
-                            <span className="inline-flex flex-wrap">
-                              {turn.messages.map((msg, idx) => {
-                                const content = msg.content.slice(0, visibleChars[msg.id] || 0);
-                                return (
-                                  <span key={msg.id} style={{ whiteSpace: 'pre' }}>
-                                    {content}
-                                    {/* Blinking cursor cho từ cuối cùng khi đang xử lý */}
-                                    {idx === turn.messages.length - 1 && turnIdx === 0 && visibleChars[msg.id] < msg.content.length && (
-                                      <span className="animate-blink text-yellow-500" style={{marginLeft: 1}}>|</span>
-                                    )}
-                                  </span>
-                                );
-                              })}
-                            </span>
-                            {/* 3 chấm nhấp nháy khi assistant đang nghe */}
-                            {turnIdx === 0 && turn.role === 'assistant' && visibleChars[turn.messages[turn.messages.length-1].id] === turn.messages[turn.messages.length-1].content.length && (
-                              <span className="ml-2 animate-ellipsis text-yellow-500">...</span>
-                            )}
-                          </p>
-                        )}
+                ) : (
+                  conversationTurns.map((turn) => (
+                    <div
+                      key={turn.id}
+                      className={`p-4 rounded-lg ${
+                        turn.role === 'user' ? 'bg-blue-50 ml-4' : 'bg-gray-50 mr-4'
+                      }`}
+                    >
+                      <div className="flex items-start space-x-3">
+                        <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                          turn.role === 'user' ? 'bg-blue-500' : 'bg-gray-500'
+                        }`}>
+                          {turn.role === 'user' ? (
+                            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                          ) : (
+                            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                          )}
+                        </div>
+                        <div className="flex-1">
+                          <div className="text-sm text-gray-500 mb-1">
+                            {turn.role === 'user' ? t('you', lang) : t('assistant', lang)}
+                          </div>
+                          <div className="text-gray-800">
+                            {turn.messages.map((message) => (
+                              <div key={message.id} className="mb-2">
+                                {visibleChars[message.id] !== undefined
+                                  ? message.content.slice(0, visibleChars[message.id])
+                                  : message.content}
+                              </div>
+                            ))}
+                          </div>
+                          <div className="text-xs text-gray-400 mt-1">
+                            {turn.timestamp.toLocaleTimeString()}
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))
+                )}
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
         {/* Right: Control buttons */}
         <div className="w-1/4 lg:w-1/3 flex-col items-center lg:items-end p-2 space-y-4 overflow-auto hidden sm:flex" style={{ maxHeight: '100%' }}>
