@@ -39,6 +39,8 @@ const StaffDashboard: React.FC = () => {
   const [deletePassword, setDeletePassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [pendingStatus, setPendingStatus] = useState<{ [id: number]: string }>({});
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   // Lấy token từ localStorage
@@ -51,6 +53,8 @@ const StaffDashboard: React.FC = () => {
       navigate('/staff');
       return;
     }
+    setLoading(true);
+    setError(null);
     try {
       const res = await fetch('/api/staff/requests', {
         headers: { 'Authorization': `Bearer ${token}` },
@@ -59,13 +63,22 @@ const StaffDashboard: React.FC = () => {
       if (res.status === 401) {
         localStorage.removeItem('staff_token');
         navigate('/staff');
+        setLoading(false);
         return;
       }
       const data = await res.json();
-      console.log('Fetched requests data:', data); // Debug log
-      setRequests(data);
-    } catch (err) {
-      console.error('Failed to fetch requests:', err);
+      if (data && data.success && Array.isArray(data.requests)) {
+        setRequests(data.requests);
+        setError(null);
+      } else {
+        setRequests([]);
+        setError(data?.error || 'Lỗi không xác định khi lấy danh sách requests');
+      }
+    } catch (err: any) {
+      setRequests([]);
+      setError(err?.message || 'Lỗi mạng khi lấy danh sách requests');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -329,6 +342,20 @@ const StaffDashboard: React.FC = () => {
             </div>
           </div>
         </div>
+
+        {/* Hiển thị trạng thái loading, lỗi, empty */}
+        {loading && (
+          <div className="text-center py-8 text-blue-600 font-semibold text-lg">Đang tải dữ liệu...</div>
+        )}
+        {!loading && error && (
+          <div className="text-center py-8 text-red-600 font-semibold text-lg">{error}</div>
+        )}
+        {!loading && !error && filteredRequests.length === 0 && (
+          <div className="text-center py-8 text-gray-500">
+            <p>Không có yêu cầu nào</p>
+            <p className="mt-2 text-sm">Nhấn Refresh để tải lại dữ liệu</p>
+          </div>
+        )}
 
         {/* Mobile version of requests - Card style */}
         <div className="block sm:hidden">
