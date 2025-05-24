@@ -15,6 +15,7 @@ import { ReferenceMedia, ReferenceSlider } from './Reference';
 import { OrderStatus } from '@shared/schema';
 import { Bus, Mountain, Landmark, Car, CarFront, Bike, Coins, Euro, DollarSign, Shirt, Sparkles, Home, Building2, CalendarDays, KeyRound, UserRound, Plus, Star, Sun, CalendarCheck, Umbrella, Map, Ship, Waves, ArrowRightLeft } from 'lucide-react';
 import InfographicSteps from './InfographicSteps';
+import '../styles/custom-scrollbar.css';
 
 interface Interface1Props {
   isActive: boolean;
