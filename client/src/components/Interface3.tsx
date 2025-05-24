@@ -289,6 +289,10 @@ const Interface3: React.FC<Interface3Props> = ({ isActive }) => {
       'security', 'special-occasions', 'other'
     ];
     let orderType = orderSummary.orderType;
+    if (typeof orderType === 'string' && orderType.includes(',')) {
+      // Nếu là chuỗi nhiều loại, lấy loại hợp lệ đầu tiên
+      orderType = orderType.split(',').find(type => validOrderTypes.includes(type)) || 'room-service';
+    }
     if (!validOrderTypes.includes(orderType)) orderType = 'room-service';
 
     // deliveryTime phải đúng enum
