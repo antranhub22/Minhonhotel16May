@@ -327,7 +327,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
   // Khi nhấn icon, set activeIcon và showReference (nếu nhấn lại icon đang chọn thì bỏ chọn)
   const handleIconClick = (iconName: string) => {
     if (activeIcon === iconName && showReference) {
-      setActiveIcon(null);
+      setActiveIcon('');
       setShowReference(false);
     } else {
       setActiveIcon(iconName);
@@ -350,7 +350,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
 
   // Hàm truyền vào Reference để đóng media động
   const handleCloseMedia = () => {
-    setActiveIcon(null);
+    setActiveIcon('');
     setShowReference(false);
   };
 
@@ -468,9 +468,22 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
     return items;
   };
 
+  // Thêm style cho animation
+  const shimmerAnimation = `
+    @keyframes shimmer {
+      0% {
+        background-position: -200% center;
+      }
+      100% {
+        background-position: 200% center;
+      }
+    }
+  `;
+
   // 1. HEADER: Đưa avatar sang phải, menu/hướng dẫn sang trái, thêm tiêu đề lớn dưới header
   const Header = () => (
     <div className="flex items-center justify-between w-full mb-4">
+      <style>{shimmerAnimation}</style>
       <div className="w-12 h-12 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/40 transition-all duration-200 shadow mr-2">
         <select
           value={language}
@@ -486,7 +499,53 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
           <option value="ko">🇰🇷 Korean</option>
         </select>
       </div>
-      <h1 className="text-4xl sm:text-5xl font-extrabold uppercase text-center flex-1 bg-gradient-to-r from-yellow-300 via-white to-yellow-400 bg-clip-text text-transparent drop-shadow-lg tracking-wide" style={{textShadow: '0 4px 24px rgba(0,0,0,0.35), 0 1px 0 #fff'}}>HaiLy Travel</h1>
+      <div className="flex flex-col items-center w-full mb-4">
+        <div className="flex flex-row items-end justify-center w-full mb-4 gap-1">
+          <span style={{
+            color: '#FFC94A',
+            fontWeight: 900,
+            fontSize: '2.5rem',
+            letterSpacing: '0.1em',
+            fontFamily: 'Impact, Arial Black, sans-serif',
+            textShadow: '0 2px 8px rgba(0,0,0,0.18)',
+            background: 'linear-gradient(90deg, #FFC94A, #FFD700, #FFC94A)',
+            backgroundSize: '200% auto',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            animation: 'shimmer 3s linear infinite',
+            filter: 'drop-shadow(0 0 8px rgba(255, 201, 74, 0.5))'
+          }}>HAI</span>
+          <span style={{
+            color: '#4FC3F7',
+            fontWeight: 900,
+            fontSize: '2.5rem',
+            letterSpacing: '0.1em',
+            fontFamily: 'Impact, Arial Black, sans-serif',
+            textShadow: '0 2px 8px rgba(0,0,0,0.18)',
+            background: 'linear-gradient(90deg, #4FC3F7, #81D4FA, #4FC3F7)',
+            backgroundSize: '200% auto',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            animation: 'shimmer 3s linear infinite',
+            filter: 'drop-shadow(0 0 8px rgba(79, 195, 247, 0.5))'
+          }}>LY</span>
+          <span style={{
+            color: '#444',
+            fontWeight: 700,
+            fontSize: '1.1rem',
+            letterSpacing: '0.18em',
+            marginLeft: '0.3em',
+            fontFamily: 'Montserrat, Arial, sans-serif',
+            textShadow: '0 1px 4px rgba(0,0,0,0.10)',
+            background: 'linear-gradient(90deg, #444, #666, #444)',
+            backgroundSize: '200% auto',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            animation: 'shimmer 3s linear infinite',
+            filter: 'drop-shadow(0 0 4px rgba(68, 68, 68, 0.3))'
+          }}>TRAVEL</span>
+        </div>
+      </div>
     </div>
   );
 
