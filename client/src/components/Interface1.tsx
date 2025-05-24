@@ -537,7 +537,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
         )}
       </div>
       <div className="flex flex-col items-center w-full mb-4">
-        <div className="flex flex-row items-end justify-center w-full mb-4 gap-1">
+        <div className="hidden sm:flex flex-row items-end justify-center w-full mb-4 gap-1">
           <span style={{
             color: '#FFC94A',
             fontWeight: 900,
