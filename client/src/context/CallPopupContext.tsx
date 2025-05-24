@@ -69,7 +69,7 @@ export const CallPopupProvider: React.FC<{ children: ReactNode }> = ({ children 
               </div>
             </div>
             <div className="p-4 overflow-y-auto max-h-[calc(90vh-64px)]">
-              <RealtimeConversation />
+              {currentCallId && <RealtimeConversation callId={currentCallId} />}
             </div>
           </div>
         </div>

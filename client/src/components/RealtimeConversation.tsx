@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useCallPopup } from '@/context/CallPopupContext';
 import { t, Lang } from '@/i18n';
 
 interface Transcript {
@@ -10,32 +9,28 @@ interface Transcript {
   timestamp: string | Date;
 }
 
-export const RealtimeConversation: React.FC = () => {
-  const { currentCallId } = useCallPopup();
+export const RealtimeConversation: React.FC<{ callId: string }> = ({ callId }) => {
   const [conversation, setConversation] = useState<Transcript[]>([]);
   const conversationRef = useRef<HTMLDivElement>(null);
   const [lang, setLang] = useState<Lang>('en');
 
-  // Lấy ngôn ngữ từ localStorage hoặc context nếu cần
   useEffect(() => {
     const storedLang = localStorage.getItem('language') as Lang;
     if (storedLang) setLang(storedLang);
   }, []);
 
   useEffect(() => {
-    if (!currentCallId) return;
-    // Fetch initial transcript
-    fetch(`/api/transcripts/${currentCallId}`)
+    if (!callId) return;
+    fetch(`/api/transcripts/${callId}`)
       .then(res => res.json())
       .then(data => setConversation(Array.isArray(data) ? data : []));
-
     // Listen WebSocket for realtime transcript (nếu backend hỗ trợ)
     let ws: WebSocket | null = null;
     try {
-      ws = new WebSocket(`wss://${window.location.host}/ws/transcripts/${currentCallId}`);
+      ws = new WebSocket(`wss://${window.location.host}/ws/transcripts/${callId}`);
       ws.onmessage = (event) => {
         const data = JSON.parse(event.data);
-        if (data.type === 'transcript' && data.callId === currentCallId) {
+        if (data.type === 'transcript' && data.callId === callId) {
           setConversation(prev => [...prev, data]);
         }
       };
@@ -43,7 +38,7 @@ export const RealtimeConversation: React.FC = () => {
     return () => {
       if (ws) ws.close();
     };
-  }, [currentCallId]);
+  }, [callId]);
 
   useEffect(() => {
     if (conversationRef.current) {
@@ -55,7 +50,6 @@ export const RealtimeConversation: React.FC = () => {
     <div className="bg-white rounded-lg shadow-md p-4 h-96 overflow-y-auto" ref={conversationRef}>
       <div className="flex justify-between items-center mb-2">
         <h2 className="text-lg font-semibold">{t('realtimeConversation', lang)}</h2>
-        {/* Có thể thêm trạng thái kết nối WebSocket nếu muốn */}
       </div>
       {conversation.length === 0 ? (
         <div className="text-gray-400 text-center py-8">{t('noConversation', lang)}</div>
