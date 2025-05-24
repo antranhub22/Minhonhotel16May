@@ -203,7 +203,7 @@ const VoiceAssistant: React.FC = () => {
             <span className="material-icons text-xl">bookmark{isBookmarked(media) ? '' : '_border'}</span>
           </button>
           <div className="h-40 bg-gray-700 rounded-2xl mb-3 overflow-hidden flex items-center justify-center">
-            <img src={media.src} alt={media.alt || ''} className="object-cover w-full h-full rounded-2xl" />
+            <img src={media.src} alt={media.alt || ''} className="object-cover w-full h-full rounded-2xl" loading="lazy" />
           </div>
           <h3 className="text-lg font-bold text-white mb-1" style={{fontSize: '1.15rem'}}>{media.alt}</h3>
           <p className="text-gray-300 text-base mb-2 whitespace-pre-line" style={{fontSize: '1rem'}}>{media.description}</p>
@@ -289,7 +289,7 @@ const VoiceAssistant: React.FC = () => {
           <span className="material-icons text-xl">bookmark{isBookmarked(modalMedia) ? '' : '_border'}</span>
         </button>
         <div className="w-full h-56 bg-gray-700 rounded-xl mb-4 overflow-hidden flex items-center justify-center">
-          <img src={modalMedia.src} alt={modalMedia.alt || ''} className="object-cover w-full h-full rounded-xl" />
+          <img src={modalMedia.src} alt={modalMedia.alt || ''} className="object-cover w-full h-full rounded-xl" loading="lazy" />
         </div>
         <h3 className="text-xl font-bold text-white mb-2" style={{fontSize: '1.2rem'}}>{modalMedia.alt}</h3>
         <p className="text-gray-200 text-base whitespace-pre-line" style={{fontSize: '1.05rem'}}>{modalMedia.description}</p>
@@ -319,7 +319,7 @@ const VoiceAssistant: React.FC = () => {
           <div className="flex flex-col gap-4">
             {filteredBookmarkedMedia.map((media, idx) => (
               <div key={idx} className="bg-black/20 rounded-xl p-3 flex gap-3 items-center relative" style={{minHeight: 80}}>
-                <img src={media.src} alt={media.alt || ''} className="w-16 h-16 object-cover rounded-lg flex-shrink-0" />
+                <img src={media.src} alt={media.alt || ''} className="w-16 h-16 object-cover rounded-lg flex-shrink-0" loading="lazy" />
                 <div className="flex-1 min-w-0">
                   <div className="font-bold text-white truncate" style={{fontSize: '1rem'}}>{media.alt}</div>
                   <div className="text-xs text-gray-300 truncate" style={{fontSize: '0.95rem'}}>{media.description?.split('\n')[0]}</div>
