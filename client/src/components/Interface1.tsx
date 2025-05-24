@@ -364,7 +364,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
   };
 
   // Component hiển thị icon với tooltip
-  const IconWithTooltip = ({ iconName, className, iconSize = 32, position = 'center' }: { iconName: string, className?: string, iconSize?: number, position?: 'left' | 'center' | 'right' }) => {
+  const IconWithTooltip = ({ iconName, className, iconSize = 32, position = 'center', isActive = false }: { iconName: string, className?: string, iconSize?: number, position?: 'left' | 'center' | 'right', isActive?: boolean }) => {
     let tooltipText = iconDisplayNamesEn[iconName] || iconName;
     if (lang === 'fr') tooltipText = iconDisplayNamesFr[iconName] || tooltipText;
     else if (lang === 'ru') tooltipText = iconDisplayNamesRu[iconName] || tooltipText;
@@ -373,11 +373,18 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
     return (
     <div className="relative flex flex-col items-center justify-center cursor-pointer">
       <span 
-          className={className || ''}
-        style={{ filter: 'drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.2))' }}
+        className={className || ''}
+        style={{
+          filter: 'drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.2))',
+          background: isActive ? 'linear-gradient(90deg, #FFD700 0%, #FFB300 100%)' : 'transparent',
+          borderRadius: '50%',
+          padding: isActive ? 6 : 0,
+          color: isActive ? '#8B1A47' : undefined,
+          transition: 'all 0.2s',
+        }}
         onClick={() => handleIconClick(iconName)}
       >
-          {React.cloneElement(iconComponents[iconName] || <span className="text-red-500">?</span>, { size: iconSize })}
+        {React.cloneElement(iconComponents[iconName] || <span className="text-red-500">?</span>, { size: iconSize, color: isActive ? '#8B1A47' : iconColor })}
       </span>
       {activeTooltip === iconName && (
           isMobile ? (
@@ -444,9 +451,10 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
   // Sửa hàm renderIconGroup để nhận iconSize động
   const renderIconGroup = (icons: string[], col: number, iconSize = 22) => {
     const items = icons.map(icon => {
+      const isActive = icon === activeIcon;
       return (
         <li key={icon} className="w-10 h-10 flex items-center justify-center">
-          {iconComponents[icon] ? <IconWithTooltip iconName={icon} iconSize={iconSize} /> : <span className="text-red-500">?</span>}
+          {iconComponents[icon] ? <IconWithTooltip iconName={icon} iconSize={iconSize} isActive={isActive} /> : <span className="text-red-500">?</span>}
         </li>
       );
     });
