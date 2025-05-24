@@ -23,6 +23,9 @@ const VoiceAssistant: React.FC = () => {
   const [orders, setOrders] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // State filter package
+  const [selectedPackage, setSelectedPackage] = useState<'all' | 'flight' | 'hotel' | 'tour'>('all');
+
   useEffect(() => {
     const fetchOrders = async () => {
       try {
@@ -38,6 +41,21 @@ const VoiceAssistant: React.FC = () => {
     };
     fetchOrders();
   }, []);
+
+  // Hàm lấy orderType từ order (ưu tiên đúng trường backend)
+  const getOrderType = (order: any) => {
+    return (order.summary?.orderType || order.orderType || '').toLowerCase();
+  };
+
+  // Lọc orders theo package
+  const filteredOrders = orders.filter(order => {
+    if (selectedPackage === 'all') return true;
+    const type = getOrderType(order);
+    if (selectedPackage === 'flight') return type.includes('flight');
+    if (selectedPackage === 'hotel') return type.includes('hotel');
+    if (selectedPackage === 'tour') return type.includes('tour');
+    return false;
+  });
 
   // Hàm mapping order thành card UI
   const renderOrderCard = (order: any, idx: number) => {
@@ -98,20 +116,20 @@ const VoiceAssistant: React.FC = () => {
 
       {/* Thanh chọn package */}
       <div className="flex flex-row gap-2 px-4 pb-3 overflow-x-auto">
-        <button className="px-4 py-2 rounded-full font-semibold bg-[var(--accent-yellow)] text-black shadow">All Package</button>
-        <button className="px-4 py-2 rounded-full font-semibold bg-card-bg text-white shadow">Flight Package</button>
-        <button className="px-4 py-2 rounded-full font-semibold bg-card-bg text-white shadow">Hotel Package</button>
-        <button className="px-4 py-2 rounded-full font-semibold bg-card-bg text-white shadow">Tour Package</button>
+        <button onClick={() => setSelectedPackage('all')} className={`px-4 py-2 rounded-full font-semibold shadow ${selectedPackage === 'all' ? 'bg-[var(--accent-yellow)] text-black' : 'bg-card-bg text-white'}`}>All Package</button>
+        <button onClick={() => setSelectedPackage('flight')} className={`px-4 py-2 rounded-full font-semibold shadow ${selectedPackage === 'flight' ? 'bg-[var(--accent-yellow)] text-black' : 'bg-card-bg text-white'}`}>Flight Package</button>
+        <button onClick={() => setSelectedPackage('hotel')} className={`px-4 py-2 rounded-full font-semibold shadow ${selectedPackage === 'hotel' ? 'bg-[var(--accent-yellow)] text-black' : 'bg-card-bg text-white'}`}>Hotel Package</button>
+        <button onClick={() => setSelectedPackage('tour')} className={`px-4 py-2 rounded-full font-semibold shadow ${selectedPackage === 'tour' ? 'bg-[var(--accent-yellow)] text-black' : 'bg-card-bg text-white'}`}>Tour Package</button>
       </div>
 
       {/* Danh sách card dịch vụ */}
       <div className="flex-1 px-4 pb-24 overflow-y-auto">
         {loading ? (
           <div className="text-center text-white py-12">Đang tải dữ liệu...</div>
-        ) : orders.length === 0 ? (
+        ) : filteredOrders.length === 0 ? (
           <div className="text-center text-white py-12">Không có dịch vụ nào.</div>
         ) : (
-          orders.map(renderOrderCard)
+          filteredOrders.map(renderOrderCard)
         )}
       </div>
 
