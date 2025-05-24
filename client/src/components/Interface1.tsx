@@ -356,29 +356,29 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
     else if (lang === 'zh') tooltipText = iconDisplayNamesZh[iconName] || tooltipText;
     else if (lang === 'ko') tooltipText = iconDisplayNamesKo[iconName] || tooltipText;
     return (
-      <div className="relative flex flex-col items-center justify-center cursor-pointer">
-        <span 
+    <div className="relative flex flex-col items-center justify-center cursor-pointer">
+      <span 
           className={className || ''}
-          style={{ filter: 'drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.2))' }}
-          onClick={() => handleIconClick(iconName)}
-        >
+        style={{ filter: 'drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.2))' }}
+        onClick={() => handleIconClick(iconName)}
+      >
           {React.cloneElement(iconComponents[iconName] || <span className="text-red-500">?</span>, { size: iconSize })}
-        </span>
-        {activeTooltip === iconName && (
+      </span>
+      {activeTooltip === iconName && (
           isMobile ? (
             <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 w-max max-w-[120px] sm:max-w-[180px] bg-white/90 text-gray-800 text-xs sm:text-sm font-medium py-1 px-2 rounded shadow-lg z-50 pointer-events-none text-center">
               {tooltipText}
               <div className="absolute w-2 h-2 bg-white/90 transform rotate-45 left-1/2 -translate-x-1/2 -top-1"></div>
             </div>
           ) : (
-            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-max max-w-[120px] sm:max-w-[180px] bg-white/90 text-gray-800 text-xs sm:text-sm font-medium py-1 px-2 rounded shadow-lg z-50 pointer-events-none text-center">
+        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 w-max max-w-[120px] sm:max-w-[180px] bg-white/90 text-gray-800 text-xs sm:text-sm font-medium py-1 px-2 rounded shadow-lg z-50 pointer-events-none text-center">
               {tooltipText}
-              <div className="absolute w-2 h-2 bg-white/90 transform rotate-45 left-1/2 -translate-x-1/2 top-full -mt-1"></div>
-            </div>
+          <div className="absolute w-2 h-2 bg-white/90 transform rotate-45 left-1/2 -translate-x-1/2 top-full -mt-1"></div>
+        </div>
           )
-        )}
-      </div>
-    );
+      )}
+    </div>
+  );
   };
 
   // Hàm để xác định màu sắc và icon dựa trên trạng thái
@@ -528,7 +528,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
         <p className="hidden sm:block text-xs sm:text-lg lg:text-xl text-center max-w-full mb-4 truncate sm:whitespace-nowrap overflow-x-auto">AI-powered Voice Assistant - Supporting All Your Needs</p>
         {/* Hiển thị icon group theo menu đang chọn trên mobile - scroll ngang native */}
         {isMobile && (
-          <div className="w-full flex justify-center mb-4">
+          <div className="w-full flex justify-center mb-8">
             {activeMenu === 'tours' && (
               <div className="w-full overflow-x-auto whitespace-nowrap no-scrollbar"><ul className="flex flex-row flex-nowrap justify-start items-center gap-x-[0.85rem] py-0">{renderIconGroup(travelTourIcons, travelTourIcons.length, 16)}</ul></div>
             )}
@@ -694,9 +694,9 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
               {/* 1. TRAVEL TOURS */}
               <div
                 className="py-0.5 px-1 sm:p-2 w-[90%] sm:w-4/5 md:w-64 mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
-                style={{
+              style={{
                   background: 'rgba(139,26,71,0.4)',
-                  backdropFilter: 'blur(8px)',
+                backdropFilter: 'blur(8px)',
                   borderRadius: '6px',
                   boxShadow: '0px 1px 2px rgba(0,0,0,0.04)',
                   border: '1px solid rgba(255,255,255,0.10)',
@@ -719,7 +719,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
               {/* 2. BUS TICKETS */}
               <div
                 className="py-0.5 px-1 sm:p-2 w-[90%] sm:w-[95%] md:w-[480px] mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
-                style={{
+                style={{ 
                   background: 'rgba(139,26,71,0.4)',
                   backdropFilter: 'blur(8px)',
                   borderRadius: '6px',
@@ -739,21 +739,21 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                     : "grid grid-cols-4 gap-x-1 gap-y-1 py-0.5 justify-items-center"
                 }>
                   {renderIconGroup(busTicketIcons, isMobile ? 4 : 4, isMobile ? 14 : 28)}
-                </ul>
-              </div>
+              </ul>
+            </div>
               {/* 3. VEHICLE RENTAL */}
               <div
                 className="py-0.5 px-1 sm:p-2 w-[90%] sm:w-4/5 md:w-64 mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
-                style={{
+              style={{
                   background: 'rgba(139,26,71,0.4)',
-                  backdropFilter: 'blur(8px)',
+                backdropFilter: 'blur(8px)',
                   borderRadius: '6px',
                   boxShadow: '0px 1px 2px rgba(0,0,0,0.04)',
                   border: '1px solid rgba(255,255,255,0.10)',
                 }}
               >
                 <h4 className="card-title font-medium text-amber-300 pb-0 mb-0 text-[0.46rem] sm:text-sm"
-                  style={{ 
+                style={{ 
                     borderBottom: 'none',
                     textShadow: '0px 1px 2px rgba(0,0,0,0.08)'
                   }}
@@ -764,21 +764,21 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                     : "grid grid-cols-2 gap-x-1 gap-y-1 py-0.5 justify-items-center"
                 }>
                   {renderIconGroup(vehicleRentalIcons, isMobile ? vehicleRentalIcons.length : 2, isMobile ? 14 : 28)}
-                </ul>
-              </div>
+              </ul>
+            </div>
               {/* 4. CURRENCY EXCHANGE */}
               <div
                 className="py-0.5 px-1 sm:p-2 w-[90%] sm:w-4/5 md:w-64 mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
-                style={{
+              style={{
                   background: 'rgba(139,26,71,0.4)',
-                  backdropFilter: 'blur(8px)',
+                backdropFilter: 'blur(8px)',
                   borderRadius: '6px',
                   boxShadow: '0px 1px 2px rgba(0,0,0,0.04)',
                   border: '1px solid rgba(255,255,255,0.10)',
                 }}
               >
                 <h4 className="card-title font-medium text-amber-300 pb-0 mb-0 text-[0.46rem] sm:text-sm"
-                  style={{ 
+                style={{ 
                     borderBottom: 'none',
                     textShadow: '0px 1px 2px rgba(0,0,0,0.08)'
                   }}
@@ -789,21 +789,21 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                     : "grid grid-cols-4 gap-x-1 gap-y-1 py-0.5 justify-items-center"
                 }>
                   {renderIconGroup(currencyIcons, isMobile ? currencyIcons.length : 4, isMobile ? 14 : 26)}
-                </ul>
-              </div>
+              </ul>
+            </div>
               {/* 5. LAUNDRY SERVICE */}
               <div
                 className="py-0.5 px-1 sm:p-2 w-[90%] sm:w-4/5 md:w-64 mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
-                style={{
+              style={{
                   background: 'rgba(139,26,71,0.4)',
-                  backdropFilter: 'blur(8px)',
+                backdropFilter: 'blur(8px)',
                   borderRadius: '6px',
                   boxShadow: '0px 1px 2px rgba(0,0,0,0.04)',
                   border: '1px solid rgba(255,255,255,0.10)',
                 }}
               >
                 <h4 className="card-title font-medium text-amber-300 pb-0 mb-0 text-[0.46rem] sm:text-sm"
-                  style={{ 
+                style={{ 
                     borderBottom: 'none',
                     textShadow: '0px 1px 2px rgba(0,0,0,0.08)'
                   }}
@@ -814,21 +814,21 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                     : "grid grid-cols-3 gap-x-1 gap-y-1 py-0.5 justify-items-center"
                 }>
                   {renderIconGroup(laundryIcons, isMobile ? laundryIcons.length : 3, isMobile ? 14 : 28)}
-                </ul>
-              </div>
+              </ul>
+            </div>
               {/* 6. HOMESTAY SERVICE */}
               <div
                 className="py-0.5 px-1 sm:p-2 w-[90%] sm:w-4/5 md:w-64 mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
-                style={{
+              style={{
                   background: 'rgba(139,26,71,0.4)',
-                  backdropFilter: 'blur(8px)',
+                backdropFilter: 'blur(8px)',
                   borderRadius: '6px',
                   boxShadow: '0px 1px 2px rgba(0,0,0,0.04)',
                   border: '1px solid rgba(255,255,255,0.10)',
                 }}
               >
                 <h4 className="card-title font-medium text-amber-300 pb-0 mb-0 text-[0.46rem] sm:text-sm"
-                  style={{ 
+                style={{ 
                     borderBottom: 'none',
                     textShadow: '0px 1px 2px rgba(0,0,0,0.08)'
                   }}
@@ -839,10 +839,10 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                     : "grid grid-cols-3 gap-x-1 gap-y-1 py-0.5 justify-items-center"
                 }>
                   {renderIconGroup(homestayIcons, isMobile ? homestayIcons.length : 3, isMobile ? 14 : 28)}
-                </ul>
-              </div>
+              </ul>
             </div>
           </div>
+        </div>
         )}
         {/* Active orders status panels - thêm hiệu ứng 3D và đường viền sáng */}
         {activeOrders && activeOrders.length > 0 && (
