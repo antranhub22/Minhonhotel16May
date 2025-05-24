@@ -534,11 +534,25 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
         <Header />
         <TabBar />
         <IconGroup />
-        <div className="w-full overflow-x-auto flex flex-row gap-4 pb-4">
-          {references.map((ref, idx) => (
-            <ServiceCard key={typeof ref === 'object' && 'id' in ref ? (ref as any).id : idx} refItem={ref} />
-          ))}
-        </div>
+        {activeIcon && iconMediaMap[activeIcon] && iconMediaMap[activeIcon].length > 0 && (
+          <div className="w-full overflow-x-auto flex flex-row gap-4 pb-4">
+            {iconMediaMap[activeIcon].map((media, idx) => (
+              <div key={idx} className="min-w-[280px] max-w-xs rounded-2xl shadow-lg overflow-hidden bg-white/90">
+                <img src={media.src} alt={media.alt || ''} className="w-full h-40 object-cover" />
+                <div className="p-4">
+                  <p className="text-sm text-gray-700 mb-2">{media.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+        {activeIcon && (
+          <div className="w-full overflow-x-auto flex flex-row gap-4 pb-4">
+            {references.filter(ref => ref.keywords && ref.keywords.includes(activeIcon)).map((ref, idx) => (
+              <ServiceCard key={ref.id || idx} refItem={ref} />
+            ))}
+          </div>
+        )}
         <CallButton />
         {/* --- END LAYOUT MỚI --- */}
         {/* Các block giao diện cũ đã được loại bỏ để layout mới hiển thị rõ ràng */}
