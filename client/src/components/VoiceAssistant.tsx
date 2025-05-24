@@ -218,11 +218,79 @@ const VoiceAssistant: React.FC = () => {
   const allMedia = Object.values(iconMediaMap).flat();
   const bookmarkedMedia = allMedia.filter(m => bookmarks.includes(m.src));
 
+  // Focus trap & ESC cho modal chi tiết
+  const modalRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!modalMedia) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setModalMedia(null);
+      if (e.key === 'Tab' && modalRef.current) {
+        const focusable = modalRef.current.querySelectorAll<HTMLElement>('button, [tabindex]:not([tabindex="-1"])');
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      }
+    };
+    document.addEventListener('keydown', handleKey);
+    setTimeout(() => { // focus nút đóng đầu tiên
+      modalRef.current?.querySelector<HTMLElement>('button')?.focus();
+    }, 100);
+    return () => document.removeEventListener('keydown', handleKey);
+  }, [modalMedia]);
+
+  // Focus trap & ESC cho modal bookmark
+  const bookmarkModalRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!showBookmarkModal) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setShowBookmarkModal(false);
+      if (e.key === 'Tab' && bookmarkModalRef.current) {
+        const focusable = bookmarkModalRef.current.querySelectorAll<HTMLElement>('button, [tabindex]:not([tabindex="-1"])');
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      }
+    };
+    document.addEventListener('keydown', handleKey);
+    setTimeout(() => {
+      bookmarkModalRef.current?.querySelector<HTMLElement>('button')?.focus();
+    }, 100);
+    return () => document.removeEventListener('keydown', handleKey);
+  }, [showBookmarkModal]);
+
+  // Render modal chi tiết
+  const renderModal = () => modalMedia && (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm animate-fadein" onClick={() => setModalMedia(null)}>
+      <div ref={modalRef} className="bg-card-bg rounded-2xl shadow-2xl p-4 max-w-md w-[90vw] relative animate-scalein" onClick={e => e.stopPropagation()} tabIndex={-1} aria-modal="true" role="dialog">
+        <button aria-label="Đóng chi tiết dịch vụ" className="absolute top-2 right-2 text-white bg-black/30 rounded-full p-1 hover:bg-black/60" onClick={() => setModalMedia(null)}>
+          <span className="material-icons text-2xl">close</span>
+        </button>
+        <button
+          aria-label={isBookmarked(modalMedia) ? 'Bỏ yêu thích' : 'Lưu vào yêu thích'}
+          className={`absolute top-2 left-2 z-10 p-1 rounded-full transition ${isBookmarked(modalMedia) ? 'bg-yellow-400 text-pink-900' : 'bg-black/30 text-white hover:bg-yellow-400 hover:text-pink-900'}`}
+          onClick={e => { e.stopPropagation(); toggleBookmark(modalMedia); }}
+          title={isBookmarked(modalMedia) ? 'Bỏ yêu thích' : 'Lưu vào yêu thích'}
+        >
+          <span className="material-icons text-xl">bookmark{isBookmarked(modalMedia) ? '' : '_border'}</span>
+        </button>
+        <div className="w-full h-56 bg-gray-700 rounded-xl mb-4 overflow-hidden flex items-center justify-center">
+          <img src={modalMedia.src} alt={modalMedia.alt || ''} className="object-cover w-full h-full rounded-xl" />
+        </div>
+        <h3 className="text-xl font-bold text-white mb-2">{modalMedia.alt}</h3>
+        <p className="text-gray-200 text-base whitespace-pre-line">{modalMedia.description}</p>
+      </div>
+    </div>
+  );
+
   // Render modal bookmark
   const renderBookmarkModal = () => showBookmarkModal && (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm" onClick={() => setShowBookmarkModal(false)}>
-      <div className="bg-card-bg rounded-2xl shadow-2xl p-4 max-w-md w-[90vw] relative max-h-[90vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
-        <button className="absolute top-2 right-2 text-white bg-black/30 rounded-full p-1 hover:bg-black/60" onClick={() => setShowBookmarkModal(false)}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm animate-fadein" onClick={() => setShowBookmarkModal(false)}>
+      <div ref={bookmarkModalRef} className="bg-card-bg rounded-2xl shadow-2xl p-4 max-w-md w-[90vw] relative max-h-[90vh] overflow-y-auto animate-scalein" onClick={e => e.stopPropagation()} tabIndex={-1} aria-modal="true" role="dialog">
+        <button aria-label="Đóng danh sách bookmark" className="absolute top-2 right-2 text-white bg-black/30 rounded-full p-1 hover:bg-black/60" onClick={() => setShowBookmarkModal(false)}>
           <span className="material-icons text-2xl">close</span>
         </button>
         <h2 className="text-xl font-bold text-white mb-4 text-center">Dịch vụ đã lưu</h2>
@@ -238,6 +306,7 @@ const VoiceAssistant: React.FC = () => {
                   <div className="text-xs text-gray-300 truncate">{media.description?.split('\n')[0]}</div>
                 </div>
                 <button
+                  aria-label={isBookmarked(media) ? 'Bỏ yêu thích' : 'Lưu vào yêu thích'}
                   className={`ml-2 p-1 rounded-full transition ${isBookmarked(media) ? 'bg-yellow-400 text-pink-900' : 'bg-black/30 text-white hover:bg-yellow-400 hover:text-pink-900'}`}
                   onClick={() => toggleBookmark(media)}
                   title={isBookmarked(media) ? 'Bỏ yêu thích' : 'Lưu vào yêu thích'}
@@ -245,6 +314,7 @@ const VoiceAssistant: React.FC = () => {
                   <span className="material-icons text-xl">bookmark{isBookmarked(media) ? '' : '_border'}</span>
                 </button>
                 <button
+                  aria-label="Xem chi tiết dịch vụ"
                   className="ml-2 p-1 rounded-full bg-blue-500 text-white hover:bg-blue-600"
                   onClick={() => { setModalMedia(media); setShowBookmarkModal(false); }}
                   title="Xem chi tiết"
@@ -255,29 +325,6 @@ const VoiceAssistant: React.FC = () => {
             ))}
           </div>
         )}
-      </div>
-    </div>
-  );
-
-  // Render modal chi tiết
-  const renderModal = () => modalMedia && (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm" onClick={() => setModalMedia(null)}>
-      <div className="bg-card-bg rounded-2xl shadow-2xl p-4 max-w-md w-[90vw] relative" onClick={e => e.stopPropagation()}>
-        <button className="absolute top-2 right-2 text-white bg-black/30 rounded-full p-1 hover:bg-black/60" onClick={() => setModalMedia(null)}>
-          <span className="material-icons text-2xl">close</span>
-        </button>
-        <button
-          className={`absolute top-2 left-2 z-10 p-1 rounded-full transition ${isBookmarked(modalMedia) ? 'bg-yellow-400 text-pink-900' : 'bg-black/30 text-white hover:bg-yellow-400 hover:text-pink-900'}`}
-          onClick={e => { e.stopPropagation(); toggleBookmark(modalMedia); }}
-          title={isBookmarked(modalMedia) ? 'Bỏ yêu thích' : 'Lưu vào yêu thích'}
-        >
-          <span className="material-icons text-xl">bookmark{isBookmarked(modalMedia) ? '' : '_border'}</span>
-        </button>
-        <div className="w-full h-56 bg-gray-700 rounded-xl mb-4 overflow-hidden flex items-center justify-center">
-          <img src={modalMedia.src} alt={modalMedia.alt || ''} className="object-cover w-full h-full rounded-xl" />
-        </div>
-        <h3 className="text-xl font-bold text-white mb-2">{modalMedia.alt}</h3>
-        <p className="text-gray-200 text-base whitespace-pre-line">{modalMedia.description}</p>
       </div>
     </div>
   );
