@@ -517,115 +517,80 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
 
   // 1. HEADER: Đưa avatar sang phải, menu/hướng dẫn sang trái, thêm tiêu đề lớn dưới header
   const Header = () => (
-    <>
-      {/* Mobile: Header + TabBar cùng dòng */}
-      <div className="flex sm:hidden items-center w-full mb-4 gap-2">
-        {/* Dropdown ngôn ngữ */}
-        <div className="relative w-10 h-10 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/40 transition-all duration-200 shadow cursor-pointer select-none" onClick={() => setIsLangDropdownOpen(v => !v)}>
-          <span className="text-2xl" style={{fontSize: '2rem'}}>{selectedLang.flag}</span>
-          {isLangDropdownOpen && (
-            <div className="absolute left-0 top-12 z-50 bg-white rounded-xl shadow-lg py-2 w-40 border border-gray-200 animate-fade-in">
-              {LANGUAGES.map(lang => (
-                <div
-                  key={lang.code}
-                  className={`flex items-center gap-2 px-4 py-2 cursor-pointer hover:bg-amber-100 rounded-lg transition text-gray-900 ${lang.code === language ? 'bg-amber-50 font-bold' : ''}`}
-                  onClick={e => { e.stopPropagation(); handleLangSelect(lang.code); }}
-                >
-                  <span className="text-xl">{lang.flag}</span>
-                  <span className="text-base">{lang.label}</span>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-        {/* TabBar nằm giữa */}
-        <div className="flex-1 flex justify-center">
-          <TabBar />
-        </div>
-        {/* Nút info/avatar */}
-        <button
-          onClick={() => setShowInfographic(true)}
-          className="w-10 h-10 flex items-center justify-center rounded-full border-2 border-amber-300 bg-white/20 hover:bg-white/40 transition-all duration-200 shadow"
-        >
-          <span className="material-icons text-2xl text-amber-400">info</span>
-        </button>
-      </div>
-      {/* Desktop: giữ nguyên layout cũ */}
-      <div className="hidden sm:flex items-center justify-between w-full mb-4">
-        <style>{shimmerAnimation}</style>
-        <div className="relative w-12 h-12 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/40 transition-all duration-200 shadow mr-2 cursor-pointer select-none" onClick={() => setIsLangDropdownOpen(v => !v)}>
-          <span className="text-2xl" style={{fontSize: '2rem'}}>{selectedLang.flag}</span>
-          {isLangDropdownOpen && (
-            <div className="absolute left-0 top-14 z-50 bg-white rounded-xl shadow-lg py-2 w-40 border border-gray-200 animate-fade-in">
-              {LANGUAGES.map(lang => (
-                <div
-                  key={lang.code}
-                  className={`flex items-center gap-2 px-4 py-2 cursor-pointer hover:bg-amber-100 rounded-lg transition text-gray-900 ${lang.code === language ? 'bg-amber-50 font-bold' : ''}`}
-                  onClick={e => { e.stopPropagation(); handleLangSelect(lang.code); }}
-                >
-                  <span className="text-xl">{lang.flag}</span>
-                  <span className="text-base">{lang.label}</span>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-        <div className="flex flex-col items-center w-full mb-4">
-          <div className="flex flex-row items-end justify-center w-full mb-4 gap-1">
-            <span style={{
-              color: '#FFC94A',
-              fontWeight: 900,
-              fontSize: '3.2rem',
-              letterSpacing: '0.1em',
-              fontFamily: 'Impact, Arial Black, sans-serif',
-              textShadow: '0 2px 8px rgba(0,0,0,0.18)',
-              background: 'linear-gradient(90deg, #FFC94A, #FFD700, #FFC94A)',
-              backgroundSize: '200% auto',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              animation: 'shimmer 3s linear infinite',
-              filter: 'drop-shadow(0 0 8px rgba(255, 201, 74, 0.5))'
-            }}>HAI</span>
-            <span style={{
-              color: '#4FC3F7',
-              fontWeight: 900,
-              fontSize: '3.2rem',
-              letterSpacing: '0.1em',
-              fontFamily: 'Impact, Arial Black, sans-serif',
-              textShadow: '0 2px 8px rgba(0,0,0,0.18)',
-              background: 'linear-gradient(90deg, #4FC3F7, #81D4FA, #4FC3F7)',
-              backgroundSize: '200% auto',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              animation: 'shimmer 3s linear infinite',
-              filter: 'drop-shadow(0 0 8px rgba(79, 195, 247, 0.5))'
-            }}>LY</span>
-            <span style={{
-              color: '#444',
-              fontWeight: 700,
-              fontSize: '1.5rem',
-              letterSpacing: '0.18em',
-              marginLeft: '0.3em',
-              fontFamily: 'Montserrat, Arial, sans-serif',
-              textShadow: '0 1px 4px rgba(0,0,0,0.10)',
-              background: 'linear-gradient(90deg, #444, #666, #444)',
-              backgroundSize: '200% auto',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              animation: 'shimmer 3s linear infinite',
-              filter: 'drop-shadow(0 0 4px rgba(68, 68, 68, 0.3))'
-            }}>TRAVEL</span>
+    <div className="flex items-center justify-between w-full mb-4">
+      <style>{shimmerAnimation}</style>
+      <div className="relative w-12 h-12 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/40 transition-all duration-200 shadow mr-2 cursor-pointer select-none" onClick={() => setIsLangDropdownOpen(v => !v)}>
+        <span className="text-2xl" style={{fontSize: '2rem'}}>{selectedLang.flag}</span>
+        {isLangDropdownOpen && (
+          <div className="absolute left-0 top-14 z-50 bg-white rounded-xl shadow-lg py-2 w-40 border border-gray-200 animate-fade-in">
+            {LANGUAGES.map(lang => (
+              <div
+                key={lang.code}
+                className={`flex items-center gap-2 px-4 py-2 cursor-pointer hover:bg-amber-100 rounded-lg transition text-gray-900 ${lang.code === language ? 'bg-amber-50 font-bold' : ''}`}
+                onClick={e => { e.stopPropagation(); handleLangSelect(lang.code); }}
+              >
+                <span className="text-xl">{lang.flag}</span>
+                <span className="text-base">{lang.label}</span>
+              </div>
+            ))}
           </div>
-        </div>
-        {/* Nút info/avatar ở góc phải */}
-        <button
-          onClick={() => setShowInfographic(true)}
-          className="w-10 h-10 flex items-center justify-center rounded-full border-2 border-amber-300 bg-white/20 hover:bg-white/40 transition-all duration-200 shadow ml-2"
-        >
-          <span className="material-icons text-2xl text-amber-400">info</span>
-        </button>
+        )}
       </div>
-    </>
+      <div className="flex flex-col items-center w-full mb-4">
+        <div className="hidden sm:flex flex-row items-end justify-center w-full mb-4 gap-1">
+          <span style={{
+            color: '#FFC94A',
+            fontWeight: 900,
+            fontSize: '3.2rem',
+            letterSpacing: '0.1em',
+            fontFamily: 'Impact, Arial Black, sans-serif',
+            textShadow: '0 2px 8px rgba(0,0,0,0.18)',
+            background: 'linear-gradient(90deg, #FFC94A, #FFD700, #FFC94A)',
+            backgroundSize: '200% auto',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            animation: 'shimmer 3s linear infinite',
+            filter: 'drop-shadow(0 0 8px rgba(255, 201, 74, 0.5))'
+          }}>HAI</span>
+          <span style={{
+            color: '#4FC3F7',
+            fontWeight: 900,
+            fontSize: '3.2rem',
+            letterSpacing: '0.1em',
+            fontFamily: 'Impact, Arial Black, sans-serif',
+            textShadow: '0 2px 8px rgba(0,0,0,0.18)',
+            background: 'linear-gradient(90deg, #4FC3F7, #81D4FA, #4FC3F7)',
+            backgroundSize: '200% auto',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            animation: 'shimmer 3s linear infinite',
+            filter: 'drop-shadow(0 0 8px rgba(79, 195, 247, 0.5))'
+          }}>LY</span>
+          <span style={{
+            color: '#444',
+            fontWeight: 700,
+            fontSize: '1.5rem',
+            letterSpacing: '0.18em',
+            marginLeft: '0.3em',
+            fontFamily: 'Montserrat, Arial, sans-serif',
+            textShadow: '0 1px 4px rgba(0,0,0,0.10)',
+            background: 'linear-gradient(90deg, #444, #666, #444)',
+            backgroundSize: '200% auto',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            animation: 'shimmer 3s linear infinite',
+            filter: 'drop-shadow(0 0 4px rgba(68, 68, 68, 0.3))'
+          }}>TRAVEL</span>
+        </div>
+      </div>
+      {/* Nút info/avatar ở góc phải */}
+      <button
+        onClick={() => setShowInfographic(true)}
+        className="w-10 h-10 flex items-center justify-center rounded-full border-2 border-amber-300 bg-white/20 hover:bg-white/40 transition-all duration-200 shadow ml-2"
+      >
+        <span className="material-icons text-2xl text-amber-400">info</span>
+      </button>
+    </div>
   );
 
   // 2. TABS: Style lại thanh menu ngang thành tab bo tròn, scroll ngang, slider mượt, snap từng tab
@@ -700,14 +665,12 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
         perspective: '1000px'
       }}
     >
-      {/* Đặt TabBar ngoài container để không bị giới hạn chiều rộng */}
-      <TabBar />
       <div className="container mx-auto flex flex-col items-center justify-start text-white p-3 pt-6 sm:p-5 sm:pt-10 lg:pt-16 overflow-visible pb-32 sm:pb-24" 
         style={{ transform: 'translateZ(20px)', minHeight: 'fit-content' }}
       >
         {/* --- LAYOUT MỚI MOBILE --- */}
         <Header />
-        {/* <TabBar />  // Đã chuyển ra ngoài */}
+        <TabBar />
         <IconGroup />
         {activeIcon && iconMediaMap[activeIcon] && iconMediaMap[activeIcon].length > 0 && (
           <div className="w-full overflow-x-auto flex flex-row gap-4 pb-4">
@@ -717,7 +680,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                 <div className="p-4">
                   <p className="text-sm text-gray-700 mb-2">{media.description}</p>
                 </div>
-              </div>
+            </div>
             ))}
           </div>
         )}
@@ -730,7 +693,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
               <button onClick={() => setShowInfographic(false)} className="absolute top-2 right-2 text-gray-500 hover:text-pink-600 text-2xl">&times;</button>
               <div className="text-gray-800">
                 <InfographicSteps />
-              </div>
+            </div>
             </div>
           </div>
         )}

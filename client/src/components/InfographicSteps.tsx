@@ -94,7 +94,7 @@ const steps = [
   // Dọc như cũ
   return (
     <div className="w-full max-w-2xl mx-auto mb-4">
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 bg-white/10 rounded-lg relative">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 bg-white/10 rounded-lg">
         {steps.map((step, idx) => (
           <div key={step.title} className="flex items-center gap-2">
             <span className="material-icons text-amber-400">{step.icon}</span>
@@ -107,7 +107,7 @@ const steps = [
         {isMobile && showProgress && (
           <button 
             onClick={() => setShowProgress(false)}
-            className="absolute top-2 right-2 text-gray-500 hover:text-pink-600"
+            className="absolute top-2 right-2 text-white/60 hover:text-white"
           >
             <span className="material-icons">close</span>
           </button>
