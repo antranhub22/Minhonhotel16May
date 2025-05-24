@@ -4,6 +4,7 @@ interface ReferenceItem {
   url: string;
   description?: string;
   keywords: string[];
+  image?: string;
 }
 
 interface ReferenceMap {
