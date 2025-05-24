@@ -49,7 +49,8 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
   const [showReference, setShowReference] = useState(false);
 
   // Thêm state để quản lý menu đang chọn trên mobile
-  const [activeMenu, setActiveMenu] = useState<string>('tours');
+  type MenuKey = 'tours' | 'bus' | 'vehicle' | 'currency' | 'laundry' | 'homestay';
+  const [activeMenu, setActiveMenu] = useState<MenuKey>('tours');
 
   // State để điều khiển popup infographic
   const [showInfographic, setShowInfographic] = useState(false);
@@ -279,6 +280,16 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
     "homestay_300k", "homestay_300_600k", "homestay_600k", "homestay_longterm", "homestay_fullhouse", "homestay_additional"
   ];
 
+  // Thêm biến ánh xạ iconMap
+  const iconMap = {
+    tours: travelTourIcons,
+    bus: busTicketIcons,
+    vehicle: vehicleRentalIcons,
+    currency: currencyIcons,
+    laundry: laundryIcons,
+    homestay: homestayIcons,
+  };
+
   // Hàm dùng chung cho mọi ngôn ngữ
   const handleCall = async (lang: 'en' | 'fr' | 'zh' | 'ru' | 'ko') => {
     setEmailSentForCurrentSession(false);
@@ -475,7 +486,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
   // 3. ICON GROUP: Style lại icon group cho bo tròn, nhỏ gọn, đặt phía trên card
   const IconGroup = () => (
     <div className="flex flex-row gap-2 mb-2 justify-center">
-      {renderIconGroup(travelTourIcons, travelTourIcons.length, 20)}
+      {iconMap[activeMenu] && renderIconGroup(iconMap[activeMenu], iconMap[activeMenu].length, 20)}
     </div>
   );
 
