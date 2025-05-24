@@ -219,6 +219,15 @@ const VoiceAssistant: React.FC = () => {
   const allMedia = Object.values(iconMediaMap).flat();
   const bookmarkedMedia = allMedia.filter(m => bookmarks.includes(m.src));
 
+  // State filter cho bookmark
+  const [bookmarkFilter, setBookmarkFilter] = useState('');
+
+  // Lọc bookmark theo filter
+  const filteredBookmarkedMedia = bookmarkedMedia.filter(media =>
+    (media.alt?.toLowerCase() || '').includes(bookmarkFilter.toLowerCase()) ||
+    (media.description?.toLowerCase() || '').includes(bookmarkFilter.toLowerCase())
+  );
+
   // Focus trap & ESC cho modal chi tiết
   const modalRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -288,7 +297,7 @@ const VoiceAssistant: React.FC = () => {
     </div>
   );
 
-  // Render modal bookmark (tối ưu mobile)
+  // Render modal bookmark (tối ưu mobile, thêm filter)
   const renderBookmarkModal = () => showBookmarkModal && (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm animate-fadein" onClick={() => setShowBookmarkModal(false)}>
       <div ref={bookmarkModalRef} className="bg-card-bg rounded-2xl shadow-2xl p-4 max-w-md w-[96vw] relative max-h-[92vh] overflow-y-auto animate-scalein" onClick={e => e.stopPropagation()} tabIndex={-1} aria-modal="true" role="dialog">
@@ -296,11 +305,19 @@ const VoiceAssistant: React.FC = () => {
           <span className="material-icons text-2xl">close</span>
         </button>
         <h2 className="text-xl font-bold text-white mb-4 text-center">Dịch vụ đã lưu</h2>
-        {bookmarkedMedia.length === 0 ? (
-          <div className="text-center text-gray-300 py-8">Chưa có dịch vụ nào được lưu.</div>
+        <input
+          type="text"
+          value={bookmarkFilter}
+          onChange={e => setBookmarkFilter(e.target.value)}
+          placeholder="Tìm kiếm dịch vụ..."
+          className="w-full mb-4 px-3 py-2 rounded-lg bg-black/20 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+          style={{fontSize: '1rem'}}
+        />
+        {filteredBookmarkedMedia.length === 0 ? (
+          <div className="text-center text-gray-300 py-8">Không tìm thấy dịch vụ phù hợp.</div>
         ) : (
           <div className="flex flex-col gap-4">
-            {bookmarkedMedia.map((media, idx) => (
+            {filteredBookmarkedMedia.map((media, idx) => (
               <div key={idx} className="bg-black/20 rounded-xl p-3 flex gap-3 items-center relative" style={{minHeight: 80}}>
                 <img src={media.src} alt={media.alt || ''} className="w-16 h-16 object-cover rounded-lg flex-shrink-0" />
                 <div className="flex-1 min-w-0">
