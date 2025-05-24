@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useAssistant } from '@/context/AssistantContext';
 import Interface1 from './Interface1';
 import Interface2 from './Interface2';
@@ -10,8 +10,43 @@ import { useWebSocket } from '@/hooks/useWebSocket';
 import { Link } from 'wouter';
 import { History } from 'lucide-react';
 import InfographicSteps from './InfographicSteps';
+import { iconMediaMap, IconMedia } from '../assets/iconMediaMap';
+import { SiriButton } from './SiriButton';
 
 const API_HOST = import.meta.env.VITE_API_HOST || '';
+
+const SERVICE_GROUPS = [
+  { key: 'tours', label: 'Tours', icons: ['tour_halfday', 'tour_fullday', 'tour_multiday', 'special_tour'] },
+  { key: 'bus', label: 'Bus Tickets', icons: ['bus_hcm', 'bus_dl', 'bus_nt', 'bus_dn', 'bus_ct', 'bus_mt', 'bus_vt', 'bus_other'] },
+  { key: 'vehicle', label: 'Vehicle Rental', icons: ['motorcycle', 'car_driver', 'car_self'] },
+  { key: 'currency', label: 'Currency Exchange', icons: ['usd', 'eur', 'krw', 'rub', 'currency_other'] },
+  { key: 'laundry', label: 'Laundry Service', icons: ['laundry_regular', 'laundry_special', 'laundry_express', 'laundry_additional'] },
+  { key: 'homestay', label: 'Homestay', icons: ['homestay_300k', 'homestay_300_600k', 'homestay_600k', 'homestay_longterm', 'homestay_fullhouse', 'homestay_additional'] },
+];
+
+const ICON_DISPLAY_NAMES: Record<string, string> = {
+  tour_halfday: 'Half Day', tour_fullday: 'Full Day', tour_multiday: '2+ Days', special_tour: 'Special',
+  bus_hcm: 'HCM', bus_dl: 'Dalat', bus_nt: 'Nha Trang', bus_dn: 'Da Nang', bus_ct: 'Can Tho', bus_mt: 'My Tho', bus_vt: 'Vung Tau', bus_other: 'Other',
+  motorcycle: 'Motorbike', car_driver: 'Car+Driver', car_self: 'Self-drive',
+  usd: 'USD', eur: 'EUR', krw: 'KRW', rub: 'RUB', currency_other: 'Other',
+  laundry_regular: 'Regular', laundry_special: 'Special', laundry_express: 'Express', laundry_additional: 'Additional',
+  homestay_300k: '<300k', homestay_300_600k: '300-600k', homestay_600k: '>600k', homestay_longterm: 'Long-term', homestay_fullhouse: 'Full House', homestay_additional: 'Additional',
+};
+
+const ICON_COMPONENTS = {
+  // ... (có thể import lại từ Interface1 nếu cần, hoặc dùng icon mặc định)
+};
+
+const SiriButtonWrapper: React.FC = () => {
+  const ref = useRef<HTMLDivElement>(null);
+  React.useEffect(() => {
+    if (ref.current) {
+      const siri = new SiriButton(ref.current.id);
+      return () => siri.cleanup();
+    }
+  }, []);
+  return <div id="siri-btn-canvas" style={{ width: 72, height: 72 }} ref={ref}></div>;
+};
 
 const VoiceAssistant: React.FC = () => {
   const { currentInterface, language } = useAssistant();
@@ -25,6 +60,10 @@ const VoiceAssistant: React.FC = () => {
 
   // State filter package
   const [selectedPackage, setSelectedPackage] = useState<'all' | 'flight' | 'hotel' | 'tour'>('all');
+
+  // State dịch vụ chính và sub-item
+  const [selectedService, setSelectedService] = useState('tours');
+  const [selectedSub, setSelectedSub] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -56,6 +95,45 @@ const VoiceAssistant: React.FC = () => {
     if (selectedPackage === 'tour') return type.includes('tour');
     return false;
   });
+
+  // Khi đổi dịch vụ chính, reset sub-item
+  useEffect(() => { setSelectedSub(null); }, [selectedService]);
+
+  // Lấy danh sách sub-item cho dịch vụ đang chọn
+  const subIcons = SERVICE_GROUPS.find(g => g.key === selectedService)?.icons || [];
+
+  // Khi chọn sub-item, lấy media từ iconMediaMap
+  const mediaList: IconMedia[] = selectedSub ? (iconMediaMap[selectedSub] || []) : [];
+
+  // Render slider sub-item
+  const renderSubSlider = () => (
+    <div className="flex flex-row gap-2 px-4 pb-3 overflow-x-auto">
+      {subIcons.map(icon => (
+        <button key={icon} onClick={() => setSelectedSub(icon)} className={`flex flex-col items-center px-3 py-2 rounded-lg shadow ${selectedSub === icon ? 'bg-[var(--accent-yellow)] text-black' : 'bg-card-bg text-white'}`}> 
+          {/* Có thể thêm icon ở đây nếu muốn */}
+          <span className="material-icons text-2xl mb-1">star</span>
+          <span className="text-xs font-semibold">{ICON_DISPLAY_NAMES[icon]}</span>
+        </button>
+      ))}
+    </div>
+  );
+
+  // Render card dịch vụ từ mediaList
+  const renderMediaCards = () => (
+    <div className="flex flex-col gap-6 px-4 pb-24">
+      {mediaList.length === 0 ? (
+        <div className="text-center text-white py-12">Chọn một hạng mục để xem chi tiết.</div>
+      ) : mediaList.map((media, idx) => (
+        <div key={idx} className="bg-card-bg rounded-3xl shadow-lg p-4" style={{boxShadow: 'var(--card-shadow)'}}>
+          <div className="h-40 bg-gray-700 rounded-2xl mb-3 overflow-hidden flex items-center justify-center">
+            <img src={media.src} alt={media.alt || ''} className="object-cover w-full h-full rounded-2xl" />
+          </div>
+          <h3 className="text-lg font-bold text-white mb-1">{media.alt}</h3>
+          <p className="text-gray-300 text-sm mb-2 whitespace-pre-line">{media.description}</p>
+        </div>
+      ))}
+    </div>
+  );
 
   // Hàm mapping order thành card UI
   const renderOrderCard = (order: any, idx: number) => {
@@ -114,34 +192,27 @@ const VoiceAssistant: React.FC = () => {
         <h2 className="text-xl italic text-gray-200" style={{fontFamily: 'var(--font-main)'}}>Your Travels</h2>
       </div>
 
-      {/* Thanh chọn package */}
+      {/* Menu dịch vụ chính */}
       <div className="flex flex-row gap-2 px-4 pb-3 overflow-x-auto">
-        <button onClick={() => setSelectedPackage('all')} className={`px-4 py-2 rounded-full font-semibold shadow ${selectedPackage === 'all' ? 'bg-[var(--accent-yellow)] text-black' : 'bg-card-bg text-white'}`}>All Package</button>
-        <button onClick={() => setSelectedPackage('flight')} className={`px-4 py-2 rounded-full font-semibold shadow ${selectedPackage === 'flight' ? 'bg-[var(--accent-yellow)] text-black' : 'bg-card-bg text-white'}`}>Flight Package</button>
-        <button onClick={() => setSelectedPackage('hotel')} className={`px-4 py-2 rounded-full font-semibold shadow ${selectedPackage === 'hotel' ? 'bg-[var(--accent-yellow)] text-black' : 'bg-card-bg text-white'}`}>Hotel Package</button>
-        <button onClick={() => setSelectedPackage('tour')} className={`px-4 py-2 rounded-full font-semibold shadow ${selectedPackage === 'tour' ? 'bg-[var(--accent-yellow)] text-black' : 'bg-card-bg text-white'}`}>Tour Package</button>
+        {SERVICE_GROUPS.map(g => (
+          <button key={g.key} onClick={() => setSelectedService(g.key)} className={`px-4 py-2 rounded-full font-semibold shadow ${selectedService === g.key ? 'bg-[var(--accent-yellow)] text-black' : 'bg-card-bg text-white'}`}>{g.label}</button>
+        ))}
       </div>
-
-      {/* Danh sách card dịch vụ */}
-      <div className="flex-1 px-4 pb-24 overflow-y-auto">
-        {loading ? (
-          <div className="text-center text-white py-12">Đang tải dữ liệu...</div>
-        ) : filteredOrders.length === 0 ? (
-          <div className="text-center text-white py-12">Không có dịch vụ nào.</div>
-        ) : (
-          filteredOrders.map(renderOrderCard)
-        )}
-      </div>
+      {/* Slider sub-item */}
+      {renderSubSlider()}
+      {/* Danh sách card dịch vụ từ media động */}
+      {renderMediaCards()}
 
       {/* Thanh điều hướng dưới */}
       <nav className="fixed bottom-0 left-0 w-full flex items-center justify-around bg-card-bg py-3 px-6 rounded-t-3xl shadow-2xl" style={{boxShadow: 'var(--card-shadow)'}}>
         <button className="flex flex-col items-center">
           <span className="material-icons text-white text-2xl">home</span>
         </button>
-        <button className="flex flex-col items-center bg-gradient-to-r from-[var(--accent-blue)] to-[var(--accent-purple)] px-6 py-2 rounded-full shadow-lg" style={{boxShadow: 'var(--card-shadow)'}}>
-          <span className="material-icons text-white text-2xl">smart_toy</span>
-          <span className="text-xs text-white font-semibold mt-1">Chat With AI</span>
-        </button>
+        {/* Thay Chat With AI bằng SiriButton */}
+        <div className="flex flex-col items-center">
+          <SiriButtonWrapper />
+          <span className="text-xs text-white font-semibold mt-1">Press to Order</span>
+        </div>
         <button className="flex flex-col items-center">
           <span className="material-icons text-white text-2xl">bookmark_border</span>
         </button>
