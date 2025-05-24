@@ -50,6 +50,50 @@ export const orderStatusSchema = z.enum([
   OrderStatus.NOTE
 ]);
 
+// Validation schema for room number
+export const roomNumberSchema = z.string()
+  .regex(/^[0-9]{1,4}[A-Za-z]?$/, 'Room number must be 1-4 digits followed by optional letter')
+  .min(1, 'Room number is required');
+
+// Validation schema for order type
+export const orderTypeSchema = z.enum([
+  'room-service',
+  'food-beverage',
+  'housekeeping',
+  'transportation',
+  'spa',
+  'tours-activities',
+  'technical-support',
+  'concierge',
+  'wellness-fitness',
+  'security',
+  'special-occasions',
+  'other'
+]);
+
+// Validation schema for delivery time
+export const deliveryTimeSchema = z.enum(['asap', '30min', '1hour', 'specific']);
+
+// Enhanced order schema with validation
+export const orderSchema = z.object({
+  id: z.number().optional(),
+  callId: z.string().min(1, 'Call ID is required'),
+  roomNumber: roomNumberSchema,
+  orderType: orderTypeSchema,
+  deliveryTime: deliveryTimeSchema,
+  specialInstructions: z.string().optional(),
+  items: z.array(z.object({
+    id: z.string(),
+    name: z.string(),
+    description: z.string(),
+    quantity: z.number().min(1),
+    price: z.number().min(0)
+  })),
+  totalAmount: z.number().min(0),
+  status: orderStatusSchema,
+  createdAt: z.date().optional()
+});
+
 export const orders = pgTable("orders", {
   id: serial("id").primaryKey(),
   callId: text("call_id").notNull(),

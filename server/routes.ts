@@ -2,7 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { WebSocketServer, WebSocket } from 'ws';
-import { insertTranscriptSchema, insertOrderSchema, insertCallSummarySchema } from "@shared/schema";
+import { insertTranscriptSchema, insertOrderSchema, insertCallSummarySchema, OrderStatus, roomNumberSchema } from "@shared/schema";
 import { z } from "zod";
 import { generateCallSummary, generateBasicSummary, extractServiceRequests, translateToVietnamese } from "./openai";
 import OpenAI from "openai";
@@ -244,13 +244,51 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Create new order
   app.post('/api/orders', async (req, res) => {
     try {
-      const orderData = insertOrderSchema.parse(req.body);
+      // Validate request body
+      const orderData = insertOrderSchema.parse({
+        ...req.body,
+        status: req.body.status || OrderStatus.PENDING,
+        createdAt: new Date()
+      });
+
+      // Additional validation for required fields
+      if (!orderData.roomNumber || !orderData.orderType) {
+        return res.status(400).json({ 
+          error: 'Missing required fields',
+          details: {
+            roomNumber: !orderData.roomNumber ? 'Room number is required' : undefined,
+            orderType: !orderData.orderType ? 'Order type is required' : undefined
+          }
+        });
+      }
+
+      // Validate items array
+      if (!Array.isArray(orderData.items) || orderData.items.length === 0) {
+        return res.status(400).json({ 
+          error: 'Invalid items',
+          details: 'Order must contain at least one item'
+        });
+      }
+
+      // Calculate total amount if not provided
+      if (!orderData.totalAmount) {
+        orderData.totalAmount = orderData.items.reduce(
+          (sum, item) => sum + (item.price * item.quantity), 
+          0
+        );
+      }
+
       const order = await storage.createOrder(orderData);
       res.status(201).json(order);
     } catch (error) {
       if (error instanceof z.ZodError) {
-        res.status(400).json({ error: 'Invalid order data', details: error.errors });
+        res.status(400).json({ 
+          error: 'Invalid order data', 
+          details: error.errors,
+          message: 'Please check your input data'
+        });
       } else {
+        console.error('Failed to create order:', error);
         handleApiError(res, error, 'Failed to create order');
       }
     }
@@ -272,13 +310,36 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
-  // Get orders by room number
+  // Get orders by room number with enhanced error handling
   app.get('/api/orders/room/:roomNumber', async (req, res) => {
     try {
       const roomNumber = req.params.roomNumber;
+      
+      // Validate room number format
+      if (!roomNumberSchema.safeParse(roomNumber).success) {
+        return res.status(400).json({ 
+          error: 'Invalid room number format',
+          details: 'Room number must be 1-4 digits followed by optional letter'
+        });
+      }
+
       const orders = await storage.getOrdersByRoomNumber(roomNumber);
-      res.json(orders);
+      
+      // Add additional metadata
+      const response = {
+        success: true,
+        count: orders.length,
+        roomNumber,
+        orders: orders.map(order => ({
+          ...order,
+          status: order.status || OrderStatus.PENDING,
+          createdAt: order.createdAt || new Date()
+        }))
+      };
+
+      res.json(response);
     } catch (error) {
+      console.error('Failed to retrieve orders:', error);
       handleApiError(res, error, 'Failed to retrieve orders');
     }
   });

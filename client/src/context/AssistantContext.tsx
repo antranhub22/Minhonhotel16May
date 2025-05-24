@@ -508,36 +508,64 @@ export function AssistantProvider({ children }: { children: ReactNode }) {
     let polling: NodeJS.Timeout | null = null;
     const fetchOrders = async () => {
       try {
-        // Sử dụng biến môi trường VITE_API_HOST nếu có, hoặc fallback sang domain backend mặc định
         const API_HOST = import.meta.env.VITE_API_HOST || "https://minhnhotelben.onrender.com";
         const res = await fetch(`${API_HOST}/api/orders`);
-        if (!res.ok) return;
+        
+        if (!res.ok) {
+          const errorData = await res.json().catch(() => ({}));
+          console.error('[AssistantContext] API Error:', {
+            status: res.status,
+            statusText: res.statusText,
+            error: errorData
+          });
+          return;
+        }
+
         const data = await res.json();
         console.log('[AssistantContext] Fetched orders from API:', data);
-        // data là mảng order, cần map sang ActiveOrder (chuyển requestedAt sang Date)
+
         if (Array.isArray(data)) {
           setActiveOrders(prev => {
-            // Chuyển data từ API về ActiveOrder chuẩn
-            const apiOrders = data.map((o: any) => ({
-              ...o,
-              reference: o.specialInstructions || o.reference || '',
-              requestedAt: o.createdAt ? new Date(o.createdAt) : new Date(),
-              callId: o.callId // Đảm bảo luôn có callId
-            }));
-            // Lọc các order local chưa có trong API (theo reference)
-            const localOnly = prev.filter(localOrder => !apiOrders.some(apiOrder => apiOrder.reference === localOrder.reference));
-            // Gộp lại: localOnly + apiOrders (order mới sẽ ở đầu)
-            return [...localOnly, ...apiOrders];
+            try {
+              // Validate each order against schema
+              const apiOrders = data.map((o: any) => {
+                // Basic validation
+                if (!o.roomNumber || !o.orderType) {
+                  console.warn('[AssistantContext] Invalid order data:', o);
+                  return null;
+                }
+
+                return {
+                  ...o,
+                  reference: o.specialInstructions || o.reference || '',
+                  requestedAt: o.createdAt ? new Date(o.createdAt) : new Date(),
+                  callId: o.callId || ''
+                };
+              }).filter(Boolean); // Remove invalid orders
+
+              // Lọc các order local chưa có trong API
+              const localOnly = prev.filter(localOrder => 
+                !apiOrders.some(apiOrder => apiOrder.reference === localOrder.reference)
+              );
+
+              // Gộp lại: localOnly + apiOrders (order mới sẽ ở đầu)
+              return [...localOnly, ...apiOrders];
+            } catch (err) {
+              console.error('[AssistantContext] Error processing orders:', err);
+              return prev; // Keep existing orders on error
+            }
           });
         }
       } catch (err) {
-        // ignore
+        console.error('[AssistantContext] Network error:', err);
       }
     };
+
     if (currentInterface === 'interface1' || currentInterface === 'interface2') {
       fetchOrders();
       polling = setInterval(fetchOrders, 5000);
     }
+
     return () => {
       if (polling) clearInterval(polling);
     };
