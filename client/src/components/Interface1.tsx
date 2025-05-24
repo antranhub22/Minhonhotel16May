@@ -486,7 +486,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
             <FaGlobeAsia className="text-[#DAC17A] text-xl mr-1.5" 
               style={{ filter: 'drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.2))' }}
             />
-            <label className="mr-2 font-semibold font-sans text-white whitespace-nowrap text-sm sm:text-base">{t('language', lang)}:</label>
+            <label className="mr-2 font-semibold font-sans text-white whitespace-nowrap text-xs sm:text-base">{t('language', lang)}:</label>
             <div className="relative flex-1">
               <select
                 value={language}
@@ -530,22 +530,22 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
         {isMobile && (
           <div className="w-full flex justify-center mb-8">
             {activeMenu === 'tours' && (
-              <div className="w-full overflow-x-auto whitespace-nowrap no-scrollbar"><ul className="flex flex-row flex-nowrap justify-start items-center gap-x-[0.85rem] py-0">{renderIconGroup(travelTourIcons, travelTourIcons.length, 16)}</ul></div>
+              <div className="w-full overflow-x-auto whitespace-nowrap no-scrollbar"><ul className="flex flex-row flex-nowrap justify-start items-center gap-x-[0.85rem] py-0">{renderIconGroup(travelTourIcons, travelTourIcons.length, 18)}</ul></div>
             )}
             {activeMenu === 'bus' && (
-              <div className="w-full overflow-x-auto whitespace-nowrap no-scrollbar"><ul className="flex flex-row flex-nowrap justify-start items-center gap-x-[0.85rem] py-0">{renderIconGroup(busTicketIcons, busTicketIcons.length, 16)}</ul></div>
+              <div className="w-full overflow-x-auto whitespace-nowrap no-scrollbar"><ul className="flex flex-row flex-nowrap justify-start items-center gap-x-[0.85rem] py-0">{renderIconGroup(busTicketIcons, busTicketIcons.length, 18)}</ul></div>
             )}
             {activeMenu === 'vehicle' && (
-              <div className="w-full overflow-x-auto whitespace-nowrap no-scrollbar"><ul className="flex flex-row flex-nowrap justify-start items-center gap-x-[0.85rem] py-0">{renderIconGroup(vehicleRentalIcons, vehicleRentalIcons.length, 16)}</ul></div>
+              <div className="w-full overflow-x-auto whitespace-nowrap no-scrollbar"><ul className="flex flex-row flex-nowrap justify-start items-center gap-x-[0.85rem] py-0">{renderIconGroup(vehicleRentalIcons, vehicleRentalIcons.length, 18)}</ul></div>
             )}
             {activeMenu === 'currency' && (
-              <div className="w-full overflow-x-auto whitespace-nowrap no-scrollbar"><ul className="flex flex-row flex-nowrap justify-start items-center gap-x-[0.85rem] py-0">{renderIconGroup(currencyIcons, currencyIcons.length, 16)}</ul></div>
+              <div className="w-full overflow-x-auto whitespace-nowrap no-scrollbar"><ul className="flex flex-row flex-nowrap justify-start items-center gap-x-[0.85rem] py-0">{renderIconGroup(currencyIcons, currencyIcons.length, 18)}</ul></div>
             )}
             {activeMenu === 'laundry' && (
-              <div className="w-full overflow-x-auto whitespace-nowrap no-scrollbar"><ul className="flex flex-row flex-nowrap justify-start items-center gap-x-[0.85rem] py-0">{renderIconGroup(laundryIcons, laundryIcons.length, 16)}</ul></div>
+              <div className="w-full overflow-x-auto whitespace-nowrap no-scrollbar"><ul className="flex flex-row flex-nowrap justify-start items-center gap-x-[0.85rem] py-0">{renderIconGroup(laundryIcons, laundryIcons.length, 18)}</ul></div>
             )}
             {activeMenu === 'homestay' && (
-              <div className="w-full overflow-x-auto whitespace-nowrap no-scrollbar"><ul className="flex flex-row flex-nowrap justify-start items-center gap-x-[0.85rem] py-0">{renderIconGroup(homestayIcons, homestayIcons.length, 16)}</ul></div>
+              <div className="w-full overflow-x-auto whitespace-nowrap no-scrollbar"><ul className="flex flex-row flex-nowrap justify-start items-center gap-x-[0.85rem] py-0">{renderIconGroup(homestayIcons, homestayIcons.length, 18)}</ul></div>
             )}
           </div>
         )}
