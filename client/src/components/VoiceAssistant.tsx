@@ -27,7 +27,7 @@ const VoiceAssistant: React.FC = () => {
             <img src="/assets/references/images/haily-logo1.jpg" alt="Haily Logo" className="h-16 sm:h-20 w-auto rounded-lg shadow-md bg-white/80 p-1" />
           </div>
           {/* Center: InfographicSteps - luôn ngang, nhỏ lại trên mobile */}
-          <div className="flex-1 flex justify-center">
+          <div className="hidden sm:flex flex-1 justify-center">
             <div className="w-full max-w-xs sm:max-w-md">
               <InfographicSteps 
                 horizontal 
