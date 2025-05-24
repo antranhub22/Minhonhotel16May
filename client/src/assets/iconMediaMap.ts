@@ -156,96 +156,156 @@ export const iconMediaMap: Record<string, IconMedia[]> = {
     {
       type: 'image',
       src: '/assets/tour_halfday/tour_halfday_1.jpg',
-      alt: 'Tour Half Day 1',
-      description: 'Destination: White Sand Dunes\nTime: 04:30 - 06:00\nActivity: Sunrise Jeep Tour\nGuide: Mr. A'
+      alt: 'White Sand Dunes 1',
+      description: 'Tour Name: East Of Mui Ne\nDestination: White Sand Dunes\nTime: 04:30 - 06:00\nActivity: Sunrise Jeep Tour\nGuide: Mr. A'
     },
     {
       type: 'image',
       src: '/assets/tour_halfday/tour_halfday_2.jpg',
       alt: 'Tour Half Day 2',
-      description: 'Destination: Red Sand Dunes\nTime: 06:15 - 07:00\nActivity: Sand Sliding\nGuide: Mr. B'
+      description: 'Tour Name: East Of Mui Ne\nDestination: Red Sand Dunes\nTime: 06:15 - 07:00\nActivity: Sand Sliding\nGuide: Mr. B'
     },
     {
       type: 'image',
       src: '/assets/tour_halfday/tour_halfday_3.jpg',
       alt: 'Tour Half Day 3',
-      description: 'Destination: Fairy Stream\nTime: 07:15 - 08:00\nActivity: Walking in the stream\nGuide: Ms. C'
+      description: 'Tour Name: East Of Mui Ne\nDestination: Fairy Stream\nTime: 07:15 - 08:00\nActivity: Walking in the stream\nGuide: Ms. C'
     },
     {
       type: 'image',
       src: '/assets/tour_halfday/tour_halfday_4.jpg',
       alt: 'Tour Half Day 4',
-      description: 'Destination: Fishing Village\nTime: 08:15 - 08:45\nActivity: Local Life Experience\nGuide: Mr. D'
+      description: 'Tour Name: East Of Mui Ne\nDestination: Fishing Village\nTime: 08:15 - 08:45\nActivity: Local Life Experience\nGuide: Mr. D'
     },
     {
       type: 'image',
       src: '/assets/tour_halfday/tour_halfday_5.jpg',
       alt: 'Tour Half Day 5',
-      description: 'Destination: Mui Ne Beach\nTime: 09:00 - 09:30\nActivity: Relaxing\nGuide: Ms. E'
+      description: 'Tour Name: East Of Mui Ne\nDestination: Mui Ne Beach\nTime: 09:00 - 09:30\nActivity: Relaxing\nGuide: Ms. E'
     },
     {
       type: 'image',
       src: '/assets/tour_halfday/tour_halfday_6.jpg',
       alt: 'Tour Half Day 6',
-      description: 'Destination: Lotus Lake\nTime: 09:45 - 10:15\nActivity: Photo Stop\nGuide: Mr. F'
+      description: 'Tour Name: East Of Mui Ne\nDestination: Lotus Lake\nTime: 09:45 - 10:15\nActivity: Photo Stop\nGuide: Mr. F'
     },
     {
       type: 'image',
       src: '/assets/tour_halfday/tour_halfday_7.jpg',
       alt: 'Tour Half Day 7',
-      description: 'Destination: Local Market\nTime: 10:30 - 11:00\nActivity: Shopping\nGuide: Ms. G'
+      description: 'Tour Name: East Of Mui Ne\nDestination: Local Market\nTime: 10:30 - 11:00\nActivity: Shopping\nGuide: Ms. G'
     },
     {
       type: 'image',
       src: '/assets/tour_halfday/tour_halfday_8.jpg',
       alt: 'Tour Half Day 8',
-      description: 'Destination: Dragon Fruit Farm\nTime: 11:15 - 11:45\nActivity: Farm Visit\nGuide: Mr. H'
+      description: 'Tour Name: East Of Mui Ne\nDestination: Dragon Fruit Farm\nTime: 11:15 - 11:45\nActivity: Farm Visit\nGuide: Mr. H'
     },
     {
       type: 'image',
       src: '/assets/tour_halfday/tour_halfday_9.jpg',
       alt: 'Tour Half Day 9',
-      description: 'Destination: Cham Tower\nTime: 12:00 - 12:30\nActivity: Sightseeing\nGuide: Ms. I'
+      description: 'Tour Name: East Of Mui Ne\nDestination: Cham Tower\nTime: 12:00 - 12:30\nActivity: Sightseeing\nGuide: Ms. I'
     },
     {
       type: 'image',
       src: '/assets/tour_halfday/tour_halfday_10.jpg',
       alt: 'Tour Half Day 10',
-      description: 'Destination: Sand Sculpture Park\nTime: 12:45 - 13:15\nActivity: Art Visit\nGuide: Mr. J'
+      description: 'Tour Name: East Of Mui Ne\nDestination: Sand Sculpture Park\nTime: 12:45 - 13:15\nActivity: Art Visit\nGuide: Mr. J'
     },
     {
       type: 'image',
       src: '/assets/tour_halfday/tour_halfday_11.jpg',
       alt: 'Tour Half Day 11',
-      description: 'Destination: Mui Ne Harbor\nTime: 13:30 - 14:00\nActivity: Boat Watching\nGuide: Ms. K'
+      description: 'Tour Name: East Of Mui Ne\nDestination: Mui Ne Harbor\nTime: 13:30 - 14:00\nActivity: Boat Watching\nGuide: Ms. K'
     },
     {
       type: 'image',
       src: '/assets/tour_halfday/tour_halfday_12.jpg',
       alt: 'Tour Half Day 12',
-      description: 'Destination: Local Pagoda\nTime: 14:15 - 14:45\nActivity: Cultural Visit\nGuide: Mr. L'
+      description: 'Tour Name: East Of Mui Ne\nDestination: Local Pagoda\nTime: 14:15 - 14:45\nActivity: Cultural Visit\nGuide: Mr. L'
     },
     {
       type: 'image',
       src: '/assets/tour_halfday/tour_halfday_13.jpg',
       alt: 'Tour Half Day 13',
-      description: 'Destination: Sunset Point\nTime: 15:00 - 15:30\nActivity: Sunset Watching\nGuide: Ms. M'
+      description: 'Tour Name: East Of Mui Ne\nDestination: Sunset Point\nTime: 15:00 - 15:30\nActivity: Sunset Watching\nGuide: Ms. M'
+    },
+    {
+      type: 'image',
+      src: '/assets/tour_halfday/Fairy_Stream2.jpg',
+      alt: 'Fairy Stream 2',
+      description: 'Tour Name: East Of Mui Ne\nDestination: Fairy Stream\nTime: 07:15 - 08:00\nActivity: Walking in the stream\nGuide: Ms. C'
+    },
+    {
+      type: 'image',
+      src: '/assets/tour_halfday/Fairy_Stream1.png',
+      alt: 'Fairy Stream 1',
+      description: 'Tour Name: East Of Mui Ne\nDestination: Fairy Stream\nTime: 07:15 - 08:00\nActivity: Walking in the stream\nGuide: Ms. C'
     }
   ],
   tour_fullday: [
     {
       type: 'image',
-      src: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80',
-      alt: 'Tour Full Day Demo 1',
-      description: `Tour: East Of Mui Ne\nDuration: Full-day\nPickup: Hotel\nItinerary: Tà Cú Pagoda, Cable Car, Poshanu Cham Towers\nInclusions: Transport, Tickets, Guide\nPrice: ~850,000 VND/person`
+      src: '/assets/tour_fullday/PoSahInu_Tower1.jpg',
+      alt: 'Po Sah Inu Tower 1',
+      description: 'Tour Name: East Of Mui Ne\nAttraction: Po Sah Inu Tower\nLocation: Phan Thiet\nHighlight: Cham architecture\nActivity: Sightseeing'
+    },
+    {
+      type: 'image',
+      src: '/assets/tour_fullday/PoSahInu_Tower2.jpg',
+      alt: 'Po Sah Inu Tower 2',
+      description: 'Tour Name: East Of Mui Ne\nAttraction: Po Sah Inu Tower\nLocation: Phan Thiet\nHighlight: Cham architecture\nActivity: Sightseeing'
+    },
+    {
+      type: 'image',
+      src: '/assets/tour_fullday/dragon fruit plantation.jpeg',
+      alt: 'Dragon Fruit Plantation',
+      description: 'Tour Name: East Of Mui Ne\nAttraction: Dragon Fruit Plantation\nActivity: Farm Visit\nHighlight: Local agriculture'
+    },
+    {
+      type: 'image',
+      src: '/assets/tour_fullday/Ke ga lighthouse.jpg',
+      alt: 'Ke Ga Lighthouse',
+      description: 'Tour Name: East Of Mui Ne\nAttraction: Ke Ga Lighthouse\nLocation: Ke Ga Cape\nHighlight: Oldest lighthouse in Vietnam\nActivity: Sightseeing'
+    },
+    {
+      type: 'image',
+      src: '/assets/tour_fullday/KeGa_Lighthouse1.jpg',
+      alt: 'Ke Ga Lighthouse 1',
+      description: 'Tour Name: East Of Mui Ne\nAttraction: Ke Ga Lighthouse\nLocation: Ke Ga Cape\nHighlight: Oldest lighthouse in Vietnam\nActivity: Sightseeing'
+    },
+    {
+      type: 'image',
+      src: '/assets/tour_fullday/Wine_Castle2.jpg',
+      alt: 'Wine Castle 2',
+      description: 'Tour Name: East Of Mui Ne\nAttraction: Wine Castle\nLocation: Mui Ne\nHighlight: Wine tasting, European architecture\nActivity: Visit & Tasting'
     }
   ],
   tour_multiday: [
     {
       type: 'image',
-      src: 'https://images.unsplash.com/photo-1465156799763-2c087c332922?auto=format&fit=crop&w=600&q=80',
-      alt: 'Tour Multi Day Demo 1',
-      description: `Tour: Mui Ne – Da Lat 2D1N\nItinerary: Prenn waterfall, Langbiang, Tuyen Lam Lake, Flower Garden\nInclusions: Hotel, Meals, Entrance Fees, Guide\nPrice: ~2,500,000 – 3,000,000 VND/person\nLanguage: Vietnamese, English`
+      src: '/assets/tour_multiday/Tuyen_Lam_Lake_Dalat.jpg',
+      alt: 'Tuyen Lam Lake Dalat',
+      description: 'Tour Name: East Of Mui Ne\nAttraction: Tuyen Lam Lake\nLocation: Da Lat\nHighlight: Scenic lake, boat ride\nActivity: Sightseeing'
+    },
+    {
+      type: 'image',
+      src: '/assets/tour_multiday/Langbiang-dalat-2.jpg',
+      alt: 'Langbiang Dalat 2',
+      description: 'Tour Name: East Of Mui Ne\nAttraction: Langbiang Mountain\nLocation: Da Lat\nHighlight: Trekking, panoramic view\nActivity: Hiking'
+    },
+    {
+      type: 'image',
+      src: '/assets/tour_multiday/Prenn_Waterfall_tour1.jpg',
+      alt: 'Prenn Waterfall Tour 1',
+      description: 'Tour Name: East Of Mui Ne\nAttraction: Prenn Waterfall\nLocation: Da Lat\nHighlight: Waterfall, elephant ride\nActivity: Sightseeing'
+    },
+    {
+      type: 'image',
+      src: '/assets/tour_multiday/flower-garden-dalat.jpg',
+      alt: 'Flower Garden Dalat',
+      description: 'Tour Name: East Of Mui Ne\nAttraction: Flower Garden\nLocation: Da Lat\nHighlight: Colorful flowers, photography\nActivity: Visit & Photo'
     }
   ],
   special_tour: [
