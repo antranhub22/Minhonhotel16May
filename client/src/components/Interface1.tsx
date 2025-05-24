@@ -513,50 +513,24 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
       <div className="container mx-auto flex flex-col items-center justify-start text-white p-3 pt-6 sm:p-5 sm:pt-10 lg:pt-16 overflow-visible pb-32 sm:pb-24" 
         style={{ transform: 'translateZ(20px)', minHeight: 'fit-content' }}
       >
-        {/* Header: Call History + Language + Infographic */}
-        <div className="flex items-center justify-center w-full max-w-2xl mb-4 sm:mb-2">
-          {/* Call History icon (giả sử đã có) */}
-          <button className="flex items-center justify-center mr-2 px-2 py-1.5 bg-white/80 border border-amber-400 rounded-full shadow text-blue-900 font-bold text-sm sm:text-lg">
-            <span className="material-icons text-lg sm:text-2xl text-amber-400">history</span>
-          </button>
-          {/* Infographic icon */}
-          <button
-            onClick={() => setShowInfographic(true)}
-            className="flex items-center justify-center mr-2 px-2 py-1.5 bg-white/80 border border-amber-400 rounded-full shadow text-blue-900 font-bold text-sm sm:text-lg"
-            style={{ minWidth: 32, minHeight: 32 }}
-            title="Guidance"
-          >
-            <span className="material-icons text-lg sm:text-2xl text-amber-400">info</span>
-          </button>
-          {/* Language selector nhỏ lại */}
-          <div className="flex items-center px-2 py-1.5 sm:py-1.5 gap-2 transition-all duration-300 mx-auto sm:mx-0"
-            style={{
-              background: 'linear-gradient(135deg, #4e5ab7 0%, #3f51b5 100%)',
-              boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.15)',
-              borderRadius: '8px',
-              minWidth: '90px',
-              maxWidth: '60%',
-              width: 'auto',
-              border: '1px solid rgba(255, 255, 255, 0.1)'
-            }}>
-            <FaGlobeAsia className="text-[#DAC17A] text-lg mr-1.5 hidden sm:inline"
-              style={{ filter: 'drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.2))' }}
-            />
-            <div className="relative flex-1">
-              <select
-                value={language}
-                onChange={e => setLanguage(e.target.value as 'en' | 'fr' | 'zh' | 'ru' | 'ko')}
-                className="appearance-none w-full pl-4 sm:pl-8 pr-4 py-1 sm:py-1.5 font-sans bg-transparent focus:outline-none transition-all duration-200 text-xs sm:text-base"
-                style={{ fontWeight: 600, color: '#fff', textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)', borderRadius: '8px' }}
-              >
-                <option value="en">🇬🇧 English</option>
-                <option value="fr">🇫🇷 Français</option>
-                <option value="zh">🇨🇳 中文</option>
-                <option value="ru">🇷🇺 Русский</option>
-                <option value="ko">🇰🇷 한국어</option>
-              </select>
-              <FiChevronDown className="absolute right-1 top-1/2 -translate-y-1/2 text-[#DAC17A] pointer-events-none text-base" />
-            </div>
+        {/* Header: Logo trái, Info & History phải (mobile) */}
+        <div className="flex items-center justify-between w-full max-w-2xl mb-4 sm:mb-2">
+          {/* Logo bên trái */}
+          <img src={require('../assets/haily-logo.png')} alt="Haily Travel Agency" className="w-16 h-16 rounded-xl shadow bg-white p-2" />
+          {/* Nhóm nút bên phải */}
+          <div className="flex items-center gap-2">
+            {/* Nút Info */}
+            <button
+              onClick={() => setShowInfographic(true)}
+              className="flex items-center justify-center w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 transition-all duration-200 shadow"
+              title="Guidance"
+            >
+              <span className="material-icons text-2xl text-amber-400">info</span>
+            </button>
+            {/* Nút Call History */}
+            <button className="flex items-center justify-center w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 transition-all duration-200 shadow">
+              <span className="material-icons text-2xl text-white">history</span>
+            </button>
           </div>
         </div>
         {/* Modal Infographic popup */}
