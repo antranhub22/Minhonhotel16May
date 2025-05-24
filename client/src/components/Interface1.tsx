@@ -658,7 +658,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                 {/* Main Button */}
                 <button 
                   id={`vapiButton${lang === 'en' ? 'En' : lang === 'fr' ? 'Fr' : lang === 'zh' ? 'Zh' : lang === 'ru' ? 'Ru' : 'Ko'}`}
-                  className="group relative w-36 h-36 sm:w-40 sm:h-40 rounded-full font-poppins font-bold flex flex-col items-center justify-center overflow-hidden hover:translate-y-[-2px] hover:shadow-[0px_12px_20px_rgba(0,0,0,0.2)]"
+                  className="group relative w-[187px] h-[187px] sm:w-40 sm:h-40 rounded-full font-poppins font-bold flex flex-col items-center justify-center overflow-hidden hover:translate-y-[-2px] hover:shadow-[0px_12px_20px_rgba(0,0,0,0.2)]"
                   onClick={() => handleCall(lang as any)}
                   style={{
                     background: lang === 'en' 
@@ -723,7 +723,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
           {/* Main Button */}
             <button 
                   id={`vapiButton${lang === 'en' ? 'En' : lang === 'fr' ? 'Fr' : lang === 'zh' ? 'Zh' : lang === 'ru' ? 'Ru' : 'Ko'}`}
-            className="group relative w-36 h-36 sm:w-40 sm:h-40 lg:w-56 lg:h-56 rounded-full font-poppins font-bold flex flex-col items-center justify-center overflow-hidden hover:translate-y-[-2px] hover:shadow-[0px_12px_20px_rgba(0,0,0,0.2)]"
+            className="group relative w-[187px] h-[187px] sm:w-40 sm:h-40 lg:w-56 lg:h-56 rounded-full font-poppins font-bold flex flex-col items-center justify-center overflow-hidden hover:translate-y-[-2px] hover:shadow-[0px_12px_20px_rgba(0,0,0,0.2)]"
                   onClick={() => handleCall(lang as any)}
             style={{
                     background: lang === 'en' 
