@@ -507,9 +507,9 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
           <div className="flex flex-row justify-between items-center gap-1 bg-white/10 rounded-lg p-1 shadow">
             <button onClick={() => setActiveMenu('tours')} className={`flex-1 py-2 rounded font-bold text-xs ${activeMenu==='tours' ? 'bg-amber-400 text-pink-900' : 'bg-transparent text-amber-300'}`}>Tours</button>
             <button onClick={() => setActiveMenu('bus')} className={`flex-1 py-2 rounded font-bold text-xs ${activeMenu==='bus' ? 'bg-amber-400 text-pink-900' : 'bg-transparent text-amber-300'}`}>Bus Tickets</button>
-            <button onClick={() => setActiveMenu('vehicle')} className={`flex-1 py-2 rounded font-bold text-xs ${activeMenu==='vehicle' ? 'bg-amber-400 text-pink-900' : 'bg-transparent text-amber-300'}`}>Vehicle</button>
-            <button onClick={() => setActiveMenu('currency')} className={`flex-1 py-2 rounded font-bold text-xs ${activeMenu==='currency' ? 'bg-amber-400 text-pink-900' : 'bg-transparent text-amber-300'}`}>Currency</button>
-            <button onClick={() => setActiveMenu('laundry')} className={`flex-1 py-2 rounded font-bold text-xs ${activeMenu==='laundry' ? 'bg-amber-400 text-pink-900' : 'bg-transparent text-amber-300'}`}>Laundry</button>
+            <button onClick={() => setActiveMenu('vehicle')} className={`flex-1 py-2 rounded font-bold text-xs ${activeMenu==='vehicle' ? 'bg-amber-400 text-pink-900' : 'bg-transparent text-amber-300'}`}>Vehicle Rental</button>
+            <button onClick={() => setActiveMenu('currency')} className={`flex-1 py-2 rounded font-bold text-xs ${activeMenu==='currency' ? 'bg-amber-400 text-pink-900' : 'bg-transparent text-amber-300'}`}>Currency Exchange</button>
+            <button onClick={() => setActiveMenu('laundry')} className={`flex-1 py-2 rounded font-bold text-xs ${activeMenu==='laundry' ? 'bg-amber-400 text-pink-900' : 'bg-transparent text-amber-300'}`}>Laundry Service</button>
             <button onClick={() => setActiveMenu('homestay')} className={`flex-1 py-2 rounded font-bold text-xs ${activeMenu==='homestay' ? 'bg-amber-400 text-pink-900' : 'bg-transparent text-amber-300'}`}>Homestay</button>
           </div>
         </div>
