@@ -557,13 +557,6 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
             ))}
           </div>
         )}
-        {activeIcon && (
-          <div className="w-full overflow-x-auto flex flex-row gap-4 pb-4">
-            {references.filter(ref => ref.keywords && ref.keywords.includes(activeIcon)).map((ref, idx) => (
-              <ServiceCard key={ref.id || idx} refItem={ref} />
-            ))}
-          </div>
-        )}
         <CallButton />
         {/* --- END LAYOUT MỚI --- */}
         {/* Các block giao diện cũ đã được loại bỏ để layout mới hiển thị rõ ràng */}
