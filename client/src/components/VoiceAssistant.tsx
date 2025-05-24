@@ -100,6 +100,9 @@ const VoiceAssistant: React.FC = () => {
   const [selectedService, setSelectedService] = useState('tours');
   const [selectedSub, setSelectedSub] = useState<string | null>(null);
 
+  // State modal chi tiết
+  const [modalMedia, setModalMedia] = useState<IconMedia | null>(null);
+
   useEffect(() => {
     const fetchOrders = async () => {
       try {
@@ -167,7 +170,7 @@ const VoiceAssistant: React.FC = () => {
       {mediaList.length === 0 ? (
         <div className="text-center text-white py-12">Chọn một hạng mục để xem chi tiết.</div>
       ) : mediaList.map((media, idx) => (
-        <div key={idx} className="bg-card-bg rounded-3xl shadow-lg p-4" style={{boxShadow: 'var(--card-shadow)'}}>
+        <div key={idx} className="bg-card-bg rounded-3xl shadow-lg p-4 cursor-pointer transition hover:scale-[1.025] hover:shadow-2xl" style={{boxShadow: 'var(--card-shadow)'}} onClick={() => setModalMedia(media)}>
           <div className="h-40 bg-gray-700 rounded-2xl mb-3 overflow-hidden flex items-center justify-center">
             <img src={media.src} alt={media.alt || ''} className="object-cover w-full h-full rounded-2xl" />
           </div>
@@ -175,6 +178,22 @@ const VoiceAssistant: React.FC = () => {
           <p className="text-gray-300 text-sm mb-2 whitespace-pre-line">{media.description}</p>
         </div>
       ))}
+    </div>
+  );
+
+  // Render modal chi tiết
+  const renderModal = () => modalMedia && (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm" onClick={() => setModalMedia(null)}>
+      <div className="bg-card-bg rounded-2xl shadow-2xl p-4 max-w-md w-[90vw] relative" onClick={e => e.stopPropagation()}>
+        <button className="absolute top-2 right-2 text-white bg-black/30 rounded-full p-1 hover:bg-black/60" onClick={() => setModalMedia(null)}>
+          <span className="material-icons text-2xl">close</span>
+        </button>
+        <div className="w-full h-56 bg-gray-700 rounded-xl mb-4 overflow-hidden flex items-center justify-center">
+          <img src={modalMedia.src} alt={modalMedia.alt || ''} className="object-cover w-full h-full rounded-xl" />
+        </div>
+        <h3 className="text-xl font-bold text-white mb-2">{modalMedia.alt}</h3>
+        <p className="text-gray-200 text-base whitespace-pre-line">{modalMedia.description}</p>
+      </div>
     </div>
   );
 
@@ -245,6 +264,8 @@ const VoiceAssistant: React.FC = () => {
       {renderSubSlider()}
       {/* Danh sách card dịch vụ từ media động */}
       {renderMediaCards()}
+      {/* Modal chi tiết dịch vụ */}
+      {renderModal()}
 
       {/* Thanh điều hướng dưới */}
       <nav className="fixed bottom-0 left-0 w-full flex items-center justify-around bg-card-bg py-3 px-6 rounded-t-3xl shadow-2xl" style={{boxShadow: 'var(--card-shadow)'}}>
