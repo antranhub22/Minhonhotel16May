@@ -99,8 +99,8 @@ const steps = [
           <div key={step.title} className="flex items-center gap-2">
             <span className="material-icons text-amber-400">{step.icon}</span>
             <div>
-              <h3 className="text-sm font-bold text-white">{step.title}</h3>
-              <p className="text-xs text-white/80">{step.desc}</p>
+              <h3 className="text-sm font-bold text-gray-800">{step.title}</h3>
+              <p className="text-xs text-gray-600">{step.desc}</p>
             </div>
           </div>
         ))}
