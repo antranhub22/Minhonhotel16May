@@ -480,6 +480,19 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
     }
   `;
 
+  // Thêm style ẩn chữ trong <select> nhưng không ẩn trong <option>
+  <style>{`
+    select.lang-flag-only {
+      color: transparent !important;
+      text-shadow: 0 0 0 #FFC94A;
+    }
+    select.lang-flag-only option {
+      color: #FFC94A !important;
+      background: #fff !important;
+      text-shadow: none;
+    }
+  `}</style>
+
   // 1. HEADER: Đưa avatar sang phải, menu/hướng dẫn sang trái, thêm tiêu đề lớn dưới header
   const Header = () => (
     <div className="flex items-center justify-between w-full mb-4">
@@ -488,8 +501,16 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
         <select
           value={language}
           onChange={e => setLanguage(e.target.value as Lang)}
-          className="bg-transparent text-amber-300 font-bold text-lg outline-none border-none cursor-pointer w-full h-full text-center appearance-none"
-          style={{ WebkitAppearance: 'none', MozAppearance: 'none', appearance: 'none' }}
+          className="lang-flag-only bg-transparent font-bold text-lg outline-none border-none cursor-pointer w-full h-full text-center appearance-none"
+          style={{
+            background: 'transparent',
+            fontWeight: 700,
+            textAlign: 'center',
+            WebkitAppearance: 'none',
+            MozAppearance: 'none',
+            appearance: 'none',
+            padding: 0,
+          }}
           aria-label="Select language"
         >
           <option value="en">🇬🇧 English</option>
