@@ -12,6 +12,7 @@ import { History, Sun, CalendarDays, CalendarCheck, Star, Bus, Mountain, Umbrell
 import InfographicSteps from './InfographicSteps';
 import { iconMediaMap, IconMedia } from '../assets/iconMediaMap';
 import { SiriButton } from './SiriButton';
+import { startCall, getVapiInstance, initVapi, isVapiInitialized } from '../lib/vapiClient';
 
 const API_HOST = import.meta.env.VITE_API_HOST || '';
 
@@ -72,15 +73,53 @@ const ICON_COMPONENTS: Record<string, JSX.Element> = {
   homestay_additional: <UserRound color="#FFC94A" size={28} strokeWidth={2} />,
 };
 
-const SiriButtonWrapper: React.FC = () => {
+const SiriButtonWrapper: React.FC<{ language: string }> = ({ language }) => {
   const ref = useRef<HTMLDivElement>(null);
-  React.useEffect(() => {
+  const [isCalling, setIsCalling] = useState(false);
+
+  // Hàm lấy assistantId theo ngôn ngữ
+  const getAssistantId = () => {
+    return language === 'fr'
+      ? import.meta.env.VITE_VAPI_ASSISTANT_ID_FR
+      : language === 'zh'
+        ? import.meta.env.VITE_VAPI_ASSISTANT_ID_ZH
+        : language === 'ru'
+          ? import.meta.env.VITE_VAPI_ASSISTANT_ID_RU
+          : language === 'ko'
+            ? import.meta.env.VITE_VAPI_ASSISTANT_ID_KO
+            : import.meta.env.VITE_VAPI_ASSISTANT_ID;
+  };
+
+  useEffect(() => {
     if (ref.current) {
       const siri = new SiriButton(ref.current.id);
       return () => siri.cleanup();
     }
   }, []);
-  return <div id="siri-btn-canvas" style={{ width: 72, height: 72 }} ref={ref}></div>;
+
+  // Hàm xử lý khi nhấn SiriButton
+  const handlePress = async () => {
+    if (isCalling) return;
+    setIsCalling(true);
+    try {
+      // Đảm bảo đã init vapi
+      if (!isVapiInitialized()) {
+        await initVapi(import.meta.env.VITE_VAPI_PUBLIC_KEY || 'demo');
+      }
+      const assistantId = getAssistantId();
+      if (!assistantId) throw new Error('Assistant ID not configured');
+      await startCall(assistantId);
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error('Failed to start Vapi call:', err);
+    } finally {
+      setTimeout(() => setIsCalling(false), 2000); // Đợi 2s rồi cho phép gọi lại
+    }
+  };
+
+  return (
+    <div id="siri-btn-canvas" style={{ width: 72, height: 72, opacity: isCalling ? 0.6 : 1, pointerEvents: isCalling ? 'none' : 'auto' }} ref={ref} onClick={handlePress} aria-disabled={isCalling} tabIndex={0} role="button" aria-label="Press to Order" />
+  );
 };
 
 const VoiceAssistant: React.FC = () => {
@@ -429,7 +468,7 @@ const VoiceAssistant: React.FC = () => {
         </button>
         {/* Thay Chat With AI bằng SiriButton */}
         <div className="flex flex-col items-center">
-          <SiriButtonWrapper />
+          <SiriButtonWrapper language={language} />
           <span className="text-xs text-white font-semibold mt-1">Press to Order</span>
         </div>
         <button className="flex flex-col items-center relative" onClick={() => setShowBookmarkModal(true)}>
