@@ -499,7 +499,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
             </div>
           </div>
         </div>
-        <h2 className="font-poppins font-bold text-2xl sm:text-3xl lg:text-4xl text-amber-400 mb-2 text-center"
+        <h2 className="font-poppins font-bold text-base sm:text-3xl lg:text-4xl text-amber-400 mb-2 text-center"
           style={{ textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)' }}>
           <span style={{ color: 'red', fontStyle: 'italic', marginRight: 8 }}>Demo</span>{t('hotel_name', lang)}
         </h2>
