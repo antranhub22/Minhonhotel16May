@@ -14,7 +14,27 @@
 
   body {
     @apply font-sans antialiased bg-background text-foreground;
+    background: linear-gradient(135deg, #23255d 0%, #3a3e8e 50%, #5b5fd6 100%);
+    min-height: 100vh;
+    color: #fff;
   }
+}
+
+:root {
+  --primary: #23255d;
+  --primary-dark: #181a3a;
+  --accent-yellow: #ffe84a;
+  --accent-yellow-neon: #faff00;
+  --accent-blue: #5b5fd6;
+  --accent-purple: #7b5fff;
+  --card-bg: rgba(30, 32, 60, 0.85);
+  --card-shadow: 0 4px 24px 0 rgba(0,0,0,0.18);
+  --border-radius: 22px;
+  --font-main: 'Poppins', 'Arial', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-main);
 }
 
 .card-title {
