@@ -644,7 +644,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                 if (match) {
                   return (
                     <div key={idx} className="mb-0.5">
-                      <span className="font-bold text-pink-900">{match[1]}:</span> <span className="font-medium">{match[2]}</span>
+                      <span className="font-bold text-amber-700">{match[1]}:</span> <span className="font-medium text-gray-900">{match[2]}</span>
                     </div>
                   );
                 }
