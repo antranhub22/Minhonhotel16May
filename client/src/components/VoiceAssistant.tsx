@@ -211,6 +211,54 @@ const VoiceAssistant: React.FC = () => {
     </div>
   );
 
+  // State modal bookmark
+  const [showBookmarkModal, setShowBookmarkModal] = useState(false);
+
+  // Lấy danh sách media đã bookmark (tìm trong iconMediaMap)
+  const allMedia = Object.values(iconMediaMap).flat();
+  const bookmarkedMedia = allMedia.filter(m => bookmarks.includes(m.src));
+
+  // Render modal bookmark
+  const renderBookmarkModal = () => showBookmarkModal && (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm" onClick={() => setShowBookmarkModal(false)}>
+      <div className="bg-card-bg rounded-2xl shadow-2xl p-4 max-w-md w-[90vw] relative max-h-[90vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+        <button className="absolute top-2 right-2 text-white bg-black/30 rounded-full p-1 hover:bg-black/60" onClick={() => setShowBookmarkModal(false)}>
+          <span className="material-icons text-2xl">close</span>
+        </button>
+        <h2 className="text-xl font-bold text-white mb-4 text-center">Dịch vụ đã lưu</h2>
+        {bookmarkedMedia.length === 0 ? (
+          <div className="text-center text-gray-300 py-8">Chưa có dịch vụ nào được lưu.</div>
+        ) : (
+          <div className="flex flex-col gap-4">
+            {bookmarkedMedia.map((media, idx) => (
+              <div key={idx} className="bg-black/20 rounded-xl p-3 flex gap-3 items-center relative">
+                <img src={media.src} alt={media.alt || ''} className="w-16 h-16 object-cover rounded-lg flex-shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <div className="font-bold text-white truncate">{media.alt}</div>
+                  <div className="text-xs text-gray-300 truncate">{media.description?.split('\n')[0]}</div>
+                </div>
+                <button
+                  className={`ml-2 p-1 rounded-full transition ${isBookmarked(media) ? 'bg-yellow-400 text-pink-900' : 'bg-black/30 text-white hover:bg-yellow-400 hover:text-pink-900'}`}
+                  onClick={() => toggleBookmark(media)}
+                  title={isBookmarked(media) ? 'Bỏ yêu thích' : 'Lưu vào yêu thích'}
+                >
+                  <span className="material-icons text-xl">bookmark{isBookmarked(media) ? '' : '_border'}</span>
+                </button>
+                <button
+                  className="ml-2 p-1 rounded-full bg-blue-500 text-white hover:bg-blue-600"
+                  onClick={() => { setModalMedia(media); setShowBookmarkModal(false); }}
+                  title="Xem chi tiết"
+                >
+                  <span className="material-icons text-xl">open_in_new</span>
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+
   // Render modal chi tiết
   const renderModal = () => modalMedia && (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm" onClick={() => setModalMedia(null)}>
@@ -303,6 +351,8 @@ const VoiceAssistant: React.FC = () => {
       {renderMediaCards()}
       {/* Modal chi tiết dịch vụ */}
       {renderModal()}
+      {/* Modal bookmark */}
+      {renderBookmarkModal()}
 
       {/* Thanh điều hướng dưới */}
       <nav className="fixed bottom-0 left-0 w-full flex items-center justify-around bg-card-bg py-3 px-6 rounded-t-3xl shadow-2xl" style={{boxShadow: 'var(--card-shadow)'}}>
@@ -314,8 +364,9 @@ const VoiceAssistant: React.FC = () => {
           <SiriButtonWrapper />
           <span className="text-xs text-white font-semibold mt-1">Press to Order</span>
         </div>
-        <button className="flex flex-col items-center">
+        <button className="flex flex-col items-center relative" onClick={() => setShowBookmarkModal(true)}>
           <span className="material-icons text-white text-2xl">bookmark_border</span>
+          {bookmarks.length > 0 && <span className="absolute -top-1 -right-1 bg-yellow-400 text-pink-900 rounded-full px-1 text-xs font-bold">{bookmarks.length}</span>}
         </button>
       </nav>
     </div>
