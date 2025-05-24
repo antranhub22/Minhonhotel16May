@@ -463,9 +463,21 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
   // 1. HEADER: Đưa avatar sang phải, menu/hướng dẫn sang trái, thêm tiêu đề lớn dưới header
   const Header = () => (
     <div className="flex items-center justify-between w-full mb-4">
-      <button onClick={() => setShowInfographic(true)} className="w-10 h-10 flex items-center justify-center rounded-full border-2 border-amber-300 bg-white/20 hover:bg-white/40 transition-all duration-200 shadow">
-        <span className="material-icons text-2xl text-amber-400">info</span>
-      </button>
+      <div className="w-12 h-12 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/40 transition-all duration-200 shadow mr-2">
+        <select
+          value={language}
+          onChange={e => setLanguage(e.target.value as Lang)}
+          className="bg-transparent text-amber-300 font-bold text-lg outline-none border-none cursor-pointer w-full h-full text-center appearance-none"
+          style={{ WebkitAppearance: 'none', MozAppearance: 'none', appearance: 'none' }}
+          aria-label="Select language"
+        >
+          <option value="en">🇬🇧</option>
+          <option value="fr">🇫🇷</option>
+          <option value="zh">🇨🇳</option>
+          <option value="ru">🇷🇺</option>
+          <option value="ko">🇰🇷</option>
+        </select>
+      </div>
       <h1 className="text-4xl sm:text-5xl font-extrabold uppercase text-center flex-1 bg-gradient-to-r from-yellow-300 via-white to-yellow-400 bg-clip-text text-transparent drop-shadow-lg tracking-wide" style={{textShadow: '0 4px 24px rgba(0,0,0,0.35), 0 1px 0 #fff'}}>HaiLy Travel</h1>
     </div>
   );
