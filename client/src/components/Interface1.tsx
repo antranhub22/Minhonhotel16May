@@ -601,31 +601,6 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
 
   const TabBar = () => (
     <>
-      {/* Mobile: Dropdown */}
-      <div className="block sm:hidden w-full mb-4">
-        <div className="relative w-full">
-          <button
-            className="w-full px-4 py-3 rounded-full bg-white/80 text-pink-900 font-bold text-base flex items-center justify-between shadow border border-amber-200"
-            onClick={() => setShowTabDropdown(v => !v)}
-          >
-            {tabOptions.find(opt => opt.key === activeMenu)?.label}
-            <span className="material-icons ml-2 text-amber-400">expand_more</span>
-          </button>
-          {showTabDropdown && (
-            <div className="absolute left-0 right-0 mt-2 bg-white rounded-xl shadow-lg z-50 border border-amber-100 overflow-hidden animate-fade-in">
-              {tabOptions.map(opt => (
-                <button
-                  key={opt.key}
-                  className={`w-full text-left px-4 py-3 text-base font-bold ${activeMenu === opt.key ? 'bg-amber-100 text-pink-900' : 'text-gray-700 hover:bg-amber-50'}`}
-                  onClick={() => { setActiveMenu(opt.key as MenuKey); setShowTabDropdown(false); }}
-                >
-                  {opt.label}
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
       {/* Desktop: Tab bar ngang */}
       <div className="hidden sm:flex w-full overflow-x-auto flex-row flex-nowrap whitespace-nowrap gap-2 bg-white/10 rounded-lg p-1 shadow no-scrollbar mb-4 scrollbar-hide scroll-snap-x"
         style={{ WebkitOverflowScrolling: 'touch', scrollBehavior: 'smooth', scrollSnapType: 'x mandatory', minWidth: 0 }}
@@ -634,7 +609,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
           <button
             key={opt.key}
             onClick={() => setActiveMenu(opt.key as MenuKey)}
-            className={`flex-shrink-0 min-w-[160px] px-4 py-2 rounded-full font-bold text-base scroll-snap-align-start ${activeMenu===opt.key ? 'bg-amber-400 text-pink-900 shadow' : 'bg-transparent text-amber-300'}`}
+            className={`flex-shrink-0 min-w-[160px] sm:min-w-[120px] px-4 py-2 rounded-full font-bold text-base sm:text-sm scroll-snap-align-start ${activeMenu === opt.key ? 'bg-amber-400 text-pink-900 shadow' : 'bg-transparent text-amber-300'}`}
           >
             {opt.label}
           </button>
