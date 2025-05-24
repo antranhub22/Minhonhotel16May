@@ -8,7 +8,8 @@ import { initVapi, getVapiInstance } from '@/lib/vapiClient';
 import { FaGlobeAsia } from 'react-icons/fa';
 import { FiChevronDown } from 'react-icons/fi';
 import { DualReference } from './Reference';
-import { referenceService, ReferenceItem } from '@/services/ReferenceService';
+import { referenceService } from '@/services/ReferenceService';
+import type { ReferenceItem } from '@/services/ReferenceService';
 import { iconMediaMap, IconMedia } from '../assets/iconMediaMap';
 import { FaMountain, FaCarSide, FaUmbrellaBeach, FaStar, FaBusAlt, FaRoute, FaMotorcycle, FaTaxi, FaMoneyBillWave, FaEuroSign, FaPoundSign, FaYenSign, FaRubleSign, FaExchangeAlt, FaBitcoin, FaTshirt, FaSoap, FaBolt, FaPlus, FaHome, FaBuilding, FaCalendarAlt, FaPlusSquare, FaDollarSign, FaWonSign, FaCity } from 'react-icons/fa';
 import { ReferenceMedia, ReferenceSlider } from './Reference';
@@ -592,9 +593,11 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
     </div>
   );
 
-  // 2. TABS: Style lại thanh menu ngang thành tab bo tròn, scroll ngang
+  // 2. TABS: Style lại thanh menu ngang thành tab bo tròn, scroll ngang, slider mượt, snap từng tab
   const TabBar = () => (
-    <div className="flex flex-row flex-nowrap overflow-x-auto whitespace-nowrap gap-2 bg-white/10 rounded-lg p-1 shadow no-scrollbar mb-4 scrollbar-hide scroll-snap-x" style={{ WebkitOverflowScrolling: 'touch' }}>
+    <div className="flex flex-row flex-nowrap overflow-x-auto whitespace-nowrap gap-2 bg-white/10 rounded-lg p-1 shadow no-scrollbar mb-4 scrollbar-hide scroll-snap-x"
+      style={{ WebkitOverflowScrolling: 'touch', scrollBehavior: 'smooth', scrollSnapType: 'x mandatory' }}
+    >
       <button onClick={() => setActiveMenu('tours')} className={`flex-shrink-0 min-w-[120px] px-4 py-2 rounded-full font-bold text-sm scroll-snap-align-start ${activeMenu==='tours' ? 'bg-amber-400 text-pink-900 shadow' : 'bg-transparent text-amber-300'}`}>Tours</button>
       <button onClick={() => setActiveMenu('bus')} className={`flex-shrink-0 min-w-[120px] px-4 py-2 rounded-full font-bold text-sm scroll-snap-align-start ${activeMenu==='bus' ? 'bg-amber-400 text-pink-900 shadow' : 'bg-transparent text-amber-300'}`}>Bus Tickets</button>
       <button onClick={() => setActiveMenu('vehicle')} className={`flex-shrink-0 min-w-[120px] px-4 py-2 rounded-full font-bold text-sm scroll-snap-align-start ${activeMenu==='vehicle' ? 'bg-amber-400 text-pink-900 shadow' : 'bg-transparent text-amber-300'}`}>Vehicle Rental</button>
@@ -614,7 +617,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
   // 4. CARD DỊCH VỤ: Style lại card/reference: ảnh lớn, overlay, tag, nút heart/arrow, slider ngang
   const ServiceCard = ({ refItem }: { refItem: ReferenceItem }) => (
     <div className="relative min-w-[280px] max-w-xs rounded-2xl shadow-lg overflow-hidden bg-white/90">
-      <img src={refItem.image && typeof refItem.image === 'string' ? refItem.image : hotelImage} alt={refItem.title || 'Service'} className="w-full h-40 object-cover" />
+      <img src={refItem.image ? refItem.image : hotelImage} alt={refItem.title || 'Service'} className="w-full h-40 object-cover" />
       <div className="absolute top-2 left-2 flex gap-1">
         <span className="bg-amber-400 text-xs font-bold px-2 py-1 rounded-full">AI</span>
         <span className="bg-blue-400 text-xs font-bold px-2 py-1 rounded-full">3 Days</span>
