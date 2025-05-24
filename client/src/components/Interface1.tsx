@@ -14,6 +14,7 @@ import { FaMountain, FaCarSide, FaUmbrellaBeach, FaStar, FaBusAlt, FaRoute, FaMo
 import { ReferenceMedia, ReferenceSlider } from './Reference';
 import { OrderStatus } from '@shared/schema';
 import { Bus, Mountain, Landmark, Car, CarFront, Bike, Coins, Euro, DollarSign, Shirt, Sparkles, Home, Building2, CalendarDays, KeyRound, UserRound, Plus, Star, Sun, CalendarCheck, Umbrella, Map, Ship, Waves, ArrowRightLeft } from 'lucide-react';
+import InfographicSteps from './InfographicSteps';
 
 interface Interface1Props {
   isActive: boolean;
@@ -612,6 +613,13 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
           }}>TRAVEL</span>
         </div>
       </div>
+      {/* Nút info/avatar ở góc phải */}
+      <button
+        onClick={() => setShowInfographic(true)}
+        className="w-10 h-10 flex items-center justify-center rounded-full border-2 border-amber-300 bg-white/20 hover:bg-white/40 transition-all duration-200 shadow ml-2"
+      >
+        <span className="material-icons text-2xl text-amber-400">info</span>
+      </button>
     </div>
   );
 
@@ -711,9 +719,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
           <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center">
             <div className="bg-white rounded-xl p-6 shadow-lg max-w-md w-full relative">
               <button onClick={() => setShowInfographic(false)} className="absolute top-2 right-2 text-gray-500 hover:text-pink-600 text-2xl">&times;</button>
-              {/* Nội dung infographic/progress ở đây */}
-              <h2 className="text-xl font-bold mb-2 text-pink-900">Infographic/Progress</h2>
-              <p className="text-gray-700">Nội dung infographic hoặc tiến trình bạn muốn hiển thị...</p>
+              <InfographicSteps />
             </div>
           </div>
         )}
