@@ -545,18 +545,24 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
         <div className="block sm:hidden w-full max-w-xs mx-auto">
           <div className="relative w-full">
             <button
-              className="w-full px-4 py-3 rounded-full bg-white/80 text-pink-900 font-bold text-base flex items-center justify-between shadow border border-amber-200"
+              className="w-full px-4 py-3 rounded-2xl bg-white/30 backdrop-blur-md text-amber-100 font-bold text-base flex items-center justify-between shadow-lg border border-white/30 focus:outline-none focus:ring-2 focus:ring-amber-300 transition-all duration-200"
+              style={{ boxShadow: '0 4px 24px 0 rgba(139,26,71,0.10)', fontFamily: 'Poppins, sans-serif', letterSpacing: '0.02em' }}
               onClick={() => setShowTabDropdown(v => !v)}
             >
-              {tabOptions.find(opt => opt.key === activeMenu)?.label}
-              <span className="material-icons ml-2 text-amber-400">expand_more</span>
+              <span className="truncate text-lg font-semibold text-amber-100 drop-shadow-sm" style={{textShadow:'0 1px 6px rgba(139,26,71,0.18)'}}>
+                {tabOptions.find(opt => opt.key === activeMenu)?.label}
+              </span>
+              <span className="material-icons ml-2 text-amber-200 transition-transform duration-200" style={{transform: showTabDropdown ? 'rotate(180deg)' : 'rotate(0deg)'}}>expand_more</span>
             </button>
             {showTabDropdown && (
-              <div className="absolute left-0 right-0 mt-2 bg-white rounded-xl shadow-lg z-50 border border-amber-100 overflow-hidden animate-fade-in">
+              <div className="absolute left-0 right-0 mt-2 bg-white/80 bg-gradient-to-br from-[#fff7] to-[#ffe9b3cc] rounded-2xl shadow-2xl z-50 border border-amber-100 overflow-hidden animate-fade-in backdrop-blur-md"
+                style={{animation: 'dropdown-fade-in 0.22s cubic-bezier(.4,0,.2,1)'}}
+              >
                 {tabOptions.map(opt => (
                   <button
                     key={opt.key}
-                    className={`w-full text-left px-4 py-3 text-base font-bold ${activeMenu === opt.key ? 'bg-amber-100 text-pink-900' : 'text-gray-700 hover:bg-amber-50'}`}
+                    className={`w-full text-left px-5 py-3 text-base font-semibold transition-all duration-150 ${activeMenu === opt.key ? 'bg-amber-100/80 text-pink-900' : 'text-amber-900 hover:bg-amber-50/80 hover:text-pink-900'}`}
+                    style={{fontFamily:'Poppins, sans-serif', letterSpacing:'0.01em'}}
                     onClick={() => { setActiveMenu(opt.key as MenuKey); setShowTabDropdown(false); }}
                   >
                     {opt.label}
@@ -564,6 +570,12 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                 ))}
               </div>
             )}
+            <style>{`
+              @keyframes dropdown-fade-in {
+                0% { opacity: 0; transform: translateY(-12px) scale(0.98); }
+                100% { opacity: 1; transform: translateY(0) scale(1); }
+              }
+            `}</style>
           </div>
         </div>
       </div>
