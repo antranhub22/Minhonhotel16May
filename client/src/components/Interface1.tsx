@@ -14,6 +14,7 @@ import { FaMountain, FaCarSide, FaUmbrellaBeach, FaStar, FaBusAlt, FaRoute, FaMo
 import { ReferenceMedia, ReferenceSlider } from './Reference';
 import { OrderStatus } from '@shared/schema';
 import { Bus, Mountain, Landmark, Car, CarFront, Bike, Coins, Euro, DollarSign, Shirt, Sparkles, Home, Building2, CalendarDays, KeyRound, UserRound, Plus, Star, Sun, CalendarCheck, Umbrella, Map, Ship, Waves, ArrowRightLeft } from 'lucide-react';
+import InfographicSteps from '@/components/InfographicSteps';
 
 interface Interface1Props {
   isActive: boolean;
@@ -461,57 +462,31 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
       <div className="container mx-auto flex flex-col items-center justify-start text-white p-3 pt-6 sm:p-5 sm:pt-10 lg:pt-16 overflow-visible pb-32 sm:pb-24" 
         style={{ transform: 'translateZ(20px)', minHeight: 'fit-content' }}
       >
-        {/* Language Switcher nâng cao */}
-        <div className="flex items-center justify-center sm:justify-end w-full max-w-2xl mb-4 sm:mb-2">
-          {/* Nút Refresh bên trái */}
-          <button
-            onClick={() => window.location.reload()}
-            className="flex items-center justify-center mr-3 px-3 py-2 sm:py-1.5 bg-white/80 hover:bg-yellow-100 border border-amber-400 rounded-full shadow transition-all duration-200 text-blue-900 font-bold text-base sm:text-lg"
-            style={{ minWidth: 40, minHeight: 40 }}
-            title="Refresh"
-          >
-            <span className="material-icons text-xl sm:text-2xl mr-1 text-amber-400">refresh</span>
-            <span className="hidden sm:inline font-semibold">Refresh</span>
-          </button>
-          <div className="flex items-center px-3 py-2 sm:py-1.5 gap-2 transition-all duration-300 mx-auto sm:mx-0" 
-            style={{
-              background: 'linear-gradient(135deg, #4e5ab7 0%, #3f51b5 100%)',
-              boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.15)', 
-              borderRadius: '8px',
-              minWidth: '150px',
-              maxWidth: '95%',
-              width: 'auto',
-              border: '1px solid rgba(255, 255, 255, 0.1)'
-            }}>
-            <FaGlobeAsia className="text-[#DAC17A] text-xl mr-1.5" 
-              style={{ filter: 'drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.2))' }}
-            />
-            <label className="mr-2 font-semibold font-sans text-white whitespace-nowrap text-xs sm:text-base">{t('language', lang)}:</label>
-            <div className="relative flex-1">
-              <select
-                value={language}
-                onChange={e => setLanguage(e.target.value as 'en' | 'fr' | 'zh' | 'ru' | 'ko')}
-                className="appearance-none w-full pl-6 sm:pl-8 pr-6 py-1 sm:py-1.5 font-sans bg-transparent focus:outline-none transition-all duration-200"
-                style={{
-                  fontWeight: 600,
-                  color: '#fff',
-                  textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)',
-                  borderRadius: '8px'
-                }}
-              >
-                <option value="en">🇬🇧 English</option>
-                <option value="fr">🇫🇷 Français</option>
-                <option value="zh">🇨🇳 中文</option>
-                <option value="ru">🇷🇺 Русский</option>
-                <option value="ko">🇰🇷 한국어</option>
-              </select>
-              <FiChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 text-[#DAC17A] pointer-events-none text-lg" />
-            </div>
+        {/* 1. Thanh trên cùng: infographic progress + dropdown ngôn ngữ */}
+        <div className="w-full flex flex-row items-center justify-between mb-2">
+          <div className="flex-1">
+            <InfographicSteps currentStep={1} compact horizontal={false} />
+          </div>
+          <div className="flex items-center ml-2">
+            <FaGlobeAsia className="text-[#DAC17A] text-lg mr-1.5" style={{ filter: 'drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.2))' }} />
+            <select
+              value={language}
+              onChange={e => setLanguage(e.target.value as 'en' | 'fr' | 'zh' | 'ru' | 'ko')}
+              className="appearance-none pl-2 pr-6 py-1 font-sans bg-transparent focus:outline-none text-xs text-white font-semibold rounded"
+              style={{ minWidth: 60 }}
+            >
+              <option value="en">🇬🇧 English</option>
+              <option value="fr">🇫🇷 Français</option>
+              <option value="zh">🇨🇳 中文</option>
+              <option value="ru">🇷🇺 Русский</option>
+              <option value="ko">🇰🇷 한국어</option>
+            </select>
+            <FiChevronDown className="-ml-5 text-[#DAC17A] pointer-events-none text-xs" />
           </div>
         </div>
-        {/* Thanh menu box cho mobile - scroll ngang native */}
-        <div className="block sm:hidden w-full max-w-2xl mx-auto mb-2">
-          <div className="flex flex-row flex-nowrap overflow-x-auto whitespace-nowrap gap-1 bg-white/10 rounded-lg p-1 shadow no-scrollbar">
+        {/* 2. Thanh menu box (nền đậm hơn) */}
+        <div className="w-full max-w-2xl mx-auto mb-2 rounded-lg p-1 shadow" style={{ background: 'rgba(60, 0, 40, 0.85)' }}>
+          <div className="flex flex-row flex-nowrap overflow-x-auto whitespace-nowrap gap-1">
             <button onClick={() => setActiveMenu('tours')} className={`flex-shrink-0 px-3 py-2 rounded font-bold text-sm ${activeMenu==='tours' ? 'bg-amber-400 text-pink-900' : 'bg-transparent text-amber-300'}`}>Tours</button>
             <button onClick={() => setActiveMenu('bus')} className={`flex-shrink-0 px-3 py-2 rounded font-bold text-sm ${activeMenu==='bus' ? 'bg-amber-400 text-pink-900' : 'bg-transparent text-amber-300'}`}>Bus Tickets</button>
             <button onClick={() => setActiveMenu('vehicle')} className={`flex-shrink-0 px-3 py-2 rounded font-bold text-sm ${activeMenu==='vehicle' ? 'bg-amber-400 text-pink-900' : 'bg-transparent text-amber-300'}`}>Vehicle Rental</button>
@@ -520,173 +495,29 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
             <button onClick={() => setActiveMenu('homestay')} className={`flex-shrink-0 px-3 py-2 rounded font-bold text-sm ${activeMenu==='homestay' ? 'bg-amber-400 text-pink-900' : 'bg-transparent text-amber-300'}`}>Homestay</button>
           </div>
         </div>
-        {/* Tiêu đề lớn và mô tả: ẩn trên mobile, hiện trên sm trở lên */}
-        <h2 className="hidden sm:block font-poppins font-bold text-base sm:text-3xl lg:text-4xl text-amber-400 mb-2 text-center"
-          style={{ textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)' }}>
-          <span style={{ color: 'red', fontStyle: 'italic', marginRight: 8 }}>Demo</span>{t('hotel_name', lang)}
-        </h2>
-        <p className="hidden sm:block text-xs sm:text-lg lg:text-xl text-center max-w-full mb-4 truncate sm:whitespace-nowrap overflow-x-auto">AI-powered Voice Assistant - Supporting All Your Needs</p>
-        {/* Hiển thị icon group theo menu đang chọn trên mobile - scroll ngang native */}
+        {/* 3. Thanh icon dịch vụ (font 20px, nền hiện tại) */}
         {isMobile && (
           <div className="w-full flex justify-center mb-8">
             {activeMenu === 'tours' && (
-              <div className="w-full overflow-x-auto whitespace-nowrap no-scrollbar"><ul className="flex flex-row flex-nowrap justify-start items-center gap-x-[0.85rem] py-0">{renderIconGroup(travelTourIcons, travelTourIcons.length, 18)}</ul></div>
+              <div className="w-full overflow-x-auto whitespace-nowrap no-scrollbar"><ul className="flex flex-row flex-nowrap justify-start items-center gap-x-[0.85rem] py-0">{renderIconGroup(travelTourIcons, travelTourIcons.length, 20)}</ul></div>
             )}
             {activeMenu === 'bus' && (
-              <div className="w-full overflow-x-auto whitespace-nowrap no-scrollbar"><ul className="flex flex-row flex-nowrap justify-start items-center gap-x-[0.85rem] py-0">{renderIconGroup(busTicketIcons, busTicketIcons.length, 18)}</ul></div>
+              <div className="w-full overflow-x-auto whitespace-nowrap no-scrollbar"><ul className="flex flex-row flex-nowrap justify-start items-center gap-x-[0.85rem] py-0">{renderIconGroup(busTicketIcons, busTicketIcons.length, 20)}</ul></div>
             )}
             {activeMenu === 'vehicle' && (
-              <div className="w-full overflow-x-auto whitespace-nowrap no-scrollbar"><ul className="flex flex-row flex-nowrap justify-start items-center gap-x-[0.85rem] py-0">{renderIconGroup(vehicleRentalIcons, vehicleRentalIcons.length, 18)}</ul></div>
+              <div className="w-full overflow-x-auto whitespace-nowrap no-scrollbar"><ul className="flex flex-row flex-nowrap justify-start items-center gap-x-[0.85rem] py-0">{renderIconGroup(vehicleRentalIcons, vehicleRentalIcons.length, 20)}</ul></div>
             )}
             {activeMenu === 'currency' && (
-              <div className="w-full overflow-x-auto whitespace-nowrap no-scrollbar"><ul className="flex flex-row flex-nowrap justify-start items-center gap-x-[0.85rem] py-0">{renderIconGroup(currencyIcons, currencyIcons.length, 18)}</ul></div>
+              <div className="w-full overflow-x-auto whitespace-nowrap no-scrollbar"><ul className="flex flex-row flex-nowrap justify-start items-center gap-x-[0.85rem] py-0">{renderIconGroup(currencyIcons, currencyIcons.length, 20)}</ul></div>
             )}
             {activeMenu === 'laundry' && (
-              <div className="w-full overflow-x-auto whitespace-nowrap no-scrollbar"><ul className="flex flex-row flex-nowrap justify-start items-center gap-x-[0.85rem] py-0">{renderIconGroup(laundryIcons, laundryIcons.length, 18)}</ul></div>
+              <div className="w-full overflow-x-auto whitespace-nowrap no-scrollbar"><ul className="flex flex-row flex-nowrap justify-start items-center gap-x-[0.85rem] py-0">{renderIconGroup(laundryIcons, laundryIcons.length, 20)}</ul></div>
             )}
             {activeMenu === 'homestay' && (
-              <div className="w-full overflow-x-auto whitespace-nowrap no-scrollbar"><ul className="flex flex-row flex-nowrap justify-start items-center gap-x-[0.85rem] py-0">{renderIconGroup(homestayIcons, homestayIcons.length, 18)}</ul></div>
+              <div className="w-full overflow-x-auto whitespace-nowrap no-scrollbar"><ul className="flex flex-row flex-nowrap justify-start items-center gap-x-[0.85rem] py-0">{renderIconGroup(homestayIcons, homestayIcons.length, 20)}</ul></div>
             )}
           </div>
         )}
-        {/* Thay thế block layout media + nút gọi */}
-        <div className="w-full mb-8 mt-2">
-          {/* Mobile: ReferenceSlider trượt ngang toàn bộ media, chỉ hiển thị trên mobile, luôn căn giữa */}
-          <div className="block md:hidden mb-4 flex flex-col items-center justify-center">
-            {getActiveIconMediaList().length > 0 && (
-              <div className="w-full flex justify-center">
-                <ReferenceSlider mediaList={getActiveIconMediaList()} activeIdx={0} onChange={() => {}} side="mobile" />
-              </div>
-            )}
-            {/* Nút gọi riêng cho mobile, luôn căn giữa dưới slider */}
-            <div className="w-full flex justify-center items-center mt-4">
-              <div className="relative flex items-center justify-center">
-                {/* Ripple Animation (luôn hiển thị, mạnh hơn khi hover) */}
-                <div className="absolute inset-0 rounded-full border-4 border-amber-400 animate-[ripple_1.5s_linear_infinite] pointer-events-none transition-opacity duration-300 group-hover:opacity-80 opacity-60"></div>
-                <div className="absolute inset-0 rounded-full border-4 border-amber-400/70 animate-[ripple_2s_linear_infinite] pointer-events-none transition-opacity duration-300 group-hover:opacity-60 opacity-40"></div>
-                {/* Main Button */}
-                <button 
-                  id={`vapiButton${lang === 'en' ? 'En' : lang === 'fr' ? 'Fr' : lang === 'zh' ? 'Zh' : lang === 'ru' ? 'Ru' : 'Ko'}`}
-                  className="group relative w-36 h-36 sm:w-40 sm:h-40 rounded-full font-poppins font-bold flex flex-col items-center justify-center overflow-hidden hover:translate-y-[-2px] hover:shadow-[0px_12px_20px_rgba(0,0,0,0.2)]"
-                  onClick={() => handleCall(lang as any)}
-                  style={{
-                    background: lang === 'en' 
-                      ? 'linear-gradient(180deg, rgba(139,26,71,0.9) 0%, rgba(139,26,71,0.9) 100%)' // Tiếng Anh - Plum Red
-                      : lang === 'fr' 
-                      ? 'linear-gradient(180deg, rgba(139,26,71,0.9) 0%, rgba(139,26,71,0.9) 100%)' // Tiếng Pháp - Plum Red
-                      : lang === 'zh' 
-                      ? 'linear-gradient(180deg, rgba(139,26,71,0.9) 0%, rgba(139,26,71,0.9) 100%)' // Tiếng Trung - Plum Red
-                      : lang === 'ru' 
-                      ? 'linear-gradient(180deg, rgba(139,26,71,0.9) 0%, rgba(139,26,71,0.9) 100%)' // Tiếng Nga - Plum Red
-                      : 'linear-gradient(180deg, rgba(139,26,71,0.9) 0%, rgba(139,26,71,0.9) 100%)', // Tiếng Hàn - Plum Red
-                    boxShadow: '0px 12px 24px rgba(0, 0, 0, 0.25), 0px 6px 12px rgba(0, 0, 0, 0.15), inset 0px 1px 0px rgba(255, 255, 255, 0.3)',
-                    border: '1px solid rgba(255, 255, 255, 0.5)',
-                    transition: 'all 0.3s ease',
-                    transform: 'translateY(0) translateZ(30px)',
-                  }}
-                >
-                  <span className="material-icons text-4xl sm:text-6xl mb-2 text-[#DAC17A] transition-all duration-300 group-hover:scale-110" 
-                    style={{ 
-                      filter: 'drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.2))',
-                      color: lang === 'en' 
-                        ? '#DAC17A' // Vàng cho tiếng Anh
-                        : lang === 'fr' 
-                        ? '#FFFFFF' // Trắng cho tiếng Pháp
-                        : lang === 'zh' 
-                        ? '#FFEB3B' // Vàng sáng cho tiếng Trung
-                        : lang === 'ru' 
-                        ? '#F48FB1' // Hồng nhạt cho tiếng Nga
-                        : '#4ADE80' // Xanh lá sáng cho tiếng Hàn
-                    }}
-                  >mic</span>
-                  {lang === 'fr' ? (
-                    <span className="text-sm sm:text-lg font-bold text-white px-2 text-center"
-                      style={{ textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)' }}
-                    >{t('press_to_order', lang)}</span>
-                  ) : lang === 'ru' || lang === 'ko' ? (
-                    <span className="text-sm sm:text-lg font-bold text-white px-2 text-center"
-                      style={{ textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)' }}
-                    >{t('press_to_order', lang)}</span>
-                  ) : (
-                    <span className="text-lg sm:text-xl font-bold whitespace-nowrap text-white"
-                      style={{ textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)' }}
-                    >{t('press_to_order', lang)}</span>
-                  )}
-                  <span className="absolute w-full h-full rounded-full pointer-events-none"></span>
-                </button>
-              </div>
-            </div>
-          </div>
-          {/* Desktop: 3 cột, nút gọi luôn giữa 2 reference, cùng hàng, căn giữa tuyệt đối */}
-          <div className="hidden md:grid grid-cols-3 items-center justify-items-center gap-4">
-            {/* ReferenceMedia bên trái */}
-            <div className="flex items-center justify-center min-h-[240px]">
-              {getActiveIconMediaList()[0] && <ReferenceMedia media={getActiveIconMediaList()[0]} />}
-            </div>
-            {/* Nút gọi luôn ở giữa */}
-            <div className="flex items-center justify-center min-h-[240px]">
-              <div className="relative flex items-center justify-center">
-          {/* Ripple Animation (luôn hiển thị, mạnh hơn khi hover) */}
-          <div className="absolute inset-0 rounded-full border-4 border-amber-400 animate-[ripple_1.5s_linear_infinite] pointer-events-none transition-opacity duration-300 group-hover:opacity-80 opacity-60"></div>
-          <div className="absolute inset-0 rounded-full border-4 border-amber-400/70 animate-[ripple_2s_linear_infinite] pointer-events-none transition-opacity duration-300 group-hover:opacity-60 opacity-40"></div>
-          {/* Main Button */}
-            <button 
-                  id={`vapiButton${lang === 'en' ? 'En' : lang === 'fr' ? 'Fr' : lang === 'zh' ? 'Zh' : lang === 'ru' ? 'Ru' : 'Ko'}`}
-            className="group relative w-36 h-36 sm:w-40 sm:h-40 lg:w-56 lg:h-56 rounded-full font-poppins font-bold flex flex-col items-center justify-center overflow-hidden hover:translate-y-[-2px] hover:shadow-[0px_12px_20px_rgba(0,0,0,0.2)]"
-                  onClick={() => handleCall(lang as any)}
-            style={{
-                    background: lang === 'en' 
-                      ? 'linear-gradient(180deg, rgba(139,26,71,0.9) 0%, rgba(139,26,71,0.9) 100%)' // Tiếng Anh - Plum Red
-                      : lang === 'fr' 
-                      ? 'linear-gradient(180deg, rgba(139,26,71,0.9) 0%, rgba(139,26,71,0.9) 100%)' // Tiếng Pháp - Plum Red
-                      : lang === 'zh' 
-                      ? 'linear-gradient(180deg, rgba(139,26,71,0.9) 0%, rgba(139,26,71,0.9) 100%)' // Tiếng Trung - Plum Red
-                      : lang === 'ru' 
-                      ? 'linear-gradient(180deg, rgba(139,26,71,0.9) 0%, rgba(139,26,71,0.9) 100%)' // Tiếng Nga - Plum Red
-                      : 'linear-gradient(180deg, rgba(139,26,71,0.9) 0%, rgba(139,26,71,0.9) 100%)', // Tiếng Hàn - Plum Red
-              boxShadow: '0px 12px 24px rgba(0, 0, 0, 0.25), 0px 6px 12px rgba(0, 0, 0, 0.15), inset 0px 1px 0px rgba(255, 255, 255, 0.3)',
-              border: '1px solid rgba(255, 255, 255, 0.5)',
-              transition: 'all 0.3s ease',
-              transform: 'translateY(0) translateZ(30px)',
-            }}
-          >
-                  <span className="material-icons text-4xl sm:text-6xl lg:text-7xl mb-2 text-[#DAC17A] transition-all duration-300 group-hover:scale-110" 
-              style={{ 
-                filter: 'drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.2))',
-                      color: lang === 'en' 
-                        ? '#DAC17A' // Vàng cho tiếng Anh
-                        : lang === 'fr' 
-                  ? '#FFFFFF' // Trắng cho tiếng Pháp
-                        : lang === 'zh' 
-                  ? '#FFEB3B' // Vàng sáng cho tiếng Trung
-                        : lang === 'ru' 
-                  ? '#F48FB1' // Hồng nhạt cho tiếng Nga
-                  : '#4ADE80' // Xanh lá sáng cho tiếng Hàn
-              }}
-            >mic</span>
-                  {lang === 'fr' ? (
-              <span className="text-sm sm:text-lg lg:text-2xl font-bold text-white px-2 text-center"
-                style={{ textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)' }}
-                    >{t('press_to_order', lang)}</span>
-                  ) : lang === 'ru' || lang === 'ko' ? (
-              <span className="text-sm sm:text-lg lg:text-xl font-bold text-white px-2 text-center"
-                style={{ textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)' }}
-                    >{t('press_to_order', lang)}</span>
-            ) : (
-              <span className="text-lg sm:text-2xl lg:text-3xl font-bold whitespace-nowrap text-white"
-                style={{ textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)' }}
-                    >{t('press_to_order', lang)}</span>
-            )}
-            <span className="absolute w-full h-full rounded-full pointer-events-none"></span>
-            </button>
-              </div>
-            </div>
-            {/* ReferenceMedia bên phải */}
-            <div className="flex items-center justify-center min-h-[240px]">
-              {getActiveIconMediaList()[1] && <ReferenceMedia media={getActiveIconMediaList()[1]} />}
-            </div>
-          </div>
-        </div>
         {/* Services Section - với hiệu ứng Glass Morphism và 3D */}
         {!isMobile && (
           <div className="text-center w-full max-w-5xl mb-8 sm:mb-10" style={{ perspective: '1000px' }}>
@@ -739,8 +570,8 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                     : "grid grid-cols-4 gap-x-1 gap-y-1 py-0.5 justify-items-center"
                 }>
                   {renderIconGroup(busTicketIcons, isMobile ? 4 : 4, isMobile ? 14 : 28)}
-              </ul>
-            </div>
+                </ul>
+              </div>
               {/* 3. VEHICLE RENTAL */}
               <div
                 className="py-0.5 px-1 sm:p-2 w-[90%] sm:w-4/5 md:w-64 mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
@@ -764,8 +595,8 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                     : "grid grid-cols-2 gap-x-1 gap-y-1 py-0.5 justify-items-center"
                 }>
                   {renderIconGroup(vehicleRentalIcons, isMobile ? vehicleRentalIcons.length : 2, isMobile ? 14 : 28)}
-              </ul>
-            </div>
+                </ul>
+              </div>
               {/* 4. CURRENCY EXCHANGE */}
               <div
                 className="py-0.5 px-1 sm:p-2 w-[90%] sm:w-4/5 md:w-64 mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
@@ -789,8 +620,8 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                     : "grid grid-cols-4 gap-x-1 gap-y-1 py-0.5 justify-items-center"
                 }>
                   {renderIconGroup(currencyIcons, isMobile ? currencyIcons.length : 4, isMobile ? 14 : 26)}
-              </ul>
-            </div>
+                </ul>
+              </div>
               {/* 5. LAUNDRY SERVICE */}
               <div
                 className="py-0.5 px-1 sm:p-2 w-[90%] sm:w-4/5 md:w-64 mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
@@ -814,8 +645,8 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                     : "grid grid-cols-3 gap-x-1 gap-y-1 py-0.5 justify-items-center"
                 }>
                   {renderIconGroup(laundryIcons, isMobile ? laundryIcons.length : 3, isMobile ? 14 : 28)}
-              </ul>
-            </div>
+                </ul>
+              </div>
               {/* 6. HOMESTAY SERVICE */}
               <div
                 className="py-0.5 px-1 sm:p-2 w-[90%] sm:w-4/5 md:w-64 mx-auto mb-0.5 sm:mb-2 rounded shadow-sm bg-opacity-80"
@@ -839,10 +670,10 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
                     : "grid grid-cols-3 gap-x-1 gap-y-1 py-0.5 justify-items-center"
                 }>
                   {renderIconGroup(homestayIcons, isMobile ? homestayIcons.length : 3, isMobile ? 14 : 28)}
-              </ul>
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
         )}
         {/* Active orders status panels - thêm hiệu ứng 3D và đường viền sáng */}
         {activeOrders && activeOrders.length > 0 && (

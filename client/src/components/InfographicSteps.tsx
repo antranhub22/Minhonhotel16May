@@ -32,11 +32,11 @@ const steps = [
   },
 ];
 
-  // Responsive: mobile sẽ là dọc, icon nhỏ, chữ nhỏ
+  // Responsive: mobile sẽ là dọc, icon nhỏ, chữ nhỏ, font 10px
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
   if (isMobile) {
     return (
-      <div className="w-full max-w-xs mx-auto flex flex-col items-center gap-2 py-2">
+      <div className="w-full max-w-xs mx-auto flex flex-col items-center gap-1 py-1">
         {steps.map((step, idx) => (
           <div
             key={step.title}
@@ -49,21 +49,21 @@ const steps = [
             }`}
           >
             <div
-              className={`flex items-center justify-center rounded-full shadow-lg mb-1 transition-all duration-300 ${
+              className={`flex items-center justify-center rounded-full shadow-lg mb-0.5 transition-all duration-300 ${
                 idx + 1 === currentStep
                   ? 'bg-[#d4af37] text-blue-900 border-2 border-[#d4af37]'
                   : 'bg-white/30 text-white border border-gray-200'
               }`}
               style={{
-                width: 20,
-                height: 20,
-                fontSize: 12,
+                width: 16,
+                height: 16,
+                fontSize: 10,
               }}
             >
-              <span className="material-icons">{step.icon}</span>
+              <span className="material-icons" style={{fontSize:10}}>{step.icon}</span>
             </div>
             <div className="text-center">
-              <div className={`font-semibold font-poppins mb-0 text-xs ${idx + 1 === currentStep ? 'text-white' : 'text-white/70'}`}>{step.title}</div>
+              <div className={`font-semibold font-poppins mb-0 text-[10px] ${idx + 1 === currentStep ? 'text-white' : 'text-white/70'}`}>{step.title}</div>
             </div>
           </div>
         ))}
