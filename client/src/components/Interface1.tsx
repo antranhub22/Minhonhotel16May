@@ -517,80 +517,115 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
 
   // 1. HEADER: Đưa avatar sang phải, menu/hướng dẫn sang trái, thêm tiêu đề lớn dưới header
   const Header = () => (
-    <div className="flex items-center justify-between w-full mb-4">
-      <style>{shimmerAnimation}</style>
-      <div className="relative w-12 h-12 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/40 transition-all duration-200 shadow mr-2 cursor-pointer select-none" onClick={() => setIsLangDropdownOpen(v => !v)}>
-        <span className="text-2xl" style={{fontSize: '2rem'}}>{selectedLang.flag}</span>
-        {isLangDropdownOpen && (
-          <div className="absolute left-0 top-14 z-50 bg-white rounded-xl shadow-lg py-2 w-40 border border-gray-200 animate-fade-in">
-            {LANGUAGES.map(lang => (
-              <div
-                key={lang.code}
-                className={`flex items-center gap-2 px-4 py-2 cursor-pointer hover:bg-amber-100 rounded-lg transition text-gray-900 ${lang.code === language ? 'bg-amber-50 font-bold' : ''}`}
-                onClick={e => { e.stopPropagation(); handleLangSelect(lang.code); }}
-              >
-                <span className="text-xl">{lang.flag}</span>
-                <span className="text-base">{lang.label}</span>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-      <div className="flex flex-col items-center w-full mb-4">
-        <div className="hidden sm:flex flex-row items-end justify-center w-full mb-4 gap-1">
-          <span style={{
-            color: '#FFC94A',
-            fontWeight: 900,
-            fontSize: '3.2rem',
-            letterSpacing: '0.1em',
-            fontFamily: 'Impact, Arial Black, sans-serif',
-            textShadow: '0 2px 8px rgba(0,0,0,0.18)',
-            background: 'linear-gradient(90deg, #FFC94A, #FFD700, #FFC94A)',
-            backgroundSize: '200% auto',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            animation: 'shimmer 3s linear infinite',
-            filter: 'drop-shadow(0 0 8px rgba(255, 201, 74, 0.5))'
-          }}>HAI</span>
-          <span style={{
-            color: '#4FC3F7',
-            fontWeight: 900,
-            fontSize: '3.2rem',
-            letterSpacing: '0.1em',
-            fontFamily: 'Impact, Arial Black, sans-serif',
-            textShadow: '0 2px 8px rgba(0,0,0,0.18)',
-            background: 'linear-gradient(90deg, #4FC3F7, #81D4FA, #4FC3F7)',
-            backgroundSize: '200% auto',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            animation: 'shimmer 3s linear infinite',
-            filter: 'drop-shadow(0 0 8px rgba(79, 195, 247, 0.5))'
-          }}>LY</span>
-          <span style={{
-            color: '#444',
-            fontWeight: 700,
-            fontSize: '1.5rem',
-            letterSpacing: '0.18em',
-            marginLeft: '0.3em',
-            fontFamily: 'Montserrat, Arial, sans-serif',
-            textShadow: '0 1px 4px rgba(0,0,0,0.10)',
-            background: 'linear-gradient(90deg, #444, #666, #444)',
-            backgroundSize: '200% auto',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            animation: 'shimmer 3s linear infinite',
-            filter: 'drop-shadow(0 0 4px rgba(68, 68, 68, 0.3))'
-          }}>TRAVEL</span>
+    <>
+      {/* Mobile: Header + TabBar cùng dòng */}
+      <div className="flex sm:hidden items-center w-full mb-4 gap-2">
+        {/* Dropdown ngôn ngữ */}
+        <div className="relative w-10 h-10 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/40 transition-all duration-200 shadow cursor-pointer select-none" onClick={() => setIsLangDropdownOpen(v => !v)}>
+          <span className="text-2xl" style={{fontSize: '2rem'}}>{selectedLang.flag}</span>
+          {isLangDropdownOpen && (
+            <div className="absolute left-0 top-12 z-50 bg-white rounded-xl shadow-lg py-2 w-40 border border-gray-200 animate-fade-in">
+              {LANGUAGES.map(lang => (
+                <div
+                  key={lang.code}
+                  className={`flex items-center gap-2 px-4 py-2 cursor-pointer hover:bg-amber-100 rounded-lg transition text-gray-900 ${lang.code === language ? 'bg-amber-50 font-bold' : ''}`}
+                  onClick={e => { e.stopPropagation(); handleLangSelect(lang.code); }}
+                >
+                  <span className="text-xl">{lang.flag}</span>
+                  <span className="text-base">{lang.label}</span>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
+        {/* TabBar nằm giữa */}
+        <div className="flex-1 flex justify-center">
+          <TabBar />
+        </div>
+        {/* Nút info/avatar */}
+        <button
+          onClick={() => setShowInfographic(true)}
+          className="w-10 h-10 flex items-center justify-center rounded-full border-2 border-amber-300 bg-white/20 hover:bg-white/40 transition-all duration-200 shadow"
+        >
+          <span className="material-icons text-2xl text-amber-400">info</span>
+        </button>
       </div>
-      {/* Nút info/avatar ở góc phải */}
-      <button
-        onClick={() => setShowInfographic(true)}
-        className="w-10 h-10 flex items-center justify-center rounded-full border-2 border-amber-300 bg-white/20 hover:bg-white/40 transition-all duration-200 shadow ml-2"
-      >
-        <span className="material-icons text-2xl text-amber-400">info</span>
-      </button>
-    </div>
+      {/* Desktop: giữ nguyên layout cũ */}
+      <div className="hidden sm:flex items-center justify-between w-full mb-4">
+        <style>{shimmerAnimation}</style>
+        <div className="relative w-12 h-12 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/40 transition-all duration-200 shadow mr-2 cursor-pointer select-none" onClick={() => setIsLangDropdownOpen(v => !v)}>
+          <span className="text-2xl" style={{fontSize: '2rem'}}>{selectedLang.flag}</span>
+          {isLangDropdownOpen && (
+            <div className="absolute left-0 top-14 z-50 bg-white rounded-xl shadow-lg py-2 w-40 border border-gray-200 animate-fade-in">
+              {LANGUAGES.map(lang => (
+                <div
+                  key={lang.code}
+                  className={`flex items-center gap-2 px-4 py-2 cursor-pointer hover:bg-amber-100 rounded-lg transition text-gray-900 ${lang.code === language ? 'bg-amber-50 font-bold' : ''}`}
+                  onClick={e => { e.stopPropagation(); handleLangSelect(lang.code); }}
+                >
+                  <span className="text-xl">{lang.flag}</span>
+                  <span className="text-base">{lang.label}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+        <div className="flex flex-col items-center w-full mb-4">
+          <div className="flex flex-row items-end justify-center w-full mb-4 gap-1">
+            <span style={{
+              color: '#FFC94A',
+              fontWeight: 900,
+              fontSize: '3.2rem',
+              letterSpacing: '0.1em',
+              fontFamily: 'Impact, Arial Black, sans-serif',
+              textShadow: '0 2px 8px rgba(0,0,0,0.18)',
+              background: 'linear-gradient(90deg, #FFC94A, #FFD700, #FFC94A)',
+              backgroundSize: '200% auto',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              animation: 'shimmer 3s linear infinite',
+              filter: 'drop-shadow(0 0 8px rgba(255, 201, 74, 0.5))'
+            }}>HAI</span>
+            <span style={{
+              color: '#4FC3F7',
+              fontWeight: 900,
+              fontSize: '3.2rem',
+              letterSpacing: '0.1em',
+              fontFamily: 'Impact, Arial Black, sans-serif',
+              textShadow: '0 2px 8px rgba(0,0,0,0.18)',
+              background: 'linear-gradient(90deg, #4FC3F7, #81D4FA, #4FC3F7)',
+              backgroundSize: '200% auto',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              animation: 'shimmer 3s linear infinite',
+              filter: 'drop-shadow(0 0 8px rgba(79, 195, 247, 0.5))'
+            }}>LY</span>
+            <span style={{
+              color: '#444',
+              fontWeight: 700,
+              fontSize: '1.5rem',
+              letterSpacing: '0.18em',
+              marginLeft: '0.3em',
+              fontFamily: 'Montserrat, Arial, sans-serif',
+              textShadow: '0 1px 4px rgba(0,0,0,0.10)',
+              background: 'linear-gradient(90deg, #444, #666, #444)',
+              backgroundSize: '200% auto',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              animation: 'shimmer 3s linear infinite',
+              filter: 'drop-shadow(0 0 4px rgba(68, 68, 68, 0.3))'
+            }}>TRAVEL</span>
+          </div>
+        </div>
+        {/* Nút info/avatar ở góc phải */}
+        <button
+          onClick={() => setShowInfographic(true)}
+          className="w-10 h-10 flex items-center justify-center rounded-full border-2 border-amber-300 bg-white/20 hover:bg-white/40 transition-all duration-200 shadow ml-2"
+        >
+          <span className="material-icons text-2xl text-amber-400">info</span>
+        </button>
+      </div>
+    </>
   );
 
   // 2. TABS: Style lại thanh menu ngang thành tab bo tròn, scroll ngang, slider mượt, snap từng tab
