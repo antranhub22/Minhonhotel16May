@@ -51,6 +51,9 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
   // Thêm state để quản lý menu đang chọn trên mobile
   const [activeMenu, setActiveMenu] = useState<string>('tours');
 
+  // State cho popup infographic
+  const [showInfographic, setShowInfographic] = useState(false);
+
   const iconColor = '#FFC94A'; // Màu vàng giống tiêu đề
   const iconComponents: Record<string, JSX.Element> = {
     // TOURISM & TOURS
@@ -448,30 +451,33 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
   // 1. Tạo component LanguageSelector để tái sử dụng ở header
   const LanguageSelector = () => (
     <div className="flex items-center justify-center w-full max-w-2xl mb-4 sm:mb-2">
-      {/* Nút Refresh bên trái */}
-      <button
-        onClick={() => window.location.reload()}
-        className="flex items-center justify-center mr-3 px-2 py-1.5 sm:py-1.5 bg-white/80 hover:bg-yellow-100 border border-amber-400 rounded-full shadow transition-all duration-200 text-blue-900 font-bold text-sm sm:text-lg"
-        style={{ minWidth: 32, minHeight: 32 }}
-        title="Refresh"
-      >
-        <span className="material-icons text-lg sm:text-2xl mr-1 text-amber-400">refresh</span>
-        <span className="hidden sm:inline font-semibold">Refresh</span>
+      {/* Call History icon (giả sử đã có) */}
+      <button className="flex items-center justify-center mr-2 px-2 py-1.5 bg-white/80 border border-amber-400 rounded-full shadow text-blue-900 font-bold text-sm sm:text-lg">
+        <span className="material-icons text-lg sm:text-2xl text-amber-400">history</span>
       </button>
-      <div className="flex items-center px-2 py-1.5 sm:py-1.5 gap-2 transition-all duration-300 mx-auto sm:mx-0" 
+      {/* Infographic icon */}
+      <button
+        onClick={() => setShowInfographic(true)}
+        className="flex items-center justify-center mr-2 px-2 py-1.5 bg-white/80 border border-amber-400 rounded-full shadow text-blue-900 font-bold text-sm sm:text-lg"
+        style={{ minWidth: 32, minHeight: 32 }}
+        title="Guidance"
+      >
+        <span className="material-icons text-lg sm:text-2xl text-amber-400">info</span>
+      </button>
+      {/* Language selector nhỏ lại */}
+      <div className="flex items-center px-2 py-1.5 sm:py-1.5 gap-2 transition-all duration-300 mx-auto sm:mx-0"
         style={{
           background: 'linear-gradient(135deg, #4e5ab7 0%, #3f51b5 100%)',
-          boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.15)', 
+          boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.15)',
           borderRadius: '8px',
           minWidth: '90px',
           maxWidth: '60%',
           width: 'auto',
           border: '1px solid rgba(255, 255, 255, 0.1)'
         }}>
-        <FaGlobeAsia className="text-[#DAC17A] text-lg mr-1.5 hidden sm:inline" 
+        <FaGlobeAsia className="text-[#DAC17A] text-lg mr-1.5 hidden sm:inline"
           style={{ filter: 'drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.2))' }}
         />
-        <label className="mr-2 font-semibold font-sans text-white whitespace-nowrap text-xs sm:text-base hidden sm:inline">{t('language', lang)}:</label>
         <div className="relative flex-1">
           <select
             value={language}
@@ -507,32 +513,35 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
       <div className="container mx-auto flex flex-col items-center justify-start text-white p-3 pt-6 sm:p-5 sm:pt-10 lg:pt-16 overflow-visible pb-32 sm:pb-24" 
         style={{ transform: 'translateZ(20px)', minHeight: 'fit-content' }}
       >
-        {/* Language Switcher nâng cao */}
+        {/* Header: Call History + Language + Infographic */}
         <div className="flex items-center justify-center w-full max-w-2xl mb-4 sm:mb-2">
-          {/* Nút Refresh bên trái */}
-          <button
-            onClick={() => window.location.reload()}
-            className="flex items-center justify-center mr-3 px-2 py-1.5 sm:py-1.5 bg-white/80 hover:bg-yellow-100 border border-amber-400 rounded-full shadow transition-all duration-200 text-blue-900 font-bold text-sm sm:text-lg"
-            style={{ minWidth: 32, minHeight: 32 }}
-            title="Refresh"
-          >
-            <span className="material-icons text-lg sm:text-2xl mr-1 text-amber-400">refresh</span>
-            <span className="hidden sm:inline font-semibold">Refresh</span>
+          {/* Call History icon (giả sử đã có) */}
+          <button className="flex items-center justify-center mr-2 px-2 py-1.5 bg-white/80 border border-amber-400 rounded-full shadow text-blue-900 font-bold text-sm sm:text-lg">
+            <span className="material-icons text-lg sm:text-2xl text-amber-400">history</span>
           </button>
-          <div className="flex items-center px-2 py-1.5 sm:py-1.5 gap-2 transition-all duration-300 mx-auto sm:mx-0" 
+          {/* Infographic icon */}
+          <button
+            onClick={() => setShowInfographic(true)}
+            className="flex items-center justify-center mr-2 px-2 py-1.5 bg-white/80 border border-amber-400 rounded-full shadow text-blue-900 font-bold text-sm sm:text-lg"
+            style={{ minWidth: 32, minHeight: 32 }}
+            title="Guidance"
+          >
+            <span className="material-icons text-lg sm:text-2xl text-amber-400">info</span>
+          </button>
+          {/* Language selector nhỏ lại */}
+          <div className="flex items-center px-2 py-1.5 sm:py-1.5 gap-2 transition-all duration-300 mx-auto sm:mx-0"
             style={{
               background: 'linear-gradient(135deg, #4e5ab7 0%, #3f51b5 100%)',
-              boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.15)', 
+              boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.15)',
               borderRadius: '8px',
               minWidth: '90px',
               maxWidth: '60%',
               width: 'auto',
               border: '1px solid rgba(255, 255, 255, 0.1)'
             }}>
-            <FaGlobeAsia className="text-[#DAC17A] text-lg mr-1.5 hidden sm:inline" 
+            <FaGlobeAsia className="text-[#DAC17A] text-lg mr-1.5 hidden sm:inline"
               style={{ filter: 'drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.2))' }}
             />
-            <label className="mr-2 font-semibold font-sans text-white whitespace-nowrap text-xs sm:text-base hidden sm:inline">{t('language', lang)}:</label>
             <div className="relative flex-1">
               <select
                 value={language}
@@ -550,6 +559,33 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
             </div>
           </div>
         </div>
+        {/* Modal Infographic popup */}
+        {isMobile && showInfographic && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+            <div className="bg-white rounded-lg shadow-lg p-6 w-11/12 max-w-xs relative flex flex-col items-center">
+              <button onClick={() => setShowInfographic(false)} className="absolute top-2 right-2 text-gray-500 hover:text-red-500">
+                <span className="material-icons">close</span>
+              </button>
+              <div className="flex flex-col items-center gap-4 mt-2">
+                <div className="flex flex-col items-center">
+                  <span className="material-icons text-amber-400 text-3xl mb-1">call</span>
+                  <div className="text-base font-bold text-gray-800 mb-1">{t('press_to_order', lang)}</div>
+                  <div className="text-xs text-gray-600 text-center">{t('press_to_call_desc', lang)}</div>
+                </div>
+                <div className="flex flex-col items-center">
+                  <span className="material-icons text-amber-400 text-3xl mb-1">check_circle</span>
+                  <div className="text-base font-bold text-gray-800 mb-1">{t('confirm_request', lang)}</div>
+                  <div className="text-xs text-gray-600 text-center">{t('confirm_request_desc', lang)}</div>
+                </div>
+                <div className="flex flex-col items-center">
+                  <span className="material-icons text-amber-400 text-3xl mb-1">mail</span>
+                  <div className="text-base font-bold text-gray-800 mb-1">{t('send_to_reception', lang)}</div>
+                  <div className="text-xs text-gray-600 text-center">{t('send_to_reception_desc', lang)}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
         {/* Thanh menu box cho mobile - scroll ngang native */}
         <div className="block sm:hidden w-full max-w-2xl mx-auto mb-2">
           <div className="flex flex-row flex-nowrap overflow-x-auto whitespace-nowrap gap-1 bg-white/10 rounded-lg p-1 shadow no-scrollbar">
