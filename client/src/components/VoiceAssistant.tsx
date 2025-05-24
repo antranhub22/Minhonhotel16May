@@ -49,6 +49,10 @@ const VoiceAssistant: React.FC = () => {
               </a>
             </Link>
           </div>
+          {/* Nút Infor ở giữa TopBar */}
+          <div className="hidden sm:flex items-center justify-center ..."> 
+            {/* ...icon info... */}
+          </div>
         </div>
       </header>
 
