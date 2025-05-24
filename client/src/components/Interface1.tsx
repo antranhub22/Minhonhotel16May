@@ -26,9 +26,6 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
   // State để lưu trữ tooltip đang hiển thị
   const [activeTooltip, setActiveTooltip] = useState<string | null>(null);
   
-  // State để kiểm soát hiển thị modal Guidance
-  const [showGuidance, setShowGuidance] = useState(false);
-  
   // Track current time for countdown calculations
   const [now, setNow] = useState(new Date());
   useEffect(() => {
@@ -464,93 +461,54 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
       <div className="container mx-auto flex flex-col items-center justify-start text-white p-3 pt-6 sm:p-5 sm:pt-10 lg:pt-16 overflow-visible pb-32 sm:pb-24" 
         style={{ transform: 'translateZ(20px)', minHeight: 'fit-content' }}
       >
-        {/* Header với 3 phần: Language - Guidance - Call History */}
-        <div className="flex items-center justify-between w-full max-w-2xl mb-4 sm:mb-2">
-          {/* Language selector bên trái */}
-          {isMobile && (
-            <div className="flex items-center gap-1 ml-1">
-              <FaGlobeAsia className="text-[#DAC17A] text-xl" style={{ filter: 'drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.2))' }} />
-              <div className="relative">
-                <select
-                  value={language}
-                  onChange={e => setLanguage(e.target.value as 'en' | 'fr' | 'zh' | 'ru' | 'ko')}
-                  className="appearance-none pl-6 pr-6 py-1 font-sans bg-transparent focus:outline-none text-xs font-bold text-white"
-                  style={{ borderRadius: '8px', minWidth: 60 }}
-                >
-                  <option value="en">🇬🇧</option>
-                  <option value="fr">🇫🇷</option>
-                  <option value="zh">🇨🇳</option>
-                  <option value="ru">🇷🇺</option>
-                  <option value="ko">🇰🇷</option>
-                </select>
-                <FiChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 text-[#DAC17A] pointer-events-none text-lg" />
-              </div>
+        {/* Language Switcher nâng cao */}
+        <div className="flex items-center justify-center sm:justify-end w-full max-w-2xl mb-4 sm:mb-2">
+          {/* Nút Refresh bên trái */}
+          <button
+            onClick={() => window.location.reload()}
+            className="flex items-center justify-center mr-3 px-3 py-2 sm:py-1.5 bg-white/80 hover:bg-yellow-100 border border-amber-400 rounded-full shadow transition-all duration-200 text-blue-900 font-bold text-base sm:text-lg"
+            style={{ minWidth: 40, minHeight: 40 }}
+            title="Refresh"
+          >
+            <span className="material-icons text-xl sm:text-2xl mr-1 text-amber-400">refresh</span>
+            <span className="hidden sm:inline font-semibold">Refresh</span>
+          </button>
+          <div className="flex items-center px-3 py-2 sm:py-1.5 gap-2 transition-all duration-300 mx-auto sm:mx-0" 
+            style={{
+              background: 'linear-gradient(135deg, #4e5ab7 0%, #3f51b5 100%)',
+              boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.15)', 
+              borderRadius: '8px',
+              minWidth: '150px',
+              maxWidth: '95%',
+              width: 'auto',
+              border: '1px solid rgba(255, 255, 255, 0.1)'
+            }}>
+            <FaGlobeAsia className="text-[#DAC17A] text-xl mr-1.5" 
+              style={{ filter: 'drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.2))' }}
+            />
+            <label className="mr-2 font-semibold font-sans text-white whitespace-nowrap text-xs sm:text-base">{t('language', lang)}:</label>
+            <div className="relative flex-1">
+              <select
+                value={language}
+                onChange={e => setLanguage(e.target.value as 'en' | 'fr' | 'zh' | 'ru' | 'ko')}
+                className="appearance-none w-full pl-6 sm:pl-8 pr-6 py-1 sm:py-1.5 font-sans bg-transparent focus:outline-none transition-all duration-200"
+                style={{
+                  fontWeight: 600,
+                  color: '#fff',
+                  textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)',
+                  borderRadius: '8px'
+                }}
+              >
+                <option value="en">🇬🇧 English</option>
+                <option value="fr">🇫🇷 Français</option>
+                <option value="zh">🇨🇳 中文</option>
+                <option value="ru">🇷🇺 Русский</option>
+                <option value="ko">🇰🇷 한국어</option>
+              </select>
+              <FiChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 text-[#DAC17A] pointer-events-none text-lg" />
             </div>
-          )}
-
-          {/* Guidance icon ở giữa */}
-          {isMobile && (
-            <button
-              onClick={() => setShowGuidance(true)}
-              className="flex items-center justify-center p-2 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-200"
-              style={{ minWidth: 40, minHeight: 40 }}
-            >
-              <span className="material-icons text-[#DAC17A] text-xl">help_outline</span>
-            </button>
-          )}
-
-          {/* Call History và Refresh bên phải */}
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => window.location.reload()}
-              className="flex items-center justify-center px-3 py-2 sm:py-1.5 bg-white/80 hover:bg-yellow-100 border border-amber-400 rounded-full shadow transition-all duration-200 text-blue-900 font-bold text-base sm:text-lg"
-              style={{ minWidth: 40, minHeight: 40 }}
-              title="Refresh"
-            >
-              <span className="material-icons text-xl sm:text-2xl mr-1 text-amber-400">refresh</span>
-              <span className="hidden sm:inline font-semibold">Refresh</span>
-            </button>
           </div>
         </div>
-
-        {/* Modal Guidance */}
-        {showGuidance && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-            <div className="bg-white rounded-lg p-6 max-w-sm w-full relative">
-              <button
-                onClick={() => setShowGuidance(false)}
-                className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-              >
-                <span className="material-icons">close</span>
-              </button>
-              <h3 className="text-lg font-bold text-gray-800 mb-4">{t('how_to_order', lang)}</h3>
-              <div className="space-y-4">
-                <div className="flex items-start gap-3">
-                  <span className="material-icons text-amber-500">mic</span>
-                  <div>
-                    <p className="font-semibold text-gray-800">{t('press_to_order', lang)}</p>
-                    <p className="text-sm text-gray-600">{t('press_to_order_desc', lang)}</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="material-icons text-amber-500">check_circle</span>
-                  <div>
-                    <p className="font-semibold text-gray-800">{t('confirm_request', lang)}</p>
-                    <p className="text-sm text-gray-600">{t('confirm_request_desc', lang)}</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <span className="material-icons text-amber-500">mail</span>
-                  <div>
-                    <p className="font-semibold text-gray-800">{t('send_to_reception', lang)}</p>
-                    <p className="text-sm text-gray-600">{t('send_to_reception_desc', lang)}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
         {/* Thanh menu box cho mobile - scroll ngang native */}
         <div className="block sm:hidden w-full max-w-2xl mx-auto mb-2">
           <div className="flex flex-row flex-nowrap overflow-x-auto whitespace-nowrap gap-1 bg-white/10 rounded-lg p-1 shadow no-scrollbar">
