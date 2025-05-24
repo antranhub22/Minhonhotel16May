@@ -48,6 +48,9 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
   // Thêm state để kiểm soát hiển thị reference media
   const [showReference, setShowReference] = useState(false);
 
+  // Thêm state để quản lý menu đang chọn trên mobile
+  const [activeMenu, setActiveMenu] = useState<string>('tours');
+
   const iconColor = '#FFC94A'; // Màu vàng giống tiêu đề
   const iconComponents: Record<string, JSX.Element> = {
     // TOURISM & TOURS
@@ -499,12 +502,46 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
             </div>
           </div>
         </div>
-        <h2 className="font-poppins font-bold text-base sm:text-3xl lg:text-4xl text-amber-400 mb-2 text-center"
+        {/* Thanh menu box cho mobile */}
+        <div className="block sm:hidden w-full max-w-2xl mx-auto mb-2">
+          <div className="flex flex-row justify-between items-center gap-1 bg-white/10 rounded-lg p-1 shadow">
+            <button onClick={() => setActiveMenu('tours')} className={`flex-1 py-2 rounded font-bold text-xs ${activeMenu==='tours' ? 'bg-amber-400 text-pink-900' : 'bg-transparent text-amber-300'}`}>Tours</button>
+            <button onClick={() => setActiveMenu('bus')} className={`flex-1 py-2 rounded font-bold text-xs ${activeMenu==='bus' ? 'bg-amber-400 text-pink-900' : 'bg-transparent text-amber-300'}`}>Bus Tickets</button>
+            <button onClick={() => setActiveMenu('vehicle')} className={`flex-1 py-2 rounded font-bold text-xs ${activeMenu==='vehicle' ? 'bg-amber-400 text-pink-900' : 'bg-transparent text-amber-300'}`}>Vehicle</button>
+            <button onClick={() => setActiveMenu('currency')} className={`flex-1 py-2 rounded font-bold text-xs ${activeMenu==='currency' ? 'bg-amber-400 text-pink-900' : 'bg-transparent text-amber-300'}`}>Currency</button>
+            <button onClick={() => setActiveMenu('laundry')} className={`flex-1 py-2 rounded font-bold text-xs ${activeMenu==='laundry' ? 'bg-amber-400 text-pink-900' : 'bg-transparent text-amber-300'}`}>Laundry</button>
+            <button onClick={() => setActiveMenu('homestay')} className={`flex-1 py-2 rounded font-bold text-xs ${activeMenu==='homestay' ? 'bg-amber-400 text-pink-900' : 'bg-transparent text-amber-300'}`}>Homestay</button>
+          </div>
+        </div>
+        {/* Tiêu đề lớn và mô tả: ẩn trên mobile, hiện trên sm trở lên */}
+        <h2 className="hidden sm:block font-poppins font-bold text-base sm:text-3xl lg:text-4xl text-amber-400 mb-2 text-center"
           style={{ textShadow: '0px 1px 2px rgba(0, 0, 0, 0.2)' }}>
           <span style={{ color: 'red', fontStyle: 'italic', marginRight: 8 }}>Demo</span>{t('hotel_name', lang)}
         </h2>
-        <p className="text-xs sm:text-lg lg:text-xl text-center max-w-full mb-4 truncate sm:whitespace-nowrap overflow-x-auto">AI-powered Voice Assistant - Supporting All Your Needs</p>
-        
+        <p className="hidden sm:block text-xs sm:text-lg lg:text-xl text-center max-w-full mb-4 truncate sm:whitespace-nowrap overflow-x-auto">AI-powered Voice Assistant - Supporting All Your Needs</p>
+        {/* Hiển thị icon group theo menu đang chọn trên mobile */}
+        {isMobile && (
+          <div className="w-full flex justify-center mb-4">
+            {activeMenu === 'tours' && (
+              <div className="w-full"><ul className="flex flex-row flex-nowrap justify-center items-center gap-x-[0.85rem] py-0">{renderIconGroup(travelTourIcons, travelTourIcons.length, 14)}</ul></div>
+            )}
+            {activeMenu === 'bus' && (
+              <div className="w-full"><ul className="flex flex-row flex-wrap justify-center items-center gap-x-[0.85rem] gap-y-2 py-0">{renderIconGroup(busTicketIcons, 4, 14)}</ul></div>
+            )}
+            {activeMenu === 'vehicle' && (
+              <div className="w-full"><ul className="flex flex-row flex-nowrap justify-center items-center gap-x-[0.85rem] py-0">{renderIconGroup(vehicleRentalIcons, vehicleRentalIcons.length, 14)}</ul></div>
+            )}
+            {activeMenu === 'currency' && (
+              <div className="w-full"><ul className="flex flex-row flex-nowrap justify-center items-center gap-x-[0.85rem] py-0">{renderIconGroup(currencyIcons, currencyIcons.length, 14)}</ul></div>
+            )}
+            {activeMenu === 'laundry' && (
+              <div className="w-full"><ul className="flex flex-row flex-nowrap justify-center items-center gap-x-[0.85rem] py-0">{renderIconGroup(laundryIcons, laundryIcons.length, 14)}</ul></div>
+            )}
+            {activeMenu === 'homestay' && (
+              <div className="w-full"><ul className="flex flex-row flex-nowrap justify-center items-center gap-x-[0.85rem] py-0">{renderIconGroup(homestayIcons, homestayIcons.length, 14)}</ul></div>
+            )}
+          </div>
+        )}
         {/* Thay thế block layout media + nút gọi */}
         <div className="w-full mb-8 mt-2">
           {/* Mobile: ReferenceSlider trượt ngang toàn bộ media, chỉ hiển thị trên mobile, luôn căn giữa */}
