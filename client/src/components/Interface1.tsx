@@ -655,6 +655,16 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
         <CallButton />
         {/* --- END LAYOUT MỚI --- */}
         {/* Các block giao diện cũ đã được loại bỏ để layout mới hiển thị rõ ràng */}
+        {showInfographic && (
+          <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center">
+            <div className="bg-white rounded-xl p-6 shadow-lg max-w-md w-full relative">
+              <button onClick={() => setShowInfographic(false)} className="absolute top-2 right-2 text-gray-500 hover:text-pink-600 text-2xl">&times;</button>
+              {/* Nội dung infographic/progress ở đây */}
+              <h2 className="text-xl font-bold mb-2 text-pink-900">Infographic/Progress</h2>
+              <p className="text-gray-700">Nội dung infographic hoặc tiến trình bạn muốn hiển thị...</p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
