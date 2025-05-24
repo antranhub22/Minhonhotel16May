@@ -512,12 +512,12 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
         {/* Thanh menu box cho mobile - scroll ngang native */}
         <div className="block sm:hidden w-full max-w-2xl mx-auto mb-2">
           <div className="flex flex-row flex-nowrap overflow-x-auto whitespace-nowrap gap-1 bg-white/10 rounded-lg p-1 shadow no-scrollbar">
-            <button onClick={() => setActiveMenu('tours')} className={`flex-shrink-0 px-3 py-2 rounded font-bold text-xs ${activeMenu==='tours' ? 'bg-amber-400 text-pink-900' : 'bg-transparent text-amber-300'}`}>Tours</button>
-            <button onClick={() => setActiveMenu('bus')} className={`flex-shrink-0 px-3 py-2 rounded font-bold text-xs ${activeMenu==='bus' ? 'bg-amber-400 text-pink-900' : 'bg-transparent text-amber-300'}`}>Bus Tickets</button>
-            <button onClick={() => setActiveMenu('vehicle')} className={`flex-shrink-0 px-3 py-2 rounded font-bold text-xs ${activeMenu==='vehicle' ? 'bg-amber-400 text-pink-900' : 'bg-transparent text-amber-300'}`}>Vehicle Rental</button>
-            <button onClick={() => setActiveMenu('currency')} className={`flex-shrink-0 px-3 py-2 rounded font-bold text-xs ${activeMenu==='currency' ? 'bg-amber-400 text-pink-900' : 'bg-transparent text-amber-300'}`}>Currency Exchange</button>
-            <button onClick={() => setActiveMenu('laundry')} className={`flex-shrink-0 px-3 py-2 rounded font-bold text-xs ${activeMenu==='laundry' ? 'bg-amber-400 text-pink-900' : 'bg-transparent text-amber-300'}`}>Laundry Service</button>
-            <button onClick={() => setActiveMenu('homestay')} className={`flex-shrink-0 px-3 py-2 rounded font-bold text-xs ${activeMenu==='homestay' ? 'bg-amber-400 text-pink-900' : 'bg-transparent text-amber-300'}`}>Homestay</button>
+            <button onClick={() => setActiveMenu('tours')} className={`flex-shrink-0 px-3 py-2 rounded font-bold text-sm ${activeMenu==='tours' ? 'bg-amber-400 text-pink-900' : 'bg-transparent text-amber-300'}`}>Tours</button>
+            <button onClick={() => setActiveMenu('bus')} className={`flex-shrink-0 px-3 py-2 rounded font-bold text-sm ${activeMenu==='bus' ? 'bg-amber-400 text-pink-900' : 'bg-transparent text-amber-300'}`}>Bus Tickets</button>
+            <button onClick={() => setActiveMenu('vehicle')} className={`flex-shrink-0 px-3 py-2 rounded font-bold text-sm ${activeMenu==='vehicle' ? 'bg-amber-400 text-pink-900' : 'bg-transparent text-amber-300'}`}>Vehicle Rental</button>
+            <button onClick={() => setActiveMenu('currency')} className={`flex-shrink-0 px-3 py-2 rounded font-bold text-sm ${activeMenu==='currency' ? 'bg-amber-400 text-pink-900' : 'bg-transparent text-amber-300'}`}>Currency Exchange</button>
+            <button onClick={() => setActiveMenu('laundry')} className={`flex-shrink-0 px-3 py-2 rounded font-bold text-sm ${activeMenu==='laundry' ? 'bg-amber-400 text-pink-900' : 'bg-transparent text-amber-300'}`}>Laundry Service</button>
+            <button onClick={() => setActiveMenu('homestay')} className={`flex-shrink-0 px-3 py-2 rounded font-bold text-sm ${activeMenu==='homestay' ? 'bg-amber-400 text-pink-900' : 'bg-transparent text-amber-300'}`}>Homestay</button>
           </div>
         </div>
         {/* Tiêu đề lớn và mô tả: ẩn trên mobile, hiện trên sm trở lên */}
@@ -530,22 +530,22 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
         {isMobile && (
           <div className="w-full flex justify-center mb-4">
             {activeMenu === 'tours' && (
-              <div className="w-full overflow-x-auto whitespace-nowrap no-scrollbar"><ul className="flex flex-row flex-nowrap justify-start items-center gap-x-[0.85rem] py-0">{renderIconGroup(travelTourIcons, travelTourIcons.length, 14)}</ul></div>
+              <div className="w-full overflow-x-auto whitespace-nowrap no-scrollbar"><ul className="flex flex-row flex-nowrap justify-start items-center gap-x-[0.85rem] py-0">{renderIconGroup(travelTourIcons, travelTourIcons.length, 16)}</ul></div>
             )}
             {activeMenu === 'bus' && (
-              <div className="w-full overflow-x-auto whitespace-nowrap no-scrollbar"><ul className="flex flex-row flex-nowrap justify-start items-center gap-x-[0.85rem] py-0">{renderIconGroup(busTicketIcons, busTicketIcons.length, 14)}</ul></div>
+              <div className="w-full overflow-x-auto whitespace-nowrap no-scrollbar"><ul className="flex flex-row flex-nowrap justify-start items-center gap-x-[0.85rem] py-0">{renderIconGroup(busTicketIcons, busTicketIcons.length, 16)}</ul></div>
             )}
             {activeMenu === 'vehicle' && (
-              <div className="w-full overflow-x-auto whitespace-nowrap no-scrollbar"><ul className="flex flex-row flex-nowrap justify-start items-center gap-x-[0.85rem] py-0">{renderIconGroup(vehicleRentalIcons, vehicleRentalIcons.length, 14)}</ul></div>
+              <div className="w-full overflow-x-auto whitespace-nowrap no-scrollbar"><ul className="flex flex-row flex-nowrap justify-start items-center gap-x-[0.85rem] py-0">{renderIconGroup(vehicleRentalIcons, vehicleRentalIcons.length, 16)}</ul></div>
             )}
             {activeMenu === 'currency' && (
-              <div className="w-full overflow-x-auto whitespace-nowrap no-scrollbar"><ul className="flex flex-row flex-nowrap justify-start items-center gap-x-[0.85rem] py-0">{renderIconGroup(currencyIcons, currencyIcons.length, 14)}</ul></div>
+              <div className="w-full overflow-x-auto whitespace-nowrap no-scrollbar"><ul className="flex flex-row flex-nowrap justify-start items-center gap-x-[0.85rem] py-0">{renderIconGroup(currencyIcons, currencyIcons.length, 16)}</ul></div>
             )}
             {activeMenu === 'laundry' && (
-              <div className="w-full overflow-x-auto whitespace-nowrap no-scrollbar"><ul className="flex flex-row flex-nowrap justify-start items-center gap-x-[0.85rem] py-0">{renderIconGroup(laundryIcons, laundryIcons.length, 14)}</ul></div>
+              <div className="w-full overflow-x-auto whitespace-nowrap no-scrollbar"><ul className="flex flex-row flex-nowrap justify-start items-center gap-x-[0.85rem] py-0">{renderIconGroup(laundryIcons, laundryIcons.length, 16)}</ul></div>
             )}
             {activeMenu === 'homestay' && (
-              <div className="w-full overflow-x-auto whitespace-nowrap no-scrollbar"><ul className="flex flex-row flex-nowrap justify-start items-center gap-x-[0.85rem] py-0">{renderIconGroup(homestayIcons, homestayIcons.length, 14)}</ul></div>
+              <div className="w-full overflow-x-auto whitespace-nowrap no-scrollbar"><ul className="flex flex-row flex-nowrap justify-start items-center gap-x-[0.85rem] py-0">{renderIconGroup(homestayIcons, homestayIcons.length, 16)}</ul></div>
             )}
           </div>
         )}
