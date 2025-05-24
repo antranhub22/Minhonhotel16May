@@ -487,16 +487,44 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
     }
   `;
 
-  // Thêm style ẩn chữ trong <select> nhưng không ẩn trong <option>
+  // Thêm style lang-flag-only:
   <style>{`
     select.lang-flag-only {
       color: transparent !important;
       text-shadow: 0 0 0 #FFC94A;
+      text-indent: 0; /* reset */
+      font-size: 1.5rem;
+      background: transparent;
+      width: 100%;
+      overflow: hidden;
     }
     select.lang-flag-only option {
       color: #FFC94A !important;
       background: #fff !important;
       text-shadow: none;
+      font-size: 1rem;
+    }
+    select.lang-flag-only:focus {
+      color: #FFC94A !important;
+      text-shadow: none;
+    }
+    select.lang-flag-only option {
+      color: #FFC94A !important;
+      background: #fff !important;
+      text-shadow: none;
+    }
+    /* Ẩn chữ trong <select> khi chưa mở */
+    select.lang-flag-only:not(:focus) {
+      color: transparent !important;
+      text-shadow: 0 0 0 #FFC94A;
+      text-indent: 0;
+    }
+    select.lang-flag-only:not(:focus) > option {
+      color: #FFC94A !important;
+    }
+    /* Hiện cờ (ký tự đầu tiên) */
+    select.lang-flag-only {
+      direction: ltr;
     }
   `}</style>
 
