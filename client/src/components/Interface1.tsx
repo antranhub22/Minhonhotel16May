@@ -523,7 +523,7 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
   const CallButton = () => (
     <button className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white px-8 py-4 rounded-full shadow-lg text-lg font-bold flex items-center gap-2 animate-pulse z-50" onClick={() => handleCall(lang as any)}>
       <span className="material-icons text-3xl mr-2">auto_mode</span>
-      {t('chat_with_ai', lang)}
+      {t('press_to_order', lang)}
     </button>
   );
 
