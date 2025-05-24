@@ -103,6 +103,29 @@ const VoiceAssistant: React.FC = () => {
   // State modal chi tiết
   const [modalMedia, setModalMedia] = useState<IconMedia | null>(null);
 
+  // State bookmark
+  const [bookmarks, setBookmarks] = useState<string[]>(() => {
+    if (typeof window === 'undefined') return [];
+    try {
+      return JSON.parse(localStorage.getItem('bookmarkedServices') || '[]');
+    } catch {
+      return [];
+    }
+  });
+  useEffect(() => {
+    localStorage.setItem('bookmarkedServices', JSON.stringify(bookmarks));
+  }, [bookmarks]);
+
+  // Hàm toggle bookmark
+  const toggleBookmark = (media: IconMedia) => {
+    setBookmarks(prev => {
+      const key = media.src;
+      if (prev.includes(key)) return prev.filter(k => k !== key);
+      return [...prev, key];
+    });
+  };
+  const isBookmarked = (media: IconMedia) => bookmarks.includes(media.src);
+
   useEffect(() => {
     const fetchOrders = async () => {
       try {
@@ -170,7 +193,14 @@ const VoiceAssistant: React.FC = () => {
       {mediaList.length === 0 ? (
         <div className="text-center text-white py-12">Chọn một hạng mục để xem chi tiết.</div>
       ) : mediaList.map((media, idx) => (
-        <div key={idx} className="bg-card-bg rounded-3xl shadow-lg p-4 cursor-pointer transition hover:scale-[1.025] hover:shadow-2xl" style={{boxShadow: 'var(--card-shadow)'}} onClick={() => setModalMedia(media)}>
+        <div key={idx} className="bg-card-bg rounded-3xl shadow-lg p-4 cursor-pointer transition hover:scale-[1.025] hover:shadow-2xl relative" style={{boxShadow: 'var(--card-shadow)'}} onClick={() => setModalMedia(media)}>
+          <button
+            className={`absolute top-3 right-3 z-10 p-1 rounded-full transition ${isBookmarked(media) ? 'bg-yellow-400 text-pink-900' : 'bg-black/30 text-white hover:bg-yellow-400 hover:text-pink-900'}`}
+            onClick={e => { e.stopPropagation(); toggleBookmark(media); }}
+            title={isBookmarked(media) ? 'Bỏ yêu thích' : 'Lưu vào yêu thích'}
+          >
+            <span className="material-icons text-xl">bookmark{isBookmarked(media) ? '' : '_border'}</span>
+          </button>
           <div className="h-40 bg-gray-700 rounded-2xl mb-3 overflow-hidden flex items-center justify-center">
             <img src={media.src} alt={media.alt || ''} className="object-cover w-full h-full rounded-2xl" />
           </div>
@@ -187,6 +217,13 @@ const VoiceAssistant: React.FC = () => {
       <div className="bg-card-bg rounded-2xl shadow-2xl p-4 max-w-md w-[90vw] relative" onClick={e => e.stopPropagation()}>
         <button className="absolute top-2 right-2 text-white bg-black/30 rounded-full p-1 hover:bg-black/60" onClick={() => setModalMedia(null)}>
           <span className="material-icons text-2xl">close</span>
+        </button>
+        <button
+          className={`absolute top-2 left-2 z-10 p-1 rounded-full transition ${isBookmarked(modalMedia) ? 'bg-yellow-400 text-pink-900' : 'bg-black/30 text-white hover:bg-yellow-400 hover:text-pink-900'}`}
+          onClick={e => { e.stopPropagation(); toggleBookmark(modalMedia); }}
+          title={isBookmarked(modalMedia) ? 'Bỏ yêu thích' : 'Lưu vào yêu thích'}
+        >
+          <span className="material-icons text-xl">bookmark{isBookmarked(modalMedia) ? '' : '_border'}</span>
         </button>
         <div className="w-full h-56 bg-gray-700 rounded-xl mb-4 overflow-hidden flex items-center justify-center">
           <img src={modalMedia.src} alt={modalMedia.alt || ''} className="object-cover w-full h-full rounded-xl" />
