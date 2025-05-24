@@ -463,11 +463,10 @@ const Interface1: React.FC<Interface1Props> = ({ isActive }) => {
   // 1. HEADER: Đưa avatar sang phải, menu/hướng dẫn sang trái, thêm tiêu đề lớn dưới header
   const Header = () => (
     <div className="flex items-center justify-between w-full mb-4">
-      <button onClick={() => setShowInfographic(true)} className="p-2 bg-white/10 rounded-full hover:bg-white/20 transition-all duration-200">
-        <span className="material-icons text-2xl text-amber-400">menu</span>
+      <button onClick={() => setShowInfographic(true)} className="w-10 h-10 flex items-center justify-center rounded-full border-2 border-amber-300 bg-white/20 hover:bg-white/40 transition-all duration-200 shadow">
+        <span className="material-icons text-2xl text-amber-400">info</span>
       </button>
       <h1 className="text-4xl sm:text-5xl font-extrabold uppercase text-center flex-1 bg-gradient-to-r from-yellow-300 via-white to-yellow-400 bg-clip-text text-transparent drop-shadow-lg tracking-wide" style={{textShadow: '0 4px 24px rgba(0,0,0,0.35), 0 1px 0 #fff'}}>HaiLy Travel</h1>
-      <img src="/path/to/avatar.jpg" alt="avatar" className="w-10 h-10 rounded-full border-2 border-amber-300 object-cover" />
     </div>
   );
 
