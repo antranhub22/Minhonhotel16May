@@ -7,7 +7,12 @@ import NotFound from "@/pages/not-found";
 import EmailTester from "@/components/EmailTester";
 import { useWebSocket } from '@/hooks/useWebSocket';
 import StaffPage from '@/pages/staff';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Routes, Route as RouterRoute, Navigate } from 'react-router-dom';
+import { AssistantProvider } from './context/AssistantContext';
+import { StaffProvider } from './context/StaffContext';
+import { StaffLogin } from './components/StaffLogin';
+import { StaffDashboard } from './components/StaffDashboard';
+import { useStaff } from './context/StaffContext';
 
 // Lazy-loaded components
 const CallHistory = React.lazy(() => import('@/pages/CallHistory'));
@@ -38,6 +43,21 @@ const EmailTestPage = () => {
       </div>
     </div>
   );
+};
+
+// Protected Route component
+const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { isAuthenticated, loading } = useStaff();
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!isAuthenticated) {
+    return <Navigate to="/staff/login" />;
+  }
+
+  return <>{children}</>;
 };
 
 function Router() {
