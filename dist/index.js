@@ -14,11 +14,13 @@ import { createServer } from "http";
 // shared/schema.ts
 var schema_exports = {};
 __export(schema_exports, {
+  OrderStatus: () => OrderStatus,
   callSummaries: () => callSummaries,
   insertCallSummarySchema: () => insertCallSummarySchema,
   insertOrderSchema: () => insertOrderSchema,
   insertTranscriptSchema: () => insertTranscriptSchema,
   insertUserSchema: () => insertUserSchema,
+  orderStatusSchema: () => orderStatusSchema,
   orders: () => orders,
   ordersRelations: () => ordersRelations,
   transcripts: () => transcripts,
@@ -27,6 +29,7 @@ __export(schema_exports, {
 });
 import { pgTable, text, serial, integer, timestamp, jsonb } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
+import { z } from "zod";
 import { relations } from "drizzle-orm";
 var users = pgTable("users", {
   id: serial("id").primaryKey(),
@@ -49,6 +52,22 @@ var insertTranscriptSchema = createInsertSchema(transcripts).pick({
   role: true,
   content: true
 });
+var OrderStatus = {
+  PENDING: "pending",
+  ACKNOWLEDGED: "acknowledged",
+  IN_PROGRESS: "in_progress",
+  DELIVERING: "delivering",
+  COMPLETED: "completed",
+  NOTE: "note"
+};
+var orderStatusSchema = z.enum([
+  OrderStatus.PENDING,
+  OrderStatus.ACKNOWLEDGED,
+  OrderStatus.IN_PROGRESS,
+  OrderStatus.DELIVERING,
+  OrderStatus.COMPLETED,
+  OrderStatus.NOTE
+]);
 var orders = pgTable("orders", {
   id: serial("id").primaryKey(),
   callId: text("call_id").notNull(),
@@ -58,7 +77,7 @@ var orders = pgTable("orders", {
   specialInstructions: text("special_instructions"),
   items: jsonb("items").notNull(),
   totalAmount: integer("total_amount").notNull(),
-  status: text("status").notNull().default("pending"),
+  status: text("status").notNull().default(OrderStatus.PENDING),
   createdAt: timestamp("created_at").defaultNow().notNull()
 });
 var callSummaries = pgTable("call_summaries", {
@@ -149,8 +168,15 @@ var DatabaseStorage = class {
     return await db.select().from(orders).where(eq(orders.roomNumber, roomNumber));
   }
   async updateOrderStatus(id, status) {
-    const result = await db.update(orders).set({ status }).where(eq(orders.id, id)).returning();
-    return result.length > 0 ? result[0] : void 0;
+    try {
+      const validatedStatus = orderStatusSchema.parse(status);
+      const result = await db.update(orders).set({ status: validatedStatus }).where(eq(orders.id, id)).returning();
+      console.log(`Updated order ${id} status to ${validatedStatus}`);
+      return result.length > 0 ? result[0] : void 0;
+    } catch (error) {
+      console.error(`Failed to update order ${id} status:`, error);
+      throw error;
+    }
   }
   async getAllOrders(filter) {
     const query = db.select().from(orders);
@@ -184,7 +210,7 @@ var storage = new DatabaseStorage();
 
 // server/routes.ts
 import { WebSocketServer, WebSocket } from "ws";
-import { z } from "zod";
+import { z as z2 } from "zod";
 
 // server/openai.ts
 import OpenAI from "openai";
@@ -1448,7 +1474,7 @@ async function registerRoutes(app2) {
       const order = await storage.createOrder(orderData);
       res.status(201).json(order);
     } catch (error) {
-      if (error instanceof z.ZodError) {
+      if (error instanceof z2.ZodError) {
         res.status(400).json({ error: "Invalid order data", details: error.errors });
       } else {
         handleApiError(res, error, "Failed to create order");
@@ -1487,17 +1513,29 @@ async function registerRoutes(app2) {
       return res.status(404).json({ error: "Order not found" });
     }
     if (globalThis.wss) {
-      if (updatedOrder.specialInstructions) {
-        globalThis.wss.clients.forEach((client) => {
-          if (client.readyState === 1) {
-            client.send(JSON.stringify({
-              type: "order_status_update",
-              reference: updatedOrder.specialInstructions,
-              status: updatedOrder.status
-            }));
-          }
+      console.log("[WebSocket] Emitting order_status_update:", {
+        reference: updatedOrder.specialInstructions,
+        callId: updatedOrder.callId,
+        status: updatedOrder.status,
+        clientCount: globalThis.wss.clients.size
+      });
+      let sentCount = 0;
+      globalThis.wss.clients.forEach((client) => {
+        console.log("[WebSocket] Client:", {
+          clientCallId: client.callId,
+          readyState: client.readyState
         });
-      }
+        if (client.readyState === 1) {
+          client.send(JSON.stringify({
+            type: "order_status_update",
+            reference: updatedOrder.specialInstructions,
+            callId: updatedOrder.callId,
+            status: updatedOrder.status
+          }));
+          sentCount++;
+        }
+      });
+      console.log(`[WebSocket] order_status_update sent to ${sentCount} clients.`);
     }
     res.json(updatedOrder);
   });
@@ -1517,7 +1555,26 @@ async function registerRoutes(app2) {
     const idNum = parseInt(req.params.id, 10);
     const { status } = req.body;
     try {
-      const updatedOrder = await storage.updateOrderStatus(idNum, status);
+      const statusMap = {
+        "\u0110\xE3 ghi nh\u1EADn": "acknowledged",
+        "\u0110ang th\u1EF1c hi\u1EC7n": "in_progress",
+        "Ho\xE0n thi\u1EC7n": "completed",
+        "\u0110ang th\u1EF1c hi\u1EC7n v\xE0 \u0111ang b\xE0n giao cho kh\xE1ch": "delivering",
+        "Ghi ch\xFA": "note",
+        "Ch\u1EDD x\u1EED l\xFD": "pending",
+        "pending": "pending",
+        "acknowledged": "acknowledged",
+        "in_progress": "in_progress",
+        "delivering": "delivering",
+        "completed": "completed",
+        "note": "note"
+      };
+      let mappedStatus = statusMap[status] || status;
+      if (!Object.values(statusMap).includes(mappedStatus)) {
+        console.log("[WebSocket][DEBUG] Status kh\xF4ng h\u1EE3p l\u1EC7, gi\u1EEF nguy\xEAn:", status);
+        mappedStatus = status;
+      }
+      const updatedOrder = await storage.updateOrderStatus(idNum, mappedStatus);
       const io = req.app.get("io");
       io.to(String(idNum)).emit("order_status_update", { orderId: String(idNum), status });
       res.json(updatedOrder);
@@ -2129,35 +2186,95 @@ Mi Nhon Hotel Mui Ne`
       const id = parseInt(req.params.id);
       const { status } = req.body;
       if (!status) {
+        console.log("[WebSocket][DEBUG] Kh\xF4ng c\xF3 status trong body");
         return res.status(400).json({ error: "Status is required" });
       }
+      const statusMap = {
+        "\u0110\xE3 ghi nh\u1EADn": "acknowledged",
+        "\u0110ang th\u1EF1c hi\u1EC7n": "in_progress",
+        "Ho\xE0n thi\u1EC7n": "completed",
+        "\u0110ang th\u1EF1c hi\u1EC7n v\xE0 \u0111ang b\xE0n giao cho kh\xE1ch": "delivering",
+        "Ghi ch\xFA": "note",
+        "Ch\u1EDD x\u1EED l\xFD": "pending",
+        "pending": "pending",
+        "acknowledged": "acknowledged",
+        "in_progress": "in_progress",
+        "delivering": "delivering",
+        "completed": "completed",
+        "note": "note"
+      };
+      let mappedStatus = statusMap[status] || status;
+      if (!Object.values(statusMap).includes(mappedStatus)) {
+        console.log("[WebSocket][DEBUG] Status kh\xF4ng h\u1EE3p l\u1EC7, gi\u1EEF nguy\xEAn:", status);
+        mappedStatus = status;
+      }
       const result = await db2.update(request).set({
-        status,
+        status: mappedStatus,
         updatedAt: /* @__PURE__ */ new Date()
       }).where(eq3(request.id, id)).returning();
       if (result.length === 0) {
+        console.log("[WebSocket][DEBUG] Kh\xF4ng t\xECm th\u1EA5y request v\u1EDBi id", id);
         return res.status(404).json({ error: "Request not found" });
       }
       const orderId = result[0].orderId;
+      console.log("[WebSocket][DEBUG] orderId l\u1EA5y t\u1EEB request:", orderId);
       if (orderId) {
         const orders2 = await storage.getAllOrders({});
-        const order = orders2.find((o) => o.specialInstructions === orderId);
+        let order = orders2.find((o) => o.specialInstructions === orderId);
+        console.log("[WebSocket][DEBUG] Order t\xECm \u0111\u01B0\u1EE3c:", order);
+        if (!order) {
+          console.log("[WebSocket][DEBUG] Kh\xF4ng t\xECm th\u1EA5y order, t\u1EA1o m\u1EDBi order v\u1EDBi specialInstructions:", orderId);
+          const newOrderData = {
+            callId: `auto-${orderId}`,
+            roomNumber: result[0].room_number || "unknown",
+            orderType: "AutoSync",
+            deliveryTime: (/* @__PURE__ */ new Date()).toISOString(),
+            specialInstructions: orderId,
+            items: [],
+            totalAmount: 0,
+            status: mappedStatus
+          };
+          order = await storage.createOrder(newOrderData);
+          console.log("[WebSocket][DEBUG] \u0110\xE3 t\u1EA1o order m\u1EDBi:", order);
+        }
         if (order) {
-          const updatedOrder = await storage.updateOrderStatus(order.id, status);
+          const updatedOrder = await storage.updateOrderStatus(order.id, mappedStatus);
           if (updatedOrder && globalThis.wss) {
             if (updatedOrder.specialInstructions) {
+              console.log("[WebSocket] Emitting order_status_update:", {
+                reference: updatedOrder.specialInstructions,
+                callId: updatedOrder.callId,
+                status: updatedOrder.status,
+                clientCount: globalThis.wss.clients.size
+              });
+              let sentCount = 0;
               globalThis.wss.clients.forEach((client) => {
+                console.log("[WebSocket] Client:", {
+                  clientCallId: client.callId,
+                  readyState: client.readyState
+                });
                 if (client.readyState === 1) {
                   client.send(JSON.stringify({
                     type: "order_status_update",
                     reference: updatedOrder.specialInstructions,
+                    callId: updatedOrder.callId,
                     status: updatedOrder.status
                   }));
+                  sentCount++;
                 }
               });
+              console.log(`[WebSocket] order_status_update sent to ${sentCount} clients.`);
+            } else {
+              console.log("[WebSocket][DEBUG] updatedOrder kh\xF4ng c\xF3 specialInstructions");
             }
+          } else {
+            console.log("[WebSocket][DEBUG] Kh\xF4ng c\xF3 updatedOrder ho\u1EB7c globalThis.wss");
           }
+        } else {
+          console.log("[WebSocket][DEBUG] Kh\xF4ng th\u1EC3 t\u1EA1o order m\u1EDBi \u0111\u1EC3 \u0111\u1ED3ng b\u1ED9");
         }
+      } else {
+        console.log("[WebSocket][DEBUG] Request kh\xF4ng c\xF3 orderId");
       }
       res.json(result[0]);
     } catch (error) {
