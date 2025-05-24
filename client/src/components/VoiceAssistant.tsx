@@ -8,7 +8,7 @@ import Interface3Fr from './Interface3Fr';
 import Interface4 from './Interface4';
 import { useWebSocket } from '@/hooks/useWebSocket';
 import { Link } from 'wouter';
-import { History } from 'lucide-react';
+import { History, Sun, CalendarDays, CalendarCheck, Star, Bus, Mountain, Umbrella, Landmark, Ship, Waves, Map, ArrowRightLeft, Bike, CarFront, Car, DollarSign, Euro, Coins, Shirt, Sparkles, Plus, Home as HomeIcon, Building2, KeyRound, UserRound } from 'lucide-react';
 import InfographicSteps from './InfographicSteps';
 import { iconMediaMap, IconMedia } from '../assets/iconMediaMap';
 import { SiriButton } from './SiriButton';
@@ -33,8 +33,43 @@ const ICON_DISPLAY_NAMES: Record<string, string> = {
   homestay_300k: '<300k', homestay_300_600k: '300-600k', homestay_600k: '>600k', homestay_longterm: 'Long-term', homestay_fullhouse: 'Full House', homestay_additional: 'Additional',
 };
 
-const ICON_COMPONENTS = {
-  // ... (có thể import lại từ Interface1 nếu cần, hoặc dùng icon mặc định)
+const ICON_COMPONENTS: Record<string, JSX.Element> = {
+  // TOURISM & TOURS
+  tour_halfday: <Sun color="#FFC94A" size={28} strokeWidth={2} />,
+  tour_fullday: <CalendarDays color="#FFC94A" size={28} strokeWidth={2} />,
+  tour_multiday: <CalendarCheck color="#FFC94A" size={28} strokeWidth={2} />,
+  special_tour: <Star color="#FFC94A" size={28} strokeWidth={2} />,
+  // BUS TICKETS
+  bus_hcm: <Bus color="#FFC94A" size={28} strokeWidth={2} />,
+  bus_dl: <Mountain color="#FFC94A" size={28} strokeWidth={2} />,
+  bus_nt: <Umbrella color="#FFC94A" size={28} strokeWidth={2} />,
+  bus_dn: <Landmark color="#FFC94A" size={28} strokeWidth={2} />,
+  bus_ct: <Ship color="#FFC94A" size={28} strokeWidth={2} />,
+  bus_mt: <Waves color="#FFC94A" size={28} strokeWidth={2} />,
+  bus_vt: <Map color="#FFC94A" size={28} strokeWidth={2} />,
+  bus_other: <ArrowRightLeft color="#FFC94A" size={28} strokeWidth={2} />,
+  // VEHICLE RENTAL
+  motorcycle: <Bike color="#FFC94A" size={28} strokeWidth={2} />,
+  car_driver: <CarFront color="#FFC94A" size={28} strokeWidth={2} />,
+  car_self: <Car color="#FFC94A" size={28} strokeWidth={2} />,
+  // CURRENCY EXCHANGE
+  usd: <DollarSign color="#FFC94A" size={28} strokeWidth={2} />,
+  eur: <Euro color="#FFC94A" size={28} strokeWidth={2} />,
+  krw: <Coins color="#FFC94A" size={28} strokeWidth={2} />,
+  rub: <Coins color="#FFC94A" size={28} strokeWidth={2} />,
+  currency_other: <Coins color="#FFC94A" size={28} strokeWidth={2} />,
+  // LAUNDRY SERVICE
+  laundry_regular: <Shirt color="#FFC94A" size={28} strokeWidth={2} />,
+  laundry_special: <Sparkles color="#FFC94A" size={28} strokeWidth={2} />,
+  laundry_express: <Plus color="#FFC94A" size={28} strokeWidth={2} />,
+  laundry_additional: <Plus color="#FFC94A" size={28} strokeWidth={2} />,
+  // HOMESTAY SERVICE
+  homestay_300k: <HomeIcon color="#FFC94A" size={28} strokeWidth={2} />,
+  homestay_300_600k: <Building2 color="#FFC94A" size={28} strokeWidth={2} />,
+  homestay_600k: <Building2 color="#FFC94A" size={28} strokeWidth={2} />,
+  homestay_longterm: <CalendarDays color="#FFC94A" size={28} strokeWidth={2} />,
+  homestay_fullhouse: <KeyRound color="#FFC94A" size={28} strokeWidth={2} />,
+  homestay_additional: <UserRound color="#FFC94A" size={28} strokeWidth={2} />,
 };
 
 const SiriButtonWrapper: React.FC = () => {
@@ -107,12 +142,20 @@ const VoiceAssistant: React.FC = () => {
 
   // Render slider sub-item
   const renderSubSlider = () => (
-    <div className="flex flex-row gap-2 px-4 pb-3 overflow-x-auto">
+    <div className="flex flex-row gap-2 px-4 pb-3 overflow-x-auto no-scrollbar">
       {subIcons.map(icon => (
-        <button key={icon} onClick={() => setSelectedSub(icon)} className={`flex flex-col items-center px-3 py-2 rounded-lg shadow ${selectedSub === icon ? 'bg-[var(--accent-yellow)] text-black' : 'bg-card-bg text-white'}`}> 
-          {/* Có thể thêm icon ở đây nếu muốn */}
-          <span className="material-icons text-2xl mb-1">star</span>
-          <span className="text-xs font-semibold">{ICON_DISPLAY_NAMES[icon]}</span>
+        <button
+          key={icon}
+          onClick={() => setSelectedSub(icon)}
+          className={`flex flex-col items-center px-3 py-2 rounded-xl shadow transition-all duration-150
+            ${selectedSub === icon ? 'bg-[var(--accent-yellow)] text-black scale-105 border-2 border-yellow-400 shadow-lg' : 'bg-card-bg text-white hover:bg-[var(--accent-yellow)] hover:text-black hover:scale-105'}
+          `}
+          style={{ minWidth: 72, minHeight: 72 }}
+        >
+          <div className="transition-transform duration-150">
+            {ICON_COMPONENTS[icon] || <span className="material-icons text-2xl mb-1">star</span>}
+          </div>
+          <span className="text-xs font-semibold mt-1 text-center whitespace-nowrap" style={{lineHeight:1.1}}>{ICON_DISPLAY_NAMES[icon]}</span>
         </button>
       ))}
     </div>
