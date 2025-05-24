@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAssistant } from '@/context/AssistantContext';
 import Interface1 from './Interface1';
 import Interface2 from './Interface2';
@@ -11,11 +11,66 @@ import { Link } from 'wouter';
 import { History } from 'lucide-react';
 import InfographicSteps from './InfographicSteps';
 
+const API_HOST = import.meta.env.VITE_API_HOST || '';
+
 const VoiceAssistant: React.FC = () => {
   const { currentInterface, language } = useAssistant();
   
   // Initialize WebSocket connection
   useWebSocket();
+
+  // State lưu danh sách dịch vụ (orders)
+  const [orders, setOrders] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const res = await fetch(`${API_HOST}/api/orders`);
+        if (!res.ok) throw new Error('Failed to fetch orders');
+        const data = await res.json();
+        setOrders(Array.isArray(data) ? data : []);
+      } catch (err) {
+        setOrders([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchOrders();
+  }, []);
+
+  // Hàm mapping order thành card UI
+  const renderOrderCard = (order: any, idx: number) => {
+    // Lấy thông tin cơ bản
+    const title = order.summary?.items?.[0]?.name || order.summary?.orderType || order.orderType || 'Tour/Service';
+    const description = order.summary?.items?.[0]?.description || order.summary?.specialInstructions || order.specialInstructions || '';
+    const location = order.summary?.roomNumber || order.roomNumber || '';
+    const image = '/assets/hotel-exterior.jpeg'; // Có thể mapping ảnh động sau
+    const label = order.summary?.orderType || order.orderType || 'Tour Package';
+    return (
+      <div key={order.reference || idx} className="bg-card-bg rounded-3xl shadow-lg p-4 mb-6" style={{boxShadow: 'var(--card-shadow)'}}>
+        <div className="h-40 bg-gray-700 rounded-2xl mb-3 overflow-hidden flex items-center justify-center">
+          <img src={image} alt={title} className="object-cover w-full h-full rounded-2xl" />
+        </div>
+        <div className="flex items-center gap-2 mb-2">
+          <span className="bg-[var(--accent-yellow)] text-black text-xs font-bold px-2 py-1 rounded-full">{label}</span>
+          <span className="bg-card-bg text-white text-xs font-bold px-2 py-1 rounded-full">{order.summary?.items?.length || 1} Days</span>
+          <span className="bg-card-bg text-white text-xs font-bold px-2 py-1 rounded-full">AI</span>
+        </div>
+        <h3 className="text-lg font-bold text-white mb-1">{title}</h3>
+        <p className="text-gray-300 text-sm mb-2">{location}</p>
+        <p className="text-gray-400 text-xs mb-2 line-clamp-2">{description}</p>
+        <div className="flex items-center justify-between">
+          <button className="bg-[var(--accent-yellow)] rounded-full p-2 shadow">
+            <span className="material-icons text-black text-xl">arrow_outward</span>
+          </button>
+          <button className="bg-card-bg rounded-full p-2 shadow">
+            <span className="material-icons text-white text-xl">favorite_border</span>
+          </button>
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="relative min-h-screen flex flex-col font-sans" style={{background: 'linear-gradient(135deg, #23255d 0%, #3a3e8e 50%, #5b5fd6 100%)'}}>
@@ -49,27 +104,15 @@ const VoiceAssistant: React.FC = () => {
         <button className="px-4 py-2 rounded-full font-semibold bg-card-bg text-white shadow">Tour Package</button>
       </div>
 
-      {/* Danh sách card dịch vụ (placeholder) */}
+      {/* Danh sách card dịch vụ */}
       <div className="flex-1 px-4 pb-24 overflow-y-auto">
-        <div className="bg-card-bg rounded-3xl shadow-lg p-4 mb-6" style={{boxShadow: 'var(--card-shadow)'}}>
-          <div className="h-40 bg-gray-700 rounded-2xl mb-3"></div>
-          <div className="flex items-center gap-2 mb-2">
-            <span className="bg-[var(--accent-yellow)] text-black text-xs font-bold px-2 py-1 rounded-full">Tour Package</span>
-            <span className="bg-card-bg text-white text-xs font-bold px-2 py-1 rounded-full">3 Days</span>
-            <span className="bg-card-bg text-white text-xs font-bold px-2 py-1 rounded-full">AI</span>
-          </div>
-          <h3 className="text-lg font-bold text-white mb-1">Sea Pearl Beach Resort & Spa</h3>
-          <p className="text-gray-300 text-sm mb-2">Inani, cox's bazar</p>
-          <div className="flex items-center justify-between">
-            <button className="bg-[var(--accent-yellow)] rounded-full p-2 shadow">
-              <span className="material-icons text-black text-xl">arrow_outward</span>
-            </button>
-            <button className="bg-card-bg rounded-full p-2 shadow">
-              <span className="material-icons text-white text-xl">favorite_border</span>
-            </button>
-          </div>
-        </div>
-        {/* Thêm nhiều card placeholder nếu muốn */}
+        {loading ? (
+          <div className="text-center text-white py-12">Đang tải dữ liệu...</div>
+        ) : orders.length === 0 ? (
+          <div className="text-center text-white py-12">Không có dịch vụ nào.</div>
+        ) : (
+          orders.map(renderOrderCard)
+        )}
       </div>
 
       {/* Thanh điều hướng dưới */}
