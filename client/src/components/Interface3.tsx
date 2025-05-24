@@ -273,6 +273,67 @@ const Interface3: React.FC<Interface3Props> = ({ isActive }) => {
     }
   }, [isActive, callSummary, orderSummary, setOrderSummary]);
 
+  // Chuẩn hóa dữ liệu order trước khi gửi lên backend
+  function normalizeOrderData(orderSummary: any, callDetails: any): any {
+    // Chuẩn hóa roomNumber: 1-4 số, có thể kèm 1 chữ cái
+    let roomNumber = orderSummary.roomNumber || '';
+    roomNumber = String(roomNumber).trim().toUpperCase();
+    if (!/^\d{1,4}[A-Z]?$/.test(roomNumber)) {
+      roomNumber = '101'; // fallback hợp lệ
+    }
+
+    // orderType phải đúng enum
+    const validOrderTypes = [
+      'room-service', 'food-beverage', 'housekeeping', 'transportation', 'spa',
+      'tours-activities', 'technical-support', 'concierge', 'wellness-fitness',
+      'security', 'special-occasions', 'other'
+    ];
+    let orderType = orderSummary.orderType;
+    if (!validOrderTypes.includes(orderType)) orderType = 'room-service';
+
+    // deliveryTime phải đúng enum
+    const validDeliveryTimes = ['asap', '30min', '1hour', 'specific'];
+    let deliveryTime = orderSummary.deliveryTime;
+    if (!validDeliveryTimes.includes(deliveryTime)) deliveryTime = 'asap';
+
+    // items phải là mảng có ít nhất 1 phần tử hợp lệ
+    let items = Array.isArray(orderSummary.items) ? orderSummary.items : [];
+    items = items.filter(item => item && item.name && item.quantity > 0 && item.price >= 0);
+    if (items.length === 0) {
+      items = [{ id: '1', name: 'Service', description: '', quantity: 1, price: 0 }];
+    }
+
+    // totalAmount
+    let totalAmount = orderSummary.totalAmount;
+    if (!totalAmount || isNaN(totalAmount)) {
+      totalAmount = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    }
+
+    // callId
+    const callId = callDetails?.id || `call-${Date.now()}`;
+
+    // status
+    const status = 'pending';
+
+    // createdAt
+    const createdAt = new Date();
+
+    // specialInstructions
+    const specialInstructions = orderSummary.specialInstructions || '';
+
+    return {
+      callId,
+      roomNumber,
+      orderType,
+      deliveryTime,
+      specialInstructions,
+      items,
+      totalAmount,
+      status,
+      createdAt
+    };
+  }
+
   // Handle confirm order
   const handleConfirmOrder = async () => {
     if (!orderSummary) return;
@@ -415,6 +476,18 @@ const Interface3: React.FC<Interface3Props> = ({ isActive }) => {
       }
     } else {
       console.log('Vietnamese interface is active, skipping email send from English interface');
+    }
+    
+    // Gửi order lên backend
+    try {
+      const normalizedOrder = normalizeOrderData(orderSummary, callDetails);
+      await fetch('/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(normalizedOrder)
+      });
+    } catch (err) {
+      console.error('Failed to send order to backend:', err);
     }
     
     // Navigate to confirmation screen
